@@ -14,3 +14,20 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('admin', array('before' => 'auth', function()
+{
+    // Only authenticated users may enter...
+}));
+
+
+// Route::post('register', array('before' => 'csrf', function()
+// {
+//     return 'You gave a valid CSRF token!';
+// }));
+
+Route::controllers([
+  'auth'     =>'Auth\AuthController',
+  'password' => 'Auth\PasswordController'
+]);
