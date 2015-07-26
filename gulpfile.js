@@ -26,6 +26,14 @@ elixir(function(mix) {
         // 'one.js',
         // 'two.js',
         // 'three.js'
-        // ]);
+        // ], '/path/filename.js');
         // To concatinate 3 js files (for example) into a single js file.
+
+      // Note: We can concat ES6 scripts in the same way as above by substituting .babel for .scripts
+
+      // In commandline running gulp tdd will watch all test files in phpUnit for example and run tests as any of the files
+      // that are to be tested change.
+
+      // To have phpSpec or phpUnit tests run through gulp, include .phpUnit() or phpSpec() (respectively)
+      // Note: phpSpec is included out of the box in Laravel 5.
 });
