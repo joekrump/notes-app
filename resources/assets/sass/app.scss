@@ -2,4 +2,14 @@
 
 body {
   color: $primaryColor;
+  background-image: url("/images/app_background.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-
+}
+
+.title {
+  padding: 10px;
+  background-color: rgba(0,0,0,0.6);
 }

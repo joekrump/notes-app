@@ -12,9 +12,12 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.sass('app.scss', './public/css/app.css')
-      .sass('frontend.scss', './public/css/frontend.css')
-      .sass('backend.scss',  './public/css/backend.css');
+    mix.sass('app.scss', 'public/css/app.css')
+      .version('public/css/app.css');
+    // mix.sass('frontend.scss', 'public/css/frontend.css')
+    //   .version('public/css/frontend.css');
+    // mix.sass('backend.scss', 'public/css/backend.css')
+    //   .version('public/css/backend.css');
 
       // Use .babel('somefile.js') to compile ES6 to plain js.
       // Note: In ES6 for example you can create classes. Check out more on babel's website: https://babeljs.io/docs/learn-es2015/

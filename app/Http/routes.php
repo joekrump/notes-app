@@ -22,6 +22,12 @@ Route::get('admin', array('before' => 'auth', function()
 }));
 
 
+// Route::get('admin', ['middleware' => 'auth', function() {
+//     // Only authenticated users may enter...
+// }]);
+
+
+
 // Route::post('register', array('before' => 'csrf', function()
 // {
 //     return 'You gave a valid CSRF token!';
