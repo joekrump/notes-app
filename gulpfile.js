@@ -1,8 +1,5 @@
 var elixir = require('laravel-elixir');
 
-// require('classnames');
-// require('react');
-// require('react-tap-event-plugin');
 /*
  |--------------------------------------------------------------------------
  | Elixir Asset Management
@@ -15,8 +12,8 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.sass('app.scss', 'public/css/app.css')
-      .version('public/css/app.css');
+    mix.sass(['app.scss', 'materialize.scss'], 'public/css/app.css');
+      // .version('public/css/app.css');
     // mix.sass('frontend.scss', 'public/css/frontend.css')
     //   .version('public/css/frontend.css');
     // mix.sass('backend.scss', 'public/css/backend.css')
@@ -27,8 +24,6 @@ elixir(function(mix) {
 
     // Use gulp watch to keep an eye on all the files that you are watching and auto compile when they are changed.
     // Use gulp --production to compile and minify.
-
-    mix.browserify("material-ui/index.js");
     // Note: We can concat ES6 scripts in the same way as above by substituting .babel for .scripts
 
     // In commandline running gulp tdd will watch all test files in phpUnit for example and run tests as any of the files
@@ -39,7 +34,5 @@ elixir(function(mix) {
 });
 
 elixir(function(mix) {
-  mix.scripts([
-      'components/*.js'
-    ], 'public/js/components.js');
+  mix.browserify('app.js', 'public/js/all.js');
 });
