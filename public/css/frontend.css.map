@@ -1,0 +1,1 @@
+{"version":3,"sources":["app.scss","variables.scss"],"names":[],"mappings":"AAEA;EACE,eCHmB;EDInB,+CAA8C,EAF1C","file":"frontend.css","sourcesContent":["@import 'variables';\n\nbody {\n  color: $primaryColor;\n  background-image: \"images/app_background.jpg\";\n}","$primaryColor: orange;\n"],"sourceRoot":"/source/"}
