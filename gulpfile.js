@@ -1,5 +1,8 @@
 var elixir = require('laravel-elixir');
 
+// require('classnames');
+// require('react');
+// require('react-tap-event-plugin');
 /*
  |--------------------------------------------------------------------------
  | Elixir Asset Management
@@ -19,24 +22,24 @@ elixir(function(mix) {
     // mix.sass('backend.scss', 'public/css/backend.css')
     //   .version('public/css/backend.css');
 
-      // Use .babel('somefile.js') to compile ES6 to plain js.
-      // Note: In ES6 for example you can create classes. Check out more on babel's website: https://babeljs.io/docs/learn-es2015/
+    // Use .babel('somefile.js') to compile ES6 to plain js.
+    // Note: In ES6 for example you can create classes. Check out more on babel's website: https://babeljs.io/docs/learn-es2015/
 
-      // Use gulp watch to keep an eye on all the files that you are watching and auto compile when they are changed.
-      // Use gulp --production to compile and minify.
+    // Use gulp watch to keep an eye on all the files that you are watching and auto compile when they are changed.
+    // Use gulp --production to compile and minify.
 
-      // Use .scripts([
-        // 'one.js',
-        // 'two.js',
-        // 'three.js'
-        // ], '/path/filename.js');
-        // To concatinate 3 js files (for example) into a single js file.
+    mix.browserify("material-ui/index.js");
+    // Note: We can concat ES6 scripts in the same way as above by substituting .babel for .scripts
 
-      // Note: We can concat ES6 scripts in the same way as above by substituting .babel for .scripts
+    // In commandline running gulp tdd will watch all test files in phpUnit for example and run tests as any of the files
+    // that are to be tested change.
 
-      // In commandline running gulp tdd will watch all test files in phpUnit for example and run tests as any of the files
-      // that are to be tested change.
+    // To have phpSpec or phpUnit tests run through gulp, include .phpUnit() or phpSpec() (respectively)
+    // Note: phpSpec is included out of the box in Laravel 5.
+});
 
-      // To have phpSpec or phpUnit tests run through gulp, include .phpUnit() or phpSpec() (respectively)
-      // Note: phpSpec is included out of the box in Laravel 5.
+elixir(function(mix) {
+  mix.scripts([
+      'components/*.js'
+    ], 'public/js/components.js');
 });
