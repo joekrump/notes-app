@@ -5,8 +5,27 @@ body {
   background-position: center;
   background-size: cover; }
 
+html, body {
+  height: 100%; }
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: table;
+  font-weight: 100;
+  font-family: 'Lato'; }
+
+.container {
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle; }
+
+.content {
+  text-align: center;
+  display: inline-block; }
+
 .title {
-  padding: 5px 10px;
-  background-color: rgba(0, 0, 0, 0.6); }
+  font-size: 96px; }
 
 /*# sourceMappingURL=app.css.map */
