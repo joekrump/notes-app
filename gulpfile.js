@@ -34,5 +34,5 @@ elixir(function(mix) {
 });
 
 elixir(function(mix) {
-  mix.browserify('app.js', 'public/js/all.js');
+  mix.babel('app.js').browserify('app.js', 'public/js/all.js');
 });

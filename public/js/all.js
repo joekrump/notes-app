@@ -1,1 +1,10 @@
-!function e(r,t,n){function o(a,c){if(!t[a]){if(!r[a]){var l="function"==typeof require&&require;if(!c&&l)return l(a,!0);if(u)return u(a,!0);var i=new Error("Cannot find module '"+a+"'");throw i.code="MODULE_NOT_FOUND",i}var f=t[a]={exports:{}};r[a][0].call(f.exports,function(e){var t=r[a][1][e];return o(t?t:e)},f,f.exports,e,r,t,n)}return t[a].exports}for(var u="function"==typeof require&&require,a=0;a<n.length;a++)o(n[a]);return o}({1:[function(e,r,t){"use strict";function n(e){return e&&e.__esModule?e:{"default":e}}var o=e("./components/Joe1"),u=n(o);React.render(React.createElement(u["default"],null),document.querySelector("#app"))},{"./components/Joe1":2}],2:[function(e,r,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n=React.createClass({displayName:"Joe1",render:function(){return console.log("render was called!"),React.createElement("div",null,React.createElement("h1",{className:"title"},"Testing"))}});t["default"]=n,r.exports=t["default"]},{}]},{},[1]);
+'use strict';
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _componentsJoe1 = require('./components/Joe1');
+
+var _componentsJoe12 = _interopRequireDefault(_componentsJoe1);
+
+React.render(React.createElement(_componentsJoe12['default'], null), document.querySelector('#app'));
+//# sourceMappingURL=all.js.map
