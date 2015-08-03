@@ -40580,7 +40580,6 @@ var Main = React.createClass({
   toggleNav: function toggleNav(e) {
     e.preventDefault();
     // Show/Hide the LeftMenu
-    console.log('clicked');
     this.refs.leftNav.toggle();
   },
 
