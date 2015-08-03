@@ -1,0 +1,1 @@
+{"version":3,"sources":["app.js"],"names":[],"mappings":";;;;8BAAA,mBAAA;;;;AAGA,KAAA,CAAA,MAAA,CAAA,sDAAA,EAAA,QAAA,CAAA,aAAA,CAAA,MAAA,CAAA,CAAA,CAAA","file":"all.js","sourcesContent":["import Joe1 from './components/Joe1';\n\n\nReact.render(<Joe1 />, document.querySelector('#app'));"],"sourceRoot":"/source/"}
