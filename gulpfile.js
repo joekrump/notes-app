@@ -28,7 +28,7 @@ elixir(function(mix) {
     // Use gulp watch to keep an eye on all the files that you are watching and auto compile when they are changed.
     // Use gulp --production to compile and minify.
 
-    mix.browserify("material-ui/index.js");
+    // mix.browserify("material-ui/index.js");
     // Note: We can concat ES6 scripts in the same way as above by substituting .babel for .scripts
 
     // In commandline running gulp tdd will watch all test files in phpUnit for example and run tests as any of the files
@@ -39,7 +39,6 @@ elixir(function(mix) {
 });
 
 elixir(function(mix) {
-  mix.scripts([
-      'components/*.js'
-    ], 'public/js/components.js');
+  mix.browserify('app.js', 'public/js/app.js')
+    // .version('public/js/app.js');
 });

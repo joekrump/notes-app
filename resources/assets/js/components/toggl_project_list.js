@@ -14,5 +14,3 @@ var TogglProjectList = React.createClass({
     );
   }
 });
-
-React.render(<TogglProjectList />, document.body);
