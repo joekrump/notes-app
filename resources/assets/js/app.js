@@ -1,3 +1,8 @@
-let Outer = require('./material-ui/outer');
+// let injectTapEventPlugin = require('./material-ui/react-tap-event-plugin');
+let Main = require('./material-ui/main');
+let React = require('react');
+// injectTapEventPlugin();
 
-React.render(<Outer />, document.querySelector('#app'));
+(function() {
+  React.render(<Main />, document.querySelector('#app'));
+})();

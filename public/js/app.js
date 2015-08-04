@@ -1,11 +1,16 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+// let injectTapEventPlugin = require('./material-ui/react-tap-event-plugin');
 'use strict';
 
-var Outer = require('./material-ui/outer');
+var Main = require('./material-ui/main');
+var React = require('react');
+// injectTapEventPlugin();
 
-React.render(React.createElement(Outer, null), document.querySelector('#app'));
+(function () {
+  React.render(React.createElement(Main, null), document.querySelector('#app'));
+})();
 
-},{"./material-ui/outer":311}],2:[function(require,module,exports){
+},{"./material-ui/main":311,"react":310}],2:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -38892,35 +38897,82 @@ module.exports = warning;
 module.exports = require('./lib/React');
 
 },{"./lib/React":168}],311:[function(require,module,exports){
+/** In this file, we create a React component which incorporates components provided by material-ui */
+
 'use strict';
 
 var React = require('react');
 var mui = require('material-ui');
+var RaisedButton = mui.RaisedButton;
+var Dialog = mui.Dialog;
 var ThemeManager = new mui.Styles.ThemeManager();
+var Colors = mui.Styles.Colors;
+var Theme = mui.Theme;
 
-var Outer = React.createClass({
-  displayName: 'Outer',
+var Main = React.createClass({
+  displayName: 'Main',
 
-  // Important!
   childContextTypes: {
     muiTheme: React.PropTypes.object
   },
 
-  // Important!
+  childContext: function childContext() {
+    muiTheme: ThemeManager.types.LIGHT;
+  },
+
   getChildContext: function getChildContext() {
     return {
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
+
+  componentWillMount: function componentWillMount() {
+    ThemeManager.setPalette({
+      accent1Color: Colors.deepOrange500
+    });
+  },
+
   render: function render() {
+
+    var containerStyle = {
+      textAlign: 'center',
+      paddingTop: '200px'
+    };
+
+    var standardActions = [{ text: 'Okay' }];
+
     return React.createElement(
       'div',
-      { className: 'title' },
-      'Hello World!'
+      { style: containerStyle },
+      React.createElement(
+        Dialog,
+        {
+          title: 'Super Secret Password',
+          actions: standardActions,
+          ref: 'superSecretPasswordDialog',
+          theme: ThemeManager.types.LIGHT },
+        '1-2-3-4-5'
+      ),
+      React.createElement(
+        'h1',
+        null,
+        'material-ui'
+      ),
+      React.createElement(
+        'h2',
+        null,
+        'example project'
+      ),
+      React.createElement(RaisedButton, { label: 'Super Secret Password', primary: true, onTouchTap: this._handleTouchTap })
     );
+  },
+
+  _handleTouchTap: function _handleTouchTap() {
+    this.refs.superSecretPasswordDialog.show();
   }
+
 });
 
-module.exports = Outer;
+module.exports = Main;
 
 },{"material-ui":36,"react":310}]},{},[1]);
