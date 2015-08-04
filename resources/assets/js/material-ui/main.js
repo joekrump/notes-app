@@ -14,9 +14,9 @@ let Main = React.createClass({
     muiTheme: React.PropTypes.object
   },
 
-  childContext() {
-    muiTheme: ThemeManager.types.LIGHT
-  },
+  // childContext() {
+  //   muiTheme: ThemeManager.types.LIGHT
+  // },
 
   getChildContext() {
     return {
@@ -46,8 +46,7 @@ let Main = React.createClass({
         <Dialog
           title="Super Secret Password"
           actions={standardActions}
-          ref="superSecretPasswordDialog"
-          theme={ThemeManager.types.LIGHT}>
+          ref="superSecretPasswordDialog">
           1-2-3-4-5
         </Dialog>
 
