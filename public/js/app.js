@@ -38981,24 +38981,25 @@ var CommentForm = React.createClass({
     }
     this.props.onCommentSubmit({ author: author, text: text });
 
-    this.refs.author.setState({});
-    this.refs.text.setState({});
+    this.refs.author.setValue('');
+    this.refs.text.setValue('');
     return;
   },
 
   render: function render() {
+
     return React.createElement(
       'form',
       { className: 'commentForm', onSubmit: this.handleSubmit },
       React.createElement(
         'div',
         null,
-        React.createElement(TextField, { hintText: 'Your name', ref: 'author' })
+        React.createElement(TextField, { style: { color: '#ffffff' }, hintText: 'Your name', ref: 'author' })
       ),
       React.createElement(
         'div',
         null,
-        React.createElement(TextField, { hintText: 'Say something...', ref: 'text' })
+        React.createElement(TextField, { style: { color: '#ffffff' }, hintText: 'Say something...', ref: 'text' })
       ),
       React.createElement(
         'button',

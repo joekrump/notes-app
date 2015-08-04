@@ -18,19 +18,20 @@ let CommentForm = React.createClass({
     }
     this.props.onCommentSubmit({author: author, text: text});
 
-    this.refs.author.setState({});
-    this.refs.text.setState({});
+    this.refs.author.setValue('');
+    this.refs.text.setValue('');
     return;
   },
 
   render: function() {
+
     return (
       <form className="commentForm" onSubmit={this.handleSubmit}>
         <div>
-          <TextField hintText="Your name" ref="author" />
+          <TextField style={{color: '#ffffff'}} hintText="Your name" ref="author" />
         </div>
         <div>
-          <TextField hintText="Say something..." ref="text" />
+          <TextField style={{color: '#ffffff'}} hintText="Say something..." ref="text" />
         </div>
         <button type="submit">Post</button>
       </form>
