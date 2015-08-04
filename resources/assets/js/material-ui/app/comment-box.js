@@ -16,7 +16,18 @@ let CommentBox = React.createClass({
     return {data: []};
   },
   handleCommentSubmit: function(comment) {
-    // TODO: submit to the server and refresh the list
+
+    // Optimistic update
+    var comments = this.state.data;
+    var newComments = comments.concat([comment]);
+    this.setState({data: newComments});
+
+    var r = new XMLHttpRequest();
+    r.open('POST', this.props.url, true);
+    r.onreadystatechange = function () {
+      this.setState({data: JSON.parse(r.response)});
+    }.bind(this);
+    r.send(comment); // Send request
   },
   componentDidMount: function() {
     this.loadCommentsFromServer('GET', this.props.url);

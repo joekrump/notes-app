@@ -22,6 +22,11 @@ Route::get('/comments', function(){
     ]);
 });
 
+Route::post('/comments', function(data){
+  var_dump(data);
+  return response()->json([data]);
+});
+
 Route::get('admin', array('before' => 'auth', function()
 {
     // Only authenticated users may enter...
