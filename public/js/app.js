@@ -40607,6 +40607,7 @@ var Main = React.createClass({
     return React.createElement(
       'div',
       null,
+
       React.createElement(LeftNav, {
         ref: 'leftNav',
         docked: false,

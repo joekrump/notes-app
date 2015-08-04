@@ -3,6 +3,7 @@
 let React = require('react');
 let mui = require('material-ui');
 let RaisedButton = mui.RaisedButton;
+let FlatButton = mui.FlatButton;
 let Dialog = mui.Dialog;
 let ThemeManager = new mui.Styles.ThemeManager();
 let Colors = mui.Styles.Colors;
@@ -32,26 +33,28 @@ let Main = React.createClass({
 
   render() {
 
-    let containerStyle = {
-      textAlign: 'center',
-      paddingTop: '200px'
-    };
-
-    let standardActions = [
-      { text: 'Okay' }
+    let customActions = [
+      <FlatButton
+        label="Cancel"
+        secondary={true}
+        onTouchTap={this._handleCustomDialogCancel} />,
+      <FlatButton
+        label="Submit"
+        primary={true}
+        onTouchTap={this._handleCustomDialogSubmit} />
     ];
 
     return (
-      <div style={containerStyle}>
+      <div>
         <Dialog
           title="Super Secret Password"
-          actions={standardActions}
-          ref="superSecretPasswordDialog">
-          1-2-3-4-5
+          actions={customActions}
+          ref="superSecretPasswordDialog"
+          openImmediately={true}>
+          The actions in this window were passed in as an array of react objects.
         </Dialog>
 
-        <h1>material-ui</h1>
-        <h2>example project</h2>
+        <h1 className="title">material-ui</h1>
 
         <RaisedButton label="Super Secret Password" primary={true} onTouchTap={this._handleTouchTap} />
 
