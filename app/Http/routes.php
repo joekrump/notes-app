@@ -15,6 +15,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/comments', function(){
+  return response()->json([
+      ['author' => "Pete Hunt", 'text' => "This is one comment"],
+      ['author' => "Jordan Walke", 'text' => "This is *another* comment"]
+    ])
+});
 
 Route::get('admin', array('before' => 'auth', function()
 {

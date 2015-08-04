@@ -31,18 +31,12 @@ let Main = React.createClass({
 
   render() {
 
-    // Dummy Comment data.
-    let data = [
-      {author: "Pete Hunt", text: "This is one comment"},
-      {author: "Jordan Walke", text: "This is *another* comment"}
-    ];
-
     return (
       <div>
         <h1 className="title">
           Welcome!
         </h1>
-        <CommentBox data={data} />
+        <CommentBox url="/comments" />
         <RaisedButton label="Super Secret Password" primary={true} onTouchTap={this._handleTouchTap} onClick={this.loadDefaultView}/>
       </div>
     );
