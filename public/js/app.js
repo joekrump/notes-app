@@ -38907,7 +38907,7 @@ var CommentForm = require('./comment-form');
 var CommentBox = React.createClass({
   displayName: 'CommentBox',
 
-  makeRequest: function makeRequest(action, url) {
+  loadCommentsFromServer: function loadCommentsFromServer(action, url) {
     var r = new XMLHttpRequest();
     r.open(action, url, true);
     r.onreadystatechange = (function () {
@@ -38919,7 +38919,8 @@ var CommentBox = React.createClass({
     return { data: [] };
   },
   componentDidMount: function componentDidMount() {
-    this.makeRequest('GET', this.props.url);
+    this.loadCommentsFromServer('GET', this.props.url);
+    setInterval(this.loadCommentsFromServer, this.props.pollInterval);
   },
   render: function render() {
     return React.createElement(
@@ -38939,25 +38940,53 @@ var CommentBox = React.createClass({
 module.exports = CommentBox;
 
 },{"./comment-form":312,"./comment-list":313,"react":310}],312:[function(require,module,exports){
-"use strict";
+'use strict';
 
 var React = require('react');
+var mui = require('material-ui');
+var TextField = mui.TextField;
+var RaisedButton = mui.RaisedButton;
+var Colors = mui.Styles.Colors;
+var ThemeManager = new mui.Styles.ThemeManager();
 
 var CommentForm = React.createClass({
-  displayName: "CommentForm",
+  displayName: 'CommentForm',
+
+  handleSubmit: function handleSubmit(e) {
+    e.preventDefault();
+    var author = React.findDOMNode(this.refs.author).value.trim();
+    var text = React.findDOMNode(this.refs.text).value.trim();
+    if (!text || !author) {
+      return;
+    }
+    // TODO: send request to the server
+    React.findDOMNode(this.refs.author).value = '';
+    React.findDOMNode(this.refs.text).value = '';
+    return;
+  },
 
   render: function render() {
     return React.createElement(
-      "div",
-      { className: "commentForm" },
-      "Hello, world! I am a CommentForm."
+      'form',
+      { className: 'commentForm', onSubmit: this.handleSubmit },
+      React.createElement(
+        'div',
+        null,
+        React.createElement(TextField, { hintText: 'Your name', ref: 'author' })
+      ),
+      React.createElement(
+        'div',
+        null,
+        React.createElement(TextField, { hintText: 'Say something...', ref: 'text' })
+      ),
+      React.createElement(RaisedButton, { label: 'Post', secondary: true })
     );
   }
 });
 
 module.exports = CommentForm;
 
-},{"react":310}],313:[function(require,module,exports){
+},{"material-ui":36,"react":310}],313:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -39054,8 +39083,7 @@ var Main = React.createClass({
         { className: 'title' },
         'Welcome!'
       ),
-      React.createElement(CommentBox, { url: '/comments' }),
-      React.createElement(RaisedButton, { label: 'Super Secret Password', primary: true, onTouchTap: this._handleTouchTap, onClick: this.loadDefaultView })
+      React.createElement(CommentBox, { url: '/comments', pollInterval: 2000 })
     );
   },
 

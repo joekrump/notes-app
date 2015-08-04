@@ -4,7 +4,7 @@ let CommentList = require('./comment-list');
 let CommentForm = require('./comment-form');
 
 let CommentBox = React.createClass({
-  makeRequest: function(action, url) {
+  loadCommentsFromServer: function(action, url) {
     var r = new XMLHttpRequest();
     r.open(action, url, true);
     r.onreadystatechange = function () {
@@ -15,15 +15,19 @@ let CommentBox = React.createClass({
   getInitialState: function() {
     return {data: []};
   },
+  handleCommentSubmit: function(comment) {
+    // TODO: submit to the server and refresh the list
+  },
   componentDidMount: function() {
-    this.makeRequest('GET', this.props.url);
+    this.loadCommentsFromServer('GET', this.props.url);
+    setInterval(this.loadCommentsFromServer, this.props.pollInterval);
   },
   render: function() {
     return (
       <div className="commentBox">
         <h1>Comments</h1>
         <CommentList data={this.state.data} />
-        <CommentForm />
+        <CommentForm onCommentSubmit={this.handleCommentSubmit} />
       </div>
     );
   }

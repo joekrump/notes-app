@@ -36,8 +36,7 @@ let Main = React.createClass({
         <h1 className="title">
           Welcome!
         </h1>
-        <CommentBox url="/comments" />
-        <RaisedButton label="Super Secret Password" primary={true} onTouchTap={this._handleTouchTap} onClick={this.loadDefaultView}/>
+        <CommentBox url="/comments" pollInterval={2000}/>
       </div>
     );
   },
