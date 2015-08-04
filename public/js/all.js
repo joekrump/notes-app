@@ -1,10 +1,1 @@
-'use strict';
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _componentsJoe1 = require('./components/Joe1');
-
-var _componentsJoe12 = _interopRequireDefault(_componentsJoe1);
-
-React.render(React.createElement(_componentsJoe12['default'], null), document.querySelector('#app'));
-//# sourceMappingURL=all.js.map
+"use strict";function _interopRequireDefault(e){return e&&e.__esModule?e:{"default":e}}var _materialUiAppMain=require("./material-ui/app/main"),_materialUiAppMain2=_interopRequireDefault(_materialUiAppMain),_react=require("react"),_react2=_interopRequireDefault(_react);_react2["default"].render(_react2["default"].createElement(_materialUiAppMain2["default"],null),document.querySelector("#app"));

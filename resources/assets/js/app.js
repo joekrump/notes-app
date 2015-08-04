@@ -1,4 +1,4 @@
-import Joe1 from './components/Joe1';
+import Main from './material-ui/app/main';
+import React from 'react';
 
-
-React.render(<Joe1 />, document.querySelector('#app'));
+React.render(<Main />, document.querySelector('#app'));
