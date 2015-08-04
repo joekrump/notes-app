@@ -12,7 +12,8 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.sass(['app.scss', 'materialize.scss'], 'public/css/app.css');
+    // mix.sass(['app.scss', 'materialize.scss'], 'public/css/app.css');
+    mix.sass(['app.scss'], 'public/css/app.css');
       // .version('public/css/app.css');
     // mix.sass('frontend.scss', 'public/css/frontend.css')
     //   .version('public/css/frontend.css');
@@ -24,6 +25,8 @@ elixir(function(mix) {
 
     // Use gulp watch to keep an eye on all the files that you are watching and auto compile when they are changed.
     // Use gulp --production to compile and minify.
+    // mix.browserify("material-ui/index.js");
+
     // Note: We can concat ES6 scripts in the same way as above by substituting .babel for .scripts
 
     // In commandline running gulp tdd will watch all test files in phpUnit for example and run tests as any of the files
@@ -31,8 +34,8 @@ elixir(function(mix) {
 
     // To have phpSpec or phpUnit tests run through gulp, include .phpUnit() or phpSpec() (respectively)
     // Note: phpSpec is included out of the box in Laravel 5.
-});
+    //
+    //
+    mix.browserify('app.js', 'public/js/app.js')
 
-elixir(function(mix) {
-  mix.babel('app.js').browserify('app.js', 'public/js/all.js');
 });
