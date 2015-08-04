@@ -38904,6 +38904,7 @@ module.exports = require('./lib/React');
 var React = require('react');
 var mui = require('material-ui');
 var RaisedButton = mui.RaisedButton;
+var FlatButton = mui.FlatButton;
 var Dialog = mui.Dialog;
 var ThemeManager = new mui.Styles.ThemeManager();
 var Colors = mui.Styles.Colors;
@@ -38916,9 +38917,9 @@ var Main = React.createClass({
     muiTheme: React.PropTypes.object
   },
 
-  childContext: function childContext() {
-    muiTheme: ThemeManager.types.LIGHT;
-  },
+  // childContext() {
+  //   muiTheme: ThemeManager.types.LIGHT
+  // },
 
   getChildContext: function getChildContext() {
     return {
@@ -38934,34 +38935,30 @@ var Main = React.createClass({
 
   render: function render() {
 
-    var containerStyle = {
-      textAlign: 'center',
-      paddingTop: '200px'
-    };
-
-    var standardActions = [{ text: 'Okay' }];
+    var customActions = [React.createElement(FlatButton, {
+      label: 'Cancel',
+      secondary: true,
+      onTouchTap: this._handleCustomDialogCancel }), React.createElement(FlatButton, {
+      label: 'Submit',
+      primary: true,
+      onTouchTap: this._handleCustomDialogSubmit })];
 
     return React.createElement(
       'div',
-      { style: containerStyle },
+      null,
       React.createElement(
         Dialog,
         {
           title: 'Super Secret Password',
-          actions: standardActions,
+          actions: customActions,
           ref: 'superSecretPasswordDialog',
-          theme: ThemeManager.types.LIGHT },
-        '1-2-3-4-5'
+          openImmediately: true },
+        'The actions in this window were passed in as an array of react objects.'
       ),
       React.createElement(
         'h1',
-        null,
+        { className: 'title' },
         'material-ui'
-      ),
-      React.createElement(
-        'h2',
-        null,
-        'example project'
       ),
       React.createElement(RaisedButton, { label: 'Super Secret Password', primary: true, onTouchTap: this._handleTouchTap })
     );
