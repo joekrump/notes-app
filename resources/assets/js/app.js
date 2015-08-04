@@ -6,4 +6,3 @@ let React = require('react');
 (function() {
   React.render(<Main />, document.querySelector('#app'));
 })();
-
