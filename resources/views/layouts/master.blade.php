@@ -18,6 +18,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
         <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 
+
         @yield('javascripts')
     </body>
 </html>
