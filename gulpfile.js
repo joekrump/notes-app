@@ -38,10 +38,4 @@ elixir(function(mix) {
     //
     //
     mix.browserify('app.js', 'public/js/app.js')
-
-<<<<<<< HEAD
-=======
-elixir(function(mix) {
-  mix.babel('app.js').browserify('app.js', 'public/js/app.js');
->>>>>>> good
 });
