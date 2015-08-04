@@ -4,9 +4,9 @@ let CommentList = require('./comment-list');
 let CommentForm = require('./comment-form');
 
 let CommentBox = React.createClass({
-  loadCommentsFromServer: function(action, url) {
+  loadCommentsFromServer: function() {
     var r = new XMLHttpRequest();
-    r.open(action, url, true);
+    r.open('GET', this.props.url, true);
     r.onreadystatechange = function () {
       this.setState({data: JSON.parse(r.response)});
     }.bind(this);
@@ -16,21 +16,26 @@ let CommentBox = React.createClass({
     return {data: []};
   },
   handleCommentSubmit: function(comment) {
-
     // Optimistic update
     var comments = this.state.data;
     var newComments = comments.concat([comment]);
     this.setState({data: newComments});
 
+    // Set Token
+    var csrfToken = document.querySelector('meta[name="_token"]').getAttribute("content");
     var r = new XMLHttpRequest();
+    console.log(csrfToken);
     r.open('POST', this.props.url, true);
+    r.setRequestHeader('X-CSRF-Token',csrfToken);
+    r.setRequestHeader('Content-Type', "application/json; charset=UTF-8");
     r.onreadystatechange = function () {
       this.setState({data: JSON.parse(r.response)});
     }.bind(this);
-    r.send(comment); // Send request
+
+    r.send(JSON.stringify(comment)); // Send request
   },
   componentDidMount: function() {
-    this.loadCommentsFromServer('GET', this.props.url);
+    this.loadCommentsFromServer();
     setInterval(this.loadCommentsFromServer, this.props.pollInterval);
   },
   render: function() {

@@ -2,6 +2,7 @@ body {
   color: orange;
   background-image: url("/images/app_background.jpg");
   background-repeat: no-repeat;
+  background-attachment: fixed;
   background-position: center;
   background-size: cover; }
 
@@ -15,6 +16,10 @@ body {
   display: table;
   font-weight: 100;
   font-family: 'Lato'; }
+
+.commentList {
+  height: 300px;
+  overflow-y: scroll; }
 
 .container {
   text-align: center;

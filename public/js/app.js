@@ -38907,9 +38907,9 @@ var CommentForm = require('./comment-form');
 var CommentBox = React.createClass({
   displayName: 'CommentBox',
 
-  loadCommentsFromServer: function loadCommentsFromServer(action, url) {
+  loadCommentsFromServer: function loadCommentsFromServer() {
     var r = new XMLHttpRequest();
-    r.open(action, url, true);
+    r.open('GET', this.props.url, true);
     r.onreadystatechange = (function () {
       this.setState({ data: JSON.parse(r.response) });
     }).bind(this);
@@ -38918,8 +38918,27 @@ var CommentBox = React.createClass({
   getInitialState: function getInitialState() {
     return { data: [] };
   },
+  handleCommentSubmit: function handleCommentSubmit(comment) {
+    // Optimistic update
+    var comments = this.state.data;
+    var newComments = comments.concat([comment]);
+    this.setState({ data: newComments });
+
+    // Set Token
+    var csrfToken = document.querySelector('meta[name="_token"]').getAttribute("content");
+    var r = new XMLHttpRequest();
+    console.log(csrfToken);
+    r.open('POST', this.props.url, true);
+    r.setRequestHeader('X-CSRF-Token', csrfToken);
+    r.setRequestHeader('Content-Type', "application/json; charset=UTF-8");
+    r.onreadystatechange = (function () {
+      this.setState({ data: JSON.parse(r.response) });
+    }).bind(this);
+
+    r.send(JSON.stringify(comment)); // Send request
+  },
   componentDidMount: function componentDidMount() {
-    this.loadCommentsFromServer('GET', this.props.url);
+    this.loadCommentsFromServer();
     setInterval(this.loadCommentsFromServer, this.props.pollInterval);
   },
   render: function render() {
@@ -38932,7 +38951,7 @@ var CommentBox = React.createClass({
         'Comments'
       ),
       React.createElement(CommentList, { data: this.state.data }),
-      React.createElement(CommentForm, null)
+      React.createElement(CommentForm, { onCommentSubmit: this.handleCommentSubmit })
     );
   }
 });
@@ -38954,14 +38973,16 @@ var CommentForm = React.createClass({
 
   handleSubmit: function handleSubmit(e) {
     e.preventDefault();
-    var author = React.findDOMNode(this.refs.author).value.trim();
-    var text = React.findDOMNode(this.refs.text).value.trim();
+    var author = this.refs.author.state.hasValue;
+    var text = this.refs.text.state.hasValue;
+
     if (!text || !author) {
       return;
     }
-    // TODO: send request to the server
-    React.findDOMNode(this.refs.author).value = '';
-    React.findDOMNode(this.refs.text).value = '';
+    this.props.onCommentSubmit({ author: author, text: text });
+
+    this.refs.author.setState({});
+    this.refs.text.setState({});
     return;
   },
 
@@ -38979,7 +39000,11 @@ var CommentForm = React.createClass({
         null,
         React.createElement(TextField, { hintText: 'Say something...', ref: 'text' })
       ),
-      React.createElement(RaisedButton, { label: 'Post', secondary: true })
+      React.createElement(
+        'button',
+        { type: 'submit' },
+        'Post'
+      )
     );
   }
 });

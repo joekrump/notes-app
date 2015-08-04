@@ -11,20 +11,20 @@
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/comments', function(){
-  return response()->json([
-      ['author' => "Pete Hunt", 'text' => "This is one comment"],
-      ['author' => "Jordan Walke", 'text' => "This is *another* comment"]
-    ]);
+  return response()->json(Comment::getData());
 });
 
-Route::post('/comments', function(data){
-  var_dump(data);
-  return response()->json([data]);
+Route::post('/comments', function(){
+  $initData = Comment::getData();
+  $initData[] = Request::all();
+
+  return response()->json($initData);
 });
 
 Route::get('admin', array('before' => 'auth', function()

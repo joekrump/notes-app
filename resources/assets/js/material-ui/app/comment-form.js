@@ -5,19 +5,21 @@ let RaisedButton = mui.RaisedButton;
 let Colors = mui.Styles.Colors;
 let ThemeManager = new mui.Styles.ThemeManager();
 
+
 let CommentForm = React.createClass({
 
   handleSubmit: function(e) {
     e.preventDefault();
-    var author = React.findDOMNode(this.refs.author).value.trim();
-    var text = React.findDOMNode(this.refs.text).value.trim();
+    var author = this.refs.author.state.hasValue;
+    var text = this.refs.text.state.hasValue;
+
     if (!text || !author) {
       return;
     }
     this.props.onCommentSubmit({author: author, text: text});
 
-    React.findDOMNode(this.refs.author).value = '';
-    React.findDOMNode(this.refs.text).value = '';
+    this.refs.author.setState({});
+    this.refs.text.setState({});
     return;
   },
 
@@ -30,7 +32,7 @@ let CommentForm = React.createClass({
         <div>
           <TextField hintText="Say something..." ref="text" />
         </div>
-        <RaisedButton label="Post" secondary={true} />
+        <button type="submit">Post</button>
       </form>
     );
   }
