@@ -1,10 +1,12 @@
 /** In this file, we create a React component which incorporates components provided by material-ui */
 
-let React = require('react');
+let React = require ('react');
 let mui = require('material-ui');
 let RaisedButton = mui.RaisedButton;
 let ThemeManager = new mui.Styles.ThemeManager();
 let Colors = mui.Styles.Colors;
+let CommentBox = require('./comment-box')
+
 let Main = React.createClass({
 
   loadDefaultView: function(){
@@ -34,6 +36,7 @@ let Main = React.createClass({
         <h1 className="title">
           Welcome!
         </h1>
+        <CommentBox />
         <RaisedButton label="Super Secret Password" primary={true} onTouchTap={this._handleTouchTap} onClick={this.loadDefaultView}/>
       </div>
     );
