@@ -10,7 +10,7 @@ var React = require('react');
   React.render(React.createElement(Main, null), document.querySelector('#app'));
 })();
 
-},{"./material-ui/app/main":314,"react":310}],2:[function(require,module,exports){
+},{"./material-ui/app/main":315,"react":310}],2:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -38907,6 +38907,20 @@ var CommentForm = require('./comment-form');
 var CommentBox = React.createClass({
   displayName: 'CommentBox',
 
+  makeRequest: function makeRequest(action, url) {
+    var r = new XMLHttpRequest();
+    r.open(action, url, true);
+    r.onreadystatechange = (function () {
+      this.setState({ data: JSON.parse(r.response) });
+    }).bind(this);
+    r.send(); // Send request
+  },
+  getInitialState: function getInitialState() {
+    return { data: [] };
+  },
+  componentDidMount: function componentDidMount() {
+    this.makeRequest('GET', this.props.url);
+  },
   render: function render() {
     return React.createElement(
       'div',
@@ -38916,7 +38930,7 @@ var CommentBox = React.createClass({
         null,
         'Comments'
       ),
-      React.createElement(CommentList, null),
+      React.createElement(CommentList, { data: this.state.data }),
       React.createElement(CommentForm, null)
     );
   }
@@ -38944,25 +38958,60 @@ var CommentForm = React.createClass({
 module.exports = CommentForm;
 
 },{"react":310}],313:[function(require,module,exports){
-"use strict";
+'use strict';
 
 var React = require('react');
+var Comment = require('./comment');
 
 var CommentList = React.createClass({
-  displayName: "CommentList",
+  displayName: 'CommentList',
 
   render: function render() {
+    var count = 1;
+    var commentNodes = this.props.data.map(function (comment) {
+      return React.createElement(
+        Comment,
+        { key: count++, author: comment.author },
+        comment.text
+      );
+    });
+
     return React.createElement(
-      "div",
-      { className: "commentList" },
-      "Hello, world! I am a CommentList."
+      'div',
+      { className: 'commentList' },
+      commentNodes
     );
   }
 });
 
 module.exports = CommentList;
 
-},{"react":310}],314:[function(require,module,exports){
+},{"./comment":314,"react":310}],314:[function(require,module,exports){
+"use strict";
+
+var React = require('react');
+
+var Comment = React.createClass({
+  displayName: "Comment",
+
+  render: function render() {
+    var rawMarkup = marked(this.props.children.toString(), { sanitize: true });
+    return React.createElement(
+      "div",
+      { className: "comment" },
+      React.createElement(
+        "h2",
+        { className: "commentAuthor" },
+        this.props.author
+      ),
+      React.createElement("span", { dangerouslySetInnerHTML: { __html: rawMarkup } })
+    );
+  }
+});
+
+module.exports = Comment;
+
+},{"react":310}],315:[function(require,module,exports){
 /** In this file, we create a React component which incorporates components provided by material-ui */
 
 'use strict';
@@ -39005,7 +39054,7 @@ var Main = React.createClass({
         { className: 'title' },
         'Welcome!'
       ),
-      React.createElement(CommentBox, null),
+      React.createElement(CommentBox, { url: '/comments' }),
       React.createElement(RaisedButton, { label: 'Super Secret Password', primary: true, onTouchTap: this._handleTouchTap, onClick: this.loadDefaultView })
     );
   },
