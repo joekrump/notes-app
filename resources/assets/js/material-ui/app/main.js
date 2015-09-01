@@ -7,6 +7,12 @@ let RaisedButton = mui.RaisedButton;
 let AppBar = mui.AppBar;
 let LeftNav = mui.LeftNav;
 let MenuItem = mui.MenuItem;
+let ActionSettings = require('material-ui/lib/svg-icons/action/settings');
+let FloatingActionButton = mui.FloatingActionButton;
+let MenuDivider = mui.MenuDivider;
+let IconMenu = mui.IconMenu;
+let IconButton = mui.IconButton;
+
 let ThemeManager = new mui.Styles.ThemeManager();
 let Colors = mui.Styles.Colors;
 let CommentBox = require('./comment-box')
@@ -69,6 +75,16 @@ let Main = React.createClass({
       },
     ];
 
+    let iconButtonElement = (
+      <FloatingActionButton 
+        zDepth={5} 
+        tooltip="Settings" 
+        tooltipPosition="top-right"
+        style={{position:'fixed',bottom:'50px',right:'50px',background:'none'}}>
+        <ActionSettings ref={"settings-1"} />
+      </FloatingActionButton>
+    );
+
     return (
       <div>
         <LeftNav 
@@ -83,15 +99,63 @@ let Main = React.createClass({
             onLeftIconButtonTouchTap={this.toggleNav}
             isInitiallyOpen={true}
             zDepth={4} 
-            style={{backgroundColor:ThemeManager.getCurrentTheme().component.appBar.backgroundColor}}
-            />
+            style={{backgroundColor:ThemeManager.getCurrentTheme().component.appBar.backgroundColor}} />
         </header>
 
         <div className="container">
           <h1 className="title">
             Welcome!
           </h1>
-          <CommentBox url="/comments" pollInterval={2000}/>
+          <CommentBox url="/comments" pollInterval={5000}/>
+      
+          <IconMenu style={{position:'fixed',bottom:'75px',right:'100px',backgroundColor:'none'}} iconButtonElement={iconButtonElement} openDirection={"top-center"}>
+            <MenuItem index={1}>
+              <FloatingActionButton 
+                      zDepth={5} 
+                      tooltip="Settings" 
+                      tooltipPosition="top-right"
+                      style={{backgroundColor:'none',marginBottom:'5px'}}>
+                <ActionSettings ref={"settings-1"} />
+              </FloatingActionButton>
+            </MenuItem>
+            <MenuItem index={2}>
+              <FloatingActionButton 
+                      zDepth={5} 
+                      tooltip="Settings" 
+                      tooltipPosition="top-right"
+                      style={{backgroundColor:'none',marginBottom:'5px'}}>
+                <ActionSettings ref={"settings-1"} />
+              </FloatingActionButton>
+            </MenuItem>
+            <MenuItem index={3}>
+              <FloatingActionButton 
+                      zDepth={5} 
+                      tooltip="Settings" 
+                      tooltipPosition="top-right"
+                      style={{backgroundColor:'none',marginBottom:'5px'}}>
+                <ActionSettings ref={"settings-1"} />
+              </FloatingActionButton>
+            </MenuItem>
+            <MenuItem index={4}>
+              <FloatingActionButton 
+                      zDepth={5} 
+                      tooltip="Settings" 
+                      tooltipPosition="top-right"
+                      style={{backgroundColor:'none',marginBottom:'5px'}}>
+                <ActionSettings ref={"settings-1"} />
+              </FloatingActionButton>
+            </MenuItem>
+            <MenuItem index={5}>
+              <FloatingActionButton 
+                      zDepth={5} 
+                      tooltip="Settings" 
+                      tooltipPosition="top-right"
+                      style={{backgroundColor:'none',marginBottom:'5px'}}>
+                <ActionSettings ref={"settings-1"} />
+              </FloatingActionButton>
+            </MenuItem>
+          </IconMenu>
+        
         </div>
       </div>
     );
