@@ -8,7 +8,9 @@ let CommentBox = React.createClass({
     var r = new XMLHttpRequest();
     r.open('GET', this.props.url, true);
     r.onreadystatechange = function () {
-      this.setState({data: JSON.parse(r.response)});
+      if(r.response){
+        this.setState({data: JSON.parse(r.response)});
+      }
     }.bind(this);
     r.send(); // Send request
   },

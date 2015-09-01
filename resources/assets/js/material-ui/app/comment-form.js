@@ -17,10 +17,15 @@ let CommentForm = React.createClass({
       return;
     }
     this.props.onCommentSubmit({author: author, text: text});
-
     this.refs.author.setValue('');
     this.refs.text.setValue('');
     return;
+  },
+
+  componentWillMount() {
+    ThemeManager.setPalette({
+      accent1Color: Colors.cyan600
+    });
   },
 
   render: function() {
@@ -28,12 +33,30 @@ let CommentForm = React.createClass({
     return (
       <form className="commentForm" onSubmit={this.handleSubmit}>
         <div>
-          <TextField style={{color: '#ffffff'}} hintText="Your name" ref="author" />
+          <TextField 
+            style={{color:Colors.white600}} 
+            floatingLabelText="Name" 
+            hintText="Your name" 
+            underlineStyle={{borderColor:Colors.cyan600}}
+            inputStyle={{color:Colors.white600}}
+            ref="author" />
         </div>
         <div>
-          <TextField style={{color: '#ffffff'}} hintText="Say something..." ref="text" />
+          <TextField 
+            style={{color:Colors.white600}} 
+            floatingLabelText="Comment" 
+            hintText="Say something..." 
+            underlineStyle={{borderColor:Colors.cyan600}}
+            inputStyle={{color:Colors.white600}}
+            ref="text" />
         </div>
-        <button type="submit">Post</button>
+        <div>
+          <RaisedButton 
+            type="submit" 
+            label="Submit Comment" 
+            zDepth={3} 
+            primary={true} />
+        </div>
       </form>
     );
   }

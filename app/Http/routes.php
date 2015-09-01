@@ -16,12 +16,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/admin', function() {
+	return view('dashboard');
+});
+
 Route::get('/comments', function(){
-  return response()->json(Comment::getData());
+  // return response()->json(Comment::getData());
 });
 
 Route::post('/comments', function(){
-  $initData = Comment::getData();
+  // $initData = Comment::getData();
   $initData[] = Request::all();
 
   return response()->json($initData);

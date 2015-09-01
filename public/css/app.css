@@ -17,8 +17,11 @@ body {
   font-weight: 100;
   font-family: 'Lato'; }
 
+form {
+  margin-bottom: 20px; }
+
 .commentList {
-  height: 300px;
+  max-height: 200px;
   overflow-y: scroll; }
 
 .container {
@@ -35,6 +38,6 @@ body {
   font-weight: 100; }
 
 input {
-  color: white; }
+  color: white !important; }
 
 /*# sourceMappingURL=app.css.map */
