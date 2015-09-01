@@ -1,5 +1,5 @@
 body {
-  color: #00A2B1;
+  color: #CFD198;
   background-image: url("/images/app_background.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -36,8 +36,5 @@ form {
 .title {
   font-size: 96px;
   font-weight: 100; }
-
-input {
-  color: white !important; }
 
 /*# sourceMappingURL=app.css.map */

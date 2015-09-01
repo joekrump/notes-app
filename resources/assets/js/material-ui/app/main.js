@@ -10,6 +10,8 @@ let MenuItem = mui.MenuItem;
 let ThemeManager = new mui.Styles.ThemeManager();
 let Colors = mui.Styles.Colors;
 let CommentBox = require('./comment-box')
+let CustomColors = require('./styles/colors');
+let CustomTheme = require('./styles/themes/custom1');
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
@@ -28,18 +30,14 @@ let Main = React.createClass({
   },
 
   getChildContext() {
-    ThemeManager.setTheme(ThemeManager.types.DARK);
+    ThemeManager.setTheme(CustomTheme);
     return {
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
 
   componentWillMount() {
-    ThemeManager.setTheme(ThemeManager.types.DARK);
-
-    ThemeManager.setPalette({
-      accent1Color: Colors.cyan600
-    });
+    ThemeManager.setTheme(CustomTheme);
   },
   toggleNav(e) {
     e.preventDefault();
@@ -84,7 +82,9 @@ let Main = React.createClass({
             iconClassNameRight="muidocs-icon-navigation-expand-more" 
             onLeftIconButtonTouchTap={this.toggleNav}
             isInitiallyOpen={true}
-            style={{backgroundColor:Colors.faintBlack}} />
+            zDepth={4} 
+            style={{backgroundColor:ThemeManager.getCurrentTheme().component.appBar.backgroundColor}}
+            />
         </header>
 
         <div className="container">

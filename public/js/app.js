@@ -40413,8 +40413,7 @@ var React = require('react');
 var mui = require('material-ui');
 var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
-var Colors = mui.Styles.Colors;
-var ThemeManager = new mui.Styles.ThemeManager();
+var CustomColors = require('./styles/colors');
 
 var CommentForm = React.createClass({
   displayName: 'CommentForm',
@@ -40433,12 +40432,6 @@ var CommentForm = React.createClass({
     return;
   },
 
-  componentWillMount: function componentWillMount() {
-    ThemeManager.setPalette({
-      accent1Color: Colors.cyan600
-    });
-  },
-
   render: function render() {
 
     return React.createElement(
@@ -40448,22 +40441,18 @@ var CommentForm = React.createClass({
         'div',
         null,
         React.createElement(TextField, {
-          style: { color: Colors.white600 },
           floatingLabelText: 'Name',
           hintText: 'Your name',
-          underlineStyle: { borderColor: Colors.cyan600 },
-          inputStyle: { color: Colors.white600 },
+          underlineStyle: { borderColor: CustomColors.primary1 },
           ref: 'author' })
       ),
       React.createElement(
         'div',
         null,
         React.createElement(TextField, {
-          style: { color: Colors.white600 },
           floatingLabelText: 'Comment',
           hintText: 'Say something...',
-          underlineStyle: { borderColor: Colors.cyan600 },
-          inputStyle: { color: Colors.white600 },
+          underlineStyle: { borderColor: CustomColors.primary1 },
           ref: 'text' })
       ),
       React.createElement(
@@ -40481,7 +40470,7 @@ var CommentForm = React.createClass({
 
 module.exports = CommentForm;
 
-},{"material-ui":37,"react":317}],320:[function(require,module,exports){
+},{"./styles/colors":323,"material-ui":37,"react":317}],320:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -40550,6 +40539,8 @@ var MenuItem = mui.MenuItem;
 var ThemeManager = new mui.Styles.ThemeManager();
 var Colors = mui.Styles.Colors;
 var CommentBox = require('./comment-box');
+var CustomColors = require('./styles/colors');
+var CustomTheme = require('./styles/themes/custom1');
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
@@ -40567,18 +40558,14 @@ var Main = React.createClass({
   },
 
   getChildContext: function getChildContext() {
-    ThemeManager.setTheme(ThemeManager.types.DARK);
+    ThemeManager.setTheme(CustomTheme);
     return {
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
 
   componentWillMount: function componentWillMount() {
-    ThemeManager.setTheme(ThemeManager.types.DARK);
-
-    ThemeManager.setPalette({
-      accent1Color: Colors.cyan600
-    });
+    ThemeManager.setTheme(CustomTheme);
   },
   toggleNav: function toggleNav(e) {
     e.preventDefault();
@@ -40618,7 +40605,9 @@ var Main = React.createClass({
           iconClassNameRight: 'muidocs-icon-navigation-expand-more',
           onLeftIconButtonTouchTap: this.toggleNav,
           isInitiallyOpen: true,
-          style: { backgroundColor: Colors.faintBlack } })
+          zDepth: 4,
+          style: { backgroundColor: ThemeManager.getCurrentTheme().component.appBar.backgroundColor }
+        })
       ),
       React.createElement(
         'div',
@@ -40641,4 +40630,101 @@ var Main = React.createClass({
 
 module.exports = Main;
 
-},{"./comment-box":318,"material-ui":37,"react":317,"react-tap-event-plugin":144}]},{},[1]);
+},{"./comment-box":318,"./styles/colors":323,"./styles/themes/custom1":324,"material-ui":37,"react":317,"react-tap-event-plugin":144}],323:[function(require,module,exports){
+// To include this file in your project:
+
+'use strict';
+
+module.exports = {
+  silverGreen: '#0D1012',
+  primary1: '#CFD198',
+  blueBlack: '#0D1012'
+};
+
+},{}],324:[function(require,module,exports){
+'use strict';
+
+var mui = require('material-ui');
+var Colors = mui.Styles.Colors;
+var ColorManipulator = mui.Utils.ColorManipulator;
+var CustomColors = require('../colors');
+var Spacing = mui.Styles.Spacing;
+
+var Custom1 = {
+  spacing: Spacing,
+  getPalette: function getPalette() {
+    return {
+      textColor: Colors.fullWhite,
+      canvasColor: '#303030',
+      borderColor: ColorManipulator.fade(Colors.fullWhite, 0.3), //Colors.grey300
+      disabledColor: ColorManipulator.fade(Colors.fullWhite, 0.3),
+      primary1Color: Colors.blueGrey500,
+      primary2Color: Colors.blueGrey700,
+      primary3Color: Colors.blueGrey100,
+      accent1Color: Colors.deepOrangeA200,
+      accent2Color: Colors.deepOrangeA400,
+      accent3Color: Colors.deepOrangeA100
+    };
+  },
+  getComponentThemes: function getComponentThemes(palette) {
+    var cardColor = Colors.grey900;
+    var spacing = spacing || Spacing;
+    return {
+      appBar: {
+        color: palette.primary1Color,
+        textColor: Colors.darkWhite,
+        height: spacing.desktopKeylineIncrement,
+        backgroundColor: cardColor,
+        containerBackgroundColor: cardColor
+      },
+      avatar: {
+        borderColor: 'rgba(0, 0, 0, 0.5)'
+      },
+      floatingActionButton: {
+        disabledColor: ColorManipulator.fade(palette.textColor, 0.12)
+      },
+      leftNav: {
+        color: cardColor
+      },
+      menu: {
+        backgroundColor: cardColor,
+        containerBackgroundColor: cardColor
+      },
+      menuItem: {
+        hoverColor: 'rgba(255, 255, 255, .03)'
+      },
+      menuSubheader: {
+        borderColor: 'rgba(255, 255, 255, 0.3)'
+      },
+      paper: {
+        backgroundColor: cardColor
+      },
+      raisedButton: {
+        color: Colors.grey500
+      },
+      toggle: {
+        thumbOnColor: Colors.cyan200,
+        thumbOffColor: Colors.grey400,
+        thumbDisabledColor: Colors.grey800,
+        thumbRequiredColor: Colors.cyan200,
+        trackOnColor: ColorManipulator.fade(Colors.cyan200, 0.5),
+        trackOffColor: 'rgba(255, 255, 255, 0.3)',
+        trackDisabledColor: 'rgba(255, 255, 255, 0.1)'
+      },
+      refreshIndicator: {
+        strokeColor: Colors.grey700,
+        loadingStrokeColor: Colors.teal300
+      },
+      slider: {
+        trackColor: Colors.minBlack,
+        handleColorZero: cardColor,
+        handleFillColor: cardColor,
+        selectionColor: Colors.cyan200
+      }
+    };
+  }
+};
+
+module.exports = Custom1;
+
+},{"../colors":323,"material-ui":37}]},{},[1]);

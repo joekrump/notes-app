@@ -2,9 +2,7 @@ let React = require('react');
 let mui = require('material-ui');
 let TextField = mui.TextField;
 let RaisedButton = mui.RaisedButton;
-let Colors = mui.Styles.Colors;
-let ThemeManager = new mui.Styles.ThemeManager();
-
+let CustomColors = require('./styles/colors');
 
 let CommentForm = React.createClass({
 
@@ -22,32 +20,22 @@ let CommentForm = React.createClass({
     return;
   },
 
-  componentWillMount() {
-    ThemeManager.setPalette({
-      accent1Color: Colors.cyan600
-    });
-  },
-
   render: function() {
 
     return (
       <form className="commentForm" onSubmit={this.handleSubmit}>
         <div>
           <TextField 
-            style={{color:Colors.white600}} 
             floatingLabelText="Name" 
             hintText="Your name" 
-            underlineStyle={{borderColor:Colors.cyan600}}
-            inputStyle={{color:Colors.white600}}
+            underlineStyle={{borderColor:CustomColors.primary1}}
             ref="author" />
         </div>
         <div>
           <TextField 
-            style={{color:Colors.white600}} 
             floatingLabelText="Comment" 
             hintText="Say something..." 
-            underlineStyle={{borderColor:Colors.cyan600}}
-            inputStyle={{color:Colors.white600}}
+            underlineStyle={{borderColor:CustomColors.primary1}}
             ref="text" />
         </div>
         <div>
