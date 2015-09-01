@@ -28,12 +28,15 @@ let Main = React.createClass({
   },
 
   getChildContext() {
+    ThemeManager.setTheme(ThemeManager.types.DARK);
     return {
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
 
   componentWillMount() {
+    ThemeManager.setTheme(ThemeManager.types.DARK);
+
     ThemeManager.setPalette({
       accent1Color: Colors.cyan600
     });
@@ -73,13 +76,15 @@ let Main = React.createClass({
         <LeftNav 
           ref="leftNav" 
           docked={false} 
+          zDepth={4}
           menuItems={menuItems} />
         <header>
           <AppBar
             title="Joe's App"
             iconClassNameRight="muidocs-icon-navigation-expand-more" 
             onLeftIconButtonTouchTap={this.toggleNav}
-            isInitiallyOpen={true} />
+            isInitiallyOpen={true}
+            style={{backgroundColor:Colors.faintBlack}} />
         </header>
 
         <div className="container">

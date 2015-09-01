@@ -1,5 +1,4 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-// let injectTapEventPlugin = require('./material-ui/react-tap-event-plugin');
 'use strict';
 
 var Main = require('./material-ui/app/main');
@@ -10,7 +9,6 @@ var React = require('react');
 })();
 
 },{"./material-ui/app/main":322,"react":317}],2:[function(require,module,exports){
-
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -40409,7 +40407,6 @@ var CommentBox = React.createClass({
 module.exports = CommentBox;
 
 },{"./comment-form":319,"./comment-list":320,"react":317}],319:[function(require,module,exports){
-
 'use strict';
 
 var React = require('react');
@@ -40418,8 +40415,6 @@ var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
 var Colors = mui.Styles.Colors;
 var ThemeManager = new mui.Styles.ThemeManager();
-var Colors = mui.Styles.Colors;
-var Theme = mui.Theme;
 
 var CommentForm = React.createClass({
   displayName: 'CommentForm',
@@ -40572,12 +40567,15 @@ var Main = React.createClass({
   },
 
   getChildContext: function getChildContext() {
+    ThemeManager.setTheme(ThemeManager.types.DARK);
     return {
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
 
   componentWillMount: function componentWillMount() {
+    ThemeManager.setTheme(ThemeManager.types.DARK);
+
     ThemeManager.setPalette({
       accent1Color: Colors.cyan600
     });
@@ -40607,10 +40605,10 @@ var Main = React.createClass({
     return React.createElement(
       'div',
       null,
-
       React.createElement(LeftNav, {
         ref: 'leftNav',
         docked: false,
+        zDepth: 4,
         menuItems: menuItems }),
       React.createElement(
         'header',
@@ -40619,7 +40617,8 @@ var Main = React.createClass({
           title: 'Joe\'s App',
           iconClassNameRight: 'muidocs-icon-navigation-expand-more',
           onLeftIconButtonTouchTap: this.toggleNav,
-          isInitiallyOpen: true })
+          isInitiallyOpen: true,
+          style: { backgroundColor: Colors.faintBlack } })
       ),
       React.createElement(
         'div',
