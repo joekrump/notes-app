@@ -1,5 +1,11 @@
 body {
+  padding: 0;
+  margin: 0;
+  display: table;
+  font-weight: 100;
+  font-family: 'Lato';
   color: #CFD198;
+  background-color: #000000;
   background-image: url("/images/app_background.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -9,16 +15,74 @@ body {
 html, body {
   height: 100%; }
 
-body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  display: table;
-  font-weight: 100;
-  font-family: 'Lato'; }
-
 form {
   margin-bottom: 20px; }
+
+h1, h2, h3 {
+  margin-bottom: 10px; }
+
+h1 {
+  font-size: 22pt;
+  color: #B44012; }
+
+h2 {
+  color: #C26811; }
+
+h3 {
+  color: #834E1A; }
+
+p {
+  margin-bottom: 15px; }
+
+.hlt1 {
+  color: #363636;
+  background-color: yellow; }
+
+.hlt2 {
+  color: #e6e6e6;
+  background-color: green; }
+
+.background-dimmer {
+  display: inline-block;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6); }
+
+.container {
+  padding: 0 25px;
+  width: 980px;
+  margin: 25px auto;
+  background-color: rgba(0, 0, 0, 0.6); }
+
+.main {
+  width: 75%;
+  display: inline-block; }
+
+.page {
+  padding: 0 5px; }
+
+.right-aside {
+  padding-top: 1em;
+  width: 20%;
+  margin-left: 2%;
+  display: inline-block;
+  vertical-align: top; }
+
+.left-options {
+  position: fixed;
+  top: 25px;
+  left: 25px; }
+  .left-options * {
+    margin: 5px 0;
+    display: block; }
+
+.list-unstyled {
+  list-style-type: none;
+  margin: 0; }
+  .list-unstyled li {
+    margin-bottom: 2px; }
+
+.side-note {
+  display: inline-block; }
 
 .commentList {
   max-height: 200px;

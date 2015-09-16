@@ -108,13 +108,13 @@ let Main = React.createClass({
           </h1>
           <CommentBox url="/comments" pollInterval={5000}/>
       
-          <IconMenu style={{position:'fixed',bottom:'75px',right:'100px',backgroundColor:'none'}} iconButtonElement={iconButtonElement} openDirection={"top-center"}>
+          <IconMenu style={{position:'fixed',bottom:'100px',right:'145px'}} zDepth={0} iconButtonElement={iconButtonElement} openDirection={"top-center"}>
             <MenuItem index={1}>
               <FloatingActionButton 
                       zDepth={5} 
                       tooltip="Settings" 
                       tooltipPosition="top-right"
-                      style={{backgroundColor:'none',marginBottom:'5px'}}>
+                      style={{marginBottom:'5px'}}>
                 <ActionSettings ref={"settings-1"} />
               </FloatingActionButton>
             </MenuItem>
@@ -123,7 +123,7 @@ let Main = React.createClass({
                       zDepth={5} 
                       tooltip="Settings" 
                       tooltipPosition="top-right"
-                      style={{backgroundColor:'none',marginBottom:'5px'}}>
+                      style={{marginBottom:'5px'}}>
                 <ActionSettings ref={"settings-1"} />
               </FloatingActionButton>
             </MenuItem>
@@ -132,7 +132,7 @@ let Main = React.createClass({
                       zDepth={5} 
                       tooltip="Settings" 
                       tooltipPosition="top-right"
-                      style={{backgroundColor:'none',marginBottom:'5px'}}>
+                      style={{marginBottom:'5px'}}>
                 <ActionSettings ref={"settings-1"} />
               </FloatingActionButton>
             </MenuItem>
@@ -141,7 +141,7 @@ let Main = React.createClass({
                       zDepth={5} 
                       tooltip="Settings" 
                       tooltipPosition="top-right"
-                      style={{backgroundColor:'none',marginBottom:'5px'}}>
+                      style={{marginBottom:'5px'}}>
                 <ActionSettings ref={"settings-1"} />
               </FloatingActionButton>
             </MenuItem>
@@ -150,7 +150,7 @@ let Main = React.createClass({
                       zDepth={5} 
                       tooltip="Settings" 
                       tooltipPosition="top-right"
-                      style={{backgroundColor:'none',marginBottom:'5px'}}>
+                      style={{marginBottom:'5px'}}>
                 <ActionSettings ref={"settings-1"} />
               </FloatingActionButton>
             </MenuItem>
