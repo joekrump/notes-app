@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class CourseController extends Controller
+class CoursesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
+        return view('courses.index');
     }
 
     /**
@@ -26,7 +26,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        return view('courses.create');
     }
 
     /**
@@ -48,7 +48,7 @@ class CourseController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('courses.show');
     }
 
     /**

@@ -16,7 +16,9 @@ class NotesController extends Controller
      */
     public function index()
     {
-        //
+        $notes_by_course = \App\Note::all()->groupBy('course_id');
+
+        return view('notes.index', compact(['notes_by_course']));
     }
 
     /**
@@ -26,7 +28,7 @@ class NotesController extends Controller
      */
     public function create()
     {
-        //
+        return view('notes.create');
     }
 
     /**
@@ -37,7 +39,10 @@ class NotesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $note = new \App\Note(['content' => $request->request->get('content')]);
+        $note->save();
+
+        return redirect('/notes/' . $note->id);
     }
 
     /**
@@ -48,7 +53,8 @@ class NotesController extends Controller
      */
     public function show($id)
     {
-        //
+        $note = \App\Note::find($id);
+        return view('notes.show', compact(['note']));
     }
 
     /**
@@ -59,7 +65,7 @@ class NotesController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('notes.edit');
     }
 
     /**
@@ -71,7 +77,9 @@ class NotesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $note = \App\Note::find($id);
+        $note->update($request->request->all());
+        return view('notes.show', compact(['note']));
     }
 
     /**
@@ -82,6 +90,6 @@ class NotesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        \App\Note::find($id)->delete();
     }
 }

@@ -25,7 +25,22 @@
 				<span class="hlt2">Highlight</span>
 				<em>Italics</em>
 				<strong>Bold</strong>
+				<button id="submit-button" type="button" class="btn btn-save btn-primary">Save</button>
 			</aside>
 		</section>
 	</div>
 @stop
+
+@section('javascripts')
+	<script type="text/javascript">
+			console.log('test');
+			window.load(function(){
+				var submitBtn = window.getElementById('submit-button');
+				console.log('loaded!');
+				submitBtn.on('click', funciton(){
+					console.log('clicked')
+				});
+			});
+	</script>
+@stop
+

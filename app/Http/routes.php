@@ -24,6 +24,15 @@ Route::get('/comments', function(){
   // return response()->json(Comment::getData());
 });
 
+Route::get('/notes', 'NotesController@index');
+Route::get('/notes/{note_id}', 'NotesController@show');
+Route::post('/notes', 'NotesController@store');
+Route::post('/notes/{note_id}', 'NotesController@update');
+Route::get('/notes/new', 'NotesController@create');
+Route::get('/courses', 'CoursesController@index');
+Route::get('/courses/{course_id}', 'CoursesController@show');
+Route::get('/courses/new', 'CoursesController@create');
+
 Route::post('/comments', function(){
   // $initData = Comment::getData();
   $initData[] = Request::all();
