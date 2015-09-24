@@ -41,18 +41,34 @@ h3 {
   color: #834E1A;
 }
 
+iframe .content {
+  h3 {
+    font-weight: 700;
+  }
+}
+.pull-right {
+  float: right;
+}
 p {
   margin-bottom: 15px;
 }
 
-.hlt1{
-  color: #363636;
-  background-color: yellow;
+.hlt1, .marker{
+  color: #363636 !important;
+  background-color: #12E833 !important;
 }
 
 .hlt2{
   color: #e6e6e6;
   background-color: green;
+}
+
+.page-header {
+  h1 {
+    margin-top: 15px;
+    padding: 15px 0 10px 0;
+    border-bottom: 1px solid #ccc
+  }
 }
 
 .background-dimmer {
@@ -149,12 +165,57 @@ p {
   background-color: none !important;
   height: 450px !important;
 }
-
-.cke_toolgroup, input[type=text] {
-  color: #e6e6e6;
+.cke_top {
+  color: #363636;
+}
+.cke_toolgroup, input[type="text"] {
   margin: 0 6px 3px 0;
-  padding: 2px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background: rgba(0,0,0,0.2);
+  padding: 5px;
+}
+
+input[type="text"] {
+  color: #e6e6e6;
+  font-size: 22pt;
+  border: none;
+  background: rgba(0,0,0,0.0);
+  border-radius: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+input[type="text"]:focused {
+  border: none;
+  border-bottom: 1px solid #ddd;
+} 
+
+.btn-secondary {
+  padding: 5px 8px;
+  background-color: #3453E7;
+  color: white;
+}
+
+
+.index-page {
+  .title {
+    font-size: 13pt;
+    font-weight: 600;
+  }
+  .row {
+    padding: 5px 10px;
+    &:nth-child(even) {
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+  }
+  .actions {
+    float: right;
+    .btn-secondary {
+      padding: 2px 5px;
+    }
+  }
+}
+.btn {
+  text-decoration: none;
+}
+
+.clearfix:before, .clearfix:after {
+  content: '';
 }

@@ -6,31 +6,10 @@
 
 @section('content')
 	<div class="background-dimmer">
+		<aside class="left-options">
+			<a href="/notes">Back to Notes</a>
+		</aside>
 		<section class="container">
-{{-- 			<div class="main" contenteditable="true">
-				<article class="page">
-					<p>Placeholder</p>
-				</article>
-			</div>
-			<aside class="right-aside" contenteditable="true">
-				<h4>Sidenote</h4>
-				<p>
-					sidenote content
-				</p>
-			</aside>
-			<aside class="left-options">
-				<h1>Header</h1>
-				<h2>Header</h2>
-				<h2>Header</h2>
-				<h2>Header</h2>
-				<h2>Header</h2>
-				<span class="hlt1">Highlight</span>
-				<span class="hlt2">Highlight</span>
-				<em>Italics</em>
-				<strong>Bold</strong>
-				--}}
-				{{-- <button id="submit-button" class="btn btn-save btn-primary" onclick="(){console.log('test')}">Save</button> --}}
-			{{-- </aside>  --}}
 			<form action={{isset($note) ? '/notes/' . $note->id : '/notes'}} method="post">
 				{!! csrf_field() !!}
 				@if(isset($courses) && $courses->count())
@@ -44,13 +23,11 @@
 					<input class="form-control" type="text" name="title" placeholder="Title" value={{isset($note) ? $note->title : null }} />
 				</h2>
 		    <p>
-		        <textarea class="ckeditor" id="editor1" name="content" cols="100" rows="20">
-		        	@if(isset($note))
-		        		{{ $note->content }}
-		        	@endif
-		        </textarea>
+	        <textarea class="ckeditor" id="editor1" name="content" cols="100" rows="20"></textarea>
 		    </p>
 			</form>
+			{{-- Put content into a hidden text area initially. --}}
+			<textarea style="display:none;" id="init-content">{{ isset($note) ? $note->content : '' }}</textarea>
 		</section>
 	</div>
 @stop
@@ -63,4 +40,19 @@
 	<!-- jQuery -->
 	<script type="text/javascript" src="{{ asset('js/jquery-1.11.0.min.js') }}"></script>
 
+	<script type="text/javascript">
+		$(document).ready(function(e, element){
+			$('.ckeditor').val($('#init-content').val());
+
+			// var $saveBtn = $('#cke_17');
+			// console.log($saveBtn.length);
+			// $saveBtn.click(function(e){
+			// 	e.preventDefault();
+			// 	console.log('trying to save');
+			// });
+			// $saveBtn.removeAttr('onclick');
+
+		});
+
+	</script>
 @stop

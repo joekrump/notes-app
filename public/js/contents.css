@@ -99,7 +99,10 @@ pre
 
 .marker
 {
-	background-color: Yellow;
+	color: #363636;
+	padding: 2px;
+	border-radius: 3px;
+	background-color: yellow;
 }
 
 span[lang]

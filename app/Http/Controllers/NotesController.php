@@ -39,7 +39,7 @@ class NotesController extends Controller
      */
     public function store(Request $request)
     {
-        $note = new \App\Note(['content' => $request->request->get('content')]);
+        $note = new \App\Note($request->request->all());
         $note->save();
 
         return redirect('/notes/' . $note->id);
@@ -53,7 +53,12 @@ class NotesController extends Controller
      */
     public function show($id)
     {
-        $note = \App\Note::find($id);
+        $notes = \App\Note::where('title', $id);
+        if($notes->count() > 0) {
+            $note = $notes->first();
+        } else {
+            $note = \App\Note::find($id);
+        }
         return view('notes.show', compact(['note']));
     }
 
