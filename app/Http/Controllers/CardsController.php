@@ -7,16 +7,24 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class CardController extends Controller
+class CardsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
-    public function index()
+    public function index($card_type)
     {
-        return view('cards.index');
+
+        $cards = \App\Card::where("type", $card_type)->get();
+
+        if($cards->count() < 1) {
+            $card_type = 'all';
+            $cards = \App\Card::all();
+        }
+
+        return view('cards.index', compact(['cards', 'card_type']));
     }
 
     /**
@@ -24,9 +32,9 @@ class CardController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function create($card_type = 'default')
     {
-        //
+        return view('cards.show', compact(['card_type']));
     }
 
     /**
@@ -37,7 +45,10 @@ class CardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $card = new \App\Card($request->request->all());
+        $card->save();
+
+        return redirect('/cards/' . $card->id);
     }
 
     /**
@@ -47,8 +58,17 @@ class CardController extends Controller
      * @return Response
      */
     public function show($id)
-    {
-        return view('cards.show');
+    {   
+        $card_type = 'default';
+        $cards = \App\Card::where('english', $id);
+        if($cards->count() > 0) {
+            $card = $cards->first();
+            $card_type = $card->type;
+        } else {
+            $card = \App\Card::find($id);
+            $card_type = $card->type;
+        }
+        return view('cards.show', compact(['card', 'card_type']));
     }
 
     /**
@@ -73,7 +93,8 @@ class CardController extends Controller
     {
         $card = \App\Card::find($id);
         $card->update($request->request->all());
-        return view('notes.show', compact(['card']));
+        $card_type = $card->type;
+        return view('cards.show', compact(['card', 'card_type']));
     }
 
     /**

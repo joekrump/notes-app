@@ -12,7 +12,25 @@ body {
   background-attachment: fixed;
   background-position: center;
   background-size: cover;
+}
 
+#card-page {
+  background-image: url("/images/cards_background.jpg");
+}
+
+#note-page {
+  background-image: url("/images/notes_background.jpg");
+}
+
+.form-control {
+  &.title-field {
+    margin-top: 25px;
+    height: 32pt;
+    &:focus {
+      box-shadow: none;
+      transition: border 500ms;
+    }
+  }
 }
 
 html, body {
@@ -31,6 +49,11 @@ h1, h2, h3 {
 h1 {
   font-size: 22pt;
   color: #B44012;
+}
+#cards {
+  h1 {
+    color: #FFCE7F;
+  }
 }
 
 h2 {
@@ -63,14 +86,6 @@ p {
   background-color: green;
 }
 
-.page-header {
-  h1 {
-    margin-top: 15px;
-    padding: 15px 0 10px 0;
-    border-bottom: 1px solid #ccc
-  }
-}
-
 .background-dimmer {
   display: inline-block;
   width: 100%;
@@ -79,11 +94,23 @@ p {
 }
 
 .container {
-  padding: 0 25px;
-  width: 980px;
-  margin: 25px auto;
+//   padding: 0 25px 15px 25px;
+//   width: 980px;
   background-color: rgba(0,0,0, 0.6);
 }
+
+.navbar {
+  .container {
+    background: none;
+  }
+}
+.navbar-inverse {
+  background-color: rgba(0,0,0, 0.8);
+}
+.content {
+  padding-bottom: 25px;
+}
+
 .main {
   width: 75%;
   display: inline-block;
@@ -132,24 +159,14 @@ p {
 //     vertical-align: middle;
 // }
 
-.content {
-    text-align: center;
-    display: inline-block;
-}
+// .content {
+//     text-align: center;
+//     display: inline-block;
+// }
 
 .title {
     font-size: 96px;
     font-weight: 100;
-}
-
-.btn {
-  padding: 10px 15px;
-  border-radius: 4px;
-  border: none;
-}
-.btn-primary {
-  color: $white;
-  background-color: $successColor;
 }
 
 // cke styles
@@ -165,6 +182,12 @@ p {
   background-color: none !important;
   height: 450px !important;
 }
+#cards {
+  .cke_contents {
+    height: 200px !important;
+  }
+}
+
 .cke_top {
   color: #363636;
 }
@@ -187,11 +210,10 @@ input[type="text"]:focused {
   border-bottom: 1px solid #ddd;
 } 
 
-.btn-secondary {
-  padding: 5px 8px;
-  background-color: #3453E7;
+.btn-secondary, .btn-primary, .btn-success {
   color: white;
 }
+
 
 
 .index-page {
@@ -199,12 +221,12 @@ input[type="text"]:focused {
     font-size: 13pt;
     font-weight: 600;
   }
-  .row {
-    padding: 5px 10px;
-    &:nth-child(even) {
-      background-color: rgba(0, 0, 0, 0.3);
-    }
-  }
+  // .row {
+  //   padding: 5px 10px;
+  //   &:nth-child(even) {
+  //     background-color: rgba(0, 0, 0, 0.3);
+  //   }
+  // }
   .actions {
     float: right;
     .btn-secondary {

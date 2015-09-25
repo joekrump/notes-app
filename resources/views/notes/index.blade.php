@@ -1,25 +1,35 @@
 @extends('layouts.index')
 
+
+
 @section('content')
-	<div class="background-dimmer">
-		<section class="container">
+	<div class="row">
+		<div class="col-sm-12">
 			<header class="page-header">
+				<a href='/notes/new' class="btn btn-success pull-right">New Note</a>
 				<h1>Notes</h1>
 			</header>
-			<a href='/notes/new' class="btn btn-primary">New Note</a>
+		
 			@if($notes_by_course->count())
 				@foreach($notes_by_course as $course_notes)
-					<h2>Course #{{$course_notes->first()->course_id}}</h2>
-					@foreach($course_notes as $note)
-					<div class="row">
-						<span class="title">{{ $note->title }}</span>
-						<div class="actions">
-							<a class="btn btn-secondary" href={{'notes/' . $note->id}}>Edit</a>
-						</div>
-					</div>
-					@endforeach
+
+					<h2>{{ is_null($course = \App\Course::find($course_notes->first()->course_id)) ? 'Uncategorized' : ucwords($course->name) }}</h2>
+					<ul class="list list-striped list-unstyled">
+						@foreach($course_notes as $note)
+						<li class="row">
+							<div class="col-sm-12">
+								<div class="title pull-left">
+									<a class="btn btn-secondary" href={{'notes/' . $note->id}}>{{ $note->title }}</a>
+								</div>
+								<div class="pull-right">
+									<button type="button" class="btn btn-sm btn-danger btn-delete" data-id="{{$note->id}}">x</button>
+								</div>
+							</div>
+						</li>
+						@endforeach
+					</ul>
 				@endforeach
 			@endif
-		</section>
+		</div>
 	</div>
 @stop

@@ -17,8 +17,9 @@ class NotesController extends Controller
     public function index()
     {
         $notes_by_course = \App\Note::all()->groupBy('course_id');
+        $resource_type = 'note';
 
-        return view('notes.index', compact(['notes_by_course']));
+        return view('notes.index', compact(['notes_by_course', 'resource_type']));
     }
 
     /**
@@ -54,12 +55,19 @@ class NotesController extends Controller
     public function show($id)
     {
         $notes = \App\Note::where('title', $id);
+        $courses = \App\Course::all();
+
         if($notes->count() > 0) {
             $note = $notes->first();
+            $note_course = \App\Course::find($note->course_id);
         } else {
             $note = \App\Note::find($id);
+            if($note){
+                $note_course = \App\Course::find($note->course_id);
+            }   
         }
-        return view('notes.show', compact(['note']));
+
+        return view('notes.show', compact(['note', 'courses', 'note_course']));
     }
 
     /**
@@ -84,7 +92,7 @@ class NotesController extends Controller
     {
         $note = \App\Note::find($id);
         $note->update($request->request->all());
-        return view('notes.show', compact(['note']));
+        return redirect('/notes/' . $note->id);
     }
 
     /**

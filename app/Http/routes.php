@@ -38,15 +38,17 @@ Route::delete('/notes/{note_id}', 'NotesController@destroy');
 Route::get('/courses', 							'CoursesController@index');
 Route::get('/courses/{course_id}', 	'CoursesController@show');
 Route::get('/courses/new', 					'CoursesController@create');
+Route::post('/courses', 						'CoursesController@store');
+Route::post('/courses/{note_id}', 	'CoursesController@update');
 
 // Cards
 // 
-Route::get('/cards', 							'NotesController@index');
-Route::get('/cards/{card_id}', 		'NotesController@show');
-Route::post('/cards', 						'NotesController@store');
-Route::post('/cards/{card_id}', 	'NotesController@update');
-Route::get('/cards/new', 					'NotesController@create');
-Route::delete('/cards/{card_id}', 'NotesController@destroy');
+Route::get('/cards/new', 										'CardsController@create');
+Route::get('/cards/{card_id}', 	'CardsController@show');
+Route::get('/cards/category/{card_type}', 						'CardsController@index');
+Route::post('/cards', 											'CardsController@store');
+Route::post('/cards/{card_id}', 						'CardsController@update');
+Route::delete('/cards/{card_id}', 					'CardsController@destroy');
 
 
 Route::post('/comments', function(){

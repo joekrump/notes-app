@@ -16,7 +16,8 @@ class CoursesController extends Controller
      */
     public function index()
     {
-        return view('courses.index');
+        $courses = \App\Course::all();
+        return view('courses.index', compact(['courses']));
     }
 
     /**
@@ -26,7 +27,8 @@ class CoursesController extends Controller
      */
     public function create()
     {
-        return view('courses.create');
+        $course = new \App\Course();
+        return view('courses.create', compact(['course']));
     }
 
     /**
@@ -37,7 +39,9 @@ class CoursesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $course = new \App\Course($request->request->all());
+        $course->save();
+        return $course;
     }
 
     /**
@@ -48,7 +52,11 @@ class CoursesController extends Controller
      */
     public function show($id)
     {
-        return view('courses.show');
+        $course = \App\Course::find($id);
+        if(is_null($course)){
+            $course = new \App\Course();
+        }
+        return view('courses.show', compact(['course']));
     }
 
     /**
@@ -71,7 +79,9 @@ class CoursesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $course = \App\Course::find($id);
+        $course->update($request->request->all());
+        return $course;
     }
 
     /**
