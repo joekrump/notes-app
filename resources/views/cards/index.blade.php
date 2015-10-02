@@ -60,6 +60,9 @@
 			var $paginationList = $('.pagination');
 			$paginationList.find('a').click(function(e){
 				e.preventDefault();
+				$(this).parents('.pagination').find('li.active').removeClass('active');
+				$(this).parents('li').addClass('active');
+
 				var cards = '';
 				var $cardDiv;
 
