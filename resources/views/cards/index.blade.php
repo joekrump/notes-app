@@ -62,15 +62,18 @@
 			$paginationList.find('a').click(function(e){
 				e.preventDefault();
 				var $paginationBtnAnchor = $(this);
-
-				$.get($(this).attr('href'), function(response){
-
-					updatePaginationLinks($paginationBtnAnchor, response);
-
-					$('#pagination-content').html(makeNewContent(response));
-				});
+				handleLinkClick($paginationBtnAnchor);
 			});
 		});
+
+		function handleLinkClick($link){
+			$.get($link.attr('href'), function(response){
+
+				updatePaginationLinks($link, response);
+
+				$('#pagination-content').html(makeNewContent(response));
+			});
+		}
 
 		function updatePaginationLinks($paginationBtnAnchor, response){
 			var $paginationList = $paginationBtnAnchor.parents('.pagination');
@@ -78,8 +81,25 @@
 			var $paginationListItems = $paginationList.find('li');
 			var $previousBtn = $paginationListItems.first();
 			var $nextBtn = $paginationListItems.last();
+			var baseUrl = response.next_page_url === null ? response.prev_page_url : response.next_page_url;
+			baseUrl = baseUrl.substring(0, baseUrl.length - 1);
 
 			var currentPage = response.current_page;
+
+			$paginationListItems.each(function(index, element){
+				var $span = $(element).find('span');
+				var $pageNum = $span.text();
+
+				if($span.length > 0 && parseInt($pageNum)){
+					var $newLink = $('<a href="'+ baseUrl + $pageNum + '">' + $pageNum +'</a>');
+					$newLink.click(function(e){
+						e.preventDefault();
+						handleLinkClick($(this));
+					});
+
+					$span.replaceWith($newLink);
+				}
+			});
 
 			$activePaginationLink.removeClass('active');
 			$paginationBtnAnchor.parents('li').addClass('active');
@@ -96,8 +116,20 @@
 				$previousBtn.removeClass('disabled');
 			}
 
-			$nextBtn.html('<a href="'+ response.next_page_url+ '">»</a>');
-			$previousBtn.html('<a href="'+ response.prev_page_url+ '">«</a>');
+			var $newNextLink = $('<a href="'+ response.next_page_url+ '" rel="next">»</a>');
+			$newNextLink.click(function(e){
+				e.preventDefault();
+				handleLinkClick($(this));
+			});
+
+			var $newPrevLink = $('<a href="'+ response.prev_page_url+ '" rel="previous">«</a>');
+			$newPrevLink.click(function(e){
+				e.preventDefault();
+				handleLinkClick($(this));
+			});
+
+			$nextBtn.children().replaceWith($newNextLink);
+			$previousBtn.children().replaceWith($newPrevLink);
 		}
 
 		/**
