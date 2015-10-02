@@ -53,7 +53,7 @@ h2 {
   color: #C26811; }
 
 h3 {
-  color: #834E1A; }
+  color: #e7e7e7; }
 
 .background-dimmer {
   display: inline-block;
@@ -172,11 +172,15 @@ input[type="text"]:focused {
   background: rgba(240, 217, 187, 0.9);
   height: 170px;
   color: #363636;
-  box-shadow: 1px 1px 2px 3px; }
+  box-shadow: 1px 1px 2px 3px;
+  padding-top: 5px; }
   .card:hover, .card:focus {
     color: #000; }
     .card:hover .english, .card:focus .english {
       opacity: 1; }
+    .card:hover .btn-delete, .card:focus .btn-delete {
+      opacity: 1;
+      z-index: 999; }
   .card .latin {
     font-family: "Times New Roman";
     font-size: 14pt;
@@ -187,9 +191,15 @@ input[type="text"]:focused {
       list-style: none; }
       .card .latin ul li {
         padding-left: -5px; }
+  .card .btn-delete {
+    opacity: 0;
+    transition: opacity 0.5s;
+    position: absolute;
+    top: 0;
+    right: 10px; }
   .card .english {
     opacity: 0;
-    transition: opacity 1s; }
+    transition: opacity 750ms; }
     .card .english .definition {
       font-size: 12pt;
       font-weight: bold; }

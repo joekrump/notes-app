@@ -49,9 +49,9 @@ class CardsController extends Controller
     public function search($search){
         // $search_term = $response->input('search');
         if(intval($search)){
-            $cards = \App\Card::where('lesson_num', $search)->select(['latin', 'english', 'origin', 'lesson_num'])->get();
+            $cards = \App\Card::where('lesson_num', $search)->select(['id', 'latin', 'english', 'origin', 'lesson_num'])->orderby('latin')->get();
         } else {
-            $cards = \App\Card::where('latin', 'like', '%'.$search.'%')->select(['latin', 'english', 'origin', 'lesson_num'])->get();
+            $cards = \App\Card::where('latin', 'like', '%'.$search.'%')->select(['id', 'latin', 'english', 'origin', 'lesson_num'])->orderby('latin')->get();
         }
 
         return $cards;
@@ -135,6 +135,6 @@ class CardsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        \App\Card::find($id)->delete();
     }
 }

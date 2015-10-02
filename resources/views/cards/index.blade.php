@@ -24,7 +24,7 @@
 		<div class="row">
 			@if($cards->count())
 			<div class="col-sm-4">
-				<h4>You currently have {{ $cards->total() }} cards</h4>
+				<h3>You currently have {{ $cards->total() }} cards</h3>
 			</div>
 			<div class="col-sm-4 text-center">
 				{!! $cards->render() !!}
@@ -183,7 +183,7 @@
 		}
 
 		function makeCard(item){
-			return ['<a class="card col-sm-4" href="/cards/"', item.id, '>',
+			return ['<a class="card col-sm-4" href="/cards/', item.id, '">',
 				'<div class="row">',
 					'<div class="latin col-sm-4">',
 						item.latin,

@@ -35,6 +35,9 @@
 			</form>
 			{{-- Put content into a hidden text area initially. --}}
 			<textarea style="display:none;" id="init-content">{{ isset($card) ? $card->latin : '<ul><li></li></ul>' }}</textarea>
+			@if(isset($card))
+				<button class="btn btn-danger btn-delete" data-url="{{ '/cards/' . $card->id }}">Delete</button>
+			@endif
 		</section>
 	</div>
 @stop
@@ -56,6 +59,21 @@
 				CKEDITOR.tools.callFunction(7,this);return false;
 				$formData = $('#card-form').serialize();
 			});
+
+			$('.btn-delete').click(function(e){
+				e.preventDefault();
+				$.ajax({
+				  url: $(this).data('url'),
+				  method: 'DELETE',
+				  data: {_token: $('meta[name="_token"]').attr('content')},
+				  complete: function(response){
+				    if(response.status === 200){
+				      // do something on success
+				      window.location="/cards/category/all";
+				    }
+				  }
+				});
+			})
 		});
 
 	</script>
