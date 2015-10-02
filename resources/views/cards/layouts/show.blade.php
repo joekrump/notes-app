@@ -16,18 +16,22 @@
 			<form id="card-form" class="form" action={{isset($card) ? '/cards/' . $card->id : '/cards'}} method="post">
 				{!! csrf_field() !!}
 		    <p>
-	        <textarea class="ckeditor" id="editor1" name="latin" cols="100" rows="5"></textarea>
+	        <textarea class="ckeditor" id="editor1" name="latin" cols="100" rows="4"></textarea>
 		    </p>
-		    <p>
-		    	<textarea class="form-control" name="english" placeholder="English Translation">{{ (isset($card) && !is_null($card)) ? $card->english : null }}</textarea>
-		    </p>
-		    <p>
-		    	<textarea class="form-control" name="origin" placeholder="Origin the Word">{{ (isset($card) && !is_null($card)) ? $card->origin : null }}</textarea>
-		    </p>
-		    <p>
-		    	<input class="form-control" type="number" name="lesson_num" placeholder="Lesson Number" value={{isset($card) ? $card->lesson_num : NULL }} />
-		    </p>
-		    @yield('extras')
+		    <div class="row">
+		    	<div class="col-sm-6">
+				    <p>
+				    	<textarea class="form-control" name="english" placeholder="English Translation">{{ (isset($card) && !is_null($card)) ? $card->english : null }}</textarea>
+				    </p>
+				    <p>
+				    	<textarea class="form-control" name="origin" rows="10" placeholder="Origin the Word">{{ (isset($card) && !is_null($card)) ? $card->origin : null }}</textarea>
+				    </p>
+				    <p>
+				    	<input class="form-control" type="number" name="lesson_num" placeholder="Lesson Number" value={{isset($card) ? $card->lesson_num : NULL }} />
+				    </p>
+				    @yield('extras')
+			    </div>
+		    </div>
 			</form>
 			{{-- Put content into a hidden text area initially. --}}
 			<textarea style="display:none;" id="init-content">{{ isset($card) ? $card->latin : '<ul><li></li></ul>' }}</textarea>

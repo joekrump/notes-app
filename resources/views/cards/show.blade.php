@@ -1,5 +1,5 @@
 @extends('cards.layouts.show')
 
 @section('extras')
-<input type="text" name="type" value={{ $card_type }} />
+	<input type="text" name="type" class="form-control" value={{ $card_type }} />
 @stop

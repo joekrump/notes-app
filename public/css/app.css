@@ -1,3 +1,17 @@
+.form-control {
+  background-color: transparent !important;
+  color: white !important;
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid white; }
+  .form-control:focused, .form-control:focus {
+    box-shadow: 0 !important;
+    transition: border 500ms; }
+  .form-control #spin {
+    border: 1px solid white;
+    color: white;
+    background-color: transparent; }
+
 body {
   padding: 0;
   margin: 0;
@@ -21,7 +35,7 @@ body {
   margin-top: 25px;
   height: 32pt; }
   .form-control.title-field:focus {
-    box-shadow: none;
+    box-shadow: none !important;
     transition: border 500ms; }
 
 html, body {
