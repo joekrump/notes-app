@@ -60,11 +60,21 @@
 			var $paginationList = $('.pagination');
 			$paginationList.find('a').click(function(e){
 				e.preventDefault();
-				$(this).parents('.pagination').find('li.active').removeClass('active');
-				$(this).parents('li').addClass('active');
 
 				var cards = '';
 				var $cardDiv;
+				var $activePaginationLink = $(this).parents('.pagination').find('li.active');
+				var currentPageNum = $activePaginationLink.text();
+
+				$activePaginationLink.removeClass('active');
+				$(this).parents('li').addClass('active');
+
+				var $previousPageBtnLink = $activePaginationLink.siblings().first().find('a');
+				var $nextPageBtnLink     = $activePaginationLink.siblings().last().find('a');
+
+				var previousPageURL = $previousPageBtn.attr('href');
+				var nextPageURL     = $nextPageBtn.attr('href');
+
 
 				$.get($(this).attr('href'), function(response){
 					$.each(response.data, function(index, item){
