@@ -14,17 +14,36 @@ class CardsController extends Controller
      *
      * @return Response
      */
-    public function index($card_type)
+    public function index(Request $request)
     {
+        
+        $resource_type = 'course';
+        $card_type = $request->request->get('card_type');
+        $lesson_num = $request->request->get('lesson_num');
 
-        $cards = \App\Card::where("type", $card_type)->get();
+        $cards = \App\Card::where("type", $card_type);
+        $path = '/cards/category/' . $card_type;
+
+        if(!is_null($lesson_num)){
+            $cards = $cards->where('lesson_num', $lesson_num);
+            $path = '/cards/category/' . $card_type . '/' . $lesson_num;
+        }
+
+        $cards = $cards->orderby('lesson_num', 'desc')->orderby('latin')->paginate(9);
 
         if($cards->count() < 1) {
             $card_type = 'all';
-            $cards = \App\Card::all();
+            $cards = \App\Card::paginate(9);
+            $path = '/cards/category/' . $card_type;
         }
 
-        return view('cards.index', compact(['cards', 'card_type']));
+        if($request->ajax()){
+            return $cards;
+        }
+
+        $cards->setPath($path);
+        
+        return view('cards.index', compact(['cards', 'card_type', 'resource_type']));
     }
 
     /**

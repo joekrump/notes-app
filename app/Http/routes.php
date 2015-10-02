@@ -45,7 +45,7 @@ Route::post('/courses/{note_id}', 	'CoursesController@update');
 // 
 Route::get('/cards/new', 										'CardsController@create');
 Route::get('/cards/{card_id}', 	'CardsController@show');
-Route::get('/cards/category/{card_type}', 						'CardsController@index');
+Route::get('/cards/category/{card_type}', 	'CardsController@index');
 Route::post('/cards', 											'CardsController@store');
 Route::post('/cards/{card_id}', 						'CardsController@update');
 Route::delete('/cards/{card_id}', 					'CardsController@destroy');

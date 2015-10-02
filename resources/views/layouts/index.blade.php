@@ -18,7 +18,7 @@
             <ul class="nav navbar-nav navbar-left">
               <li><a href="/notes">Notes</a></li>
               <li><a href="/courses">Courses</a></li>
-              <li><a href="/cards ">Cards</a></li>
+              <li><a href="/cards/category/all">Cards</a></li>
             </ul>
           </div>
         </div>

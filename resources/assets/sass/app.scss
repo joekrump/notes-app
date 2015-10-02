@@ -38,10 +38,6 @@ html, body {
   width: 100%;
 }
 
-form {
-  margin-bottom: 20px;
-}
-
 h1, h2, h3 {
   margin-bottom: 10px;
 }
@@ -64,39 +60,19 @@ h3 {
   color: #834E1A;
 }
 
-iframe .content {
-  h3 {
-    font-weight: 700;
-  }
-}
 .pull-right {
   float: right;
-}
-p {
-  margin-bottom: 15px;
-}
-
-.hlt1, .marker{
-  color: #363636 !important;
-  background-color: #12E833 !important;
-}
-
-.hlt2{
-  color: #e6e6e6;
-  background-color: green;
 }
 
 .background-dimmer {
   display: inline-block;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0, 0.6);
+  background-color: rgba(0,0,0,0.6);
 }
 
 .container {
-//   padding: 0 25px 15px 25px;
-//   width: 980px;
-  background-color: rgba(0,0,0, 0.6);
+  background-color: rgba(0,0,0,0.6);
 }
 
 .navbar {
@@ -196,13 +172,15 @@ p {
   padding: 5px;
 }
 
-input[type="text"] {
-  color: #e6e6e6;
-  font-size: 22pt;
-  border: none;
-  background: rgba(0,0,0,0.0);
-  border-radius: 0;
-  border-bottom: 1px solid #ddd;
+.form-control {
+  &.transparent {
+    color: #e6e6e6;
+    font-size: 22pt;
+    border: none;
+    background: rgba(0,0,0,0.0);
+    border-radius: 0;
+    border-bottom: 1px solid #ddd;
+  }
 }
 
 input[type="text"]:focused {

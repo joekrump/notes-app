@@ -11,18 +11,16 @@
 		</aside>
 		<section class="container container-fluid">
 			<div class="row">
-				<form id="note-form" class="form" action="{{ isset($note) ? '/notes/' . $note->id : '/notes'}}" method="post">
+				<form id="note-form" action="{{ isset($note) ? '/notes/' . $note->id : '/notes'}}" method="post">
 					{!! csrf_field() !!}
 					<div class="col-sm-8">
-						<h2>
-							<input class="form-control title-field" type="text" name="title" placeholder="Title" value="{{isset($note) ? $note->title : null }}" />
-						</h2>
+							<input class="form-control title-field transparent" type="text" name="title" placeholder="Title" value="{{isset($note) ? $note->title : null }}" />
 					</div>
 				
 					@if(isset($courses) && $courses->count())
-					<div class="col-sm-6">
+					<div class="col-sm-4">
 						<div class="form-group">
-						<select name="course_id" class="form-control">
+						<select name="course_id" class="form-control title-field transparent">
 						@foreach($courses as $course)
 							<option value={{$course->id}} {{ isset($note_course) && ($note_course->id == $course->id) ? 'selected' : '' }}>{{$course->name}}</option>
 						@endforeach
