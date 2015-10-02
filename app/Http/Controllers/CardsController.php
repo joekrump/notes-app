@@ -46,6 +46,13 @@ class CardsController extends Controller
         return view('cards.index', compact(['cards', 'card_type', 'resource_type']));
     }
 
+    public function search($search){
+        // $search_term = $response->input('search');
+        $cards = \App\Card::where('latin', 'like', '%'.$search.'%')->get();
+
+        return $cards;
+    }
+
     /**
      * Show the form for creating a new resource.
      *

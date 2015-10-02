@@ -3,10 +3,20 @@
 @section('content')
 	<section class="container container-fluid">
 		<header class="page-header">
-			<div class="btn-group pull-right">
-				<a href="/cards/category/all" class="btn btn-primary">All Cards</a>
-{{-- 				<a href="/cards/category/all" class="btn btn-primary">Show Categories</a> --}}
-				<a href='/cards/new' class="btn btn-success">New Card</a>
+			<div class="pull-right col-sm-6">
+				<div class="row">
+					<div class="col-sm-6">
+						<input id="search" class="form-control" name='search' placeholder="Search" data-url="/cards/search/" />
+					</div>
+					<div class="col-sm-6">
+						<div class="btn-group pull-right">
+							
+							<a href="/cards/category/all" class="btn btn-primary">All Cards</a>
+			{{-- <a href="/cards/category/all" class="btn btn-primary">Show Categories</a> --}}
+							<a href='/cards/new' class="btn btn-success">New Card</a>
+						</div>
+					</div>
+				</div>
 			</div>
 			<h1>{{ ucwords($card_type) }} Cards</h1>
 		</header>
@@ -64,6 +74,19 @@
 				var $paginationBtnAnchor = $(this);
 				handleLinkClick($paginationBtnAnchor);
 			});
+
+			var searchInProgress = false;
+			if(!searchInProgress){
+				$('#search').change(function(e){
+					searchInProgress = true;
+					var $searchInput = $(this);
+					
+					$.get($searchInput.data('url') + $searchInput.val(), function(response){
+						searchInProgress = false;
+						console.log(response);
+					});	
+				});
+			}
 		});
 
 		function handleLinkClick($link){
