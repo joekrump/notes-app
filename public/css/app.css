@@ -4,9 +4,9 @@
   border-radius: 0;
   border: none;
   border-bottom: 1px solid white; }
-  .form-control:focused, .form-control:focus {
-    box-shadow: 0 !important;
-    transition: border 500ms; }
+  .form-control:focus {
+    box-shadow: none !important;
+    transition: border 300ms; }
   .form-control #spin {
     border: 1px solid white;
     color: white;
@@ -34,9 +34,9 @@ body {
 .form-control.title-field {
   margin-top: 25px;
   height: 32pt; }
-  .form-control.title-field:focus {
-    box-shadow: none !important;
-    transition: border 500ms; }
+
+#cards h1 {
+  color: #FFCE7F; }
 
 html, body {
   height: 100%;
@@ -49,17 +49,11 @@ h1 {
   font-size: 22pt;
   color: #B44012; }
 
-#cards h1 {
-  color: #FFCE7F; }
-
 h2 {
   color: #C26811; }
 
 h3 {
   color: #834E1A; }
-
-.pull-right {
-  float: right; }
 
 .background-dimmer {
   display: inline-block;

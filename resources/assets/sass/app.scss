@@ -7,8 +7,8 @@
   border: none;
   border-bottom: 1px solid white;
   &:focus {
-    box-shadow: 0 !important;
-    transition: border 500ms;
+    box-shadow: none !important;
+    transition: border 300ms;
   }
   #spin {
     border: 1px solid white;
@@ -43,10 +43,12 @@ body {
   &.title-field {
     margin-top: 25px;
     height: 32pt;
-    &:focus {
-      box-shadow: none !important;
-      transition: border 500ms;
-    }
+  }
+}
+
+#cards {
+  h1 {
+    color: #FFCE7F;
   }
 }
 
@@ -63,11 +65,6 @@ h1 {
   font-size: 22pt;
   color: #B44012;
 }
-#cards {
-  h1 {
-    color: #FFCE7F;
-  }
-}
 
 h2 {
   color: #C26811;
@@ -75,10 +72,6 @@ h2 {
 
 h3 {
   color: #834E1A;
-}
-
-.pull-right {
-  float: right;
 }
 
 .background-dimmer {
