@@ -21,7 +21,7 @@
 		    <div class="row">
 		    	<div class="col-sm-6">
 				    <p>
-				    	<textarea class="form-control" name="english" placeholder="English Translation">{{ (isset($card) && !is_null($card)) ? $card->english : null }}</textarea>
+				    	<input type="text" class="form-control" name="english" placeholder="English Translation" value="{{ (isset($card) && !is_null($card)) ? $card->english : null }}" />
 				    </p>
 				    <p>
 				    	<textarea class="form-control" name="origin" rows="10" placeholder="Origin the Word">{{ (isset($card) && !is_null($card)) ? $card->origin : null }}</textarea>

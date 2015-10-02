@@ -19,10 +19,14 @@
 				</div>
 			</div>
 			<h1>{{ ucwords($card_type) }} Cards</h1>
+
 		</header>
 		<div class="row">
 			@if($cards->count())
-			<div class="col-sm-4 col-sm-offset-4 text-center">
+			<div class="col-sm-4">
+				<h4>You currently have {{ $cards->total() }} cards</h4>
+			</div>
+			<div class="col-sm-4 text-center">
 				{!! $cards->render() !!}
 			</div>
 			<div id="pagination-content" class="col-sm-12">
