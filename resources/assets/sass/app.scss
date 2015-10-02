@@ -6,7 +6,7 @@
   border-radius: 0;
   border: none;
   border-bottom: 1px solid white;
-  &:focused, &:focus {
+  &:focus {
     box-shadow: 0 !important;
     transition: border 500ms;
   }

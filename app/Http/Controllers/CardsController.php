@@ -48,7 +48,11 @@ class CardsController extends Controller
 
     public function search($search){
         // $search_term = $response->input('search');
-        $cards = \App\Card::where('latin', 'like', '%'.$search.'%')->get();
+        if(intval($search)){
+            $cards = \App\Card::where('lesson_num', $search)->select(['latin', 'english', 'origin', 'lesson_num'])->get();
+        } else {
+            $cards = \App\Card::where('latin', 'like', '%'.$search.'%')->select(['latin', 'english', 'origin', 'lesson_num'])->get();
+        }
 
         return $cards;
     }

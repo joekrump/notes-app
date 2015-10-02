@@ -83,7 +83,12 @@
 					
 					$.get($searchInput.data('url') + $searchInput.val(), function(response){
 						searchInProgress = false;
-						console.log(response);
+						if(response.length > 0){
+							$('#pagination-content').html(makeNewContent(response));
+						} else {
+							$('#pagination-content').html('<div class="alert alert-info"><p>No results found for "'+ $searchInput.val() +'".</p></div>');
+						}
+						
 					});	
 				});
 			}
@@ -94,7 +99,7 @@
 
 				updatePaginationLinks($link, response);
 
-				$('#pagination-content').html(makeNewContent(response));
+				$('#pagination-content').html(makeNewContent(response.data));
 			});
 		}
 
@@ -160,44 +165,48 @@
 		 * @param  {Object} response The json response
 		 * @return {String}          A string container HTML which is to be inserted.
 		 */
-		function makeNewContent(response){
+		function makeNewContent(data){
 			var $cardDiv;
 			var newContent = '';
-			$.each(response.data, function(index, item){
+			$.each(data, function(index, item){
 
-				$cardDiv = ['<a class="card col-sm-4" href="/cards/"', item.id, '>',
-					'<div class="row">',
-						'<div class="latin col-sm-4">',
-							item.latin,
-						'</div>',
-						'<div class="col-sm-8">',
-							'<div class="row">',
-								'<div class="lesson-number col-sm-12">',
-									'<div class="pull-right">',
-										item.lesson_num,
-									'</div>',
-								'</div>',
-							'</div>',
-							'<div class="english row">',
-								'<div class="col-sm-12">',
-									'<div class="definition">',
-										item.english,
-									'</div>',
-								'</div>',
-								'<div class="col-sm-12">',
-									'<div class="origin">',
-										item.origin,
-									'</div>',
-								'</div>',
-							'</div>',
-						'</div>',
-					'</div>',
-				'</a>'].join('');
+				$cardDiv = makeCard(item);
 
 				newContent += $cardDiv;
 			});
 
 			return newContent;
+		}
+
+		function makeCard(item){
+			return ['<a class="card col-sm-4" href="/cards/"', item.id, '>',
+				'<div class="row">',
+					'<div class="latin col-sm-4">',
+						item.latin,
+					'</div>',
+					'<div class="col-sm-8">',
+						'<div class="row">',
+							'<div class="lesson-number col-sm-12">',
+								'<div class="pull-right">',
+									item.lesson_num,
+								'</div>',
+							'</div>',
+						'</div>',
+						'<div class="english row">',
+							'<div class="col-sm-12">',
+								'<div class="definition">',
+									item.english,
+								'</div>',
+							'</div>',
+							'<div class="col-sm-12">',
+								'<div class="origin">',
+									item.origin,
+								'</div>',
+							'</div>',
+						'</div>',
+					'</div>',
+				'</div>',
+			'</a>'].join('');
 		}
 	</script>
 @stop
