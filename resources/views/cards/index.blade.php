@@ -61,24 +61,44 @@
 			var $paginationList = $('.pagination');
 			$paginationList.find('a').click(function(e){
 				e.preventDefault();
-
-				var $activePaginationLink = $(this).parents('.pagination').find('li.active');
-				var currentPageNum = $activePaginationLink.text();
-
-				$activePaginationLink.removeClass('active');
-				$(this).parents('li').addClass('active');
-
-				var $previousPageBtnLink = $activePaginationLink.siblings().first().find('a');
-				var $nextPageBtnLink     = $activePaginationLink.siblings().last().find('a');
-
-				var previousPageURL = $previousPageBtnLink.attr('href');
-				var nextPageURL     = $nextPageBtnLink.attr('href');
+				var $paginationBtnAnchor = $(this);
 
 				$.get($(this).attr('href'), function(response){
+
+					updatePaginationLinks($paginationBtnAnchor, response);
+
 					$('#pagination-content').html(makeNewContent(response));
 				});
 			});
 		});
+
+		function updatePaginationLinks($paginationBtnAnchor, response){
+			var $paginationList = $paginationBtnAnchor.parents('.pagination');
+			var $activePaginationLink = $paginationList.find('li.active');
+			var $paginationListItems = $paginationList.find('li');
+			var $previousBtn = $paginationListItems.first();
+			var $nextBtn = $paginationListItems.last();
+
+			var currentPage = response.current_page;
+
+			$activePaginationLink.removeClass('active');
+			$paginationBtnAnchor.parents('li').addClass('active');
+
+			if(currentPage == response.last_page) {
+				$nextBtn.addClass('disabled');
+			} else if($nextBtn.hasClass('disabled')) {
+				$nextBtn.removeClass('disabled');
+			}
+
+			if(currentPage == 1) {
+				$previousBtn.addClass('disabled');
+			} else if($previousBtn.hasClass('disabled')) {
+				$previousBtn.removeClass('disabled');
+			}
+
+			$nextBtn.html('<a href="'+ response.next_page_url+ '">»</a>');
+			$previousBtn.html('<a href="'+ response.prev_page_url+ '">«</a>');
+		}
 
 		/**
 		 * Makes the html content that is to be inserted into the page.
@@ -121,7 +141,7 @@
 
 				newContent += $cardDiv;
 			});
-			console.log(newContent)
+
 			return newContent;
 		}
 	</script>
