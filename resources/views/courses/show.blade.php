@@ -38,7 +38,6 @@
 		$(document).ready(function(e, element){
 
 			Mousetrap.bind('ctrl+shift+s', function() {
-			console.log('save'); 
 				$form = $('#course-form');
 				$.post($form.attr('action'), $form.serialize(), function(response){
 					console.log(response);
