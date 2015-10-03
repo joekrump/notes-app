@@ -40,10 +40,10 @@ class NotesController extends Controller
      */
     public function store(Request $request)
     {
-        $note = new \App\Note($request->request->all());
+        $note = new \App\Note($request->input());
         $note->save();
 
-        return redirect('/notes/' . $note->id);
+        return $note;
     }
 
     /**
@@ -91,8 +91,8 @@ class NotesController extends Controller
     public function update(Request $request, $id)
     {
         $note = \App\Note::find($id);
-        $note->update($request->request->all());
-        return redirect('/notes/' . $note->id);
+        $note->update($request->input());
+        return $note;
     }
 
     /**

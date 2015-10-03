@@ -6,6 +6,9 @@
 
 @section('content')
 	<div class="background-dimmer">
+		<div id="action-box" class="alert">
+			Saving...
+		</div>
 		<aside class="left-options">
 			<a href="/notes">Back to Notes</a>
 		</aside>
@@ -28,12 +31,12 @@
 						</div>
 					</div>
 					@endif
-					<div class="col-sm-12">
-				    <p>
-			        <textarea class="ckeditor" id="editor1" name="content" cols="100" rows="20"></textarea>
-				    </p>
-			    </div>
 				</form>
+				<div class="col-sm-12">
+			    <p>
+		        <textarea class="ckeditor" id="editor1" name="content" cols="100" rows="20"></textarea>
+			    </p>
+		    </div>
 				{{-- Put content into a hidden text area initially. --}}
 				<textarea style="display:none;" id="init-content">{{ isset($note) ? $note->content : '' }}</textarea>
 			</div>
@@ -54,31 +57,22 @@
 		$(document).ready(function(e, element){
 			$('.ckeditor').val($('#init-content').val());
 
-			Mousetrap.bind('ctrl+s', function() { 
-				CKEDITOR.tools.callFunction(7,this);
-				$formData = $('#note-form').serialize();
-			});			
+			Mousetrap.bind('ctrl+s', function(e) {
+				e.preventDefault();
+				var data = CKEDITOR.instances.editor1.getData();
+				// console.log(data);
+				$form = $('#note-form');
+				
+				// console.log();
+				var formData = $form.serializeArray();
+				formData.push({name: 'content', value: data});
 
+				$('#action-box').removeClass('alert-success').addClass('alert-info').text('Saving...').fadeIn(200);
+				$.post($form.attr('action'), formData, function(response){
+
+					$('#action-box')removeClass('alert-info').addClass('alert-success').text('Complete!').fadeOut(200);
+				});
+			});
 		});
-
-		// $('iframe').ready(function(e, element){
-
-		// 	$(this).ready(function(e, element){
-		// 		Mousetrap.bind('ctrl+s', function() { 
-		// 			CKEDITOR.tools.callFunction(7,this);
-		// 			$formData = $('#note-form').serialize();
-		// 		});
-		// 		Mousetrap.bind('ctrl+shift+1', function() { 
-		// 			console.log('h1');
-		// 			CKEDITOR.tools.callFunction(201,'h1'); 
-		// 		});
-		// 		Mousetrap.bind('ctrl+shift+2', function() { 
-		// 			CKEDITOR.tools.callFunction(201,'h2'); 
-		// 		});
-		// 	});
-
-		// });
-
-
 	</script>
 @stop
