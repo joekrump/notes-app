@@ -12,6 +12,11 @@
     color: white;
     background-color: transparent; }
 
+#action-box {
+  position: fixed;
+  top: 15px;
+  right: 15px; }
+
 body {
   padding: 0;
   margin: 0;

@@ -6,7 +6,7 @@
 
 @section('content')
 	<div class="background-dimmer">
-		<div id="action-box" class="alert">
+		<div id="action-box" class="alert" style="display:none;">
 			Saving...
 		</div>
 		<aside class="left-options">
@@ -57,22 +57,48 @@
 		$(document).ready(function(e, element){
 			$('.ckeditor').val($('#init-content').val());
 
+			// Add event listener for ctrl+s in editor to do an AJAX save.
+			var editor = CKEDITOR.instances.editor1;
+
+			editor.on( 'contentDom', function( evt )
+			{
+				editor.document.on( 'keyup', function(event){
+					if(event.data.$.keyCode == 17) isCtrl=false;
+				});
+
+				editor.document.on( 'keydown', function(event){
+					if(event.data.$.keyCode == 17) isCtrl = true;
+					if(event.data.$.keyCode == 83 && isCtrl == true){
+						// The preventDefault() call prevents the browser's save popup to appear.
+						// The try statement fixes a weird IE error.
+						try {
+							event.data.$.preventDefault();
+						} catch(err) {}
+
+						ajaxSave(editor);
+						return false;
+	        }
+	      });
+			}, editor.element.$);
+	
 			Mousetrap.bind('ctrl+s', function(e) {
 				e.preventDefault();
-				var data = CKEDITOR.instances.editor1.getData();
-				// console.log(data);
-				$form = $('#note-form');
-				
-				// console.log();
-				var formData = $form.serializeArray();
-				formData.push({name: 'content', value: data});
 
-				$('#action-box').removeClass('alert-success').addClass('alert-info').text('Saving...').fadeIn(200);
-				$.post($form.attr('action'), formData, function(response){
-
-					$('#action-box')removeClass('alert-info').addClass('alert-success').text('Complete!').fadeOut(200);
-				});
+				ajaxSave(editor);
 			});
 		});
+
+		function ajaxSave(editor){
+			var $form = $('#note-form');
+			var data = editor.getData();
+			var formData = $form.serializeArray();
+			formData.push({name: 'content', value: data});
+
+			$('#action-box').removeClass('alert-success').addClass('alert-info').text('Saving...').fadeIn(100);
+			$.post($form.attr('action'), formData, function(response){
+				console.log(response);
+				$('#action-box').removeClass('alert-info').addClass('alert-success').fadeOut(500);
+			});
+		}
 	</script>
 @stop
