@@ -6,11 +6,11 @@
 
 @section('content')
 	<div class="background-dimmer">
-		<div id="action-box" class="alert" style="display:none;">
+		<div id="action-box" class="label" style="display:none;">
 			Saving...
 		</div>
 		<aside class="left-options">
-			<a href="/notes">Back to Notes</a>
+			<a href="/notes" class="inverse-link">To Notes</a>
 		</aside>
 		<section class="container container-fluid">
 			<div class="row">
@@ -55,10 +55,21 @@
 
 	<script type="text/javascript">
 		$(document).ready(function(e, element){
+			// Load 
 			$('.ckeditor').val($('#init-content').val());
 
 			// Add event listener for ctrl+s in editor to do an AJAX save.
 			var editor = CKEDITOR.instances.editor1;
+			editor.on('loaded', function (ev) {
+			  var editor = ev.editor;
+			  // add custom commands
+			  addCustomEditorCommands(editor);
+			  // bind the custom events to hotkeys
+			  editor.setKeystroke(CKEDITOR.CTRL + 49 /*1*/, 'heading-h1');
+			  editor.setKeystroke(CKEDITOR.CTRL + 50 /*2*/, 'heading-h2');
+			  editor.setKeystroke(CKEDITOR.CTRL + 51 /*3*/, 'heading-h3');
+			  editor.setKeystroke(CKEDITOR.CTRL + 52 /*4*/, 'heading-h4');
+			});
 
 			editor.on( 'contentDom', function( evt )
 			{
@@ -80,24 +91,55 @@
 	        }
 	      });
 			}, editor.element.$);
-	
+			
+			// Set hotkey listener for saving.
 			Mousetrap.bind('ctrl+s', function(e) {
 				e.preventDefault();
-
 				ajaxSave(editor);
 			});
 		});
 
+		function addCustomEditorCommands(editor){
+			editor.addCommand('heading-h1', {
+				exec: function (editor) {
+					CKEDITOR.tools.callFunction(201,'h1');
+				}
+			});
+			editor.addCommand('heading-h2', {
+				exec: function (editor) {
+					CKEDITOR.tools.callFunction(201,'h2');
+				}
+			});
+			editor.addCommand('heading-h3', {
+				exec: function (editor) {
+					CKEDITOR.tools.callFunction(201,'h3');            
+				}
+			}); 
+			editor.addCommand('heading-h4', {
+				exec: function (editor) {
+					CKEDITOR.tools.callFunction(201,'h4'); 
+				}
+			}); 
+		}
+
 		function ajaxSave(editor){
 			var $form = $('#note-form');
+			var noteId = {{isset($note) ? $note->id : 'undefined'}};
 			var data = editor.getData();
 			var formData = $form.serializeArray();
 			formData.push({name: 'content', value: data});
 
-			$('#action-box').removeClass('alert-success').addClass('alert-info').text('Saving...').fadeIn(100);
+			$('#action-box').removeClass('label-success').addClass('label-info').text('Saving...').fadeIn(100);
 			$.post($form.attr('action'), formData, function(response){
-				console.log(response);
-				$('#action-box').removeClass('alert-info').addClass('alert-success').fadeOut(500);
+				// console.log(response);
+				if(response.id !== noteId){
+					noteId = response.id;
+					$form.attr('action', '/notes/' + noteId)
+				}
+				$('#action-box').removeClass('label-info').addClass('label-success').fadeOut(500);
+			}).error(function(response){
+				// console.log(response)
+				alert(response);
 			});
 		}
 	</script>

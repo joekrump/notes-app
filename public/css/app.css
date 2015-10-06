@@ -23,12 +23,7 @@ body {
   font-weight: 100;
   font-family: 'Lato', 'Tahoma';
   color: #CFD198;
-  background-color: #000000;
-  background-image: url("/images/app_background.jpg");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
-  background-size: cover; }
+  background-color: #000000; }
 
 #card-page {
   background-image: url("/images/cards_background.jpg"); }
@@ -43,7 +38,10 @@ body {
 #cards h1 {
   color: #FFCE7F; }
 
-html, body {
+a.inverse-link {
+  color: white; }
+
+html {
   height: 100%;
   width: 100%; }
 
@@ -60,19 +58,40 @@ h2 {
 h3 {
   color: #e7e7e7; }
 
+.label-inverse {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid #C26811; }
+
+.background {
+  background-image: url("/images/app_background.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: left top;
+  background-size: cover; }
+
 .background-dimmer {
-  display: inline-block;
+  background-color: rgba(0, 0, 0, 0.3); }
+
+.background, .background-dimmer {
+  display: block;
+  position: fixed;
+  top: 0px;
+  left: 0px;
   width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6); }
+  height: 100%; }
 
 .container {
   background-color: rgba(0, 0, 0, 0.6);
-  padding-bottom: 35px; }
+  padding-bottom: 35px;
+  margin-top: 35px; }
+
+.index-page .container {
+  margin-top: 0px; }
 
 .navbar .container {
   background: none;
-  padding-bottom: 0px; }
+  padding-bottom: 0px;
+  margin-top: 0px; }
 
 .navbar-inverse {
   background-color: rgba(0, 0, 0, 0.8); }

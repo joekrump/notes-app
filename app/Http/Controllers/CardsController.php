@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 class CardsController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of cards
      *
      * @return Response
      */
@@ -29,14 +29,15 @@ class CardsController extends Controller
             $path = '/cards/category/' . $card_type . '/' . $lesson_num;
         }
 
-        $cards = $cards->orderby('lesson_num', 'desc')->orderby('latin')->paginate(9);
+        $cards = $cards->orderby('lesson_num', 'desc')->orderby('latin')->paginate(12);
 
         if($cards->count() < 1) {
             $card_type = 'all';
-            $cards = \App\Card::paginate(9);
+            $cards = \App\Card::orderby('lesson_num', 'desc')->orderby('latin')->paginate(12);
             $path = '/cards/category/' . $card_type;
         }
 
+        // return a list of cards in json format if this is an AJAX request.
         if($request->ajax()){
             return $cards;
         }
@@ -47,14 +48,15 @@ class CardsController extends Controller
     }
 
     public function search($search){
-        // $search_term = $response->input('search');
+
+        // if the search value is a number then we assume that the user is trying to filter by lesson number.
         if(intval($search)){
-            $cards = \App\Card::where('lesson_num', $search)->select(['id', 'latin', 'english', 'origin', 'lesson_num'])->orderby('latin')->get();
+            $cards = \App\Card::where('lesson_num', $search);
         } else {
-            $cards = \App\Card::where('latin', 'like', '%'.$search.'%')->select(['id', 'latin', 'english', 'origin', 'lesson_num'])->orderby('latin')->get();
+            $cards = \App\Card::where('latin', 'like', '%'.$search.'%');
         }
 
-        return $cards;
+        return $cards->select(['id', 'latin', 'english', 'origin', 'lesson_num'])->orderby('latin')->get();
     }
 
     /**

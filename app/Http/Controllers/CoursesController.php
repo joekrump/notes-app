@@ -57,7 +57,9 @@ class CoursesController extends Controller
         if(is_null($course)){
             $course = new \App\Course();
         }
-        return view('courses.show', compact(['course']));
+        $background = $course->name;
+        return view('courses.show', compact(['course', 'background']));
+
     }
 
     /**

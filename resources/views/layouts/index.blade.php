@@ -10,6 +10,7 @@
   <meta name="_token" content="{{ csrf_token() }}" />
 </head>
 <body>
+  <div class="background"></div>
 	<div class="index-page">
     <nav class="navbar navbar-static-top navbar-inverse">
       <div class="container container-fluid">
@@ -24,6 +25,7 @@
         </div>
       </div>
     </nav>
+
     <div class="container container-fluid content">
       @yield('content')
     </div>
