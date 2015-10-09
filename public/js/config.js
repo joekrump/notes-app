@@ -6,7 +6,24 @@
 CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here. For example:
 	// config.language = 'fr';
-	// config.uiColor = '#AADC6E';
+	config.uiColor = '#000000';
 	config.disableNativeSpellChecker = false;
-	config.removePlugins = 'liststyle,tabletools,scayt,contextmenu';
+	config.removePlugins = 'liststyle,tabletools,scayt,contextmenu,resize,save';
+	config.resize_enabled = false;   //Disallow resizing
+	config.toolbarGroups = [
+	    { name: 'document',    groups: [ 'mode', 'document' ] },
+	    // { name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
+	    { name: 'editing',     groups: [ 'find', 'selection'] },
+	    { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+	    { name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
+	    // { name: 'forms' },
+	    // '/',
+	    // { name: 'links' },
+	    // { name: 'insert' },
+	    '/',
+	    { name: 'styles' },
+	    { name: 'colors' },
+	    { name: 'tools' },
+	    { name: 'others' }
+	];
 };

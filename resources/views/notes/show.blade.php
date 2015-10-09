@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-	<div class="background-dimmer">
+	<div id="note-page" class="background-dimmer">
 		<div id="action-box" class="label label-inverse" style="display:none;">
 			Saving...
 		</div>

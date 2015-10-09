@@ -27,7 +27,7 @@
 					
 				</div>
 			</div>
-
+			
 		</header>
 		<div class="row">
 			@if($cards->count())
