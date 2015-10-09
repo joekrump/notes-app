@@ -1,0 +1,27 @@
+// cke styles
+// 
+.cke_chrome {
+  border: none !important;
+}
+.cke_bottom, .cke_top {
+  background: rgba(0,0,0,0.0) !important;
+}
+
+.cke_contents {
+  background-color: none !important;
+  height: 450px !important;
+}
+
+.cke_top {
+  color: #363636;
+}
+.cke_toolgroup, input[type="text"] {
+  margin: 0 6px 3px 0;
+  padding: 5px;
+}
+
+.cke_maximized {
+  &.cke_inner {
+    background-color: rgba(0,0,0,0.8);
+  }
+}

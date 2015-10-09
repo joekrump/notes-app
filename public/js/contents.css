@@ -13,15 +13,17 @@ body
 	color: #e6e6e6;
 
 	/* Remove the background color to make it transparent */
-/*	background-color: #fff;*/
-	background-color: none !important;
+
+	background-color: #fff;
+	/*background-color: none !important;*/
 	margin: 20px 0px;
 }
 
 .cke_editable
 {
-	font-size: 13px;
-	line-height: 1.6;
+	font-size: 11pt;
+	line-height: 1.5;
+	background-color: rgba(0,0,0,0.0) !important;
 }
 
 blockquote

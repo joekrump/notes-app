@@ -1,0 +1,11 @@
+#spin {
+  border: 1px solid white;
+  color: white;
+  background-color: rgba(0,0,0,0.0);
+}
+.form-control {
+  &.title-field {
+    margin-top: 25px;
+    height: 32pt;
+  }
+}

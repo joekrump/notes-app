@@ -1,0 +1,11 @@
+#card-page {
+  background-image: url("/images/cards_background.jpg");
+}
+#cards {
+  h1 {
+    color: $lightBrown;
+  }
+  .cke_contents {
+    height: 200px !important;
+  }
+}

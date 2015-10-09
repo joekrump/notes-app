@@ -18,7 +18,7 @@
 							<div class="col-sm-12">
 								<div class="title pull-left">
 									<a class="btn btn-secondary" href={{'notes/' . $note->id}}>{{ $note->title }}</a>
-									<div class="label label-inverse">{{ $note->created_at->toFormattedDateString() }}</div>
+									<div class="label label-inverse label-default">{{ $note->created_at->toFormattedDateString() }}</div>
 								</div>
 								<div class="pull-right">
 									<button type="button" class="btn btn-sm btn-danger btn-delete" data-id="{{$note->id}}">x</button>

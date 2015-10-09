@@ -12,7 +12,7 @@
 <body>
   <div class="background"></div>
 	<div class="index-page">
-    <nav class="navbar navbar-static-top navbar-inverse">
+    <nav class="navbar navbar-fixed-top navbar-inverse">
       <div class="container container-fluid">
         <div class="row"> 
           <div class="col-sm-12">

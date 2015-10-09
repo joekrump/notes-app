@@ -1,24 +1,32 @@
 @extends('cards.layouts.master')
 
 @section('content')
-	<section class="container container-fluid">
 		<header class="page-header">
-			<div class="pull-right col-sm-6">
-				<div class="row">
-					<div class="col-sm-6">
-						<input id="search" class="form-control" name='search' placeholder="Search" data-url="/cards/search/" />
-					</div>
-					<div class="col-sm-6">
-						<div class="btn-group pull-right">
-							
-							<a href="/cards/category/all" class="btn btn-primary">All Cards</a>
-			{{-- <a href="/cards/category/all" class="btn btn-primary">Show Categories</a> --}}
-							<a href='/cards/new' class="btn btn-success">New Card</a>
+			<div class="row">
+				<div class="col-sm-6">
+					<h1>{{ ucwords($card_type) }} Cards</h1>
+				</div>
+				
+				<div class="col-sm-6">
+
+					<div class="row pull-right">
+
+
+						<div class="col-sm-6">
+							<input id="search" class="form-control" name='search' placeholder="Search" data-url="/cards/search/" />
+						</div>
+						<div class="col-sm-6">
+							<div class="btn-group pull-right">
+								
+								<a href="/cards/category/all" class="btn btn-primary">All Cards</a>
+				{{-- <a href="/cards/category/all" class="btn btn-primary">Show Categories</a> --}}
+								<a href='/cards/new' class="btn btn-success">New Card</a>
+							</div>
 						</div>
 					</div>
+					
 				</div>
 			</div>
-			<h1>{{ ucwords($card_type) }} Cards</h1>
 
 		</header>
 		<div class="row">
@@ -65,7 +73,6 @@
 				</div>
 			@endif
 		</div>
-	</section>
 @stop
 
 @section('javascripts')

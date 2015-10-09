@@ -6,7 +6,7 @@
 
 @section('content')
 	<div class="background-dimmer">
-		<div id="action-box" class="label" style="display:none;">
+		<div id="action-box" class="label label-inverse" style="display:none;">
 			Saving...
 		</div>
 		<aside class="left-options">
@@ -36,6 +36,9 @@
 			    <p>
 		        <textarea class="ckeditor" id="editor1" name="content" cols="100" rows="20"></textarea>
 			    </p>
+			    <div class="pull-left">
+			    	<small id="word-count"></small>
+			    </div>
 		    </div>
 				{{-- Put content into a hidden text area initially. --}}
 				<textarea style="display:none;" id="init-content">{{ isset($note) ? $note->content : '' }}</textarea>
@@ -56,7 +59,15 @@
 	<script type="text/javascript">
 		$(document).ready(function(e, element){
 			// Load 
-			$('.ckeditor').val($('#init-content').val());
+			var initVal = $('#init-content').val();
+			var isCtrl = false;
+			var spaceRegex = /\s+/gi;
+			var stripNBSPS = initVal.replace(/&nbsp;/gi,'');
+			var taglessString = stripNBSPS.replace(/(<([^>]+)>)/ig, "");
+			taglessString = stripNBSPS.replace(/&quot;/ig, "");
+			var wordCount = taglessString.trim().replace(spaceRegex, ' ').split(' ').length;
+			$('.ckeditor').val(stripNBSPS);
+			$('#word-count').text(wordCount);
 
 			// Add event listener for ctrl+s in editor to do an AJAX save.
 			var editor = CKEDITOR.instances.editor1;
@@ -71,6 +82,7 @@
 			  editor.setKeystroke(CKEDITOR.CTRL + 52 /*4*/, 'heading-h4');
 			});
 
+			// Set hotkey listner for ctrl+s in editor
 			editor.on( 'contentDom', function( evt )
 			{
 				editor.document.on( 'keyup', function(event){
@@ -92,7 +104,7 @@
 	      });
 			}, editor.element.$);
 			
-			// Set hotkey listener for saving.
+			// Set hotkey listener for ctrl+s saving outside editor.
 			Mousetrap.bind('ctrl+s', function(e) {
 				e.preventDefault();
 				ajaxSave(editor);
@@ -125,7 +137,13 @@
 		function ajaxSave(editor){
 			var $form = $('#note-form');
 			var noteId = {{isset($note) ? $note->id : 'undefined'}};
-			var data = editor.getData();
+			var data = editor.getData().replace(/&nbsp;/ig, "");
+			var spaceRegex = /\s+/gi;
+			var taglessString = data.replace(/(<([^>]+)>)/ig, "");
+			taglessString = taglessString.replace(/&quot;/ig, "");
+			var wordCount = taglessString.trim().replace(spaceRegex, ' ').split(' ').length;
+			$('#word-count').text(wordCount);
+
 			var formData = $form.serializeArray();
 			formData.push({name: 'content', value: data});
 

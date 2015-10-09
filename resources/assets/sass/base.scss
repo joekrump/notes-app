@@ -1,0 +1,74 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-weight: 100;
+  font-family: 'Lato', 'Tahoma';
+  color: $primaryColor;
+  background-color: $backgroundColor;
+}
+
+h1, h2, h3 {
+  margin-bottom: 10px;
+}
+
+h1 {
+  font-size: 22pt;
+  color: $darkOrange;
+}
+
+h2 {
+  color: $lightOrange;
+}
+
+h3 {
+  color: $white;
+}
+
+.background {
+  background-image: url("/images/app_background.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: left top;
+  background-size: cover;
+}
+.background-dimmer {
+  background-color: rgba(0,0,0,0.3);
+}
+.background, .background-dimmer {
+  display: block;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+.title {
+    font-size: 96px;
+    font-weight: 100;
+}
+
+.index-page {
+  .content {
+    margin-top: 25px;
+    padding-bottom: 25px;
+  }
+  .container {
+    margin-top: 0px;
+  }
+  .title {
+    font-size: 13pt;
+    font-weight: 600;
+  }
+  .actions {
+    float: right;
+    .btn-secondary {
+      padding: 2px 5px;
+    }
+  }
+}

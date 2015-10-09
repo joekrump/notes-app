@@ -1,0 +1,83 @@
+.form-control {
+  background-color: rgba(0,0,0,0.0) !important;
+  color: $white !important;
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid $white;
+  &:focus {
+    box-shadow: none !important;
+    transition: border 300ms;
+  }
+}
+
+.label-inverse {
+  &.label-default {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid #C26811;
+  }
+  &.label-success {
+    background-color: rgba(92, 184, 92, 0.4);
+    border: 1px solid rgba(92, 184, 92, 1);
+  }
+  &.label-info {
+    background-color: rgba(91, 192, 222, 0.4);
+    border: 1px solid rgba(91,192,222,1);
+  }
+}
+
+a.inverse-link {
+  color: white;
+}
+
+.container {
+  background-color: rgba(0,0,0,0.6);
+  padding-bottom: 35px;
+  margin-top: 35px;
+}
+
+.navbar {
+  .container {
+    background: none;
+    padding-bottom: 0px;
+    margin-top: 0px;
+  }
+}
+.navbar-inverse {
+  background-color: rgba(0,0,0, 0.8);
+}
+
+.btn {
+  text-decoration: none;
+}
+
+.btn-danger {
+  background-color:  rgba(217, 83, 79, 0.2) !important;
+}
+
+.form-control {
+  &.transparent {
+    color: #e6e6e6;
+    font-size: 22pt;
+    border: none;
+    background: rgba(0,0,0,0.0);
+    border-radius: 0;
+    border-bottom: 1px solid $white;
+    option {
+      color: white;
+      font-size: 14pt;
+      background-color: rgba(0,0,0,0.8);
+    }
+  }
+}
+select {
+  border: none;
+}
+
+input[type="text"]:focused {
+  border: none;
+  border-bottom: 1px solid $white;
+} 
+
+a.btn-secondary, a.btn-primary, a.btn-success {
+  color: $white;
+}

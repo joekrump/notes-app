@@ -80,7 +80,7 @@ class CardsController extends Controller
         $card = new \App\Card($request->request->all());
         $card->save();
 
-        return redirect('/cards/' . $card->id);
+        return $card;
     }
 
     /**

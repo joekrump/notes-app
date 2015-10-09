@@ -1,0 +1,15 @@
+#action-box {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+}
+
+.left-options {
+  position: fixed;
+  top: 25px;
+  left: 25px;
+  * {
+    margin: 5px 0;
+    display: block;
+  }
+}

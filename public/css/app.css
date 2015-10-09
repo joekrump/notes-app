@@ -58,9 +58,17 @@ h2 {
 h3 {
   color: #e7e7e7; }
 
-.label-inverse {
+.label-inverse.label-default {
   background: rgba(0, 0, 0, 0.4);
   border: 1px solid #C26811; }
+
+.label-inverse.label-success {
+  background-color: rgba(92, 184, 92, 0.4);
+  border: 1px solid #5cb85c; }
+
+.label-inverse.label-info {
+  background-color: rgba(91, 192, 222, 0.4);
+  border: 1px solid #5bc0de; }
 
 .background {
   background-image: url("/images/app_background.jpg");
@@ -96,7 +104,8 @@ h3 {
 .navbar-inverse {
   background-color: rgba(0, 0, 0, 0.8); }
 
-.content {
+.index-page .content {
+  margin-top: 25px;
   padding-bottom: 25px; }
 
 .main {
@@ -150,6 +159,9 @@ h3 {
   background-color: none !important;
   height: 450px !important; }
 
+.cke_maximized .cke_contents {
+  height: inherit; }
+
 #cards .cke_contents {
   height: 200px !important; }
 
@@ -179,8 +191,11 @@ input[type="text"]:focused {
   border: none;
   border-bottom: 1px solid #ddd; }
 
-.btn-secondary, .btn-primary, .btn-success {
+a.btn-secondary, a.btn-primary, a.btn-success {
   color: white; }
+
+.btn-danger {
+  background-color: rgba(217, 83, 79, 0.2) !important; }
 
 .index-page .title {
   font-size: 13pt;
@@ -194,8 +209,8 @@ input[type="text"]:focused {
 .btn {
   text-decoration: none; }
 
-.clearfix:before, .clearfix:after {
-  content: ''; }
+.cke_maximized.cke_inner {
+  background-color: rgba(0, 0, 0, 0.8); }
 
 .card {
   border: 1px solid black;
