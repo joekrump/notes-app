@@ -1,6 +1,33 @@
 #note-page {
-  background-image: url("/images/notes_background.jpg");
+  // background-image: url("/images/notes_background.jpg");
   .container {
   	padding-bottom: 15px;
   }
+}
+.list-header {
+	border-left: 1px solid $lightBlue;
+	margin-bottom: 2px;
+	h3 {
+		color: $whiteBlue;
+		// text-shadow: 1px 1px 4px $white;
+	}
+	&:hover {
+		border-color: $darkOrange;
+		background-color: rgba(0,0,0,0.8);
+		h3 {
+			// color: $darkOrange;
+		}
+	}
+}
+@media (min-width: 1500px){
+	#note-page {
+		.container {
+		  width: 1400px;
+		}
+	}
+}
+@media(min-height: 950px){
+	.cke_contents {
+		height: 800px !important;
+	}
 }

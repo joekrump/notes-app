@@ -42,7 +42,8 @@ class NotesController extends Controller
     {
         $note = new \App\Note($request->input());
         $note->save();
-
+        $note_course = \App\Course::find($note->course_id);
+        $note['courseName'] = $note_course->name;
         return $note;
     }
 
@@ -92,6 +93,8 @@ class NotesController extends Controller
     {
         $note = \App\Note::find($id);
         $note->update($request->input());
+        $note_course = \App\Course::find($note->course_id);
+        $note['courseName'] = $note_course->name;
         return $note;
     }
 
@@ -103,6 +106,8 @@ class NotesController extends Controller
      */
     public function destroy($id)
     {
-        \App\Note::find($id)->delete();
+    	if($note = \App\Note::find($id)){
+        $note->delete();
+    	}
     }
 }

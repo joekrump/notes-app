@@ -6,10 +6,15 @@
 .cke_bottom, .cke_top {
   background: rgba(0,0,0,0.0) !important;
 }
-
 .cke_contents {
   background-color: none !important;
   height: 450px !important;
+}
+
+#note-page {
+  .cke_contents {
+    height: 580px !important;
+  }
 }
 
 .cke_top {

@@ -6,7 +6,7 @@ body {
   padding: 0;
   margin: 0;
   font-weight: 100;
-  font-family: 'Lato', 'Tahoma';
+  font-family: 'Lato', 'Tahoma', 'Arial';
   color: #CFD198;
   background-color: #000000; }
 
@@ -41,20 +41,34 @@ h3 {
   width: 100%;
   height: 100%; }
 
+.list-striped li {
+  background-color: rgba(0, 0, 0, 0.6);
+  margin-top: 1px;
+  padding-top: 5px;
+  border-left: 1px solid #B98940;
+  padding-top: 8px;
+  padding-bottom: 8px; }
+  .list-striped li:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-left: 1px solid #C26811; }
+
 .title {
   font-size: 96px;
   font-weight: 100; }
+
+.index-page .list-header {
+  background-color: rgba(0, 0, 0, 0.7); }
 
 .index-page .content {
   margin-top: 25px;
   padding-bottom: 25px; }
 
-.index-page .container {
-  margin-top: 0px; }
-
 .index-page .title {
-  font-size: 13pt;
-  font-weight: 600; }
+  font-size: 12pt;
+  font-weight: 400; }
+  .index-page .title .text {
+    color: #e6e6e6;
+    margin-right: 15px; }
 
 .index-page .actions {
   float: right; }
@@ -144,6 +158,14 @@ input[type="text"]:focused {
 a.btn-secondary, a.btn-primary, a.btn-success {
   color: #e6e6e6; }
 
+.btn-success-inverse {
+  color: #e6e6e6;
+  background-color: rgba(92, 184, 92, 0.2);
+  border-color: #4cae4c; }
+  .btn-success-inverse:hover {
+    border-color: #45CF45;
+    color: #fff; }
+
 #spin {
   border: 1px solid white;
   color: white;
@@ -152,20 +174,6 @@ a.btn-secondary, a.btn-primary, a.btn-success {
 .form-control.title-field {
   margin-top: 25px;
   height: 32pt; }
-
-#note-page {
-  background-image: url("/images/notes_background.jpg"); }
-  #note-page .container {
-    padding-bottom: 15px; }
-
-#card-page {
-  background-image: url("/images/cards_background.jpg"); }
-
-#cards h1 {
-  color: #FFCE7F; }
-
-#cards .cke_contents {
-  height: 200px !important; }
 
 .cke_chrome {
   border: none !important; }
@@ -177,6 +185,9 @@ a.btn-secondary, a.btn-primary, a.btn-success {
   background-color: none !important;
   height: 450px !important; }
 
+#note-page .cke_contents {
+  height: 580px !important; }
+
 .cke_top {
   color: #363636; }
 
@@ -186,6 +197,35 @@ a.btn-secondary, a.btn-primary, a.btn-success {
 
 .cke_maximized.cke_inner {
   background-color: rgba(0, 0, 0, 0.8); }
+
+#note-page .container {
+  padding-bottom: 15px; }
+
+.list-header {
+  border-left: 1px solid #008B95;
+  margin-bottom: 2px; }
+  .list-header h3 {
+    color: #E6F2F6; }
+  .list-header:hover {
+    border-color: #B44012;
+    background-color: rgba(0, 0, 0, 0.8); }
+
+@media (min-width: 1500px) {
+  #note-page .container {
+    width: 1400px; } }
+
+@media (min-height: 950px) {
+  .cke_contents {
+    height: 800px !important; } }
+
+#card-page {
+  background-image: url("/images/cards_background.jpg"); }
+
+#cards h1 {
+  color: #FFCE7F; }
+
+#cards .cke_contents {
+  height: 200px !important; }
 
 /* Let's get this party started */
 ::-webkit-scrollbar {

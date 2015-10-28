@@ -81,3 +81,12 @@ input[type="text"]:focused {
 a.btn-secondary, a.btn-primary, a.btn-success {
   color: $white;
 }
+.btn-success-inverse {
+  color: #e6e6e6;
+  background-color: rgba(92, 184, 92, 0.2);
+  border-color: $green;
+  &:hover {
+    border-color: $hoverGreen;
+    color: #fff;
+  }
+}

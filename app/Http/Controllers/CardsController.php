@@ -64,7 +64,7 @@ class CardsController extends Controller
      *
      * @return Response
      */
-    public function create($card_type = 'default')
+    public function create($card_type = 'latin')
     {
         return view('cards.show', compact(['card_type']));
     }

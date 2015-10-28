@@ -7,7 +7,7 @@ body {
   padding: 0;
   margin: 0;
   font-weight: 100;
-  font-family: 'Lato', 'Tahoma';
+  font-family: 'Lato', 'Tahoma', 'Arial';
   color: $primaryColor;
   background-color: $backgroundColor;
 }
@@ -48,22 +48,41 @@ h3 {
   height: 100%;
 }
 
+.list-striped {
+  li {
+    background-color: rgba(0,0,0,0.6);
+    margin-top: 1px;
+    padding-top: 5px;
+    border-left: 1px solid $middleOrange;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    &:hover {
+      background-color: rgba(0,0,0,0.7);
+      border-left: 1px solid $lightOrange;
+    }
+  }
+}
+
 .title {
     font-size: 96px;
     font-weight: 100;
 }
 
 .index-page {
+  .list-header {
+    background-color: rgba(0,0,0,0.7);
+  }
   .content {
     margin-top: 25px;
     padding-bottom: 25px;
   }
-  .container {
-    margin-top: 0px;
-  }
   .title {
-    font-size: 13pt;
-    font-weight: 600;
+    font-size: 12pt;
+    font-weight: 400;
+    .text {
+      color: $white;
+      margin-right: 15px;
+    }
   }
   .actions {
     float: right;

@@ -57,12 +57,15 @@
 	<script type="text/javascript" src="{{ asset('js/mousetrap.min.js') }}"></script>
 
 	<script type="text/javascript">
+
+		var courseName = '';
+
 		$(document).ready(function(e, element){
 			// Load 
 			var initVal = $('#init-content').val();
 			var isCtrl = false;
 			var spaceRegex = /\s+/gi;
-			var stripNBSPS = initVal.replace(/&nbsp;/gi,'');
+			var stripNBSPS = initVal.replace(/&nbsp;/gi, " ");
 			var taglessString = stripNBSPS.replace(/(<([^>]+)>)/ig, "");
 			taglessString = stripNBSPS.replace(/&quot;/ig, "");
 			var wordCount = taglessString.trim().replace(spaceRegex, ' ').split(' ').length;
@@ -137,7 +140,7 @@
 		function ajaxSave(editor){
 			var $form = $('#note-form');
 			var noteId = {{isset($note) ? $note->id : 'undefined'}};
-			var data = editor.getData().replace(/&nbsp;/ig, "");
+			var data = editor.getData().replace(/&nbsp;/ig, " ");
 			var spaceRegex = /\s+/gi;
 			var taglessString = data.replace(/(<([^>]+)>)/ig, "");
 			taglessString = taglessString.replace(/&quot;/ig, "");
@@ -152,7 +155,15 @@
 				// console.log(response);
 				if(response.id !== noteId){
 					noteId = response.id;
-					$form.attr('action', '/notes/' + noteId)
+					$form.attr('action', '/notes/' + noteId);
+					var filename = response.courseName.replace(/\s+/, '_');
+					if(courseName !== filename){
+						courseName = filename;
+						
+						$('.background').fadeOut(200, function(){
+							$('.background').css({'background-image': 'url("/images/' + filename + '.jpg")'});
+						}).fadeIn(500);
+					}
 				}
 				$('#action-box').removeClass('label-info').addClass('label-success').fadeOut(500);
 			}).error(function(response){
