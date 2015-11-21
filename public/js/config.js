@@ -9,7 +9,7 @@ CKEDITOR.editorConfig = function( config ) {
 	config.uiColor = '#000000';
 	config.disableNativeSpellChecker = false;
 	config.removePlugins = 'liststyle,tabletools,scayt,contextmenu,resize,save';
-	config.extraPlugins = 'pastebase64';
+	// config.extraPlugins = 'pastebase64';
 	config.resize_enabled = false;   //Disallow resizing
 	config.toolbarGroups = [
 	    { name: 'document',    groups: [ 'mode', 'document' ] },

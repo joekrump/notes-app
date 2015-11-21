@@ -9,6 +9,10 @@ use App\Http\Controllers\Controller;
 
 class CardsController extends Controller
 {
+    public function cards_list(Request $request){
+        $cards = \App\Card::orderby('latin', 'asc')->get();
+        return view('cards.list', compact(['cards']));
+    }
     /**
      * Display a listing of cards
      *

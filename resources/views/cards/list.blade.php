@@ -4,7 +4,7 @@
 		<header class="page-header">
 			<div class="row">
 				<div class="col-sm-6">
-					<h1>{{ ucwords($card_type) }} Cards</h1>
+					<h1>Cards List</h1>
 				</div>
 				
 				<div class="col-sm-6">
@@ -16,9 +16,6 @@
 						</div>
 						<div class="col-sm-6">
 							<div class="btn-group pull-right">
-								
-								<a href="/cards/category/all" class="btn btn-primary">All Cards</a>
-				{{-- <a href="/cards/category/all" class="btn btn-primary">Show Categories</a> --}}
 								<a href='/cards/new' class="btn btn-success">New Card</a>
 							</div>
 						</div>
@@ -31,44 +28,25 @@
 		<div class="row">
 			@if($cards->count())
 			<div class="col-sm-4">
-				<h3>You currently have {{ $cards->total() }} cards</h3>
+				<h3>You currently have {{ $cards->count() }} cards</h3>
 			</div>
-			<div class="col-sm-4 text-center">
-				{!! $cards->render() !!}
-			</div>
-			<div id="pagination-content" class="col-sm-12">
+			<div  class="col-sm-12">
+				@if($cards->count())
+				<ul class="list list-unstyled">
 				
-				@foreach($cards as $card)
-					<a class="card col-sm-4{{ trim($card->english) === '' || is_null($card->english) ? ' empty' : ''}}" href={{ "/cards/" . $card->id }}>
-						<div class="row">
-							<div class="latin col-sm-4">
-								{!! $card->latin !!}
-							</div>
-							<div class="col-sm-8">
-								<div class="row">
-									<div class="lesson-number col-sm-12">
-									<div class="pull-right">
-										{{ $card->lesson_num }}
-									</div>
+					@foreach($cards as $card)
+						<li class="col-sm-12">
+							<div class="row">
+								<div class="col-sm-3">
+									{!! $card->latin !!}
 								</div>
+								<div class="col-sm-3">{{ $card->english }}</div>
 								</div>
-								<div class="english row">
-									<div class="col-sm-12">
-										<div class="definition">
-											{{ $card->english }}
-										</div>
-									</div>
-									<div class="col-sm-12">
-										<div class="origin">
-											{!! $card->origin !!}
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</a>
-				@endforeach
-				</div>
+						</li>
+					@endforeach
+				</ul>
+				@endif
+			</div>
 			@endif
 		</div>
 @stop
@@ -188,9 +166,7 @@
 		}
 
 		function makeCard(item){
-			var noDefinition = item.english === null || item.english === '';
-			return ['<a class="card col-sm-4',
-						(noDefinition ? ' empty' : ''), '" href="/cards/', item.id, '">',
+			return ['<a class="card col-sm-4" href="/cards/', item.id, '">',
 				'<div class="row">',
 					'<div class="latin col-sm-4">',
 						item.latin,

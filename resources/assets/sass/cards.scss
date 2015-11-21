@@ -2,6 +2,18 @@
   background-image: url("/images/cards_background.jpg");
   background-size: cover;
   background-repeat: no-repeat;
+  .list > li {
+    border-bottom: 1px solid $lightOrange;
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+  }
+  .card {
+    &.empty {
+      border-top: 5px solid red;
+    } 
+  }
 }
 #cards {
   h1 {
@@ -19,4 +31,5 @@
   .left-options {
   	top: 50px;
   }
+
 }

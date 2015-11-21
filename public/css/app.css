@@ -229,6 +229,13 @@ a.btn-secondary, a.btn-primary, a.btn-success {
   background-image: url("/images/cards_background.jpg");
   background-size: cover;
   background-repeat: no-repeat; }
+  #card-page .list > li {
+    border-bottom: 1px solid #C26811; }
+    #card-page .list > li ul {
+      list-style-type: none;
+      padding-left: 0; }
+  #card-page .card.empty {
+    border-top: 5px solid red; }
 
 #cards h1 {
   color: #FFCE7F; }
