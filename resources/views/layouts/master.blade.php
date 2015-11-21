@@ -7,16 +7,21 @@
         @yield('stylesheets')
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
-        @if(isset($note_course))
-        <style>
-            .background {
+        @if(isset($note))
+            <style>
+                .background {
+            @if(strpos($note->title, 'Enlightenment'))
+                background-image: url("/images/enlightenment.jpg");
+            @elseif(isset($note_course))
                 background-image: url("/images/{{preg_replace('/\s+/', '_', $note_course->name)}}.jpg");
-                background-repeat: no-repeat;
-                background-attachment: fixed;
-                background-position: left top;
-                background-size: cover;
-            }
-        </style>
+            @endif
+            
+                    background-repeat: no-repeat;
+                    background-attachment: fixed;
+                    background-position: left top;
+                    background-size: cover;
+                }
+            </style>
         @endif
         <meta name="_token" content="{{ csrf_token() }}" />
         

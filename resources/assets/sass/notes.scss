@@ -19,15 +19,35 @@
 		}
 	}
 }
+
+@media(max-width: 970px){
+	#note-page {
+		.cke_contents {
+			height: 360px !important; 
+		}
+	}
+}
 @media (min-width: 1500px){
 	#note-page {
 		.container {
 		  width: 1400px;
 		}
+		.cke_contents {
+			height: 600px !important;
+		}
 	}
 }
-@media(min-height: 950px){
-	.cke_contents {
-		height: 800px !important;
+@media (min-width: 1900px){
+	#note-page {
+		.cke_contents {
+			height: 800px !important;
+		}
+	}
+}
+@media (min-width: 1800px){
+	#note-page {
+		.container {
+		  width: 1780px;
+		}
 	}
 }

@@ -1,11 +1,22 @@
 #card-page {
   background-image: url("/images/cards_background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 #cards {
   h1 {
     color: $lightBrown;
   }
+  .container {
+  	margin-top: 60px;
+  }
   .cke_contents {
     height: 200px !important;
+  }
+  #action-box {
+  	top: 50px;
+  }
+  .left-options {
+  	top: 50px;
   }
 }

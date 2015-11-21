@@ -833,7 +833,7 @@ d.contentsCss;CKEDITOR.tools.isArray(b)||(d.contentsCss=b?[b]:[]);d.contentsCss.
 a+"</body></html>";CKEDITOR.env.gecko&&(a=a.replace(/<body/,'<body contenteditable="true" '),2E4>CKEDITOR.env.version&&(a=a.replace(/<body[^>]*>/,"$&<\!-- cke-content-start --\>")));c='<script id="cke_actscrpt" type="text/javascript"'+(CKEDITOR.env.ie?' defer="defer" ':"")+">var wasLoaded=0;function onload(){if(!wasLoaded)window.parent.CKEDITOR.tools.callFunction("+this._.frameLoadedHandler+",window);wasLoaded=1;}"+(CKEDITOR.env.ie?"onload();":'document.addEventListener("DOMContentLoaded", onload, false );')+
 "<\/script>";
 // c+='<script type="text/javascript" src="/js/jquery-1.11.0.min.js"></script>';
-// c+='<script type="text/javascript" src="/js/mousetrap.min.js"></script>';
+// c+='<script type="text/javascript" src="/js/paste-image.js"></script>';
 // c+='<script type="text/javascript">' +
 // '$(document).ready(function(){' +
 // 	'console.log("ready");\n' +

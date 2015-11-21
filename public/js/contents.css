@@ -24,6 +24,14 @@ body
 	font-size: 11pt;
 	line-height: 1.5;
 	background-color: rgba(0,0,0,0.0) !important;
+
+}
+
+::selection {
+  background: #819AA8; /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: #819AA8; /* Gecko Browsers */
 }
 
 blockquote

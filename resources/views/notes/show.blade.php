@@ -51,6 +51,7 @@
 	
 	<!-- ckeditor -->
 	<script type="text/javascript" src="{{ asset('js/ckeditor.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/plugins/plugins.js') }}"></script>
 
 	<!-- jQuery -->
 	<script type="text/javascript" src="{{ asset('js/jquery-1.11.0.min.js') }}"></script>
@@ -84,6 +85,8 @@
 			  editor.setKeystroke(CKEDITOR.CTRL + 51 /*3*/, 'heading-h3');
 			  editor.setKeystroke(CKEDITOR.CTRL + 52 /*4*/, 'heading-h4');
 			});
+
+			editor.addContentsCss( '/css/editor-print.css' );
 
 			// Set hotkey listner for ctrl+s in editor
 			editor.on( 'contentDom', function( evt )

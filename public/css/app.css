@@ -82,8 +82,8 @@ h3 {
 
 .left-options {
   position: fixed;
-  top: 25px;
-  left: 25px; }
+  top: 10px;
+  left: 10px; }
   .left-options * {
     margin: 5px 0;
     display: block; }
@@ -185,9 +185,6 @@ a.btn-secondary, a.btn-primary, a.btn-success {
   background-color: none !important;
   height: 450px !important; }
 
-#note-page .cke_contents {
-  height: 580px !important; }
-
 .cke_top {
   color: #363636; }
 
@@ -210,22 +207,43 @@ a.btn-secondary, a.btn-primary, a.btn-success {
     border-color: #B44012;
     background-color: rgba(0, 0, 0, 0.8); }
 
+@media (max-width: 970px) {
+  #note-page .cke_contents {
+    height: 360px !important; } }
+
 @media (min-width: 1500px) {
   #note-page .container {
-    width: 1400px; } }
+    width: 1400px; }
+  #note-page .cke_contents {
+    height: 600px !important; } }
 
-@media (min-height: 950px) {
-  .cke_contents {
+@media (min-width: 1900px) {
+  #note-page .cke_contents {
     height: 800px !important; } }
 
+@media (min-width: 1800px) {
+  #note-page .container {
+    width: 1780px; } }
+
 #card-page {
-  background-image: url("/images/cards_background.jpg"); }
+  background-image: url("/images/cards_background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat; }
 
 #cards h1 {
   color: #FFCE7F; }
 
+#cards .container {
+  margin-top: 60px; }
+
 #cards .cke_contents {
   height: 200px !important; }
+
+#cards #action-box {
+  top: 50px; }
+
+#cards .left-options {
+  top: 50px; }
 
 /* Let's get this party started */
 ::-webkit-scrollbar {
