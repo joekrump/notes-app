@@ -1,0 +1,13 @@
+/**
+ * Styling for CKEditor printing
+ * Add the line below to js so that this stylesheet will be loaded.
+ * editor.addContentsCss( '/css/editor-print.css' );
+ * 
+ */
+
+@media print {
+  p, body, h1, h2, ol {
+    color: black;
+    font-family: Geneva, Tahoma, Verdana, sans-serif;
+  }
+}

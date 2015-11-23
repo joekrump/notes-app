@@ -21,7 +21,7 @@ h2 {
   color: #C26811; }
 
 h3 {
-  color: #e6e6e6; }
+  color: #ffffff; }
 
 .background {
   background-image: url("/images/app_background.jpg");
@@ -67,7 +67,7 @@ h3 {
   font-size: 12pt;
   font-weight: 400; }
   .index-page .title .text {
-    color: #e6e6e6;
+    color: #ffffff;
     margin-right: 15px; }
 
 .index-page .actions {
@@ -94,10 +94,10 @@ h3 {
 
 .form-control {
   background-color: transparent !important;
-  color: #e6e6e6 !important;
+  color: #ffffff !important;
   border-radius: 0;
   border: none;
-  border-bottom: 1px solid #e6e6e6; }
+  border-bottom: 1px solid #ffffff; }
   .form-control:focus {
     box-shadow: none !important;
     transition: border 300ms; }
@@ -137,12 +137,12 @@ a.inverse-link {
   background-color: rgba(217, 83, 79, 0.2) !important; }
 
 .form-control.transparent {
-  color: #e6e6e6;
+  color: #ffffff;
   font-size: 22pt;
   border: none;
   background: transparent;
   border-radius: 0;
-  border-bottom: 1px solid #e6e6e6; }
+  border-bottom: 1px solid #ffffff; }
   .form-control.transparent option {
     color: white;
     font-size: 14pt;
@@ -153,18 +153,18 @@ select {
 
 input[type="text"]:focused {
   border: none;
-  border-bottom: 1px solid #e6e6e6; }
+  border-bottom: 1px solid #ffffff; }
 
 a.btn-secondary, a.btn-primary, a.btn-success {
-  color: #e6e6e6; }
+  color: #ffffff; }
 
 .btn-success-inverse {
-  color: #e6e6e6;
-  background-color: rgba(92, 184, 92, 0.2);
-  border-color: #4cae4c; }
+  color: #c5e1a5;
+  background-color: rgba(92, 184, 92, 0);
+  border-color: #c5e1a5; }
   .btn-success-inverse:hover {
-    border-color: #45CF45;
-    color: #fff; }
+    border-color: #7cb342;
+    color: #7cb342; }
 
 #spin {
   border: 1px solid white;
@@ -201,8 +201,8 @@ a.btn-secondary, a.btn-primary, a.btn-success {
 .list-header {
   border-left: 1px solid #008B95;
   margin-bottom: 2px; }
-  .list-header h3 {
-    color: #E6F2F6; }
+  .list-header h4 {
+    color: #81d4fa; }
   .list-header:hover {
     border-color: #B44012;
     background-color: rgba(0, 0, 0, 0.8); }

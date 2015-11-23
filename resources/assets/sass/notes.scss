@@ -7,16 +7,16 @@
 .list-header {
 	border-left: 1px solid $lightBlue;
 	margin-bottom: 2px;
-	h3 {
-		color: $whiteBlue;
+	h4 {
+		color: $lightBlue200;
 		// text-shadow: 1px 1px 4px $white;
 	}
 	&:hover {
 		border-color: $darkOrange;
 		background-color: rgba(0,0,0,0.8);
-		h3 {
-			// color: $darkOrange;
-		}
+		// h4 {
+		// 	color: $lightBlue400;
+		// }
 	}
 }
 

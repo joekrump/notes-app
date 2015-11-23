@@ -16,7 +16,7 @@
 					  <div class="accordion-heading row list-header">
 					    <a class="accordion-toggle" data-toggle="collapse" data-parent="#course-list" href="#collapse{{$course_notes->first()->course_id}}">
 					      <div class="col-sm-12">
-					      	<h3>{{ is_null($course = \App\Course::find($course_notes->first()->course_id)) ? 'Uncategorized' : ucwords($course->name) }}</h3>
+					      	<h4>{{ is_null($course = \App\Course::find($course_notes->first()->course_id)) ? 'Uncategorized' : ucwords($course->name) }}</h4>
 					      </div>
 					    </a>
 					  </div>

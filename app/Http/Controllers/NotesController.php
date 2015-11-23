@@ -41,6 +41,7 @@ class NotesController extends Controller
     public function store(Request $request)
     {
         $note = new \App\Note($request->input());
+        $note = make_slug($note);
         $note->save();
         $note_course = \App\Course::find($note->course_id);
         $note['courseName'] = $note_course->name;
@@ -109,5 +110,9 @@ class NotesController extends Controller
     	if($note = \App\Note::find($id)){
         $note->delete();
     	}
+    }
+
+    private function make_slug($note){
+
     }
 }

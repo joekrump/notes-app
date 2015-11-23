@@ -56,10 +56,10 @@ a.inverse-link {
 
 .form-control {
   &.transparent {
-    color: #e6e6e6;
+    color: $white;
     font-size: 22pt;
     border: none;
-    background: rgba(0,0,0,0.0);
+    background: $transparent;
     border-radius: 0;
     border-bottom: 1px solid $white;
     option {
@@ -82,11 +82,11 @@ a.btn-secondary, a.btn-primary, a.btn-success {
   color: $white;
 }
 .btn-success-inverse {
-  color: #e6e6e6;
-  background-color: rgba(92, 184, 92, 0.2);
-  border-color: $green;
+  color: $lightGreen700;
+  background-color: rgba(92, 184, 92, 0.0);
+  border-color: $lightGreen700;
   &:hover {
-    border-color: $hoverGreen;
-    color: #fff;
+    border-color: $lightGreen600;
+    color: $lightGreen600;
   }
 }
