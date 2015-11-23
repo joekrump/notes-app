@@ -64,8 +64,6 @@ class NotesController extends Controller
 
         if($note){
             $note_course = \App\Course::find($note->course_id);
-        } else {
-            $note = new \App\Note();
         }
 
         return view('notes.show', compact(['note', 'courses', 'note_course']));

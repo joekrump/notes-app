@@ -15,10 +15,10 @@ h1, h2, h3 {
 
 h1 {
   font-size: 22pt;
-  color: #B44012; }
+  color: #0091ea; }
 
 h2 {
-  color: #C26811; }
+  color: #00b0ff; }
 
 h3 {
   color: #ffffff; }
@@ -45,12 +45,12 @@ h3 {
   background-color: rgba(0, 0, 0, 0.6);
   margin-top: 1px;
   padding-top: 5px;
-  border-left: 1px solid #B98940;
+  border-left: 1px solid #827717;
   padding-top: 8px;
   padding-bottom: 8px; }
   .list-striped li:hover {
     background-color: rgba(0, 0, 0, 0.7);
-    border-left: 1px solid #C26811; }
+    border-left: 1px solid #aeea00; }
 
 .title {
   font-size: 96px;
@@ -104,7 +104,7 @@ h3 {
 
 .label-inverse.label-default {
   background: rgba(0, 0, 0, 0.4);
-  border: 1px solid #C26811; }
+  border: 1px solid #008B95; }
 
 .label-inverse.label-success {
   background-color: rgba(92, 184, 92, 0.4);
@@ -204,7 +204,7 @@ a.btn-secondary, a.btn-primary, a.btn-success {
   .list-header h4 {
     color: rgba(255, 255, 255, 0.87); }
   .list-header:hover {
-    border-color: #B44012;
+    border-color: #aeea00;
     background-color: rgba(0, 0, 0, 0.8); }
 
 @media (max-width: 970px) {
