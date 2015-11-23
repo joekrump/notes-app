@@ -82,11 +82,11 @@ a.btn-secondary, a.btn-primary, a.btn-success {
   color: $white;
 }
 .btn-success-inverse {
-  color: $lime400;
+  color: $lime700;
   background-color: rgba(92, 184, 92, 0.0);
-  border-color: $lime400;
+  border-color: $lime700;
   &:hover {
-    border-color: $limeA400;
-    color: $limeA400;
+    border-color: $limeA700;
+    color: $limeA700;
   }
 }

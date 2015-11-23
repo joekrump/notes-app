@@ -18,5 +18,5 @@ class Note extends Model
    *
    * @var array
    */
-  protected $fillable = ['title', 'content', 'course_id'];
+  protected $fillable = ['title', 'content', 'course_id', 'slug'];
 }

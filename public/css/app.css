@@ -159,12 +159,12 @@ a.btn-secondary, a.btn-primary, a.btn-success {
   color: #ffffff; }
 
 .btn-success-inverse {
-  color: #c5e1a5;
+  color: #afb42b;
   background-color: rgba(92, 184, 92, 0);
-  border-color: #c5e1a5; }
+  border-color: #afb42b; }
   .btn-success-inverse:hover {
-    border-color: #7cb342;
-    color: #7cb342; }
+    border-color: #aeea00;
+    color: #aeea00; }
 
 #spin {
   border: 1px solid white;
@@ -202,7 +202,7 @@ a.btn-secondary, a.btn-primary, a.btn-success {
   border-left: 1px solid #008B95;
   margin-bottom: 2px; }
   .list-header h4 {
-    color: #81d4fa; }
+    color: rgba(255, 255, 255, 0.87); }
   .list-header:hover {
     border-color: #B44012;
     background-color: rgba(0, 0, 0, 0.8); }
