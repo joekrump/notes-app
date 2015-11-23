@@ -25,7 +25,12 @@
 					      <ul class="list list-striped list-unstyled col-sm-12">
 					      	@foreach($course_notes as $note)
 					      	<li class="row">
+					      	@if($note->slug)
+					      		<a href={{'notes/' . $note->slug}}>	
+					      	@else
 					      		<a href={{'notes/' . $note->id}}>	
+					      	@endif
+					      		
 					      		<div class="col-sm-12">
 					      			<div class="title pull-left">
 					      				<span class="text">{{ $note->title }}</span>

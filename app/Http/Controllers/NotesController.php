@@ -41,7 +41,7 @@ class NotesController extends Controller
     public function store(Request $request)
     {
         $note = new \App\Note($request->input());
-
+        $note->slug = str_slug($request->title);
         $note->save();
         $note_course = \App\Course::find($note->course_id);
         $note['courseName'] = $note_course->name;
@@ -54,34 +54,33 @@ class NotesController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        $notes = \App\Note::where('title', $id);
+        $note = \App\Note::whereSlug($slug)->first();
+        if(!$note){
+            $note = \App\Note::find($slug);
+        }
         $courses = \App\Course::all();
 
-        if($notes->count() > 0) {
-            $note = $notes->first();
+        if($note){
             $note_course = \App\Course::find($note->course_id);
         } else {
-            $note = \App\Note::find($id);
-            if($note){
-                $note_course = \App\Course::find($note->course_id);
-            }   
+            $note = new \App\Note();
         }
 
         return view('notes.show', compact(['note', 'courses', 'note_course']));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        return view('notes.edit');
-    }
+    // *
+    //  * Show the form for editing the specified resource.
+    //  *
+    //  * @param  int  $id
+    //  * @return Response
+     
+    // public function edit($id)
+    // {
+    //     return view('notes.edit');
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -95,6 +94,8 @@ class NotesController extends Controller
         $note = \App\Note::find($id);
     
         $note->update($request->input());
+        $note->slug = str_slug($request->title);
+        $note->save();
         $note_course = \App\Course::find($note->course_id);
         $note['courseName'] = $note_course->name;
         return $note;
