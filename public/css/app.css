@@ -10,6 +10,21 @@ body {
   color: #CFD198;
   background-color: #000000; }
 
+.footer-fixed-bottom {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  margin-top: 0px;
+  border-top: none;
+  padding-top: 0px;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6); }
+  .footer-fixed-bottom .container {
+    margin-top: 0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: transparent; }
+
 h1, h2, h3 {
   margin-bottom: 10px; }
 
@@ -82,11 +97,8 @@ h3 {
 
 .left-options {
   position: fixed;
-  top: 10px;
+  bottom: 10px;
   left: 10px; }
-  .left-options * {
-    margin: 5px 0;
-    display: block; }
 
 #word-count {
   padding: 5px;
@@ -101,6 +113,9 @@ h3 {
   .form-control:focus {
     box-shadow: none !important;
     transition: border 300ms; }
+
+a.btn {
+  text-decoration: none !important; }
 
 .label-inverse.label-default {
   background: rgba(0, 0, 0, 0.4);
@@ -130,9 +145,6 @@ a.inverse-link {
 .navbar-inverse {
   background-color: rgba(0, 0, 0, 0.8); }
 
-.btn {
-  text-decoration: none; }
-
 .btn-danger {
   background-color: rgba(217, 83, 79, 0.2) !important; }
 
@@ -158,11 +170,20 @@ input[type="text"]:focused {
 a.btn-secondary, a.btn-primary, a.btn-success {
   color: #ffffff; }
 
-.btn-success-inverse {
+a.btn-default, .btn-default {
+  color: #b3e5fc;
+  background-color: transparent;
+  border-color: #b3e5fc; }
+  a.btn-default:hover, .btn-default:hover {
+    color: #ffffff;
+    border-color: #ffffff;
+    background-color: transparent; }
+
+a.btn-success-inverse, .btn-success-inverse {
   color: #afb42b;
   background-color: rgba(92, 184, 92, 0);
   border-color: #afb42b; }
-  .btn-success-inverse:hover {
+  a.btn-success-inverse:hover, .btn-success-inverse:hover {
     border-color: #aeea00;
     color: #aeea00; }
 

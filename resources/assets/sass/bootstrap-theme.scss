@@ -9,6 +9,9 @@
     transition: border 300ms;
   }
 }
+a.btn {
+  text-decoration: none !important;
+}
 
 .label-inverse {
   &.label-default {
@@ -46,10 +49,6 @@ a.inverse-link {
   background-color: rgba(0,0,0, 0.8);
 }
 
-.btn {
-  text-decoration: none;
-}
-
 .btn-danger {
   background-color:  rgba(217, 83, 79, 0.2) !important;
 }
@@ -81,7 +80,17 @@ input[type="text"]:focused {
 a.btn-secondary, a.btn-primary, a.btn-success {
   color: $white;
 }
-.btn-success-inverse {
+a.btn-default, .btn-default {
+  color: $lightBlue100;
+  background-color: $transparent;
+  border-color: $lightBlue100;
+  &:hover {
+    color: $white;
+    border-color: $white;
+    background-color: $transparent;
+  }
+}
+a.btn-success-inverse, .btn-success-inverse {
   color: $lime700;
   background-color: rgba(92, 184, 92, 0.0);
   border-color: $lime700;

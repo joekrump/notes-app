@@ -6,12 +6,8 @@
 
 .left-options {
   position: fixed;
-  top: 10px;
+  bottom: 10px;
   left: 10px;
-  * {
-    margin: 5px 0;
-    display: block;
-  }
 }
 #word-count {
 	padding: 5px;

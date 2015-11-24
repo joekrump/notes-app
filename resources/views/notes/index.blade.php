@@ -37,7 +37,7 @@
 					      				<div class="label label-inverse label-default">{{ $note->created_at->toFormattedDateString() }}</div>
 					      			</div>
 					      			<div class="pull-right">
-					      				<button type="button" class="btn btn-xs btn-danger btn-delete" data-id="{{$note->id}}">x</button>
+					      				<button type="button" class="btn btn-xs btn-danger btn-delete" data-id="{{$note->id}}">&times;</button>
 					      			</div>
 					      		</div>
 					      		</a>
