@@ -24,7 +24,7 @@
 					    {{-- <div class="accordion-inner"> --}}
 					      <ul class="list list-striped list-unstyled col-sm-12">
 					      	@foreach($course_notes as $note)
-					      	<li class="row">
+					      	<li class="row" data-id="{{$note->id}}">
 					      	@if($note->slug)
 					      		<a href={{'notes/' . $note->slug}}>	
 					      	@else

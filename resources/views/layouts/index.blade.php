@@ -37,18 +37,21 @@
     $(document).ready(function(e, element){
       $('.btn-delete').click(function(e){
         e.preventDefault();
-        var $itemRow = $(this).parent().parent().parent('.row');
-        $itemRow.fadeOut(300);
+        var $itemRow = $('.row [data-id="' + $(this).data('id') + '"]');
+        // Hide row by positive assertion.
+        $itemRow.slideUp(300);
+
         $.ajax({
           url: '/{{$resource_type}}s/' + $(this).data('id'),
           method: 'DELETE',
           data: {_token: $('meta[name="_token"]').attr('content')},
           complete: function(response){
             if(response.status === 200){
-              // do something on success
+              // Remove DOM element
               $itemRow.remove();
             } else {
-              $itemRow.show();
+              // If the deletion fails then show the row again.
+              $itemRow.slideDown(300);
             }
           }
         });
