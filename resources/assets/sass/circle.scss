@@ -1,0 +1,88 @@
+$xsDiameter: 100px;
+$smDiameter: 200px;
+$mdDiameter: 300px;
+$lgDiameter: 350px;
+$xlDiameter: 400px;
+
+.circle {
+	display: inline-block;
+	position: relative;
+	vertical-align: middle;
+
+	.name {
+		position: relative;
+		text-align: center;
+		font-size: 15px;
+		color: white;
+		font-weight: 700;
+		text-shadow: 1px 1px 1px #111;
+	}
+
+	&.yellow {
+		background-color: $yellow700;
+	}
+	&.red {
+		background-color: $red700;		
+	}
+	&.lime {
+		background-color: $lime700;
+	}
+	&.teal {
+		background-color: $teal700;
+	}
+	&.light-blue {
+		background-color: $lightBlue700;
+	}
+	&.deep-orange {
+		background-color: $deepOrange700;
+	}
+	&.purple {
+		background-color: $purple700;
+	}
+	&.grey {
+		background-color: $grey700;
+	}
+	&.amber {
+		background-color: $amber700;
+	}
+	&.circle-xs {
+		width: $xsDiameter;
+		height: $xsDiameter;
+		border-radius: ($xsDiameter / 2);
+		.name {
+			top: 40px;
+		}
+	}
+	&.circle-sm {
+		width: $smDiameter;
+		height: $smDiameter;
+		border-radius: ($smDiameter / 2);
+		.name {
+			top: 90px;
+		}
+	}
+	&.circle-md {
+		width: $mdDiameter;
+		height: $mdDiameter;
+		border-radius: ($mdDiameter / 2);
+		.name {
+			top: 145px;
+		}
+	}
+	&.circle-lg {
+		width: $lgDiameter;
+		height: $lgDiameter;
+		border-radius: ($lgDiameter / 2);
+		.name {
+			top: 170px;
+		}
+	}
+	&.circle-xl {
+		width: $xlDiameter;
+		height: $xlDiameter;
+		border-radius: ($xlDiameter / 2);
+		.name {
+			top: 195px;
+		}
+	}
+}

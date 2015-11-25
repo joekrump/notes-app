@@ -13,7 +13,11 @@
 
 
 Route::get('/', function () {
-    return view('welcome');
+   return view('welcome');
+});
+
+Route::get('/rob-roy-graph', function() {
+	return view('graph.circle.rob_roy');
 });
 
 Route::get('/admin', function() {
