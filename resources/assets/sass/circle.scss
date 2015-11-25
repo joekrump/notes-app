@@ -8,6 +8,8 @@ $xlDiameter: 400px;
 	display: inline-block;
 	position: relative;
 	vertical-align: middle;
+	border: 3px solid $white;
+	box-shadow: inset 2px 2px 2px $black;
 
 	.name {
 		position: relative;
@@ -19,32 +21,51 @@ $xlDiameter: 400px;
 	}
 
 	&.yellow {
-		background-color: $yellow700;
+		background-color: $yellow800;
 	}
 	&.red {
-		background-color: $red700;		
+		background-color: $red800;		
 	}
 	&.lime {
-		background-color: $lime700;
+		background-color: $limeA700;
+	}
+	&.lime2 {
+		background-color: $limeA400;
 	}
 	&.teal {
-		background-color: $teal700;
+		background-color: $teal800;
 	}
 	&.light-blue {
-		background-color: $lightBlue700;
+		background-color: $lightBlue800;
 	}
 	&.deep-orange {
-		background-color: $deepOrange700;
+		background-color: $deepOrange800;
 	}
 	&.purple {
-		background-color: $purple700;
+		background-color: $purple800;
 	}
 	&.grey {
-		background-color: $grey700;
+		background-color: $grey800;
 	}
 	&.amber {
-		background-color: $amber700;
+		background-color: $amber800;
 	}
+	&.blue-grey {
+		background-color: $blueGrey800;
+	}
+	&.green {
+		background-color: $green800;
+	}
+	&.indigo {
+		background-color: $indigo800;
+	}
+	&.cyan {
+		background-color: $cyan900;
+	}
+	&.light-green {
+		background-color: $lightGreenA400;
+	}
+
 	&.circle-xs {
 		width: $xsDiameter;
 		height: $xsDiameter;

@@ -296,7 +296,9 @@ a.btn-success-inverse, .btn-success-inverse {
 .circle {
   display: inline-block;
   position: relative;
-  vertical-align: middle; }
+  vertical-align: middle;
+  border: 3px solid #ffffff;
+  box-shadow: inset 2px 2px 2px #000000; }
   .circle .name {
     position: relative;
     text-align: center;
@@ -305,23 +307,35 @@ a.btn-success-inverse, .btn-success-inverse {
     font-weight: 700;
     text-shadow: 1px 1px 1px #111; }
   .circle.yellow {
-    background-color: #fbc02d; }
+    background-color: #f9a825; }
   .circle.red {
-    background-color: #d32f2f; }
+    background-color: #c62828; }
   .circle.lime {
-    background-color: #afb42b; }
+    background-color: #aeea00; }
+  .circle.lime2 {
+    background-color: #c6ff00; }
   .circle.teal {
-    background-color: #00796b; }
+    background-color: #00695c; }
   .circle.light-blue {
-    background-color: #0288d1; }
+    background-color: #0277bd; }
   .circle.deep-orange {
-    background-color: #e64a19; }
+    background-color: #d84315; }
   .circle.purple {
-    background-color: #7b1fa2; }
+    background-color: #6a1b9a; }
   .circle.grey {
-    background-color: #616161; }
+    background-color: #424242; }
   .circle.amber {
-    background-color: #ffa000; }
+    background-color: #ff8f00; }
+  .circle.blue-grey {
+    background-color: #37474f; }
+  .circle.green {
+    background-color: #2e7d32; }
+  .circle.indigo {
+    background-color: #283593; }
+  .circle.cyan {
+    background-color: #006064; }
+  .circle.light-green {
+    background-color: #76ff03; }
   .circle.circle-xs {
     width: 100px;
     height: 100px;
@@ -352,9 +366,6 @@ a.btn-success-inverse, .btn-success-inverse {
     border-radius: 200px; }
     .circle.circle-xl .name {
       top: 195px; }
-
-.circle-graph-page.container {
-  overflow-y: scroll; }
 
 .card {
   border: 1px solid black;
