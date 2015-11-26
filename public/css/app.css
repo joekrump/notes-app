@@ -170,22 +170,62 @@ input[type="text"]:focused {
 a.btn-secondary, a.btn-primary, a.btn-success {
   color: #ffffff; }
 
-a.btn-default, .btn-default {
-  color: #b3e5fc;
+a.btn-primary, button.btn-primary {
+  color: #00b0ff;
   background-color: transparent;
-  border-color: #b3e5fc; }
+  border-color: #00b0ff; }
+  a.btn-primary:hover, button.btn-primary:hover {
+    color: #0091ea;
+    border-color: #0091ea;
+    background-color: transparent; }
+
+a.btn-default, .btn-default {
+  color: #cfd8dc;
+  background-color: transparent;
+  border-color: #cfd8dc; }
   a.btn-default:hover, .btn-default:hover {
     color: #ffffff;
     border-color: #ffffff;
     background-color: transparent; }
 
 a.btn-success-inverse, .btn-success-inverse {
-  color: #afb42b;
+  color: #c6ff00;
   background-color: rgba(92, 184, 92, 0);
-  border-color: #afb42b; }
+  border-color: #c6ff00; }
   a.btn-success-inverse:hover, .btn-success-inverse:hover {
     border-color: #aeea00;
     color: #aeea00; }
+
+.pagination > li > a, .pagination > li > span {
+  position: relative;
+  float: left;
+  line-height: 1.42857143;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.6);
+  text-decoratino: none;
+  border: 1px solid #ffffff; }
+
+.pagination > .disabled > span,
+.pagination > .disabled > a,
+.pagination > .disabled > span:focus,
+.pagination > .disabled > span:hover,
+.pagination > .disabled > a:focus,
+.pagination > .disabled > a:hover {
+  color: #e0e0e0;
+  cursor: not-allowed;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-color: #e0e0e0; }
+
+.pagination > li > a:focus, .pagination > li > a:hover, .pagination > li > span:focus, .pagination > li > span:hover {
+  z-index: 3;
+  color: #00bcd4;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-color: #0097a7; }
+
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+  color: #aeea00;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-color: #c6ff00; }
 
 #spin {
   border: 1px solid white;
@@ -274,6 +314,17 @@ a.btn-success-inverse, .btn-success-inverse {
 
 #cards .left-options {
   top: 70px; }
+
+@media (min-width: 1500px) {
+  .container {
+    width: 1400px; } }
+
+@media (min-width: 1800px) {
+  .container {
+    width: 1780px; } }
+
+#card-page .container {
+  width: 1170px; }
 
 /* Let's get this party started */
 ::-webkit-scrollbar {

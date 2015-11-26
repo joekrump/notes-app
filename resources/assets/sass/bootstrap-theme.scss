@@ -80,10 +80,20 @@ input[type="text"]:focused {
 a.btn-secondary, a.btn-primary, a.btn-success {
   color: $white;
 }
-a.btn-default, .btn-default {
-  color: $lightBlue100;
+a.btn-primary, button.btn-primary {
+  color: $lightBlueA400;
   background-color: $transparent;
-  border-color: $lightBlue100;
+  border-color: $lightBlueA400;
+  &:hover {
+    color: $lightBlueA700;
+    border-color: $lightBlueA700;
+    background-color: $transparent;
+  }
+}
+a.btn-default, .btn-default {
+  color: $blueGrey100;
+  background-color: $transparent;
+  border-color: $blueGrey100;
   &:hover {
     color: $white;
     border-color: $white;
@@ -91,9 +101,9 @@ a.btn-default, .btn-default {
   }
 }
 a.btn-success-inverse, .btn-success-inverse {
-  color: $lime700;
+  color: $limeA400;
   background-color: rgba(92, 184, 92, 0.0);
-  border-color: $lime700;
+  border-color: $limeA400;
   &:hover {
     border-color: $limeA700;
     color: $limeA700;
@@ -105,7 +115,32 @@ a.btn-success-inverse, .btn-success-inverse {
   float: left;
   line-height: 1.42857143;
   color: $white;
-  background-color: $transparent;
+  background-color: rgba(0,0,0,0.6);
   text-decoratino: none;
   border: 1px solid $white;
+}
+
+.pagination>.disabled>span, 
+.pagination>.disabled>a, 
+.pagination>.disabled>span:focus, 
+.pagination>.disabled>span:hover,
+.pagination>.disabled>a:focus, 
+.pagination>.disabled>a:hover {
+  color: $grey300;
+  cursor: not-allowed;
+  background-color: rgba(0,0,0,0.8);
+  border-color: $grey300;
+}
+
+.pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover {
+  z-index: 3;
+  color: $cyan500;
+  background-color: rgba(0,0,0,0.6);
+  border-color: $cyan700;
+}
+
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+  color: $limeA700;
+  background-color: rgba(0,0,0,0.6);
+  border-color: $limeA400;
 }

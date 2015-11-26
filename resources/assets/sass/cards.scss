@@ -37,3 +37,21 @@
   	top: 70px;
   }
 }
+
+@media (min-width: 1500px){
+  .container {
+    width: 1400px;
+  }
+}
+
+@media (min-width: 1800px){
+  .container {
+    width: 1780px;
+  }
+}
+
+#card-page {
+  .container {
+    width: 1170px;
+  }
+}

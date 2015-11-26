@@ -17,9 +17,9 @@
 						<div class="col-sm-6">
 							<div class="btn-group pull-right">
 								
-								<a href="/cards/category/all" class="btn btn-primary">All Cards</a>
+								<a href="/cards/category/all" class="btn btn-default">All Cards</a>
 				{{-- <a href="/cards/category/all" class="btn btn-primary">Show Categories</a> --}}
-								<a href='/cards/new' class="btn btn-success">New Card</a>
+								<a href='/cards/new' class="btn btn-success-inverse">New Card</a>
 							</div>
 						</div>
 					</div>
@@ -173,7 +173,11 @@
 			});
 
 			$activePaginationLink.removeClass('active');
-			$paginationBtnAnchor.parents('li').addClass('active');
+			
+			if(!($paginationBtnAnchor.parents('li').attr('rel') != 'next' || $paginationBtnAnchor.parents('li').attr('rel') != 'prev')){
+				$paginationBtnAnchor.parents('li').addClass('active');
+			}
+			
 
 			if(currentPage == response.last_page) {
 				$nextBtn.addClass('disabled');
@@ -221,6 +225,7 @@
 			return newContent;
 		}
 
+		// Make a card div given the info contained in item.
 		function makeCard(item){
 			var noDefinition = item.english === null || item.english === '';
 			return ['<a class="card col-sm-4',
