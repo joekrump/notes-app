@@ -12,7 +12,7 @@
 		<aside class="left-options">
 			<div class="btn-group">
 				<a href={{"/cards/category" . (isset($card) ? ('/' . $card->type) : '/default') }} class="btn btn-default">Back to Cards</a>
-				<a href='/cards/new' class="btn btn-success pull-right">New Card</a>
+				<a href='/cards/new' class="btn btn-success-inverse pull-right">New Card</a>
 			</div>
 		</aside>
 		<section class="container">

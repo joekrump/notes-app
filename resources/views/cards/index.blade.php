@@ -31,17 +31,20 @@
 		<div class="row">
 			@if($cards->count())
 			<div class="col-sm-4">
-				<h3>You currently have {{ $cards->total() }} cards</h3>
+				<h3>{{ $cards->total() }} cards total</h3>
 			</div>
 			<div class="col-sm-4 text-center">
 				{!! $cards->render() !!}
+			</div>
+			<div class="col-sm-4 toggle-actions text-right">
+				<button id="latin-english-btn" type="button" class="btn btn-primary" data-showing-"latin">Latin</button>
 			</div>
 			<div id="pagination-content" class="col-sm-12">
 				
 				@foreach($cards as $card)
 					<a class="card col-sm-4{{ trim($card->english) === '' || is_null($card->english) ? ' empty' : ''}}" href={{ "/cards/" . $card->id }}>
 						<div class="row">
-							<div class="latin col-sm-4">
+							<div class="latin {{ $show_latin ? '' : 'not-showing' }} col-sm-4">
 								{!! $card->latin !!}
 							</div>
 							<div class="col-sm-8">
@@ -52,7 +55,7 @@
 									</div>
 								</div>
 								</div>
-								<div class="english row">
+								<div class="english {{ $show_latin ? 'not-showing' : '' }} row">
 									<div class="col-sm-12">
 										<div class="definition">
 											{{ $card->english }}
@@ -76,32 +79,63 @@
 @section('javascripts')
 	<script type="text/javascript">
 
+		var showLatin = {{ $show_latin ? 'true' : 'false' }};
+		var searchInProgress = false;
+
 		$(document).ready(function(e, element){
 			var $paginationList = $('.pagination');
+
 			$paginationList.find('a').click(function(e){
 				e.preventDefault();
 				var $paginationBtnAnchor = $(this);
 				handleLinkClick($paginationBtnAnchor);
 			});
 
-			var searchInProgress = false;
+			$('#latin-english-btn').click(function(e){
+				e.preventDefault();
+				
+				showLatin = !showLatin;
+
+				if($(this).text() == 'Latin'){
+					$(this).text('English');
+				} else {
+					$(this).text('Latin');
+				}
+
+				$('.latin').toggleClass('not-showing');
+				$('.english').toggleClass('not-showing');
+			});
+
+			
 			if(!searchInProgress){
 				$('#search').change(function(e){
-					searchInProgress = true;
 					var $searchInput = $(this);
-					
-					$.get($searchInput.data('url') + $searchInput.val(), function(response){
-						searchInProgress = false;
-						if(response.length > 0){
-							$('#pagination-content').html(makeNewContent(response));
-						} else {
-							$('#pagination-content').html('<div class="alert alert-info"><p>No results found for "'+ $searchInput.val() +'".</p></div>');
-						}
-						
-					});	
+					$searchInput.data('searching', true);
+
+					issueSearchRequest($searchInput);
+					$searchInput.data('searching', false);
+				}).keydown(function(e){
+					var $searchInput = $(this);
+					var enterKey = 13;
+					if((!$searchInput.data('searching')) && e.keyCode == enterKey){
+						issueSearchRequest($searchInput);
+					}
 				});
 			}
 		});
+
+		function issueSearchRequest($searchInput){
+			searchInProgress = true;
+			
+			$.get($searchInput.data('url') + (showLatin ? 'ln/' : 'en/') + $searchInput.val(), function(response){
+				searchInProgress = false;
+				if(response.length > 0){
+					$('#pagination-content').html(makeNewContent(response));
+				} else {
+					$('#pagination-content').html('<div class="alert alert-info"><p>No results found for "'+ $searchInput.val() +'".</p></div>');
+				}
+			});	
+		}
 
 		function handleLinkClick($link){
 			$.get($link.attr('href'), function(response){
@@ -192,7 +226,7 @@
 			return ['<a class="card col-sm-4',
 						(noDefinition ? ' empty' : ''), '" href="/cards/', item.id, '">',
 				'<div class="row">',
-					'<div class="latin col-sm-4">',
+					'<div class="latin', (showLatin ? '' : ' not-showing'),' col-sm-4">',
 						item.latin,
 					'</div>',
 					'<div class="col-sm-8">',
@@ -203,7 +237,7 @@
 								'</div>',
 							'</div>',
 						'</div>',
-						'<div class="english row">',
+						'<div class="english', (showLatin ? ' not-showing' : ''),' row">',
 							'<div class="col-sm-12">',
 								'<div class="definition">',
 									item.english,

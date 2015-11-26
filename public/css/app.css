@@ -233,9 +233,9 @@ a.btn-success-inverse, .btn-success-inverse {
     height: 360px !important; } }
 
 @media (min-width: 1500px) {
-  #note-page .container {
+  #note-page .container, .footer-fixed-bottom .container {
     width: 1400px; }
-  #note-page .cke_contents {
+  #note-page .cke_contents, .footer-fixed-bottom .cke_contents {
     height: 600px !important; } }
 
 @media (min-width: 1900px) {
@@ -243,7 +243,7 @@ a.btn-success-inverse, .btn-success-inverse {
     height: 800px !important; } }
 
 @media (min-width: 1800px) {
-  #note-page .container {
+  #note-page .container, .footer-fixed-bottom .container {
     width: 1780px; } }
 
 #card-page {
@@ -257,21 +257,23 @@ a.btn-success-inverse, .btn-success-inverse {
       padding-left: 0; }
   #card-page .card.empty {
     border-top: 5px solid red; }
+  #card-page .toggle-actions {
+    padding-top: 20px; }
 
 #cards h1 {
   color: #FFCE7F; }
 
 #cards .container {
-  margin-top: 60px; }
+  margin-top: 80px; }
 
 #cards .cke_contents {
   height: 200px !important; }
 
 #cards #action-box {
-  top: 50px; }
+  top: 70px; }
 
 #cards .left-options {
-  top: 50px; }
+  top: 70px; }
 
 /* Let's get this party started */
 ::-webkit-scrollbar {
@@ -311,11 +313,11 @@ a.btn-success-inverse, .btn-success-inverse {
   .circle.red {
     background-color: #c62828; }
   .circle.lime {
-    background-color: #aeea00; }
+    background-color: #afb42b; }
   .circle.lime2 {
-    background-color: #c6ff00; }
+    background-color: #827717; }
   .circle.teal {
-    background-color: #00695c; }
+    background-color: #26a69a; }
   .circle.light-blue {
     background-color: #0277bd; }
   .circle.deep-orange {
@@ -326,8 +328,10 @@ a.btn-success-inverse, .btn-success-inverse {
     background-color: #424242; }
   .circle.amber {
     background-color: #ff8f00; }
+  .circle.amber2 {
+    background-color: #ffca28; }
   .circle.blue-grey {
-    background-color: #37474f; }
+    background-color: #546e7a; }
   .circle.green {
     background-color: #2e7d32; }
   .circle.indigo {
@@ -335,7 +339,7 @@ a.btn-success-inverse, .btn-success-inverse {
   .circle.cyan {
     background-color: #006064; }
   .circle.light-green {
-    background-color: #76ff03; }
+    background-color: #689f38; }
   .circle.circle-xs {
     width: 100px;
     height: 100px;
@@ -349,23 +353,29 @@ a.btn-success-inverse, .btn-success-inverse {
     .circle.circle-sm .name {
       top: 90px; }
   .circle.circle-md {
-    width: 300px;
-    height: 300px;
-    border-radius: 150px; }
+    width: 240px;
+    height: 240px;
+    border-radius: 120px; }
     .circle.circle-md .name {
-      top: 145px; }
+      top: 110px; }
   .circle.circle-lg {
-    width: 350px;
-    height: 350px;
-    border-radius: 175px; }
+    width: 290px;
+    height: 290px;
+    border-radius: 145px; }
     .circle.circle-lg .name {
-      top: 170px; }
+      top: 135px; }
   .circle.circle-xl {
-    width: 400px;
-    height: 400px;
-    border-radius: 200px; }
+    width: 320px;
+    height: 320px;
+    border-radius: 160px; }
     .circle.circle-xl .name {
-      top: 195px; }
+      top: 150px; }
+  .circle.circle-xs-sm {
+    width: 150px;
+    height: 150px;
+    border-radius: 75px; }
+    .circle.circle-xs-sm .name {
+      top: 65px; }
 
 .card {
   border: 1px solid black;
@@ -376,12 +386,18 @@ a.btn-success-inverse, .btn-success-inverse {
   padding-top: 5px; }
   .card:hover, .card:focus {
     color: #000; }
-    .card:hover .english, .card:focus .english {
+    .card:hover .english.not-showing, .card:focus .english.not-showing {
+      opacity: 1; }
+    .card:hover .latin.not-showing, .card:focus .latin.not-showing {
       opacity: 1; }
   .card .latin {
+    opacity: 1;
     font-family: "Times New Roman";
     font-size: 14pt;
     font-weight: bold; }
+    .card .latin.not-showing {
+      opacity: 0;
+      transition: opacity 750ms; }
     .card .latin ul {
       padding: 0;
       margin-top: 14pt;
@@ -389,8 +405,10 @@ a.btn-success-inverse, .btn-success-inverse {
       .card .latin ul li {
         padding-left: -5px; }
   .card .english {
-    opacity: 0;
-    transition: opacity 750ms; }
+    opacity: 1; }
+    .card .english.not-showing {
+      opacity: 0;
+      transition: opacity 750ms; }
     .card .english .definition {
       font-size: 12pt;
       font-weight: bold; }

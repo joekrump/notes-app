@@ -47,17 +47,25 @@ class CardsController extends Controller
         }
 
         $cards->setPath($path);
+
+        $show_latin = true;
         
-        return view('cards.index', compact(['cards', 'card_type', 'resource_type']));
+        return view('cards.index', compact(['cards', 'card_type', 'resource_type', 'show_latin']));
     }
 
-    public function search($search){
+    public function search($language, $search_term){
 
-        // if the search value is a number then we assume that the user is trying to filter by lesson number.
-        if(intval($search)){
-            $cards = \App\Card::where('lesson_num', $search);
+        // if the search_term value is a number then we assume that the user is trying to filter by lesson number.
+        if(intval($search_term)){
+            $cards = \App\Card::where('lesson_num', $search_term);
         } else {
-            $cards = \App\Card::where('latin', 'like', '%'.$search.'%');
+            $likeString = '%' . $search_term . '%';
+            // Search based on the language that we are searching for.
+            if($language == 'ln'){
+                $cards = \App\Card::where('latin', 'like', $likeString);
+            } else if($language == 'en') {
+                $cards = \App\Card::where('english', 'like', '%' . $likeString);
+            }
         }
 
         return $cards->select(['id', 'latin', 'english', 'origin', 'lesson_num'])->orderby('latin')->get();

@@ -1,8 +1,10 @@
 $xsDiameter: 100px;
+$xssmDiameter: 150px;
 $smDiameter: 200px;
-$mdDiameter: 300px;
-$lgDiameter: 350px;
-$xlDiameter: 400px;
+$smmdDiameter: 220px;
+$mdDiameter: 240px;
+$lgDiameter: 290px;
+$xlDiameter: 320px;
 
 .circle {
 	display: inline-block;
@@ -30,10 +32,10 @@ $xlDiameter: 400px;
 		background-color: $lime700;
 	}
 	&.lime2 {
-		background-color: $lime400;
+		background-color: $lime900;
 	}
 	&.teal {
-		background-color: $teal800;
+		background-color: $teal400;
 	}
 	&.light-blue {
 		background-color: $lightBlue800;
@@ -50,8 +52,11 @@ $xlDiameter: 400px;
 	&.amber {
 		background-color: $amber800;
 	}
+	&.amber2 {
+		background-color: $amber400;
+	}
 	&.blue-grey {
-		background-color: $blueGrey800;
+		background-color: $blueGrey600;
 	}
 	&.green {
 		background-color: $green800;
@@ -87,7 +92,7 @@ $xlDiameter: 400px;
 		height: $mdDiameter;
 		border-radius: ($mdDiameter / 2);
 		.name {
-			top: 145px;
+			top: 110px;
 		}
 	}
 	&.circle-lg {
@@ -95,7 +100,7 @@ $xlDiameter: 400px;
 		height: $lgDiameter;
 		border-radius: ($lgDiameter / 2);
 		.name {
-			top: 170px;
+			top: 135px;
 		}
 	}
 	&.circle-xl {
@@ -103,7 +108,15 @@ $xlDiameter: 400px;
 		height: $xlDiameter;
 		border-radius: ($xlDiameter / 2);
 		.name {
-			top: 195px;
+			top: 150px;
+		}
+	}
+	&.circle-xs-sm {
+		width: $xssmDiameter;
+		height: $xssmDiameter;
+		border-radius: ($xssmDiameter / 2);
+		.name {
+			top: 65px;
 		}
 	}
 }

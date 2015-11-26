@@ -54,7 +54,7 @@ Route::get('/cards/category/{card_type}', 	'CardsController@index');
 Route::post('/cards', 											'CardsController@store');
 Route::post('/cards/{card_id}', 						'CardsController@update');
 Route::delete('/cards/{card_id}', 					'CardsController@destroy');
-Route::get('/cards/search/{search}', 'CardsController@search');
+Route::get('/cards/search/{language}/{search}', 'CardsController@search');
 
 
 Route::post('/comments', function(){

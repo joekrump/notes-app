@@ -20,6 +20,7 @@
               <li><a href="/notes">Notes</a></li>
               <li><a href="/courses">Courses</a></li>
               <li><a href="/cards/category/all">Cards</a></li>
+              <li><a href="/rob-roy-graph">Rob Roy</a></li>
             </ul>
           </div>
         </div>

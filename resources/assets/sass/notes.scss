@@ -14,9 +14,6 @@
 	&:hover {
 		border-color: $limeA700;
 		background-color: rgba(0,0,0,0.8);
-		// h4 {
-		// 	color: $lightBlue400;
-		// }
 	}
 }
 
@@ -28,7 +25,7 @@
 	}
 }
 @media (min-width: 1500px){
-	#note-page {
+	#note-page, .footer-fixed-bottom  {
 		.container {
 		  width: 1400px;
 		}
@@ -45,7 +42,7 @@
 	}
 }
 @media (min-width: 1800px){
-	#note-page {
+	#note-page, .footer-fixed-bottom {
 		.container {
 		  width: 1780px;
 		}
