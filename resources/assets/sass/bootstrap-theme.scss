@@ -50,7 +50,7 @@ a.inverse-link {
 }
 
 .btn-danger {
-  background-color:  rgba(217, 83, 79, 0.2) !important;
+  background-color: rgba(217, 83, 79, 0.2) !important;
 }
 
 .form-control {
@@ -98,4 +98,14 @@ a.btn-success-inverse, .btn-success-inverse {
     border-color: $limeA700;
     color: $limeA700;
   }
+}
+
+.pagination>li>a, .pagination>li>span {
+  position: relative;
+  float: left;
+  line-height: 1.42857143;
+  color: $white;
+  background-color: $transparent;
+  text-decoratino: none;
+  border: 1px solid $white;
 }
