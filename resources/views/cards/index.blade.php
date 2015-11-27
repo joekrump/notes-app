@@ -403,7 +403,7 @@
 									'data-action="complete" ',
 									'data-id="',item.id,'" ',
 									'data-next-page-url="',nextPageUrl,'">&check;',
-						'</button>',
+						'</button>&nbsp;',
 						'<button class="btn btn-xs btn-danger btn-22 mark-incomplete" ',
 									'data-action="incomplete" ',
 									'data-id="',item.id,'" ',
