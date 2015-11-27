@@ -106,7 +106,7 @@
 
 @section('javascripts')
 	<script type="text/javascript">
-	
+
 		/**
 		 * [showLatin description]
 		 * @type {Object}
@@ -121,7 +121,7 @@
 		 * [showMode description]
 		 * @type {Object}
 		 */
-		var showMode = {{ $show_mode }};
+		var showMode = "{{ $show_mode }}";
 
 		/**
 		 * [setCardActionListeners description]
@@ -347,7 +347,10 @@
 		function makeNewContent(response){
 			var $cardDiv;
 			var newContent = '';
-			$.each(response.data, function(index, item){
+			if(response.data !== undefined){
+				response = response.data;
+			}
+			$.each(response, function(index, item){
 				$cardDiv = makeCard(item, response.next_page_url);
 				newContent += $cardDiv;
 			});
@@ -385,7 +388,8 @@
 							'</div>',
 						'</div>',
 					'</div>',
-					'<div class="actions">',
+					( nextPageUrl !== undefined ? 
+					['<div class="actions">',
 						'<button class="btn btn-xs btn-success-inverse mark-complete" ',
 									'data-action="complete" ',
 									'data-id="',item.id,'" ',
@@ -396,7 +400,7 @@
 									'data-id="',item.id,'" ',
 									'data-next-page-url="',nextPageUrl,'">&times;',
 						'</button>',
-					'</div>',
+					'</div>'].join('') : ''),
 				'</div>',
 			'</div>'].join('');
 		}
