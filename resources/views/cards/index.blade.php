@@ -40,10 +40,25 @@
 			<div class="col-sm-4 toggle-actions text-right">
 				<button id="latin-english-btn" type="button" class="btn btn-primary" data-showing-"latin">Latin</button>
 			</div>
+			<div class="col-sm-12">
+				<nav class="nav">
+					<ul class="nav-tabs">
+						<li>
+							<button id="complete-filter-btn" type="button" class="btn btn-success-inverse">Completed</button>
+						</li>
+						<li>
+							<button id="incomplete-filter-btn" type="button" class="btn btn-danger">Incomplete</button>
+						</li>
+						<li>
+							<button id="all-filter-btn" type="button" class="btn btn-default active">All</button>
+						</li>
+					</ul>
+				</nav>
+			</div>
 			<div id="pagination-content" class="col-sm-12">
 				
 				@foreach($cards as $card)
-					<div class="card col-sm-4{{ trim($card->english) === '' || is_null($card->english) ? ' empty' : ''}}">
+					<div class="card col-sm-4{{ trim($card->english) === '' || is_null($card->english) ? ' empty' : ''}}" data-id="{{$card->id }}">
 						<div class="row">
 							<div class="latin {{ $show_latin ? '' : 'not-showing' }} col-sm-4">
 								<a href={{ "/cards/" . $card->id }}>{!! $card->latin !!}</a>
@@ -62,17 +77,25 @@
 											{{ $card->english }}
 										</div>
 									</div>
-									<div class="col-sm-12">
+								<div class="col-sm-12">
 										<div class="origin">
 											{!! $card->origin !!}
 										</div>
 									</div>
 								</div>
 							</div>
-								<div class="actions">
-									<button class="btn btn-xs btn-success-inverse">&check;</button>
-									<button class="btn btn-xs btn-danger btn-22">&times;</button>
-								</div>
+							<div class="actions">
+								<button class="btn btn-xs btn-success-inverse mark-complete" 
+											data-action="complete" 
+											data-id="{{ $card->id }}" 
+											data-current-page="{{$cards->currentPage()}}">&check;
+								</button>
+								<button class="btn btn-xs btn-danger btn-22 mark-incomplete" 
+											data-action="incomplete" 
+											data-id="{{ $card->id }}" 
+											data-current-page="{{$cards->currentPage()}}">&times;
+								</button>
+							</div>
 						</div>
 					</div>
 				@endforeach
@@ -83,19 +106,85 @@
 
 @section('javascripts')
 	<script type="text/javascript">
-
+	
+		/**
+		 * [showLatin description]
+		 * @type {Object}
+		 */
 		var showLatin = {{ $show_latin ? 'true' : 'false' }};
+		/**
+		 * [searchInProgress description]
+		 * @type {Boolean}
+		 */
 		var searchInProgress = false;
+		/**
+		 * [showMode description]
+		 * @type {Object}
+		 */
+		var showMode = {{ $show_mode }};
 
-		$(document).ready(function(e, element){
-			var $paginationList = $('.pagination');
+		/**
+		 * [setCardActionListeners description]
+		 */
+		function setCardActionListeners(){
+			
+			var $markCompleteBtns = $('.mark-complete');
+			var $markIncompleteBtns = $('.mark-complete');
 
-			$paginationList.find('a').click(function(e){
-				e.preventDefault();
-				var $paginationBtnAnchor = $(this);
-				handleLinkClick($paginationBtnAnchor);
+			$markCompleteBtns.unbind().click(function(e){
+				if(showMode == 'incomplete'){
+					$('.card[data-id="' + $(this).data('id') + '"]').fadeOut();
+				}
 			});
+			
+			$markIncompleteBtns.unbind().click(function(e){
+				if(showMode == 'incomplete'){
+					$('.card[data-id="' + $(this).data('id') + '"]').fadeOut();
+				}
+			});
+		}
 
+		/**
+		 * [setFilterBtnListeners description]
+		 */
+		function setFilterBtnListeners(){
+			var $completeFilterBtn = $('#complete-filter-btn');
+			var $incompleteFilterBtn = $('#incomplete-filter-btn');
+			var $allFilterBtn = $('#all-filter-btn');
+
+			$completeFilterBtn.click(function(e){
+				e.preventDefault();
+				// set complete as active
+				// 
+				// send a request to get first page of all cards
+				// 
+				// display cards
+				// 
+			});
+			$incompleteFilterBtn.click(function(e){
+				e.preventDefault();
+				// set incomplete as active on button and showMode
+				// 
+				// send a request to get first page of all cards
+				// 
+				// display cards
+				// 
+			});
+			$allFilterBtn.click(function(e){
+				e.preventDefault();
+				// set all as active on button and show mode
+				// 
+				// send a request to get first page of all cards
+				// 
+				// display cards
+				// 
+			});
+		}
+
+		/**
+		 * [setToggleLangauageListener description]
+		 */
+		function setToggleLangauageListener(){
 			$('#latin-english-btn').click(function(e){
 				e.preventDefault();
 				
@@ -110,7 +199,29 @@
 				$('.latin').toggleClass('not-showing');
 				$('.english').toggleClass('not-showing');
 			});
+		}
 
+		/**
+		 * [setPaginationListener description]
+		 */
+		function setPaginationListener(){
+			var $paginationList = $('.pagination');
+			$paginationList.find('a').click(function(e){
+				e.preventDefault();
+				var $paginationBtnAnchor = $(this);
+				handleLinkClick($paginationBtnAnchor);
+			});
+		}
+
+		$(document).ready(function(e, element){
+			
+			setCardActionListeners();
+
+			setFilterBtnListeners();
+			
+			setPaginationListener();
+
+			setToggleLangauageListener();
 			
 			if(!searchInProgress){
 				$('#search').change(function(e){
@@ -129,6 +240,11 @@
 			}
 		});
 
+		/**
+		 * [issueSearchRequest description]
+		 * @param  {[type]} $searchInput [description]
+		 * @return {[type]}              [description]
+		 */
 		function issueSearchRequest($searchInput){
 			searchInProgress = true;
 			
@@ -142,15 +258,26 @@
 			});	
 		}
 
+		/**
+		 * [handleLinkClick description]
+		 * @param  {[type]} $link [description]
+		 * @return {[type]}       [description]
+		 */
 		function handleLinkClick($link){
 			$.get($link.attr('href'), function(response){
 
 				updatePaginationLinks($link, response);
 
-				$('#pagination-content').html(makeNewContent(response.data));
+				$('#pagination-content').html(makeNewContent(response));
 			});
 		}
 
+		/**
+		 * [updatePaginationLinks description]
+		 * @param  {[type]} $paginationBtnAnchor [description]
+		 * @param  {[type]} response             [description]
+		 * @return {[type]}                      [description]
+		 */
 		function updatePaginationLinks($paginationBtnAnchor, response){
 			var $paginationList = $paginationBtnAnchor.parents('.pagination');
 			var $activePaginationLink = $paginationList.find('li.active');
@@ -217,13 +344,11 @@
 		 * @param  {Object} response The json response
 		 * @return {String}          A string container HTML which is to be inserted.
 		 */
-		function makeNewContent(data){
+		function makeNewContent(response){
 			var $cardDiv;
 			var newContent = '';
-			$.each(data, function(index, item){
-
-				$cardDiv = makeCard(item);
-
+			$.each(response.data, function(index, item){
+				$cardDiv = makeCard(item, response.next_page_url);
 				newContent += $cardDiv;
 			});
 
@@ -231,14 +356,14 @@
 		}
 
 		// Make a card div given the info contained in item.
-		function makeCard(item){
+		function makeCard(item, nextPageUrl){
 			var noDefinition = item.english === null || item.english === '';
-			return ['<a class="card col-sm-4',
-						(noDefinition ? ' empty' : ''), '" href="/cards/', item.id, '">',
+			return ['<div class="card col-sm-4',
+						(noDefinition ? ' empty' : ''), '" data-id="',item.id,'">',
 				'<div class="row">',
-					'<div class="latin', (showLatin ? '' : ' not-showing'),' col-sm-4">',
+					'<div class="latin', (showLatin ? '' : ' not-showing'),' col-sm-4"><a href="/cards/', item.id, '">',
 						item.latin,
-					'</div>',
+					'</a></div>',
 					'<div class="col-sm-8">',
 						'<div class="row">',
 							'<div class="lesson-number col-sm-12">',
@@ -260,8 +385,20 @@
 							'</div>',
 						'</div>',
 					'</div>',
+					'<div class="actions">',
+						'<button class="btn btn-xs btn-success-inverse mark-complete" ',
+									'data-action="complete" ',
+									'data-id="',item.id,'" ',
+									'data-next-page-url="',nextPageUrl,'">&check;',
+						'</button>',
+						'<button class="btn btn-xs btn-danger btn-22 mark-incomplete" ',
+									'data-action="incomplete" ',
+									'data-id="',item.id,'" ',
+									'data-next-page-url="',nextPageUrl,'">&times;',
+						'</button>',
+					'</div>',
 				'</div>',
-			'</a>'].join('');
+			'</div>'].join('');
 		}
 	</script>
 @stop

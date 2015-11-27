@@ -48,9 +48,20 @@ a.inverse-link {
 .navbar-inverse {
   background-color: rgba(0,0,0, 0.8);
 }
+.nav-tabs {
+  list-style: none;
+  border-bottom: 0;
+}
 
 .btn-danger {
-  background-color: rgba(217, 83, 79, 0.2) !important;
+  color: $red600;
+  border: 1px solid $red600;
+  background: $transparent;
+  &:hover, &:focus {
+    color: $redA400;
+    border-color: $redA400;
+    background: $transparent;
+  }
 }
 
 .form-control {

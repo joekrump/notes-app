@@ -13,10 +13,22 @@
     &.empty {
       border-top: 5px solid red;
     }
+    .latin {
+      a { 
+        color: $black;
+      }
+      a:hover, a:focus {
+        color: $grey700;
+        text-decoration: none;
+      }
+    }
     .actions {
       position: absolute;
-      top: 26px;
+      bottom: 12px;
       right: 12px;
+      .btn-success-inverse, .btn-danger {
+        background-color: rgba(0,0,0,0.6);
+      }
       .btn-22 {
         width: 22px;
       }

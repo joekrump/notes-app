@@ -145,8 +145,18 @@ a.inverse-link {
 .navbar-inverse {
   background-color: rgba(0, 0, 0, 0.8); }
 
+.nav-tabs {
+  list-style: none;
+  border-bottom: 0; }
+
 .btn-danger {
-  background-color: rgba(217, 83, 79, 0.2) !important; }
+  color: #e53935;
+  border: 1px solid #e53935;
+  background: transparent; }
+  .btn-danger:hover, .btn-danger:focus {
+    color: #ff1744;
+    border-color: #ff1744;
+    background: transparent; }
 
 .form-control.transparent {
   color: #ffffff;
@@ -297,6 +307,19 @@ a.btn-success-inverse, .btn-success-inverse {
       padding-left: 0; }
   #card-page .card.empty {
     border-top: 5px solid red; }
+  #card-page .card .latin a {
+    color: #000000; }
+  #card-page .card .latin a:hover, #card-page .card .latin a:focus {
+    color: #616161;
+    text-decoration: none; }
+  #card-page .card .actions {
+    position: absolute;
+    bottom: 12px;
+    right: 12px; }
+    #card-page .card .actions .btn-success-inverse, #card-page .card .actions .btn-danger {
+      background-color: rgba(0, 0, 0, 0.6); }
+    #card-page .card .actions .btn-22 {
+      width: 22px; }
   #card-page .toggle-actions {
     padding-top: 20px; }
 

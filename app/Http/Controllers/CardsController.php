@@ -49,8 +49,8 @@ class CardsController extends Controller
         $cards->setPath($path);
         $blank_count = \App\Card::whereRaw('english = ""')->count();
         $show_latin = true;
-        
-        return view('cards.index', compact(['cards', 'card_type', 'resource_type', 'show_latin', 'blank_count']));
+        $show_mode = 'all';
+        return view('cards.index', compact(['cards', 'card_type', 'resource_type', 'show_latin', 'blank_count', 'show_mode']));
     }
 
     public function search($language, $search_term){
