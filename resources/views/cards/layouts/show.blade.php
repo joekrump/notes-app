@@ -117,7 +117,8 @@
 
 			$('#action-box').removeClass('label-success').addClass('label-info').text('Saving...').fadeIn(100);
 			$.post($form.attr('action'), formData, function(response){
-				// console.log(response);
+				console.log(response);
+				
 				if(response.id !== cardId){
 					cardId = response.id;
 					$form.attr('action', '/cards/' + cardId)

@@ -33,11 +33,11 @@ class CardsController extends Controller
             $path = '/cards/category/' . $card_type . '/' . $lesson_num;
         }
 
-        $cards = $cards->orderby('lesson_num', 'desc')->orderby('latin')->paginate(12);
+        $cards = $cards->orderby('lesson_num', 'desc')->orderby('latin')->paginate(9);
 
         if($cards->count() < 1) {
             $card_type = 'all';
-            $cards = \App\Card::orderby('lesson_num', 'desc')->orderby('latin')->paginate(12);
+            $cards = \App\Card::orderby('lesson_num', 'desc')->orderby('latin')->paginate(9);
             $path = '/cards/category/' . $card_type;
         }
 
@@ -137,8 +137,9 @@ class CardsController extends Controller
     {
         $card = \App\Card::find($id);
         $card->update($request->request->all());
-        $card_type = $card->type;
-        return view('cards.show', compact(['card', 'card_type']));
+        $card->save();
+
+        return $card;
     }
 
     /**

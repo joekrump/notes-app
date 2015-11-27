@@ -83,7 +83,9 @@ class CoursesController extends Controller
     public function update(Request $request, $id)
     {
         $course = \App\Course::find($id);
-        $course->update($request->request->all());
+        if($course){
+           $course->update($request->request->all()); 
+        }
         return $course;
     }
 
