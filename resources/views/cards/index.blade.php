@@ -129,16 +129,20 @@
 		function setCardActionListeners(){
 			
 			var $markCompleteBtns = $('.mark-complete');
-			var $markIncompleteBtns = $('.mark-complete');
+			var $markIncompleteBtns = $('.mark-incomplete');
 
 			$markCompleteBtns.unbind().click(function(e){
+				e.preventDefault();
+				console.log('complete');
 				if(showMode == 'incomplete'){
 					$('.card[data-id="' + $(this).data('id') + '"]').fadeOut();
 				}
 			});
 			
 			$markIncompleteBtns.unbind().click(function(e){
-				if(showMode == 'incomplete'){
+				e.preventDefault();
+				console.log('incomplete');
+				if(showMode == 'complete'){
 					$('.card[data-id="' + $(this).data('id') + '"]').fadeOut();
 				}
 			});
@@ -255,6 +259,7 @@
 				} else {
 					$('#pagination-content').html('<div class="alert alert-info"><p>No results found for "'+ $searchInput.val() +'".</p></div>');
 				}
+				setCardActionListeners();
 			});	
 		}
 
@@ -269,6 +274,7 @@
 				updatePaginationLinks($link, response);
 
 				$('#pagination-content').html(makeNewContent(response));
+				setCardActionListeners();
 			});
 		}
 
@@ -347,10 +353,12 @@
 		function makeNewContent(response){
 			var $cardDiv;
 			var newContent = '';
+			var data = response;
+
 			if(response.data !== undefined){
-				response = response.data;
+				data = response.data;
 			}
-			$.each(response, function(index, item){
+			$.each(data, function(index, item){
 				$cardDiv = makeCard(item, response.next_page_url);
 				newContent += $cardDiv;
 			});
@@ -361,6 +369,7 @@
 		// Make a card div given the info contained in item.
 		function makeCard(item, nextPageUrl){
 			var noDefinition = item.english === null || item.english === '';
+			console.log(nextPageUrl);
 			return ['<div class="card col-sm-4',
 						(noDefinition ? ' empty' : ''), '" data-id="',item.id,'">',
 				'<div class="row">',
