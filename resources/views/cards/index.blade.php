@@ -32,6 +32,7 @@
 			@if($cards->count())
 			<div class="col-sm-4">
 				<h3>{{ $cards->total() }} cards total</h3>
+				<h3>{{ $blank_count }} blank cards</h3>
 			</div>
 			<div class="col-sm-4 text-center">
 				{!! $cards->render() !!}
@@ -42,10 +43,10 @@
 			<div id="pagination-content" class="col-sm-12">
 				
 				@foreach($cards as $card)
-					<a class="card col-sm-4{{ trim($card->english) === '' || is_null($card->english) ? ' empty' : ''}}" href={{ "/cards/" . $card->id }}>
+					<div class="card col-sm-4{{ trim($card->english) === '' || is_null($card->english) ? ' empty' : ''}}">
 						<div class="row">
 							<div class="latin {{ $show_latin ? '' : 'not-showing' }} col-sm-4">
-								{!! $card->latin !!}
+								<a href={{ "/cards/" . $card->id }}>{!! $card->latin !!}</a>
 							</div>
 							<div class="col-sm-8">
 								<div class="row">
@@ -68,8 +69,12 @@
 									</div>
 								</div>
 							</div>
+								<div class="actions">
+									<button class="btn btn-xs btn-success-inverse">&check;</button>
+									<button class="btn btn-xs btn-danger btn-22">&times;</button>
+								</div>
 						</div>
-					</a>
+					</div>
 				@endforeach
 				</div>
 			@endif

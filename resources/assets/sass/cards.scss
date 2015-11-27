@@ -12,7 +12,15 @@
   .card {
     &.empty {
       border-top: 5px solid red;
-    } 
+    }
+    .actions {
+      position: absolute;
+      top: 26px;
+      right: 12px;
+      .btn-22 {
+        width: 22px;
+      }
+    }
   }
   .toggle-actions {
     padding-top: 20px;
