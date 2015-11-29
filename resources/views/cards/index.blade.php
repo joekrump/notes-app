@@ -128,14 +128,23 @@
 		 */
 		function setCardActionListeners(){
 			
-			var $markCompleteBtns = $('.mark-complete');
+			var $markCompleteBtns   = $('.mark-complete');
 			var $markIncompleteBtns = $('.mark-incomplete');
 
 			$markCompleteBtns.unbind().click(function(e){
 				e.preventDefault();
 				console.log('complete');
 				if(showMode == 'incomplete'){
-					$('.card[data-id="' + $(this).data('id') + '"]').fadeOut();
+					var cardId = $(this).data('id');
+					$('.card[data-id="' + cardId + '"]').fadeOut();
+					$.ajax({
+					  url: '/cards/' + cardId + '/mark-as-complete/1',
+					  method: 'POST',
+					  data: {_token: $('meta[name="_token"]').attr('content')},
+					  complete: function(response){
+					    console.log(response);
+					  }
+					});
 				}
 			});
 			
@@ -143,7 +152,17 @@
 				e.preventDefault();
 				console.log('incomplete');
 				if(showMode == 'complete'){
-					$('.card[data-id="' + $(this).data('id') + '"]').fadeOut();
+					var cardId = $(this).data('id');
+					$('.card[data-id="' + cardId + '"]').fadeOut();
+
+					$.ajax({
+					  url: '/cards/' + cardId + '/mark-as-complete/0',
+					  method: 'POST',
+					  data: {_token: $('meta[name="_token"]').attr('content')},
+					  complete: function(response){
+					    console.log(response);
+					  }
+					});
 				}
 			});
 		}
@@ -159,7 +178,7 @@
 			$completeFilterBtn.click(function(e){
 				e.preventDefault();
 				// set complete as active
-				// 
+				showMode = 'complete';
 				// send a request to get first page of all cards
 				// 
 				// display cards
@@ -168,7 +187,7 @@
 			$incompleteFilterBtn.click(function(e){
 				e.preventDefault();
 				// set incomplete as active on button and showMode
-				// 
+				showMode = 'incomplete';
 				// send a request to get first page of all cards
 				// 
 				// display cards
@@ -177,7 +196,7 @@
 			$allFilterBtn.click(function(e){
 				e.preventDefault();
 				// set all as active on button and show mode
-				// 
+				showMode = 'all';
 				// send a request to get first page of all cards
 				// 
 				// display cards

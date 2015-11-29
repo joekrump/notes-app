@@ -52,6 +52,10 @@ class CardsController extends Controller
         $show_mode = 'all';
         return view('cards.index', compact(['cards', 'card_type', 'resource_type', 'show_latin', 'blank_count', 'show_mode']));
     }
+    public function mark_as_complete($card_id, $status){
+        $card = \App\Card::findOrFail($card_id);
+        $card->update(['marked_complete' => $status]);
+    }
 
     public function search($language, $search_term){
 
