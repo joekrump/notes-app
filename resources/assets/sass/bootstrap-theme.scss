@@ -17,7 +17,7 @@ a.btn {
   padding: .2em .6em .2em;
   display: inline-block;
   vertical-align: middle;
-  
+
   &.label-default {
     background: rgba(0,0,0,0.4);
     border: 1px solid $lightBlue;
@@ -58,12 +58,12 @@ a.inverse-link {
 }
 
 .btn-danger {
-  color: $red600;
-  border: 1px solid $red600;
+  color: $redA400;
+  border: 1px solid $redA400;
   background: $transparent;
   &:hover, &:focus {
-    color: $redA400;
-    border-color: $redA400;
+    color: $redA700;
+    border-color: $redA700;
     background: $transparent;
   }
 }
@@ -102,6 +102,16 @@ a.btn-primary, button.btn-primary {
   &:hover {
     color: $lightBlueA700;
     border-color: $lightBlueA700;
+    background-color: $transparent;
+  }
+}
+a.btn-secondary, button.btn-secondary {
+  color: #DDDDDD;
+  background-color: $transparent;
+  border-color: $grey400;
+  &:hover {
+    color: $grey700;
+    border-color: $grey700;
     background-color: $transparent;
   }
 }

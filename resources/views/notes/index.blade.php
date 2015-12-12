@@ -16,10 +16,10 @@
 					  <div class="accordion-heading row list-header">
 					    <a class="accordion-toggle" data-toggle="collapse" data-parent="#course-list" href="#collapse{{$course->id}}">
 					      <div class="col-sm-12">
-					      	<div class="title pull-left">
-					      		<h4>{{ ucwords($course->name) }}</h4>
-					      		<div class="label label-inverse label-default">{{ $note_count }}</div>
-					      	</div>
+						      	<div class="title">
+						      		<h4>{{ ucwords($course->name) }}</h4>
+						      	</div>
+						      	<div class="label label-inverse label-default">{{ $note_count }}</div>
 					      </div>
 					    </a>
 					  </div>
@@ -34,12 +34,21 @@
 					      	@endif
 					      		
 					      		<div class="col-sm-12">
-					      			<div class="title pull-left">
+					      			<div class="title">
 					      				<span class="text">{{ $note->title }}</span>
-					      				<div class="label label-inverse label-default">{{ $note->created_at->toFormattedDateString() }}</div>
 					      			</div>
+					      			<div class="label label-inverse label-default">{{ $note->created_at->toFormattedDateString() }}</div>
 					      			<div class="pull-right">
-					      				<button type="button" class="btn btn-xs btn-primary">archive</button>
+					      				@if($note->status != 0)
+					      					<button type="button" class="btn btn-xs btn-success-inverse" data-id="{{$note->id}}" data-action-status=1>set active</button>
+					      				@endif
+					      				@if($note->status != 1)
+					      					<button type="button" class="btn btn-xs btn-primary" data-id="{{$note->id}}" data-action-status=1>archive</button>
+					      				@endif
+					      				@if($note->status != 2)
+					      					<button type="button" class="btn btn-xs btn-secondary" data-id="{{$note->id}}" data-action-status=1>backup</button>
+					      				@endif
+					      				
 					      				<button type="button" class="btn btn-xs btn-danger btn-delete" data-id="{{$note->id}}">&times;</button>
 					      			</div>
 					      		</div>

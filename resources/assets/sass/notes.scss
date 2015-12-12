@@ -4,9 +4,33 @@
   	padding-bottom: 15px;
   }
 }
+#notes {
+  .title {
+  	width: 300px;
+  	display: inline-block;
+  	overflow: hidden;
+  	white-space: nowrap;
+		text-overflow: ellipsis;
+		text-overflow: " …";
+		color: $white;
+		vertical-align: middle;
+		.text {
+			vertical-align: middle;
+		}
+	}
+}
+
 .list-header {
 	border-left: 1px solid $lightBlue;
 	margin-bottom: 2px;
+	.title {
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		text-overflow: " …";
+		width: 300px;
+		display: inline-block;
+	}
 	h4 {
 		color: $darkWhite;
 		display: inline-block;
@@ -18,10 +42,16 @@
 	}
 }
 
-@media(max-width: 970px){
+@media(min-width: 970px){
 	#note-page {
 		.cke_contents {
 			height: 360px !important; 
+		}
+	}
+	#notes {
+		.accordion-body {
+			max-height: 360px;
+			overflow-y: scroll;
 		}
 	}
 }
@@ -34,6 +64,12 @@
 			height: 600px !important;
 		}
 	}
+	#notes {
+		.accordion-body {
+			max-height: 400px;
+			overflow-y: scroll;
+		}
+	}
 }
 @media (min-width: 1900px){
 	#note-page {
@@ -41,11 +77,23 @@
 			height: 800px !important;
 		}
 	}
+	#notes {
+		.accordion-body {
+			max-height: 400px;
+			overflow-y: scroll;
+		}
+	}
 }
 @media (min-width: 1800px){
 	#note-page, .footer-fixed-bottom {
 		.container {
 		  width: 1780px;
+		}
+	}
+	#notes {
+		.accordion-body {
+			max-height: 550px;
+			overflow-y: scroll;
 		}
 	}
 }

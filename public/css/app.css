@@ -1,3 +1,4 @@
+@charset "UTF-8";
 html {
   height: 100%;
   width: 100%; }
@@ -152,12 +153,12 @@ a.inverse-link {
   border-bottom: 0; }
 
 .btn-danger {
-  color: #e53935;
-  border: 1px solid #e53935;
+  color: #ff1744;
+  border: 1px solid #ff1744;
   background: transparent; }
   .btn-danger:hover, .btn-danger:focus {
-    color: #ff1744;
-    border-color: #ff1744;
+    color: #d50000;
+    border-color: #d50000;
     background: transparent; }
 
 .form-control.transparent {
@@ -189,6 +190,15 @@ a.btn-primary, button.btn-primary {
   a.btn-primary:hover, button.btn-primary:hover {
     color: #0091ea;
     border-color: #0091ea;
+    background-color: transparent; }
+
+a.btn-secondary, button.btn-secondary {
+  color: #DDDDDD;
+  background-color: transparent;
+  border-color: #bdbdbd; }
+  a.btn-secondary:hover, button.btn-secondary:hover {
+    color: #616161;
+    border-color: #616161;
     background-color: transparent; }
 
 a.btn-default, .btn-default {
@@ -271,9 +281,28 @@ a.btn-success-inverse, .btn-success-inverse {
 #note-page .container {
   padding-bottom: 15px; }
 
+#notes .title {
+  width: 300px;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-overflow: " …";
+  color: #ffffff;
+  vertical-align: middle; }
+  #notes .title .text {
+    vertical-align: middle; }
+
 .list-header {
   border-left: 1px solid #008B95;
   margin-bottom: 2px; }
+  .list-header .title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-overflow: " …";
+    width: 300px;
+    display: inline-block; }
   .list-header h4 {
     color: rgba(255, 255, 255, 0.87);
     display: inline-block;
@@ -282,23 +311,35 @@ a.btn-success-inverse, .btn-success-inverse {
     border-color: #aeea00;
     background-color: rgba(0, 0, 0, 0.8); }
 
-@media (max-width: 970px) {
+@media (min-width: 970px) {
   #note-page .cke_contents {
-    height: 360px !important; } }
+    height: 360px !important; }
+  #notes .accordion-body {
+    max-height: 360px;
+    overflow-y: scroll; } }
 
 @media (min-width: 1500px) {
   #note-page .container, .footer-fixed-bottom .container {
     width: 1400px; }
   #note-page .cke_contents, .footer-fixed-bottom .cke_contents {
-    height: 600px !important; } }
+    height: 600px !important; }
+  #notes .accordion-body {
+    max-height: 400px;
+    overflow-y: scroll; } }
 
 @media (min-width: 1900px) {
   #note-page .cke_contents {
-    height: 800px !important; } }
+    height: 800px !important; }
+  #notes .accordion-body {
+    max-height: 400px;
+    overflow-y: scroll; } }
 
 @media (min-width: 1800px) {
   #note-page .container, .footer-fixed-bottom .container {
-    width: 1780px; } }
+    width: 1780px; }
+  #notes .accordion-body {
+    max-height: 550px;
+    overflow-y: scroll; } }
 
 #card-page {
   background-image: url("/images/cards_background.jpg");
