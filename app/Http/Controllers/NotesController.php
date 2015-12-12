@@ -16,10 +16,10 @@ class NotesController extends Controller
      */
     public function index()
     {
-        $notes_by_course = \App\Note::all()->groupBy('course_id');
+        $courses = \App\Course::orderBy('name', 'ASC')->get();
         $resource_type = 'note';
 
-        return view('notes.index', compact(['notes_by_course', 'resource_type']));
+        return view('notes.index', compact(['courses', 'resource_type']));
     }
 
     /**

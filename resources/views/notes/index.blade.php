@@ -8,22 +8,22 @@
 				<h1>Notes</h1>
 			</header>
 			
-			@if($notes_by_course->count())
+			@if($courses->count())
 				<div class="accordion" id="course-list">
-				@foreach($notes_by_course as $course_notes)
-
+				@foreach($courses as $course)
+					@if($course->notes()->count())
 					<div class="accordion-group">
 					  <div class="accordion-heading row list-header">
-					    <a class="accordion-toggle" data-toggle="collapse" data-parent="#course-list" href="#collapse{{$course_notes->first()->course_id}}">
+					    <a class="accordion-toggle" data-toggle="collapse" data-parent="#course-list" href="#collapse{{$course->id}}">
 					      <div class="col-sm-12">
-					      	<h4>{{ is_null($course = \App\Course::find($course_notes->first()->course_id)) ? 'Uncategorized' : ucwords($course->name) }}</h4>
+					      	<h4>{{ ucwords($course->name) }}</h4>
 					      </div>
 					    </a>
 					  </div>
 					  <div id="collapse{{$course->id}}" class="accordion-body collapse row">
 					    {{-- <div class="accordion-inner"> --}}
 					      <ul class="list list-striped list-unstyled col-sm-12">
-					      	@foreach($course_notes as $note)
+					      	@foreach($course->notes()->orderBy('created_at', 'DESC')->get() as $note)
 					      	<li class="row" data-id="{{$note->id}}">
 					      	@if($note->slug)
 					      		<a href={{'notes/' . $note->slug}}>	
@@ -47,6 +47,7 @@
 					  {{--   </div> --}}
 					  </div>
 					</div>
+					@endif
 				@endforeach
 				</div>
 			@endif

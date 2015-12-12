@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Card extends Model
+class Deck extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'cards';
+    protected $table = 'decks';
 
     /**
      * The attributes that are mass assignable.
@@ -19,10 +19,10 @@ class Card extends Model
      * @var array
      */
     
-    protected $fillable = ['latin', 'english', 'origin', 'lesson_num', 'type'];
+    protected $fillable = ['title'];
 
-    public function decks()
+    public function cards()
     {
-        return $this->belongsToMany('App\Deck');
+        return $this->belongsToMany('App\Card');
     }
 }

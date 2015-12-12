@@ -76,12 +76,6 @@ Route::get('admin', array('before' => 'auth', function()
 // }]);
 
 
-
-// Route::post('register', array('before' => 'csrf', function()
-// {
-//     return 'You gave a valid CSRF token!';
-// }));
-
 Route::controllers([
   'auth'     =>'Auth\AuthController',
   'password' => 'Auth\PasswordController'

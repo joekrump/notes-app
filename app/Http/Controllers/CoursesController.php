@@ -17,7 +17,7 @@ class CoursesController extends Controller
     public function index()
     {
         $resource_type = 'course';
-        $courses = \App\Course::all();
+        $courses = \App\Course::all()->orderby('title');
         return view('courses.index', compact(['courses', 'resource_type']));
     }
 

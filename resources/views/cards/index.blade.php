@@ -335,7 +335,6 @@
 				$paginationBtnAnchor.parents('li').addClass('active');
 			}
 			
-
 			if(currentPage == response.last_page) {
 				$nextBtn.addClass('disabled');
 			} else if($nextBtn.hasClass('disabled')) {
