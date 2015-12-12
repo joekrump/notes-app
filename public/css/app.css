@@ -117,17 +117,19 @@ h3 {
 a.btn {
   text-decoration: none !important; }
 
-.label-inverse.label-default {
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid #008B95; }
-
-.label-inverse.label-success {
-  background-color: rgba(92, 184, 92, 0.4);
-  border: 1px solid #5cb85c; }
-
-.label-inverse.label-info {
-  background-color: rgba(91, 192, 222, 0.4);
-  border: 1px solid #5bc0de; }
+.label-inverse {
+  padding: 0.2em 0.6em 0.2em;
+  display: inline-block;
+  vertical-align: middle; }
+  .label-inverse.label-default {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid #008B95; }
+  .label-inverse.label-success {
+    background-color: rgba(92, 184, 92, 0.4);
+    border: 1px solid #5cb85c; }
+  .label-inverse.label-info {
+    background-color: rgba(91, 192, 222, 0.4);
+    border: 1px solid #5bc0de; }
 
 a.inverse-link {
   color: white; }
@@ -273,7 +275,9 @@ a.btn-success-inverse, .btn-success-inverse {
   border-left: 1px solid #008B95;
   margin-bottom: 2px; }
   .list-header h4 {
-    color: rgba(255, 255, 255, 0.87); }
+    color: rgba(255, 255, 255, 0.87);
+    display: inline-block;
+    vertical-align: middle; }
   .list-header:hover {
     border-color: #aeea00;
     background-color: rgba(0, 0, 0, 0.8); }

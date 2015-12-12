@@ -11,7 +11,7 @@
 			@foreach($courses as $course)
 				<li class="col-sm-12">
 					<div class="title">
-						<a class="btn btn-secondary" href={{'courses/' . $course->id}}>{{ $course->name }}</a>
+						<a class="btn btn-secondary" href={{'courses/' . $course->id}}><h4>{{ $course->name }}</h4></a>
 					</div>
 				</li>
 			@endforeach
