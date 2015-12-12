@@ -15,7 +15,8 @@
 Route::get('/', function () {
    return view('welcome');
 });
-
+// Unique route for showing circles with characters from the novel "Rob Roy"
+//
 Route::get('/rob-roy-graph', function() {
 	return view('graph.circle.rob_roy');
 });
@@ -57,6 +58,16 @@ Route::post('/cards/{card_id}', 						'CardsController@update');
 Route::delete('/cards/{card_id}', 					'CardsController@destroy');
 Route::get('/cards/search/{language}/{search}', 'CardsController@search');
 
+// Decks
+// 
+Route::get('/decks',                    'DecksController@index');
+Route::post('/decks',                   'DecksController@store');
+Route::post('/decks/{deck_id}',         'DecksController@update');
+Route::delete('/decks/{deck_id}',       'DecksController@destroy');
+// Should perform actions such as adding or removing a card from a deck.
+// 
+Route::post('/decks/{deck_id}/{card_id}/{action}', 'DecksController@handle_card_action');
+Route::delete('/decks/{deck_id}',       'DecksController@destroy');
 
 Route::post('/comments', function(){
   // $initData = Comment::getData();
