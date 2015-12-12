@@ -18,34 +18,33 @@
 			vertical-align: middle;
 		}
 	}
-}
-
-.list-header {
-	border-left: 1px solid $lightBlue;
-	margin-bottom: 2px;
-	.title {
-		overflow: hidden;
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		text-overflow: " …";
-		width: 200px;
-		display: inline-block;
-	}
-	h4 {
-		color: $darkWhite;
-		display: inline-block;
-		vertical-align: middle;
-	}
-	&:hover {
-		border-color: $limeA700;
-		background-color: rgba(0,0,0,0.8);
+	.list-header {
+		border-left: 1px solid $lightBlue;
+		margin-bottom: 2px;
+		.title {
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			text-overflow: " …";
+			width: 200px;
+			display: inline-block;
+		}
+		h4 {
+			color: $darkWhite;
+			display: inline-block;
+			vertical-align: middle;
+		}
+		&:hover {
+			border-color: $limeA700;
+			background-color: rgba(0,0,0,0.8);
+		}
 	}
 }
 
 @media(min-width: 970px){
 	#note-page {
 		.cke_contents {
-			height: 360px !important; 
+			height: 430px !important; 
 		}
 	}
 	#notes {
@@ -74,7 +73,7 @@
 @media (min-width: 1900px){
 	#note-page {
 		.cke_contents {
-			height: 800px !important;
+			height: 760px !important;
 		}
 	}
 	#notes {

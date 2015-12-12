@@ -57,6 +57,9 @@ h3 {
   width: 100%;
   height: 100%; }
 
+.title {
+  color: #ffffff; }
+
 .list-striped li {
   background-color: rgba(0, 0, 0, 0.6);
   margin-top: 1px;
@@ -293,27 +296,27 @@ a.btn-success-inverse, .btn-success-inverse {
   #notes .title .text {
     vertical-align: middle; }
 
-.list-header {
+#notes .list-header {
   border-left: 1px solid #008B95;
   margin-bottom: 2px; }
-  .list-header .title {
+  #notes .list-header .title {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     text-overflow: " …";
-    width: 300px;
+    width: 200px;
     display: inline-block; }
-  .list-header h4 {
+  #notes .list-header h4 {
     color: rgba(255, 255, 255, 0.87);
     display: inline-block;
     vertical-align: middle; }
-  .list-header:hover {
+  #notes .list-header:hover {
     border-color: #aeea00;
     background-color: rgba(0, 0, 0, 0.8); }
 
 @media (min-width: 970px) {
   #note-page .cke_contents {
-    height: 360px !important; }
+    height: 430px !important; }
   #notes .accordion-body {
     max-height: 360px;
     overflow-y: scroll; } }
@@ -329,7 +332,7 @@ a.btn-success-inverse, .btn-success-inverse {
 
 @media (min-width: 1900px) {
   #note-page .cke_contents {
-    height: 800px !important; }
+    height: 760px !important; }
   #notes .accordion-body {
     max-height: 400px;
     overflow-y: scroll; } }

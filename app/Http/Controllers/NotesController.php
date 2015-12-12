@@ -14,12 +14,12 @@ class NotesController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index($status = 0)
     {
         $courses = \App\Course::orderBy('name', 'ASC')->get();
         $resource_type = 'note';
 
-        return view('notes.index', compact(['courses', 'resource_type']));
+        return view('notes.index', compact(['courses', 'resource_type', 'status']));
     }
 
     /**
@@ -60,6 +60,26 @@ class NotesController extends Controller
         if(!$note){
             $note = \App\Note::find($slug);
         }
+        
+        // check if there is already a backup of the note.
+        $existingBackup = \App\Note::where('original_note_id', $note->id)
+            ->where('status', 2)
+            ->first();
+
+        $newNote = $note->replicate();
+        // Set the status of the new note to 2 :'backup'
+        $newNote->setAttribute('status', 2);
+
+        if($existingBackup){
+            $newNote->setAttribute('id', $existingBackup->id);
+            $newNote->update();
+        } else {
+            $newNote->setAttribute('id', null);
+            $newNote->setAttribute('original_note_id', $note->id);
+            $newNote = new \App\Note($newNote->toArray());
+            $newNote->save();
+        }
+        
         $courses = \App\Course::all();
 
         if($note){

@@ -32,6 +32,7 @@ Route::get('/comments', function(){
 // Notes
 // 
 Route::get('/notes', 							'NotesController@index');
+Route::get('/notes/status/{status}', 'NotesController@index');
 Route::get('/notes/{note_id}', 		'NotesController@show');
 Route::post('/notes', 						'NotesController@store');
 Route::post('/notes/{note_id}', 	'NotesController@update');

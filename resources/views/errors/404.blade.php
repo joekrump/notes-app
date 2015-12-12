@@ -30,11 +30,15 @@
             .content {
                 text-align: center;
                 display: inline-block;
+                color: white;
+                font-weight: 300;
             }
 
             .title {
                 font-size: 72px;
                 margin-bottom: 40px;
+                color: white;
+                font-weight: 300;
             }
         </style>
     </head>

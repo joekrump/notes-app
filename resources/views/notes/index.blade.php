@@ -1,7 +1,7 @@
 @extends('layouts.index')
 
 @section('content')
-	<div id="notes" class="row">
+	<div id="notes" class="row" data-filter-status={{ $status }}>
 		<div class="col-sm-12">
 			<header class="page-header">
 				<a href='/notes/new' class="btn btn-success-inverse pull-right">New Note</a>
@@ -11,8 +11,9 @@
 			@if($courses->count())
 				<div class="accordion" id="course-list">
 				@foreach($courses as $course)
-					@if($note_count = $course->notes()->count())
-					<div class="accordion-group" id="{{ $course->name }}" data-note-count={{$note_count}}>
+
+					@if(($notes = $course->notes()->where('status', $status)) && ($note_count = $notes->count()))
+					<div class="accordion-group" id="{{ $course->name }}" data-note-count={{ $note_count }}>
 					  <div class="accordion-heading row list-header">
 					    <a class="accordion-toggle" data-toggle="collapse" data-parent="#course-list" href="#collapse{{$course->id}}">
 					      <div class="col-sm-12">
@@ -25,12 +26,12 @@
 					  </div>
 					  <div id="collapse{{$course->id}}" class="accordion-body collapse row">
 					      <ul class="list list-striped list-unstyled col-sm-12">
-					      	@foreach($course->notes()->orderBy('created_at', 'DESC')->get() as $note)
+					      	@foreach($notes->orderBy('created_at', 'DESC')->get() as $note)
 					      	<li class="row" data-id="{{$note->id}}">
 					      	@if($note->slug)
-					      		<a href={{'notes/' . $note->slug}}>	
+					      		<a href={{'/notes/' . $note->slug}}>	
 					      	@else
-					      		<a href={{'notes/' . $note->id}}>	
+					      		<a href={{'/notes/' . $note->id}}>
 					      	@endif
 					      		
 					      		<div class="col-sm-12">
