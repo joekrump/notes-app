@@ -69,7 +69,10 @@
 
 	<script type="text/javascript">
 
-		var courseName = '';
+		var courseName = '{{isset($note) ? $note_course->name : ''}}';
+		if(courseName === '') {
+			courseName = undefined;
+		}
 
 		$(document).ready(function(e, element){
 			// Load 
@@ -158,6 +161,7 @@
 			var taglessString = data.replace(/(<([^>]+)>)/ig, "");
 			taglessString = taglessString.replace(/&quot;/ig, "");
 			var wordCount = taglessString.trim().replace(spaceRegex, ' ').split(' ').length;
+			var fileName;
 			$('#word-count').text(wordCount);
 
 			var formData = $form.serializeArray();
@@ -165,19 +169,22 @@
 
 			$('#action-box').removeClass('label-success').addClass('label-info').text('Saving...').fadeIn(100);
 			$.post($form.attr('action'), formData, function(response){
-				// console.log(response);
+
+				// Only update on intial save
 				if(response.id !== noteId){
 					noteId = response.id;
 					$form.attr('action', '/notes/' + noteId);
-					var filename = response.courseName.replace(/\s+/, '_');
-					if(courseName !== filename){
-						courseName = filename;
-						
-						$('.background').fadeOut(200, function(){
-							$('.background').css({'background-image': 'url("/images/' + filename + '.jpg")'});
-						}).fadeIn(500);
-					}
 				}
+
+				fileName = response.courseName.replace(/\s+/, '_');
+				// Only update the background if the course has changed.
+				if(courseName !== fileName){
+					courseName = fileName;
+					$('.background').fadeOut(200, function(){
+						$('.background').css({'background-image': 'url("/images/' + fileName + '.jpg")'});
+					}).fadeIn(500);
+				}
+
 				$('#action-box').removeClass('label-info').addClass('label-success').fadeOut(500);
 			}).error(function(response){
 				// console.log(response)
