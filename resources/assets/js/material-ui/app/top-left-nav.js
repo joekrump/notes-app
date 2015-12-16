@@ -1,7 +1,6 @@
 let React = require ('react');
 let mui = require('material-ui');
-let injectTapEventPlugin = require('react-tap-event-plugin');
-let RaisedButton = mui.RaisedButton;
+// let injectTapEventPlugin = require('react-tap-event-plugin');
 let AppBar = mui.AppBar;
 let LeftNav = mui.LeftNav;
 let MenuItem = mui.MenuItem;
@@ -15,7 +14,7 @@ let CustomTheme = require('./styles/themes/custom1');
 //Can go away when react 1.0 release
 //Check this repo:
 //https://github.com/zilverline/react-tap-event-plugin
-injectTapEventPlugin();
+// injectTapEventPlugin();
 
 let TopLeftNav = React.createClass({
 
