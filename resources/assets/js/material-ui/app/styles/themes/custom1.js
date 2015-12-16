@@ -28,7 +28,7 @@ let Custom1 = {
         color: palette.primary1Color,
         textColor: Colors.darkWhite,
         height: spacing.desktopKeylineIncrement,
-        backgroundColor: cardColor,
+        backgroundColor: Colors.transparent,
         containerBackgroundColor: cardColor
       },
       avatar: {

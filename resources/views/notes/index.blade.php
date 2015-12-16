@@ -1,5 +1,9 @@
 @extends('layouts.index')
 
+@section('title')
+<title>Notes</title>
+@stop
+
 @section('content')
 	<div id="notes" class="row" data-filter-status={{ $status }}>
 		<div class="col-sm-12">
@@ -68,5 +72,29 @@
 @stop
 
 @section('javascripts')
+<script>
+  $(document).ready(function(e, element){
+    $('.btn-delete').click(function(e){
+      e.preventDefault();
+      var $itemRow = $('.row [data-id="' + $(this).data('id') + '"]');
+      // Hide row by positive assertion.
+      $itemRow.slideUp(300);
 
+      $.ajax({
+        url: '/{{$resource_type}}s/' + $(this).data('id'),
+        method: 'DELETE',
+        data: {_token: $('meta[name="_token"]').attr('content')},
+        complete: function(response){
+          if(response.status === 200){
+            // Remove DOM element
+            $itemRow.remove();
+          } else {
+            // If the deletion fails then show the row again.
+            $itemRow.slideDown(300);
+          }
+        }
+      });
+    });
+  });
+</script>
 @stop

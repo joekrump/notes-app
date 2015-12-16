@@ -1,6 +1,11 @@
-@extends('cards.layouts.master')
+@extends('../../layouts.master')
+
+@section('top_nav')
+	@include('../../partials.top_nav')
+@stop
 
 @section('content')
+	<div id="card-page" class="container container-fluid">
 		<header class="page-header">
 			<div class="row">
 				<div class="col-sm-6">
@@ -102,6 +107,7 @@
 				</div>
 			@endif
 		</div>
+	</div>
 @stop
 
 @section('javascripts')

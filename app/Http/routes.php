@@ -33,10 +33,10 @@ Route::get('/comments', function(){
 // 
 Route::get('/notes', 							'NotesController@index');
 Route::get('/notes/status/{status}', 'NotesController@index');
-Route::get('/notes/{note_id}', 		'NotesController@show');
-Route::post('/notes', 						'NotesController@store');
-Route::post('/notes/{note_id}', 	'NotesController@update');
 Route::get('/notes/new', 					'NotesController@create');
+Route::get('/notes/{note_id}',    'NotesController@show');
+Route::post('/notes',             'NotesController@store');
+Route::post('/notes/{note_id}',   'NotesController@update');
 Route::delete('/notes/{note_id}', 'NotesController@destroy');
 
 // Courses 

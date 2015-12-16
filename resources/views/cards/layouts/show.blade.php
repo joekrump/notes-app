@@ -1,7 +1,19 @@
-@extends('cards.layouts.master')
+@extends('../../layouts.master')
 
 @section('stylesheets')
 	<link href="{{ asset('css/bootstrap-ckeditor.css') }}" rel="stylesheet" type="text/css">
+@stop
+
+@section('navbar_right')
+	<ul class="nav navbar-nav navbar-right">
+	  <div class="btn-group">
+	  	<a href='/cards/new' class="btn btn-success-inverse pull-right">New Card</a>
+	  </div>
+	</ul>
+@stop
+
+@section('top_nav')
+	@include('../../partials.top_nav')
 @stop
 
 @section('content')
@@ -9,12 +21,6 @@
 		<div id="action-box" class="label" style="display:none;">
 			Saving...
 		</div>
-		<aside class="left-options">
-			<div class="btn-group">
-				<a href={{"/cards/category" . (isset($card) ? ('/' . $card->type) : '/default') }} class="btn btn-default">Back to Cards</a>
-				<a href='/cards/new' class="btn btn-success-inverse pull-right">New Card</a>
-			</div>
-		</aside>
 		<section class="container">
 			<p>
         <textarea class="ckeditor" id="editor1" name="latin" cols="100" rows="4"></textarea>
@@ -41,7 +47,7 @@
 			{{-- Put content into a hidden text area initially. --}}
 			<textarea style="display:none;" id="init-content">{{ isset($card) ? $card->latin : '<ul><li></li></ul>' }}</textarea>
 			@if(isset($card))
-				<button class="btn btn-danger btn-delete" data-url="{{ '/cards/' . $card->id }}">Delete</button>
+				<button type="button" class="btn btn-danger btn-delete" data-url="{{ '/cards/' . $card->id }}">Delete</button>
 			@endif
 		</section>
 	</div>

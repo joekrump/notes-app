@@ -38,4 +38,5 @@ elixir(function(mix) {
     //
     //
     mix.browserify('app.js', 'public/js/app.js')
+    mix.browserify('nav.js', 'public/js/react-nav.js')
 });

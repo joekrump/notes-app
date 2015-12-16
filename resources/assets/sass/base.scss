@@ -12,6 +12,26 @@ body {
   background-color: $backgroundColor;
 }
 
+#react-nav {
+  position: fixed;
+  z-index: 9999;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+}
+
+.mobile-nav {
+  display: none;
+}
+@media (max-width: 900px){
+  .mobile-nav {
+    display: block;  
+  }
+  .navbar-fixed-top {
+    display: none;
+  }
+}
+
 .footer-fixed-bottom {
   position: fixed;
   bottom: 0px;
@@ -28,7 +48,13 @@ body {
     background-color: $transparent;
   }
 }
-
+.nav {
+  .btn-group {
+    .btn {
+      margin-top: 8px;
+    }
+  }
+}
 h1, h2, h3 {
   margin-bottom: 10px;
 }

@@ -4,6 +4,11 @@
 	<link href="{{ asset('css/bootstrap-ckeditor.css') }}" rel="stylesheet" type="text/css">
 @stop
 
+@section('top_nav')
+    <div id="react-nav">
+    </div>
+@stop
+
 @section('content')
 	<div id="note-page" class="background-dimmer">
 		<div id="action-box" class="label label-inverse" style="display:none;">
@@ -45,16 +50,9 @@
 			</div>
 		</section>
 	</div>
-	<footer class="footer footer-fixed-bottom">
-		<section class="container container-fluid">
-			<div class="pull-left">
-				<div class="btn-group">
-					<a href="/notes" class="btn btn-sm btn-default">To Notes</a>
-					<a href='/notes/new' class="btn btn-sm btn-success-inverse pull-right">New Note</a>
-				</div>
-			</div>
-		</section>
-	</footer>
+
+	@include('partials.footer')
+
 @stop
 
 @section('javascripts')

@@ -19,17 +19,20 @@ class NotesController extends Controller
         $courses = \App\Course::orderBy('name', 'ASC')->get();
         $resource_type = 'note';
 
+
         return view('notes.index', compact(['courses', 'resource_type', 'status']));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show view for creating a new Note
      *
      * @return Response
      */
     public function create()
     {
-        return view('notes.create');
+        $courses = \App\Course::all();
+
+        return view('notes.show', compact(['courses']));    
     }
 
     /**
@@ -57,10 +60,12 @@ class NotesController extends Controller
     public function show($slug)
     {
         $note = \App\Note::whereSlug($slug)->first();
+        $courses = \App\Course::all();
+        
         if(!$note){
             $note = \App\Note::find($slug);
         }
-        
+
         // check if there is already a backup of the note.
         $existingBackup = \App\Note::where('original_note_id', $note->id)
             ->where('status', 2)
@@ -80,8 +85,6 @@ class NotesController extends Controller
             $newNote->save();
         }
         
-        $courses = \App\Course::all();
-
         if($note){
             $note_course = \App\Course::find($note->course_id);
         }
