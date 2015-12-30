@@ -32,11 +32,8 @@
     </head>
     <body>
 
-        @yield('top_nav')
-        @section('top_nav')
-            <div id="react-nav">
-            </div>
-        @stop
+        @include('../partials.top_nav')
+
         <div class="background"></div>
         @yield('content')
 

@@ -4,11 +4,6 @@
 	<link href="{{ asset('css/bootstrap-ckeditor.css') }}" rel="stylesheet" type="text/css">
 @stop
 
-@section('top_nav')
-    <div id="react-nav">
-    </div>
-@stop
-
 @section('content')
 	<div id="note-page" class="background-dimmer">
 		<div id="action-box" class="label label-inverse" style="display:none;">

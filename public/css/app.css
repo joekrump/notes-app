@@ -95,7 +95,23 @@ h3 {
   font-weight: 100; }
 
 .index-page .list-header {
+  border-left: 1px solid #008B95;
+  margin-bottom: 2px;
   background-color: rgba(0, 0, 0, 0.7); }
+  .index-page .list-header .title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-overflow: " …";
+    width: 200px;
+    display: inline-block; }
+  .index-page .list-header h4 {
+    color: rgba(255, 255, 255, 0.87);
+    display: inline-block;
+    vertical-align: middle; }
+  .index-page .list-header:hover {
+    border-color: #aeea00;
+    background-color: rgba(0, 0, 0, 0.8); }
 
 .index-page .content {
   margin-top: 25px;
@@ -155,7 +171,7 @@ a.btn {
     border: 1px solid #5bc0de; }
 
 a.inverse-link {
-  color: white; }
+  color: #ffffff; }
 
 .container {
   background-color: rgba(0, 0, 0, 0.6);
@@ -168,7 +184,12 @@ a.inverse-link {
   margin-top: 0px; }
 
 .navbar-inverse {
-  background-color: rgba(0, 0, 0, 0.8); }
+  background-color: transparent;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 14px 45px rgba(0, 0, 0, 0.25), 0 10px 18px rgba(0, 0, 0, 0.22);
+  border-bottom: none; }
+  .navbar-inverse .navbar-nav > li > a {
+    color: #ffffff; }
 
 .nav-tabs {
   list-style: none;
@@ -315,24 +336,6 @@ a.btn-success-inverse, .btn-success-inverse {
   vertical-align: middle; }
   #notes .title .text {
     vertical-align: middle; }
-
-#notes .list-header {
-  border-left: 1px solid #008B95;
-  margin-bottom: 2px; }
-  #notes .list-header .title {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    text-overflow: " …";
-    width: 200px;
-    display: inline-block; }
-  #notes .list-header h4 {
-    color: rgba(255, 255, 255, 0.87);
-    display: inline-block;
-    vertical-align: middle; }
-  #notes .list-header:hover {
-    border-color: #aeea00;
-    background-color: rgba(0, 0, 0, 0.8); }
 
 @media (min-width: 970px) {
   #note-page .cke_contents {
