@@ -6,29 +6,50 @@ let ThemeManager = new mui.Styles.ThemeManager();
 let Colors = mui.Styles.Colors;
 let CustomColors = require('./styles/colors');
 let CustomTheme = require('./styles/themes/custom1');
+let FontIcon = require('material-ui/lib/font-icon');
 let IconButton = require('material-ui/lib/icon-button');
-let IconMenu require('material-ui/lib/menus/icon-menu');
-let MenuItem require('material-ui/lib/menus/menu-item');
+let IconMenu = require('material-ui/lib/menus/icon-menu');
+let MenuItem = require('material-ui/lib/menus/menu-item');
 
 injectTapEventPlugin();
 
 let FlashCard = React.createClass({
+  getInitialState: function() {
+    return {
+      id: 1,
+      english: "test English",
+      latin: "<ul><li>test Latin</li></ul>",
+      origin: null,
+      lesson_num: 3,
+      current_language: 'latin'
+    };
+  },
+  componentDidMount: function() {
+    this.setState(
+      {
+        id: this.props.id,
+        english: this.props.english,
+        latin: this.props.latin,
+        origin: this.props.origin,
+        lesson_num: this.props.lesson_num
+      }
+    );
+    window.addEventListener("toggleShowRecentOnly", this.handleShowRecentlyOnly, false);
+  },
   render: function() {
-    var rawLatinMarkup = marked(this.props.data.latin.toString(), {sanitize: true});
-    var rawWordOrigin = marked(this.props.data.origin.toString(), {sanitize: true});
+    var rawLatinMarkup = this.props.data.latin;
+    var rawWordOrigin = this.props.data.origin;
     var editLink = '/cards/' + this.props.data.id;
-    var iconMenuButton = (function(){
-      return (
+    var iconMenuButton = (
         <IconButton>
           <FontIcon className="muidocs-icon-navigation-menu" color={Colors.red500} />
         </IconButton>
-      );
-    });
+    );
     
     return (
       <div className={"card col-sm-4" + (this.props.data.english == null || this.props.data.english === undefined ? " empty" : "")} data-id={this.props.data.id}>
         <div className="row">
-          <div className="latin {{ $show_latin ? '' : 'not-showing' }} col-sm-4">
+          <div className={"latin" + (this.state.current_language !== "latin" ? " not-showing" : "" + " row")}>
             <a href={editLink} dangerouslySetInnerHTML={{__html: rawLatinMarkup}}></a>
           </div>
           <div className="col-sm-8">
@@ -39,7 +60,7 @@ let FlashCard = React.createClass({
               </div>
             </div>
             </div>
-            <div className={"english" + (this.state.currentLanguage === "latin" ? " not-showing" : "" + " row")}>
+            <div className={"english" + (this.state.current_language === "latin" ? " not-showing" : "" + " row")}>
               <div className="col-sm-12">
                 <div className="definition">
                   { this.props.data.english }
@@ -51,16 +72,6 @@ let FlashCard = React.createClass({
             </div>
           </div>
           <div className="actions">
-            // <button className="btn btn-xs btn-success-inverse mark-complete" 
-            //       data-action="complete" 
-            //       data-id="{{ $card->id }}" 
-            //       data-current-page="{{$cards->currentPage()}}">&check;
-            // </button>
-            // <button className="btn btn-xs btn-danger btn-22 mark-incomplete" 
-            //       data-action="incomplete" 
-            //       data-id="{{ $card->id }}" 
-            //       data-current-page="{{$cards->currentPage()}}">&times;
-            // </button>
             <IconMenu iconButtonElement={iconMenuButton}>
               <MenuItem primaryText="Refresh" />
               <MenuItem primaryText="Send feedback" />

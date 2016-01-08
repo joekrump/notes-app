@@ -18,12 +18,27 @@ let CardList = require('./card-list');
 injectTapEventPlugin();
 
 let CardPage = React.createClass({
-	render: function() {
+	childContextTypes: {
+	  muiTheme: React.PropTypes.object
+	},
 
-		<div className="card-page">
-			<CardList />
-		</div>
-	});
+	getChildContext() {
+	  ThemeManager.setTheme(CustomTheme);
+	  return {
+	    muiTheme: ThemeManager.getCurrentTheme()
+	  };
+	},
+
+	componentWillMount() {
+	  ThemeManager.setTheme(CustomTheme);
+	},
+	render() {
+		return (
+			<div className="card-page">
+				<CardList />
+			</div>
+		);
+	}
 });
 
 module.exports = CardPage;
