@@ -15,6 +15,12 @@
 Route::get('/', function () {
    return view('welcome');
 });
+
+// Card view created using react
+Route::get('/react/cards', function(){
+  return view('cards/react-view');
+});
+
 // Unique route for showing circles with characters from the novel "Rob Roy"
 //
 Route::get('/rob-roy-graph', function() {

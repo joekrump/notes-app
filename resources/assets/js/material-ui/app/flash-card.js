@@ -6,7 +6,9 @@ let ThemeManager = new mui.Styles.ThemeManager();
 let Colors = mui.Styles.Colors;
 let CustomColors = require('./styles/colors');
 let CustomTheme = require('./styles/themes/custom1');
-let IconButton = reqiore('material-ui/lib/icon-button');
+let IconButton = require('material-ui/lib/icon-button');
+let IconMenu require('material-ui/lib/menus/icon-menu');
+let MenuItem require('material-ui/lib/menus/menu-item');
 
 injectTapEventPlugin();
 
@@ -15,7 +17,14 @@ let FlashCard = React.createClass({
     var rawLatinMarkup = marked(this.props.data.latin.toString(), {sanitize: true});
     var rawWordOrigin = marked(this.props.data.origin.toString(), {sanitize: true});
     var editLink = '/cards/' + this.props.data.id;
-
+    var iconMenuButton = (function(){
+      return (
+        <IconButton>
+          <FontIcon className="muidocs-icon-navigation-menu" color={Colors.red500} />
+        </IconButton>
+      );
+    });
+    
     return (
       <div className={"card col-sm-4" + (this.props.data.english == null || this.props.data.english === undefined ? " empty" : "")} data-id={this.props.data.id}>
         <div className="row">
@@ -42,16 +51,22 @@ let FlashCard = React.createClass({
             </div>
           </div>
           <div className="actions">
-            <button className="btn btn-xs btn-success-inverse mark-complete" 
-                  data-action="complete" 
-                  data-id="{{ $card->id }}" 
-                  data-current-page="{{$cards->currentPage()}}">&check;
-            </button>
-            <button className="btn btn-xs btn-danger btn-22 mark-incomplete" 
-                  data-action="incomplete" 
-                  data-id="{{ $card->id }}" 
-                  data-current-page="{{$cards->currentPage()}}">&times;
-            </button>
+            // <button className="btn btn-xs btn-success-inverse mark-complete" 
+            //       data-action="complete" 
+            //       data-id="{{ $card->id }}" 
+            //       data-current-page="{{$cards->currentPage()}}">&check;
+            // </button>
+            // <button className="btn btn-xs btn-danger btn-22 mark-incomplete" 
+            //       data-action="incomplete" 
+            //       data-id="{{ $card->id }}" 
+            //       data-current-page="{{$cards->currentPage()}}">&times;
+            // </button>
+            <IconMenu iconButtonElement={iconMenuButton}>
+              <MenuItem primaryText="Refresh" />
+              <MenuItem primaryText="Send feedback" />
+              <MenuItem primaryText="Settings" />
+              <MenuItem primaryText="Help" />
+            </IconMenu>
           </div>
         </div>
       </div>

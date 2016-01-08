@@ -9,6 +9,7 @@ let ThemeManager = new mui.Styles.ThemeManager();
 let Colors = mui.Styles.Colors;
 let CustomColors = require('./styles/colors');
 let CustomTheme = require('./styles/themes/custom1');
+let CardList = require('./card-list');
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
@@ -17,7 +18,12 @@ let CustomTheme = require('./styles/themes/custom1');
 injectTapEventPlugin();
 
 let CardPage = React.createClass({
+	render: function() {
 
+		<div className="card-page">
+			<CardList />
+		</div>
+	});
 });
 
 module.exports = CardPage;
