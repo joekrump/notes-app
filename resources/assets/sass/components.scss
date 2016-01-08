@@ -10,6 +10,13 @@
   left: 10px;
 }
 #word-count {
+	box-shadow: inset 4px 4px 4px $darkBlack;
 	padding: 5px;
-	color: $darkOrange;
+	border-top: 1px solid $black;
+	border-right: 1px solid $lightWhite;
+	border-bottom: 1px solid $lightWhite;
+	border-left: 1px solid $black;
+	background-color: $lightBlack;
+	color: $blueGrey200;
+	border-radius: 5px;
 }
