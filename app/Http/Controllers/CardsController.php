@@ -13,6 +13,33 @@ class CardsController extends Controller
         $cards = \App\Card::orderby('latin', 'asc')->get();
         return view('cards.list', compact(['cards']));
     }
+
+    public function getLatinCards(Request $request){
+        $cards = \App\Card::orderby('latin');
+        if(($tab_filter = $request->request->get('tab_filter'))){
+            if($tab_filter == 'all'){
+                $allCards = $cards->paginate(9);
+            } else if($tab_filter == 'complete') {
+                $allCards = $cards->where("english", '!=', '')->paginate(9);
+            } else {
+                // incomplete
+                $allCards = $cards->whereRaw("english IS NULL OR english = ''")->paginate(9);
+            }
+        } else {
+            $all = $cards->paginate(9);
+            $complete = $cards->where("english", '!=', '')->paginate(9);
+            $incomplete = $cards->whereRaw("english IS NULL OR english = ''")->paginate(9);
+            $allCards = [
+                'all' => $all->toJson(),
+                'complete' => $complete->toJson(),
+                'incomplete' => $incomplete->toJson()
+            ];
+        }
+       
+        if($request->ajax()){
+            return $allCards;
+        }
+    }
     /**
      * Display a listing of cards
      *

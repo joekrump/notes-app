@@ -9,7 +9,7 @@ let ThemeManager = new mui.Styles.ThemeManager();
 let Colors = mui.Styles.Colors;
 let CustomColors = require('./styles/colors');
 let CustomTheme = require('./styles/themes/custom1');
-let CardList = require('./card-list');
+let SwipeableCardTabs = require('./swipeable-card-tabs');
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
@@ -21,7 +21,85 @@ let CardPage = React.createClass({
 	childContextTypes: {
 	  muiTheme: React.PropTypes.object
 	},
+	getInitialState: function() {
+	  return {
+	    cards: [],
+	    filteredProjects: [],
+	    fetchingCards: false,
+	    paginationPages: {
+	    	all: 1,
+	    	complete: 1,
+	    	incomplete: 1
+	    }
+	  };
+	},
+	setListeners: function(){
+    window.addEventListener("getNewPage", this.handleGetNewPage, false);
+  },
+  updatePageNum: function(tabFilter, pageNum){
+  	var specificPageCount;
+  	var currentPagination = this.state.paginationPages;
+  	currentPagination[tabFilter] = pageNum;
+  	this.setState(
+			{
+				paginationPages: currentPagination
+			}
+  	);
+  },
+  getNextPage: function(){
+  	window.dispatchEvent(new CustomEvent("getNewPage", { detail: { tabFilter: 'all', pageNum: 2 } }));
+  },
+	handleGetNewPage: function(){
+		console.log('clicked');
+		if(!this.state.fetchingCards){
+		  this.setState({fetchingCards: true});
+		  updatePageNum(event.detail.tabFilter, event.detail.pageNum);
+		  $.ajax({
+		    url: (this.props.src + '/' + event.detail.tabFilter + '?page=' + event.detail.pageNum),
+		    dataType: 'json',
+		    cache: false,
+		    success: function(cards) {
+		    	currentCards = this.state.cards;
+		    	currentCards[event.detail.tabFilter] = cards;
+		      this.setState({cards: currentCards});
+		      console.log(this.state.cards);
+		      this.setState({fetchingCards: false});
+		    }.bind(this),
+		    error: function(xhr, status, err) {
+		      console.error(this.props.src, status, err.toString());
+		      this.setState({fetchingCards: false});
+		    }.bind(this) // bind(this) allows this to keep it's context when being accessed within ajax callbacks.
+		  });
+		}
+	},
+	fetchCards: function(){
 
+	  if(!this.state.fetchingCards){
+	    this.setState({fetchingCards: true});
+
+	    $.ajax({
+	      url: this.props.src,
+	      dataType: 'json',
+	      cache: false,
+	      success: function(cards) {
+	        this.setState({cards: {all: JSON.parse(cards.all), complete: JSON.parse(cards.complete), incomplete: JSON.parse(cards.incomplete)}});
+	        console.log(this.state.cards);
+	        this.setState({fetchingCards: false});
+	      }.bind(this),
+	      error: function(xhr, status, err) {
+	        console.error(this.props.src, status, err.toString());
+	        this.setState({fetchingCards: false});
+	      }.bind(this) // bind(this) allows this to keep it's context when being accessed within ajax callbacks.
+	    });
+	  }
+	},
+	componentDidMount: function() {
+	  // this.setListeners();
+	  this.fetchCards();
+	  if (this.props.pollInterval !== undefined && this.props.pollInterval > 0) {
+	    setInterval(this.fetchCards, this.props.pollInterval);
+	  }
+	},
 	getChildContext() {
 	  ThemeManager.setTheme(CustomTheme);
 	  return {
@@ -34,8 +112,51 @@ let CardPage = React.createClass({
 	},
 	render() {
 		return (
-			<div className="card-page">
-				<CardList />
+			<div>
+				<header className="page-header">
+				    <div className="row">
+				        <div className="col-sm-6">
+				            <h1>Cards</h1>
+				        </div>
+				        
+				        <div className="col-sm-6">
+
+				            <div className="row pull-right">
+
+				                <div className="col-sm-6">
+				                    <input id="search" className="form-control" name='search' placeholder="Search" data-url="/cards/search/" />
+				                </div>
+				                <div className="col-sm-6">
+				                    <div className="btn-group pull-right">
+				                        
+				                        <a href="/cards/category/all" className="btn btn-default">All Cards</a>
+				                        <a href='/cards/new' className="btn btn-success-inverse">New Card</a>
+				                    </div>
+				                </div>
+				            </div>
+				            
+				        </div>
+				    </div>
+				    
+				</header>
+				<div className="row">
+				    <div className="col-sm-4">
+				        <h3># cards total</h3>
+				        <h3># blank cards</h3>
+				    </div>
+				    <div className="col-sm-4 text-center">
+				        Pagination links...
+				        <div onClick={this.getNextPage}>
+				        	TEST NEXT PAGINATE BUTTON
+				        </div>
+				    </div>
+				    <div className="col-sm-4 toggle-actions text-right">
+				        <button id="latin-english-btn" type="button" className="btn btn-primary" data-showing="latin">Latin</button>
+				    </div>
+				    <div className="col-sm-12">
+				    	<SwipeableCardTabs />
+				    </div>
+				</div>
 			</div>
 		);
 	}

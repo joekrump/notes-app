@@ -11,7 +11,7 @@ let CardList = React.createClass({
 			lesson_num: 3
 		};
 		return (
-			<div>
+			<div className="row">
 				<FlashCard data={fakeCardData} />
 			</div>
 		);

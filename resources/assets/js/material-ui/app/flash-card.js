@@ -42,23 +42,23 @@ let FlashCard = React.createClass({
     var editLink = '/cards/' + this.props.data.id;
     var iconMenuButton = (
         <IconButton>
-          <FontIcon className="muidocs-icon-navigation-menu" color={Colors.red500} />
+          <FontIcon className="material-icons muidocs-icon-action-home" color={Colors.red500} />
         </IconButton>
     );
     
     return (
       <div className={"card col-sm-4" + (this.props.data.english == null || this.props.data.english === undefined ? " empty" : "")} data-id={this.props.data.id}>
         <div className="row">
-          <div className={"latin" + (this.state.current_language !== "latin" ? " not-showing" : "" + " row")}>
+          <div className={"latin" + (this.state.current_language !== "latin" ? " not-showing" : "" + " col-sm-4")}>
             <a href={editLink} dangerouslySetInnerHTML={{__html: rawLatinMarkup}}></a>
           </div>
           <div className="col-sm-8">
             <div className="row">
               <div className="lesson-number col-sm-12">
-              <div className="pull-left">
-                {this.props.data.lesson_num}
+                <div className="pull-right">
+                  {this.props.data.lesson_num}
+                </div>
               </div>
-            </div>
             </div>
             <div className={"english" + (this.state.current_language === "latin" ? " not-showing" : "" + " row")}>
               <div className="col-sm-12">
@@ -72,7 +72,7 @@ let FlashCard = React.createClass({
             </div>
           </div>
           <div className="actions">
-            <IconMenu iconButtonElement={iconMenuButton}>
+            <IconMenu iconButtonElement={iconMenuButton} anchorOrigin={{vertical: "top", horizontal: "right"}} targetOrigin={{vertical: "top", horizontal: "right"}}>
               <MenuItem primaryText="Refresh" />
               <MenuItem primaryText="Send feedback" />
               <MenuItem primaryText="Settings" />
