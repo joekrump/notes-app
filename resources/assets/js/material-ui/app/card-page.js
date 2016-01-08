@@ -36,31 +36,38 @@ let CardPage = React.createClass({
 	setListeners: function(){
     window.addEventListener("getNewPage", this.handleGetNewPage, false);
   },
+  componentWillUnmount: function(){
+    window.removeEventListener("getNewPage", this.handleGetNewPage, false);
+  },
   updatePageNum: function(tabFilter, pageNum){
   	var specificPageCount;
   	var currentPagination = this.state.paginationPages;
+  	console.log(currentPagination);
   	currentPagination[tabFilter] = pageNum;
   	this.setState(
 			{
 				paginationPages: currentPagination
 			}
   	);
+  	console.log(this.state.paginationPages);
   },
   getNextPage: function(){
+  	console.log('clicked');
   	window.dispatchEvent(new CustomEvent("getNewPage", { detail: { tabFilter: 'all', pageNum: 2 } }));
   },
 	handleGetNewPage: function(){
 		console.log('clicked');
 		if(!this.state.fetchingCards){
 		  this.setState({fetchingCards: true});
-		  updatePageNum(event.detail.tabFilter, event.detail.pageNum);
+		  this.updatePageNum(event.detail.tabFilter, event.detail.pageNum);
+		  var tabFilter = event.detail.tabFilter;
 		  $.ajax({
 		    url: (this.props.src + '/' + event.detail.tabFilter + '?page=' + event.detail.pageNum),
 		    dataType: 'json',
 		    cache: false,
 		    success: function(cards) {
-		    	currentCards = this.state.cards;
-		    	currentCards[event.detail.tabFilter] = cards;
+		    	var currentCards = this.state.cards;
+		    	currentCards[tabFilter] = cards;
 		      this.setState({cards: currentCards});
 		      console.log(this.state.cards);
 		      this.setState({fetchingCards: false});
@@ -94,7 +101,7 @@ let CardPage = React.createClass({
 	  }
 	},
 	componentDidMount: function() {
-	  // this.setListeners();
+	  this.setListeners();
 	  this.fetchCards();
 	  if (this.props.pollInterval !== undefined && this.props.pollInterval > 0) {
 	    setInterval(this.fetchCards, this.props.pollInterval);
