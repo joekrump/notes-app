@@ -1,15 +1,16 @@
-//Import statement:
-let React = require ('react');
-let mui = require('material-ui');
+// Import components
+let React                = require ('react');
+let mui                  = require('material-ui');
 let injectTapEventPlugin = require('react-tap-event-plugin');
-let ThemeManager = new mui.Styles.ThemeManager();
-let Colors = mui.Styles.Colors;
-let CustomColors = require('./styles/colors');
-let CustomTheme = require('./styles/themes/custom1');
-let FontIcon = require('material-ui/lib/font-icon');
-let IconButton = require('material-ui/lib/icon-button');
-let IconMenu = require('material-ui/lib/menus/icon-menu');
-let MenuItem = require('material-ui/lib/menus/menu-item');
+let ThemeManager         = new mui.Styles.ThemeManager();
+let Colors               = mui.Styles.Colors;
+let CustomColors         = require('./styles/colors');
+let CustomTheme          = require('./styles/themes/custom1');
+let FontIcon             = require('material-ui/lib/font-icon');
+let IconButton           = require('material-ui/lib/icon-button');
+let IconMenu             = require('material-ui/lib/menus/icon-menu');
+let MenuItem             = require('material-ui/lib/menus/menu-item');
+let Paper                = require('material-ui/lib/paper');
 
 injectTapEventPlugin();
 
@@ -47,40 +48,42 @@ let FlashCard = React.createClass({
     );
     
     return (
-      <div className={"card col-sm-4" + (this.props.data.english == null || this.props.data.english === undefined ? " empty" : "")} data-id={this.props.data.id}>
-        <div className="row">
-          <div className={"latin" + (this.state.current_language !== "latin" ? " not-showing" : "" + " col-sm-4")}>
-            <a href={editLink} dangerouslySetInnerHTML={{__html: rawLatinMarkup}}></a>
-          </div>
-          <div className="col-sm-8">
-            <div className="row">
-              <div className="lesson-number col-sm-12">
-                <div className="pull-right">
-                  {this.props.data.lesson_num}
+      <Paper zDepth={5}>
+        <div className={"card col-sm-4" + (this.props.data.english == null || this.props.data.english === undefined ? " empty" : "")} data-id={this.props.data.id}>
+          <div className="row">
+            <div className={"latin" + (this.state.current_language !== "latin" ? " not-showing" : "" + " col-sm-4")}>
+              <a href={editLink} dangerouslySetInnerHTML={{__html: rawLatinMarkup}}></a>
+            </div>
+            <div className="col-sm-8">
+              <div className="row">
+                <div className="lesson-number col-sm-12">
+                  <div className="pull-right">
+                    {this.props.data.lesson_num}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className={"english" + (this.state.current_language === "latin" ? " not-showing" : "" + " row")}>
+              <div className={"english" + (this.state.current_language === "latin" ? " not-showing" : "" + " row")}>
+                <div className="col-sm-12">
+                  <div className="definition">
+                    { this.props.data.english }
+                  </div>
+                </div>
               <div className="col-sm-12">
-                <div className="definition">
-                  { this.props.data.english }
+                  <div className="origin" dangerouslySetInnerHTML={{__html: rawWordOrigin}}></div>
                 </div>
               </div>
-            <div className="col-sm-12">
-                <div className="origin" dangerouslySetInnerHTML={{__html: rawWordOrigin}}></div>
-              </div>
             </div>
-          </div>
-          <div className="actions">
-            <IconMenu iconButtonElement={iconMenuButton} anchorOrigin={{vertical: "top", horizontal: "right"}} targetOrigin={{vertical: "top", horizontal: "right"}}>
-              <MenuItem primaryText="Refresh" />
-              <MenuItem primaryText="Send feedback" />
-              <MenuItem primaryText="Settings" />
-              <MenuItem primaryText="Help" />
-            </IconMenu>
+            <div className="actions">
+              <IconMenu iconButtonElement={iconMenuButton} anchorOrigin={{vertical: "top", horizontal: "right"}} targetOrigin={{vertical: "top", horizontal: "right"}}>
+                <MenuItem primaryText="Refresh" />
+                <MenuItem primaryText="Send feedback" />
+                <MenuItem primaryText="Settings" />
+                <MenuItem primaryText="Help" />
+              </IconMenu>
+            </div>
           </div>
         </div>
-      </div>
+      </Paper>
     );
   }
 });
