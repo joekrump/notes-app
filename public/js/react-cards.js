@@ -8,7 +8,7 @@ var React = require('react');
   React.render(React.createElement(CardPage, { src: "/react/cards/latin" }), document.querySelector('#card-page'));
 })();
 
-},{"./material-ui/app/card-page":325,"react":323}],2:[function(require,module,exports){
+},{"./material-ui/app/card-page":326,"react":323}],2:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -40616,6 +40616,37 @@ module.exports = require('./lib/React');
 },{"./lib/React":181}],324:[function(require,module,exports){
 'use strict';
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _materialUiLibTextField = require('material-ui/lib/text-field');
+
+var _materialUiLibTextField2 = _interopRequireDefault(_materialUiLibTextField);
+
+var React = require('react');
+var mui = require('material-ui');
+var Colors = mui.Styles.Colors;
+
+var CardActionMenu = React.createClass({
+  displayName: 'CardActionMenu',
+
+  render: function render() {
+    return React.createElement(
+      'div',
+      { className: 'btn-group pull-right' },
+      React.createElement(
+        'a',
+        { href: '/cards/new', className: 'btn btn-success-inverse' },
+        'New Card'
+      )
+    );
+  }
+});
+
+module.exports = CardActionMenu;
+
+},{"material-ui":37,"material-ui/lib/text-field":109,"react":323}],325:[function(require,module,exports){
+'use strict';
+
 var React = require('react');
 var FlashCard = require('./flash-card');
 
@@ -40652,7 +40683,7 @@ var CardList = React.createClass({
 
 module.exports = CardList;
 
-},{"./flash-card":326,"react":323}],325:[function(require,module,exports){
+},{"./flash-card":327,"react":323}],326:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -40669,6 +40700,7 @@ var CustomTheme = require('./styles/themes/custom1');
 var SwipeableCardTabs = require('./swipeable-card-tabs');
 var Pagination = require('./pagination');
 var SearchField = require('./search');
+var CardActionMenu = require('./card-action-menu');
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
@@ -40740,7 +40772,7 @@ var CardPage = React.createClass({
         }
       },
       currentCardType: 'complete',
-      language: 'english'
+      language: 'latin'
     };
   },
   setListeners: function setListeners() {
@@ -40809,29 +40841,40 @@ var CardPage = React.createClass({
   },
   doSearch: function doSearch(queryText, cards) {
     var matchingCards = [];
-    var cardsToSearch = cards === undefined ? this.state.cards[this.state.currentCardType] : cards;
+    var cardsToSearch = cards === undefined ? this.state.cards[this.state.currentCardType].data : cards;
+    var currentLanguage = this.state.language;
+
+    console.log(currentLanguage);
+    console.log(cardsToSearch);
+    console.log(queryText);
 
     if (queryText !== undefined && cardsToSearch !== undefined) {
       cardsToSearch.forEach(function (card) {
-        if (this.state.language === 'english' && card.english.toLowerCase().indexOf(queryText.toLowerCase) != -1 || this.state.language === 'latin' && card.latin.toLowerCase().indexOf(queryText.toLowerCase) != -1) {
+        console.log(card.latin.toLowerCase());
+        console.log(queryText.toLowerCase());
+        // console.log(card.english.toLowerCase().indexOf(queryText.toLowerCase) );
+        // console.log(card.latin.toLowerCase().indexOf(queryText.toLowerCase) );
+        if (currentLanguage === 'english' && card.english.toLowerCase().indexOf(queryText.toLowerCase()) != -1 || currentLanguage === 'latin' && card.latin.toLowerCase().indexOf(queryText.toLowerCase()) != -1) {
           matchingCards.push(card);
         }
       });
-    } else {
-      matchingCards = cardsToSearch;
     }
+    console.log("matching Cards:");
+    console.log(matchingCards);
 
-    if (this.state.cards[this.state.currentCardType].total > 0) {
+    if (this.state.cards[this.state.currentCardType].total > 0 && matchingCards.length > 0) {
+      var currentCards = this.state.cards;
+      currentCards[this.state.currentCardType].data = matchingCards;
       this.setState({
         searchQuery: queryText,
-        cards: matchingCards === undefined ? this.state.cards[this.state.currentCardType] : matchingCards
+        cards: currentCards
       });
     }
 
-    return {
-      searchQuery: queryText,
-      cards: matchingCards
-    };
+    // return {
+    //   searchQuery: queryText,
+    //   cards: matchingCards
+    // };
   },
   cardFilter: function cardFilter() {},
   filterCards: function filterCards(cards) {
@@ -40990,20 +41033,7 @@ var CardPage = React.createClass({
               React.createElement(
                 'div',
                 { className: 'col-sm-6' },
-                React.createElement(
-                  'div',
-                  { className: 'btn-group pull-right' },
-                  React.createElement(
-                    'a',
-                    { href: '/cards/category/all', className: 'btn btn-default' },
-                    'All Cards'
-                  ),
-                  React.createElement(
-                    'a',
-                    { href: '/cards/new', className: 'btn btn-success-inverse' },
-                    'New Card'
-                  )
-                )
+                React.createElement(CardActionMenu, null)
               )
             )
           )
@@ -41055,7 +41085,7 @@ var CardPage = React.createClass({
 
 module.exports = CardPage;
 
-},{"./pagination":327,"./search":328,"./styles/colors":329,"./styles/themes/custom1":330,"./swipeable-card-tabs":331,"material-ui":37,"react":323,"react-tap-event-plugin":150}],326:[function(require,module,exports){
+},{"./card-action-menu":324,"./pagination":328,"./search":329,"./styles/colors":330,"./styles/themes/custom1":331,"./swipeable-card-tabs":332,"material-ui":37,"react":323,"react-tap-event-plugin":150}],327:[function(require,module,exports){
 // Import components
 'use strict';
 
@@ -41172,7 +41202,7 @@ var FlashCard = React.createClass({
 
 module.exports = FlashCard;
 
-},{"./styles/colors":329,"./styles/themes/custom1":330,"material-ui":37,"material-ui/lib/font-icon":35,"material-ui/lib/icon-button":36,"material-ui/lib/menus/icon-menu":49,"material-ui/lib/menus/menu-item":50,"material-ui/lib/paper":59,"material-ui/lib/svg-icons/navigation/more-vert":94,"react":323,"react-tap-event-plugin":150}],327:[function(require,module,exports){
+},{"./styles/colors":330,"./styles/themes/custom1":331,"material-ui":37,"material-ui/lib/font-icon":35,"material-ui/lib/icon-button":36,"material-ui/lib/menus/icon-menu":49,"material-ui/lib/menus/menu-item":50,"material-ui/lib/paper":59,"material-ui/lib/svg-icons/navigation/more-vert":94,"react":323,"react-tap-event-plugin":150}],328:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -41230,7 +41260,7 @@ var Pagination = React.createClass({
 
 module.exports = Pagination;
 
-},{"material-ui":37,"material-ui/lib/svg-icons/navigation/arrow-back":86,"material-ui/lib/svg-icons/navigation/arrow-forward":89,"react":323,"react-tap-event-plugin":150}],328:[function(require,module,exports){
+},{"material-ui":37,"material-ui/lib/svg-icons/navigation/arrow-back":86,"material-ui/lib/svg-icons/navigation/arrow-forward":89,"react":323,"react-tap-event-plugin":150}],329:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -41268,7 +41298,7 @@ var SearchField = React.createClass({
 
 module.exports = SearchField;
 
-},{"material-ui":37,"material-ui/lib/svg-icons/action/search":81,"material-ui/lib/text-field":109,"react":323}],329:[function(require,module,exports){
+},{"material-ui":37,"material-ui/lib/svg-icons/action/search":81,"material-ui/lib/text-field":109,"react":323}],330:[function(require,module,exports){
 // To include this file in your project:
 
 'use strict';
@@ -41279,7 +41309,7 @@ module.exports = {
   blueBlack: '#0D1012'
 };
 
-},{}],330:[function(require,module,exports){
+},{}],331:[function(require,module,exports){
 'use strict';
 
 var mui = require('material-ui');
@@ -41365,7 +41395,7 @@ var Custom1 = {
 
 module.exports = Custom1;
 
-},{"../colors":329,"material-ui":37}],331:[function(require,module,exports){
+},{"../colors":330,"material-ui":37}],332:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -41476,4 +41506,4 @@ var SwipeableCardTabs = (function (_React$Component) {
 exports['default'] = SwipeableCardTabs;
 module.exports = exports['default'];
 
-},{"./card-list":324,"material-ui/lib/tabs/tab":106,"material-ui/lib/tabs/tabs":108,"react":323}]},{},[1]);
+},{"./card-list":325,"material-ui/lib/tabs/tab":106,"material-ui/lib/tabs/tabs":108,"react":323}]},{},[1]);

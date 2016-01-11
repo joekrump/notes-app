@@ -91,7 +91,7 @@ let CardPage = React.createClass({
 	    	}
 	    },
 	    currentCardType: 'complete',
-	    language: 'english'
+	    language: 'latin'
 	  };
 	},
 	setListeners: function(){
@@ -160,31 +160,41 @@ let CardPage = React.createClass({
   },
   doSearch: function(queryText, cards){
       var matchingCards = [];
-      var cardsToSearch = cards === undefined ? this.state.cards[this.state.currentCardType] : cards
+      var cardsToSearch = cards === undefined ? this.state.cards[this.state.currentCardType].data : cards;
+      var currentLanguage = this.state.language;
+
+      console.log(currentLanguage);
+      console.log(cardsToSearch);
+      console.log(queryText);
 
       if(queryText !== undefined && cardsToSearch !== undefined){
         cardsToSearch.forEach(function(card){
-            if((this.state.language === 'english' && card.english.toLowerCase().indexOf(queryText.toLowerCase) != -1)
-            	|| (this.state.language === 'latin' && card.latin.toLowerCase().indexOf(queryText.toLowerCase) != -1)){
+        	console.log(card.latin.toLowerCase())
+        	console.log(queryText.toLowerCase())
+        	// console.log(card.english.toLowerCase().indexOf(queryText.toLowerCase) );
+        	// console.log(card.latin.toLowerCase().indexOf(queryText.toLowerCase) );
+            if((currentLanguage === 'english' && card.english.toLowerCase().indexOf(queryText.toLowerCase()) != -1)
+            	|| (currentLanguage === 'latin' && card.latin.toLowerCase().indexOf(queryText.toLowerCase()) != -1)){
             	matchingCards.push(card);
             }
-            
         });
-      } else {
-        matchingCards = cardsToSearch;
       }
+      console.log("matching Cards:");
+      console.log(matchingCards);
 
-      if(this.state.cards[this.state.currentCardType].total > 0){
+      if(this.state.cards[this.state.currentCardType].total > 0 && matchingCards.length > 0){
+    		var currentCards = this.state.cards;
+    		currentCards[this.state.currentCardType].data = matchingCards;
         this.setState({
           searchQuery: queryText, 
-          cards: matchingCards === undefined ? this.state.cards[this.state.currentCardType] : matchingCards 
+          cards: currentCards 
         });
       } 
 
-      return {
-        searchQuery: queryText,
-        cards: matchingCards
-      };
+      // return {
+      //   searchQuery: queryText,
+      //   cards: matchingCards
+      // };
   },
   cardFilter: function(){
 
