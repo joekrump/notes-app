@@ -11,12 +11,47 @@ let CustomColors = require('./styles/colors');
 let CustomTheme = require('./styles/themes/custom1');
 let SwipeableCardTabs = require('./swipeable-card-tabs');
 let Pagination = require('./pagination');
+let SearchField = require('./search');
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
 //Check this repo:
 //https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin();
+
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+
+function sortEnglishByNameASC(a,b) {
+  if (a.english < b.english)
+    return -1;
+  if (a.english > b.english)
+    return 1;
+  return 0;
+}
+
+function sortEnglishByNameDESC(a,b) {
+  if (a.english > b.english)
+    return -1;
+  if (a.english < b.english)
+    return 1;
+  return 0;
+}
+
+function sortLatinByNameASC(a,b) {
+  if (a.latin < b.latin)
+    return -1;
+  if (a.latin > b.latin)
+    return 1;
+  return 0;
+}
+
+function sortLatinByNameDESC(a,b) {
+  if (a.latin > b.latin)
+    return -1;
+  if (a.latin < b.latin)
+    return 1;
+  return 0;
+}
 
 let CardPage = React.createClass({
 	childContextTypes: {
@@ -25,9 +60,9 @@ let CardPage = React.createClass({
 	getInitialState: function() {
 	  return {
 	  	cards: {
-	  		all: [],
-	  		complete: [],
-	  		incomplete: []
+	  		all: {total: 0, data:[]},
+	  		complete: {total: 0, data:[]},
+	  		incomplete: {total: 0, data:[]}
 	  	},
 	    fetchingCards: false,
 	    paginationPages: {
@@ -53,7 +88,8 @@ let CardPage = React.createClass({
 	    		last: null
 	    	}
 	    },
-	    currentCardType: 'complete'
+	    currentCardType: 'complete',
+	    language: 'english'
 	  };
 	},
 	setListeners: function(){
@@ -120,38 +156,41 @@ let CardPage = React.createClass({
     });
     this.filterProjects();
   },
-  doSearch: function(queryText, projects){
+  doSearch: function(queryText, cards){
+      var matchingCards = [];
+      var cardsToSearch = cards === undefined ? this.state.cards[this.state.currentCardType] : cards
 
-      var matchingProjects=[];
-      var projectsToSearch  = projects === undefined ? this.state.filteredProjects : projects
-
-      if(queryText !== undefined && projectsToSearch !== undefined){
-        projectsToSearch.forEach(function(project){
-            if(project.title.toLowerCase().indexOf(queryText.toLowerCase)!=-1)
-            matchingProjects.push(project);
+      if(queryText !== undefined && cardsToSearch !== undefined){
+        cardsToSearch.forEach(function(card){
+            if((this.state.language === 'english' && card.english.toLowerCase().indexOf(queryText.toLowerCase) != -1)
+            	|| (this.state.language === 'latin' && card.latin.toLowerCase().indexOf(queryText.toLowerCase) != -1)){
+            	matchingCards.push(card);
+            }
+            
         });
       } else {
-        matchingProjects = projectsToSearch;
+        matchingCards = cardsToSearch;
       }
 
-      if(this.state.filteredProjects.length > 0){
+      if(this.state.cards[this.state.currentCardType].total > 0){
         this.setState({
           searchQuery: queryText, 
-          projects: matchingProjects === undefined ? this.state.projects : matchingProjects 
+          cards: matchingCards === undefined ? this.state.cards[this.state.currentCardType] : matchingCards 
         });
       } 
 
       return {
         searchQuery: queryText,
-        projects: matchingProjects
+        cards: matchingCards
       };
+  },
+  cardFilter: function(){
+
   },
   filterCards: function(cards) {
     this.setState({
       fetchingCards: true
     });
-    var projectList = this;
-    if(this.state.projects.length === 0){
       projects = projects.filter(function(project){ return projectList.projectFilter(project) });
     } else {
       projects = this.state.projects.filter(function(project){ return projectList.projectFilter(project) });
@@ -159,48 +198,57 @@ let CardPage = React.createClass({
    
     this.sortProjects(projects);
   },
-  sortCards: function(projects) {
-    var matchedProjects;
-    var setFilteredProjects = false;
+  sortCards: function(cards) {
+  	// TODO: Sort alphabetically 
+  	//       - Latin & Enlish depending on current language set.
+  	//       Sort by Lesson #
+  	//       Sort by Category
+  	//       
+    var matchedCards;
     var hasQuery = false;
 
-    if(!this.state.loadingProjects){
+    if(!this.state.fetchingCards){
       this.setState({
-        loadingProjects: true
+        fetchingCards: true
       });
     }
 
     if(this.state.searchQuery !== undefined && this.state.searchQuery.trim()){
-      var searchResults = this.doSearch(this.state.searchQuery, projects);
+      var searchResults = this.doSearch(this.state.searchQuery, cards);
       hasQuery = true;
-      matchedProjects = searchResults.projects;
+      matchedCards = searchResults.cards;
 
-    } else if(this.state.filteredProjects.length === 0) {
-      matchedProjects = projects;
-      setFilteredProjects = true;
+    } else if(this.state.cards[this.state.currentCardType].total === 0) {
+      matchedCards = cards;
     } else {
-      matchedProjects = this.state.projects
+      matchedCards = this.state.cards[this.state.currentType];
     }
 
-    if(matchedProjects.length > 0 && this.state.filteredProjects.length > 0){
+    if(matchedCards.length > 0 && this.state.cards[this.state.currentType].total > 0){
+      // TODO: UPDATE FROM HERE DOWN!!!!!!
       switch(this.state.sortOrder){
         case 'name_asc':
-          projects = matchedProjects.sort(sortByNameASC);
+        	if language === 'latin'
+        		cards = matchedCards.sort(sortLatinByNameASC);
+        	else
+          	cards = matchedCards.sort(sortEnglishByNameASC);
           break;
         case 'name_desc':
-          projects = matchedProjects.sort(sortByNameDESC);
+          if language === 'latin'
+        		cards = matchedCards.sort(sortLatinByNameDESC);
+        	else
+          	cards = matchedCards.sort(sortEnglishByNameDESC);
           break;
         default:
           break;
       }
     } else {
-      projects = matchedProjects;
+      cards = matchedCards;
     }
 
     this.setState({
-      loadingProjects: false,
-      projects: projects,
-      filteredProjects: setFilteredProjects ? matchedProjects : this.state.filteredProjects,
+      fetchingCards: false,
+      cards: cards,
       searchQuery: hasQuery ? searchResults.searchQuery: this.state.searchQuery
     }); 
   },
@@ -286,7 +334,7 @@ let CardPage = React.createClass({
 						<div className="col-sm-6">
 							<div className="row pull-right">
 								<div className="col-sm-6">
-									<input id="search" className="form-control" name='search' placeholder="Search" data-url="/cards/search/" />
+									<SearchBox query={this.state.searchQuery} doSearch={this.doSearch}/>
 								</div>
 								<div className="col-sm-6">
 									<div className="btn-group pull-right">
@@ -300,8 +348,7 @@ let CardPage = React.createClass({
 				</header>
 				<div className="row">
 					<div className="col-sm-4">
-						<h3>{this.state.cards.all.length} cards</h3>
-						<h3>{this.state.cards.incomplete.length} blank cards</h3>
+						<h4>{this.state.cards.all.total + " cards"} <i>({this.state.cards.incomplete.total + " blank"})</i></h4>
 					</div>
 					<div className="col-sm-4 text-center">
 						<Pagination />
