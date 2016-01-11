@@ -385,6 +385,8 @@ a.btn-success-inverse, .btn-success-inverse {
       padding-left: 0; }
   #card-page .card.empty {
     border-top: 5px solid red; }
+  #card-page .card .card-menu {
+    background-color: rgba(0, 0, 0, 0.54) !important; }
   #card-page .card .latin a {
     color: #000000; }
   #card-page .card .latin a:hover, #card-page .card .latin a:focus {
@@ -534,7 +536,6 @@ a.btn-success-inverse, .btn-success-inverse {
   background: rgba(240, 217, 187, 0.9);
   height: 170px;
   color: #363636;
-  box-shadow: 1px 1px 2px 3px;
   padding-top: 5px; }
   .card:hover, .card:focus {
     color: #000; }

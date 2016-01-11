@@ -2,7 +2,6 @@
 let React                = require ('react');
 let mui                  = require('material-ui');
 let injectTapEventPlugin = require('react-tap-event-plugin');
-let ThemeManager         = new mui.Styles.ThemeManager();
 let Colors               = mui.Styles.Colors;
 let CustomColors         = require('./styles/colors');
 let CustomTheme          = require('./styles/themes/custom1');
@@ -11,8 +10,11 @@ let IconButton           = require('material-ui/lib/icon-button');
 let IconMenu             = require('material-ui/lib/menus/icon-menu');
 let MenuItem             = require('material-ui/lib/menus/menu-item');
 let Paper                = require('material-ui/lib/paper');
+let NavigationMoreVert   = require('material-ui/lib/svg-icons/navigation/more-vert'); // svg icon
 
 injectTapEventPlugin();
+
+let ThemeManager         = new mui.Styles.ThemeManager();
 
 let FlashCard = React.createClass({
   getInitialState: function() {
@@ -28,11 +30,11 @@ let FlashCard = React.createClass({
   componentDidMount: function() {
     this.setState(
       {
-        id: this.props.id,
-        english: this.props.english,
-        latin: this.props.latin,
-        origin: this.props.origin,
-        lesson_num: this.props.lesson_num
+        id: this.props.data.id,
+        english: this.props.data.english,
+        latin: this.props.data.latin,
+        origin: this.props.data.origin,
+        lesson_num: this.props.data.lesson_num
       }
     );
     window.addEventListener("toggleShowRecentOnly", this.handleShowRecentlyOnly, false);
@@ -43,13 +45,12 @@ let FlashCard = React.createClass({
     var editLink = '/cards/' + this.props.data.id;
     var iconMenuButton = (
         <IconButton>
-          <FontIcon className="material-icons muidocs-icon-action-home" color={Colors.red500} />
+          <NavigationMoreVert ref={"menu-1"} />
         </IconButton>
     );
     
     return (
-      <Paper zDepth={5}>
-        <div className={"card col-sm-4" + (this.props.data.english == null || this.props.data.english === undefined ? " empty" : "")} data-id={this.props.data.id}>
+      <Paper zDepth={5} className={"card col-sm-4" + (this.props.data.english == null || this.props.data.english === undefined ? " empty" : "")} data-id={this.props.data.id}>
           <div className="row">
             <div className={"latin" + (this.state.current_language !== "latin" ? " not-showing" : "" + " col-sm-4")}>
               <a href={editLink} dangerouslySetInnerHTML={{__html: rawLatinMarkup}}></a>
@@ -74,15 +75,12 @@ let FlashCard = React.createClass({
               </div>
             </div>
             <div className="actions">
-              <IconMenu iconButtonElement={iconMenuButton} anchorOrigin={{vertical: "top", horizontal: "right"}} targetOrigin={{vertical: "top", horizontal: "right"}}>
+              <IconMenu className="card-menu" color={Colors.black500} iconButtonElement={iconMenuButton} anchorOrigin={{vertical: "bottom", horizontal: "right"}} targetOrigin={{vertical: "top", horizontal: "left"}}>
                 <MenuItem primaryText="Refresh" />
                 <MenuItem primaryText="Send feedback" />
-                <MenuItem primaryText="Settings" />
-                <MenuItem primaryText="Help" />
               </IconMenu>
             </div>
           </div>
-        </div>
       </Paper>
     );
   }

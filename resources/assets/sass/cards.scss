@@ -13,6 +13,9 @@
     &.empty {
       border-top: 5px solid red;
     }
+    .card-menu {
+      background-color: $lightBlack !important;
+    }
     .latin {
       a { 
         color: $black;

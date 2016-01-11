@@ -16,6 +16,7 @@ class CardsController extends Controller
 
     public function getLatinCards(Request $request){
         $cards = \App\Card::orderby('latin');
+        
         if(($tab_filter = $request->request->get('tab_filter'))){
             if($tab_filter == 'all'){
                 $allCards = $cards->paginate(9);

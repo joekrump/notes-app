@@ -2,17 +2,31 @@ let React = require ('react');
 let FlashCard = require('./flash-card');
 
 let CardList = React.createClass({
+	getInitialState: function() {
+	  return {};
+	},
+	componentDidMount: function() {
+	  // this.setState({
+	  //   cards: this.props.data
+	  // });
+	},
 	render: function(){
-		var fakeCardData = {
-			id: 1,
-			english: "test English",
-			latin: "<ul><li>test Latin</li></ul>",
-			origin: null,
-			lesson_num: 3
-		};
+		var flashCards = null;
+
+		if(this.props.data !== [] && this.props.data.data !== undefined){
+			// DEBUG:
+			// console.log("data: ");
+			// console.log(this.props.data.data);
+			flashCards = this.props.data.data.map(function (card, index) {
+			  return (
+			    <FlashCard data={card} key={card.id} />
+			  );
+			}.bind(this));
+		}
+
 		return (
 			<div className="row">
-				<FlashCard data={fakeCardData} />
+				{flashCards}
 			</div>
 		);
 	}

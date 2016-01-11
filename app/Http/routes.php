@@ -20,8 +20,8 @@ Route::get('/', function () {
 Route::get('/react/cards', function(){
   return view('cards/react-view');
 });
-Route::get('/react/cards/latin', 'CardsController@getLatinCards');
 Route::get('/react/cards/latin/{tab_filter}', 'CardsController@getLatinCards');
+Route::get('/react/cards/latin', 'CardsController@getLatinCards');
 
 // Unique route for showing circles with characters from the novel "Rob Roy"
 //

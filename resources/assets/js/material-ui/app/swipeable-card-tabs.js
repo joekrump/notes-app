@@ -16,6 +16,7 @@ export default class SwipeableCardTabs extends React.Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
       value: 'complete',
     };
@@ -25,27 +26,28 @@ export default class SwipeableCardTabs extends React.Component {
     this.setState({
       value: value,
     });
+    window.dispatchEvent(new CustomEvent("updateCurrentCardType", { detail: { cardType: value}}));
   }
-
   render() {
+
     return (
       <Tabs
         value={this.state.value}
         onChange={this.handleChange}
       >
-        <Tab label="Complete" value="complete" >
+        <Tab label="Complete" value="complete">
           <div className="col-sm-12">
-            <CardList />
+            <CardList data={this.props.data.complete} />
           </div>
         </Tab>
         <Tab label="Incomplete" value="incomplete">
           <div className="col-sm-12">
-            <CardList />
+            <CardList data={this.props.data.incomplete}  />
           </div>
         </Tab>
         <Tab label="All" value="all">
           <div className="col-sm-12">
-            <CardList />
+            <CardList data={this.props.data.all}  />
           </div>
         </Tab>
       </Tabs>

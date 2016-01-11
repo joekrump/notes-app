@@ -10,6 +10,7 @@ let Colors = mui.Styles.Colors;
 let CustomColors = require('./styles/colors');
 let CustomTheme = require('./styles/themes/custom1');
 let SwipeableCardTabs = require('./swipeable-card-tabs');
+let Pagination = require('./pagination');
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
@@ -23,45 +24,96 @@ let CardPage = React.createClass({
 	},
 	getInitialState: function() {
 	  return {
-	    cards: [],
-	    filteredProjects: [],
+	  	cards: {
+	  		all: [],
+	  		complete: [],
+	  		incomplete: []
+	  	},
 	    fetchingCards: false,
 	    paginationPages: {
-	    	all: 1,
-	    	complete: 1,
-	    	incomplete: 1
-	    }
+	    	all: {
+	    		curr: 1,
+	    		prev: null,
+	    		first: null,
+	    		next: null,
+	    		last: null
+	    	},
+	    	complete: {
+	    		curr: 1,
+	    		prev: null,
+	    		first: null,
+	    		next: null,
+	    		last: null
+	    	},
+	    	incomplete: {
+	    		curr: 1,
+	    		prev: null,
+	    		first: null,
+	    		next: null,
+	    		last: null
+	    	}
+	    },
+	    currentCardType: 'complete'
 	  };
 	},
 	setListeners: function(){
-    window.addEventListener("getNewPage", this.handleGetNewPage, false);
+    window.addEventListener("getNewCardPage", this.handleGetNewPage, false);
+    window.addEventListener("updateCurrentCardType", this.updateCurrentCardType, false);
   },
   componentWillUnmount: function(){
-    window.removeEventListener("getNewPage", this.handleGetNewPage, false);
+    window.removeEventListener("getNewCardPage", this.handleGetNewPage, false);
+    window.removeEventListener("updateCurrentCardType", this.updateCurrentCardType, false);
   },
-  updatePageNum: function(tabFilter, pageNum){
-  	var specificPageCount;
+  updateCurrentCardType: function(){
+  	// console.log(event.detail.cardType);
+  	this.setState({currentCardType: event.detail.cardType});
+  	this.setPageNums(event.detail.cardType);
+  },
+  calcPageNums: function(cardType){
+  	var stateCurrentPage = this.state.cards[cardType].current_page;
+  	var stateLastPage = this.state.cards[cardType].last_page
+  	var curr  = stateCurrentPage === undefined ? 1 : stateCurrentPage;
+  	var last  = stateLastPage === undefined ? 1 : stateLastPage;
+  	var next  = null;
+  	var first = null;
+  	var prev  = null;
+  	// if current page is equal to last page then next page num is null and last page num is null
+  	// 
+  	if(curr == last){
+  		last = null;
+  	} else {
+  		next = curr + 1;
+  	}
+  	
+  	if(curr > 1) {
+  		prev = curr - 1;
+  		first = 1;
+  	}
+  	// // if current page # is 1 then previous page is null and first page is null
+  	// else first page is 1 and previous page # is current page - 1
+  	// 
+  	return {
+  		curr: curr,
+  		prev: prev,
+  		first: first,
+  		next: next,
+  		last: last 
+  	};
+  },
+  setPageNums: function(cardType){
   	var currentPagination = this.state.paginationPages;
-  	console.log(currentPagination);
-  	currentPagination[tabFilter] = pageNum;
-  	this.setState(
-			{
-				paginationPages: currentPagination
-			}
-  	);
-  	console.log(this.state.paginationPages);
+  	currentPagination[cardType] = this.calcPageNums(cardType);
+  	this.setState({
+  		paginationPages: currentPagination
+  	});
   },
-  getNextPage: function(){
-  	console.log('clicked');
-  	window.dispatchEvent(new CustomEvent("getNewPage", { detail: { tabFilter: 'all', pageNum: 2 } }));
-  },
-  shouldComponentUpdate: function(nextProps, nextState){
-    // No need to re-render the view when loading state changes.
-    // if(nextState.loadingProjects !== this.state.loadingProjects){
-    //   return false;
-    // }
-    // return true;
-  },
+  // shouldComponentUpdate: function(nextProps, nextState){
+  //   // No need to re-render the view when loading state changes.
+  //   // if(nextState.loadingProjects !== this.state.loadingProjects){
+  //   //   return false;
+  //   // }
+  //   return false;
+  // },
   updateSortOrder: function(event){
     this.setState({
       sortOrder: event.detail.sortOrder
@@ -153,21 +205,23 @@ let CardPage = React.createClass({
     }); 
   },
 	handleGetNewPage: function(){
-		console.log('clicked');
+		// console.log('clicked');
 		if(!this.state.fetchingCards){
 		  this.setState({fetchingCards: true});
-		  this.updatePageNum(event.detail.tabFilter, event.detail.pageNum);
-		  var tabFilter = event.detail.tabFilter;
+		  var pageNum = this.state.paginationPages[this.state.currentCardType][event.detail.button_type];
+		  // console.log("Page Num: " + pageNum);
 		  $.ajax({
-		    url: (this.props.src + '/' + event.detail.tabFilter + '?page=' + event.detail.pageNum),
+		    url: (this.props.src + '?tab_filter=' + this.state.currentCardType + '&page=' + pageNum),
 		    dataType: 'json',
 		    cache: false,
-		    success: function(cards) {
+		    success: function(newPageOfCards) {
+		    	// TODO: route needs to return just one set based on the card type. Right now all 3 (all, complete and incomplete are being returned.)
 		    	var currentCards = this.state.cards;
-		    	currentCards[tabFilter] = cards;
+		    	currentCards[this.state.currentCardType] = newPageOfCards;
 		      this.setState({cards: currentCards});
-		      console.log(this.state.cards);
+		      // console.log(this.state.cards);
 		      this.setState({fetchingCards: false});
+		      this.setPageNums(this.state.currentCardType); // update what the current page is.
 		    }.bind(this),
 		    error: function(xhr, status, err) {
 		      console.error(this.props.src, status, err.toString());
@@ -186,23 +240,30 @@ let CardPage = React.createClass({
 	      dataType: 'json',
 	      cache: false,
 	      success: function(cards) {
-	        this.setState({cards: {all: JSON.parse(cards.all), complete: JSON.parse(cards.complete), incomplete: JSON.parse(cards.incomplete)}});
-	        console.log(this.state.cards);
-	        this.setState({fetchingCards: false});
+	        this.setState({
+	        	cards: {
+	        		all: JSON.parse(cards.all), 
+	        		complete: JSON.parse(cards.complete), 
+	        		incomplete: JSON.parse(cards.incomplete)
+	        	},
+	        	fetchingCards: false
+	        });
+	        this.setPageNums(this.state.currentCardType);
+	        // console.log(this.state.cards);
 	      }.bind(this),
 	      error: function(xhr, status, err) {
 	        console.error(this.props.src, status, err.toString());
 	        this.setState({fetchingCards: false});
-	      }.bind(this) // bind(this) allows this to keep it's context when being accessed within ajax callbacks.
+	      }.bind(this) // bind(this) allows 'this' to keep it's context when being accessed within ajax callbacks.
 	    });
 	  }
 	},
 	componentDidMount: function() {
 	  this.setListeners();
 	  this.fetchCards();
-	  if (this.props.pollInterval !== undefined && this.props.pollInterval > 0) {
-	    setInterval(this.fetchCards, this.props.pollInterval);
-	  }
+	  // if (this.props.pollInterval !== undefined && this.props.pollInterval > 0) {
+	    // setInterval(this.fetchCards, 5000);
+	  // }
 	},
 	getChildContext() {
 	  ThemeManager.setTheme(CustomTheme);
@@ -213,7 +274,8 @@ let CardPage = React.createClass({
 	componentWillMount() {
 	  ThemeManager.setTheme(CustomTheme);
 	},
-	render() {
+	render: function() {
+		// console.log(this.state);
 		return (
 			<div>
 				<header className="page-header">
@@ -236,24 +298,21 @@ let CardPage = React.createClass({
 						</div>
 					</div>
 				</header>
-			<div className="row">
-			<div className="col-sm-4">
-			<h3># cards total</h3>
-			<h3># blank cards</h3>
-			</div>
-			<div className="col-sm-4 text-center">
-			Pagination links...
-			<div onClick={this.getNextPage}>
-			TEST NEXT PAGINATE BUTTON
-			</div>
-			</div>
-			<div className="col-sm-4 toggle-actions text-right">
-			<button id="latin-english-btn" type="button" className="btn btn-primary" data-showing="latin">Latin</button>
-			</div>
-			<div className="col-sm-12">
-			<SwipeableCardTabs />
-			</div>
-			</div>
+				<div className="row">
+					<div className="col-sm-4">
+						<h3># cards total</h3>
+						<h3># blank cards</h3>
+					</div>
+					<div className="col-sm-4 text-center">
+						<Pagination />
+					</div>
+					<div className="col-sm-4 toggle-actions text-right">
+						<button id="latin-english-btn" type="button" className="btn btn-primary" data-showing="latin">Latin</button>
+					</div>
+					<div className="col-sm-12">
+						<SwipeableCardTabs data={this.state.cards}/>
+					</div>
+				</div>
 			</div>
 		);
 	}

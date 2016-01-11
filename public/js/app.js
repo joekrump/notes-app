@@ -40804,7 +40804,7 @@ var Custom1 = {
         borderColor: 'rgba(255, 255, 255, 0.3)'
       },
       paper: {
-        backgroundColor: cardColor
+        backgroundColor: 'rgba(240, 217, 187, 0.9)'
       },
       raisedButton: {
         color: Colors.grey500
