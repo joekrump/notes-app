@@ -1,6 +1,8 @@
 import TextField from 'material-ui/lib/text-field';
-
-let SearchAction = require('material-ui/lib/svg-icons/action/search'); // svg icon
+let React = require ('react');
+let mui = require('material-ui');
+let Colors = mui.Styles.Colors;
+let SearchAction = require('material-ui/lib/svg-icons/action/search'); // search svg icon (not currently used)
 
 var SearchField = React.createClass({
     doSearch:function(){
@@ -11,7 +13,6 @@ var SearchField = React.createClass({
     render:function(){
         return (
           <div>
-            <SearchAction ref={"top-search-icon"} />
             <TextField
               ref="searchInput"
               floatingLabelText="Search"

@@ -12,6 +12,8 @@ let CustomTheme = require('./styles/themes/custom1');
 let SwipeableCardTabs = require('./swipeable-card-tabs');
 let Pagination = require('./pagination');
 let SearchField = require('./search');
+let CardActionMenu = require('./card-action-menu');
+
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
@@ -188,15 +190,9 @@ let CardPage = React.createClass({
 
   },
   filterCards: function(cards) {
-    this.setState({
-      fetchingCards: true
-    });
-      projects = projects.filter(function(project){ return projectList.projectFilter(project) });
-    } else {
-      projects = this.state.projects.filter(function(project){ return projectList.projectFilter(project) });
-    }
-   
-    this.sortProjects(projects);
+    // this.setState({
+    //   fetchingCards: true
+    // });
   },
   sortCards: function(cards) {
   	// TODO: Sort alphabetically 
@@ -228,13 +224,13 @@ let CardPage = React.createClass({
       // TODO: UPDATE FROM HERE DOWN!!!!!!
       switch(this.state.sortOrder){
         case 'name_asc':
-        	if language === 'latin'
+        	if(language === 'latin')
         		cards = matchedCards.sort(sortLatinByNameASC);
         	else
           	cards = matchedCards.sort(sortEnglishByNameASC);
           break;
         case 'name_desc':
-          if language === 'latin'
+          if(language === 'latin')
         		cards = matchedCards.sort(sortLatinByNameDESC);
         	else
           	cards = matchedCards.sort(sortEnglishByNameDESC);
@@ -334,13 +330,10 @@ let CardPage = React.createClass({
 						<div className="col-sm-6">
 							<div className="row pull-right">
 								<div className="col-sm-6">
-									<SearchBox query={this.state.searchQuery} doSearch={this.doSearch}/>
+									<SearchField query={this.state.searchQuery} doSearch={this.doSearch}/>
 								</div>
 								<div className="col-sm-6">
-									<div className="btn-group pull-right">
-										<a href="/cards/category/all" className="btn btn-default">All Cards</a>
-										<a href='/cards/new' className="btn btn-success-inverse">New Card</a>
-									</div>
+									<CardActionMenu />
 								</div>
 							</div>
 						</div>
