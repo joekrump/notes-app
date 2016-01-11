@@ -300,8 +300,8 @@ let CardPage = React.createClass({
 				</header>
 				<div className="row">
 					<div className="col-sm-4">
-						<h3># cards total</h3>
-						<h3># blank cards</h3>
+						<h3>{this.state.cards.all.length} cards</h3>
+						<h3>{this.state.cards.incomplete.length} blank cards</h3>
 					</div>
 					<div className="col-sm-4 text-center">
 						<Pagination />
