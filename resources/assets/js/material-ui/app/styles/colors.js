@@ -3,5 +3,6 @@
 module.exports = {
   silverGreen: '#0D1012',
   primary1: '#CFD198',
-  blueBlack: '#0D1012'
+  blueBlack: '#0D1012',
+  highlightYellow: '#CDCE18'
 };

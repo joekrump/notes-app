@@ -16,8 +16,8 @@ var SearchField = React.createClass({
             <TextField
               ref="searchInput"
               floatingLabelText="Search"
-              floatingLabelStyle={{color: Colors.amber900}}
-              underlineFocusStyle={{borderColor: Colors.amber900}} 
+              floatingLabelStyle={{color: Colors.highlightYellow}}
+              underlineFocusStyle={{borderColor: Colors.highlightYellow}} 
               onChange={this.doSearch}/>
           </div>
         );

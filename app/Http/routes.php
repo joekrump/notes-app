@@ -17,7 +17,7 @@ Route::get('/', function () {
 });
 
 // Card view created using react
-Route::get('/react/cards', function(){
+Route::get('/cards', function(){
   return view('cards/react-view');
 });
 Route::get('/react/cards/latin/{tab_filter}', 'CardsController@getLatinCards');

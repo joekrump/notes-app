@@ -11,7 +11,7 @@ var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var Pagination = React.createClass({
 	getInitialState: function() {
 	  return {
-	    currentFilter: 'complete'
+	    currentFilter: 'complete',
 	  };
 	},
 	componentDidMount: function() {
@@ -28,10 +28,10 @@ var Pagination = React.createClass({
   },
   fetchPrevPage: function(){
   	// trigger event to get new page with details for prev page
-  	window.dispatchEvent(new CustomEvent("getNewCardPage", { detail: { button_type: 'prev'} }));
+  	window.dispatchEvent(new CustomEvent("getNewCardPage", { detail: { buttonType: 'prev'} }));
   },
   fetchNextPage: function() {
-  	window.dispatchEvent(new CustomEvent("getNewCardPage", { detail: { button_type: 'next'} }));
+  	window.dispatchEvent(new CustomEvent("getNewCardPage", { detail: { buttonType: 'next'} }));
   },
   render: function () {
     var projectNodes  = null;

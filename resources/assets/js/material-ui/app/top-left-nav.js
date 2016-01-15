@@ -17,22 +17,24 @@ let CustomTheme = require('./styles/themes/custom1');
 injectTapEventPlugin();
 
 let TopLeftNav = React.createClass({
-
+  getInitialState: function() {
+    return {
+      novelValue: 'Rob Roy',
+      currentPage: 'notes'
+    };
+  },
   loadDefaultView: function(){
 
   },
-
   childContextTypes: {
     muiTheme: React.PropTypes.object
   },
-
   getChildContext() {
     ThemeManager.setTheme(CustomTheme);
     return {
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
-
   componentWillMount() {
     ThemeManager.setTheme(CustomTheme);
   },
@@ -41,29 +43,42 @@ let TopLeftNav = React.createClass({
     // Show/Hide the LeftMenu
     this.refs.leftNav.toggle();
   },
+  handleNovelDropdownChange() {
 
+  },
   render() {
+    let currentPath = window.location.pathname;
 
     let menuItems = [
       {
          type: MenuItem.Types.LINK,
          payload: '/notes',
-         text: 'Notes'
+         text: 'Notes',
+         active: (currentPath == '/notes')
       },
       {
          type: MenuItem.Types.LINK,
          payload: '/cards/category/all',
-         text: 'Cards'
+         text: 'Cards',
+         active: (currentPath == '/cards/category/all')
+      },
+      {
+         type: MenuItem.Types.LINK,
+         payload: '/cards',
+         text: 'React Cards',
+         active: (currentPath == '/cards')
       },
       {
          type: MenuItem.Types.LINK,
          payload: '/courses',
-         text: 'Courses'
+         text: 'Courses',
+         active: (currentPath == '/courses')
       },
       {
          type: MenuItem.Types.LINK,
          payload: '/rob-roy-graph',
-         text: 'Rob Roy Graph'
+         text: 'Rob Roy',
+         active: (currentPath == '/rob-roy-graph')
       }
     ];
 
@@ -76,10 +91,10 @@ let TopLeftNav = React.createClass({
           menuItems={menuItems} />
         <header>
           <AppBar
-            title=""
-            iconClassNameRight="muidocs-icon-navigation-expand-more" 
+            title="Seminarium"
+            iconClassNameRight="muidocs-icon-navigation-expand-more"
             onLeftIconButtonTouchTap={this.toggleNav}
-            isInitiallyOpen={true}
+            isInitiallyOpen={false}
             zDepth={4} 
             style={{backgroundColor:ThemeManager.getCurrentTheme().component.appBar.backgroundColor}} />
         </header>

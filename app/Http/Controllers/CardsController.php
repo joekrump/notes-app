@@ -9,38 +9,56 @@ use App\Http\Controllers\Controller;
 
 class CardsController extends Controller
 {
-    public function cards_list(Request $request){
-        $cards = \App\Card::orderby('latin', 'asc')->get();
-        return view('cards.list', compact(['cards']));
-    }
+  public function cards_list(Request $request){
+    $cards = \App\Card::orderby('latin', 'asc')->get();
+    return view('cards.list', compact(['cards']));
+  }
 
-    public function getLatinCards(Request $request){
-        $cards = \App\Card::orderby('latin');
-        
-        if(($tab_filter = $request->request->get('tab_filter'))){
-            if($tab_filter == 'all'){
-                $allCards = $cards->paginate(9);
-            } else if($tab_filter == 'complete') {
-                $allCards = $cards->where("english", '!=', '')->paginate(9);
-            } else {
-                // incomplete
-                $allCards = $cards->whereRaw("english IS NULL OR english = ''")->paginate(9);
-            }
-        } else {
-            $all = $cards->paginate(9);
-            $complete = $cards->where("english", '!=', '')->paginate(9);
-            $incomplete = $cards->whereRaw("english IS NULL OR english = ''")->paginate(9);
-            $allCards = [
-                'all' => $all->toJson(),
-                'complete' => $complete->toJson(),
-                'incomplete' => $incomplete->toJson()
-            ];
-        }
-       
-        if($request->ajax()){
-            return $allCards;
-        }
+  public function getLatinCards(Request $request){
+    $cards = \App\Card::orderBYRaw('RAND()');
+    $per_page = 9.0;
+        // if(($tab_filter = $request->request->get('tab_filter'))){
+        //     if($tab_filter == 'all'){
+        //         $allCards = $cards->get();
+        //     } else if($tab_filter == 'complete') {
+        //         $allCards = $cards->where("english", '!=', '')->get();
+        //     } else {
+        //         $allCards = $cards->whereRaw("english IS NULL OR english = ''")->get();
+        //     }
+        // } else {
+    $all = $cards->get();
+    $complete = $cards->where("english", '!=', '')->get();
+    $incomplete = $cards->whereRaw("english IS NULL OR english = ''")->get();
+    $all_count = 1.0 * $all->count();
+    $complete_count = 1.0 * $complete->count();
+    $incomplete_count = 1.0 * $incomplete->count();
+
+    $allCards = [
+      'all' => [
+        'data' => $all->toArray(),
+        'total' => $all_count,
+        'last_page' => ceil($all_count/$per_page),
+        'current_page' => 1
+      ],
+      'complete' => [
+        'data' => $complete->toArray(),
+        'total' => $complete_count,
+        'last_page' => ceil($complete_count/$per_page),
+        'current_page' => 1
+      ],
+      'incomplete' => [
+        'data' => $incomplete->toArray(),
+        'total' => $incomplete_count,
+        'last_page' => ceil($incomplete_count/$per_page),
+        'current_page' => 1
+      ]
+    ];
+        // }
+
+    if($request->ajax()){
+      return $allCards;
     }
+  }
     /**
      * Display a listing of cards
      *
@@ -48,59 +66,59 @@ class CardsController extends Controller
      */
     public function index(Request $request)
     {
-        
-        $resource_type = 'course';
-        $card_type = $request->request->get('card_type');
-        $lesson_num = $request->request->get('lesson_num');
 
-        $cards = \App\Card::where("type", $card_type);
+      $resource_type = 'course';
+      $card_type = $request->request->get('card_type');
+      $lesson_num = $request->request->get('lesson_num');
+
+      $cards = \App\Card::where("type", $card_type);
+      $path = '/cards/category/' . $card_type;
+
+      if(!is_null($lesson_num)){
+        $cards = $cards->where('lesson_num', $lesson_num);
+        $path = '/cards/category/' . $card_type . '/' . $lesson_num;
+      }
+
+      $cards = $cards->orderby('lesson_num', 'desc')->orderby('latin')->paginate(9);
+
+      if($cards->count() < 1) {
+        $card_type = 'all';
+        $cards = \App\Card::orderby('lesson_num', 'desc')->orderby('latin')->paginate(9);
         $path = '/cards/category/' . $card_type;
-
-        if(!is_null($lesson_num)){
-            $cards = $cards->where('lesson_num', $lesson_num);
-            $path = '/cards/category/' . $card_type . '/' . $lesson_num;
-        }
-
-        $cards = $cards->orderby('lesson_num', 'desc')->orderby('latin')->paginate(9);
-
-        if($cards->count() < 1) {
-            $card_type = 'all';
-            $cards = \App\Card::orderby('lesson_num', 'desc')->orderby('latin')->paginate(9);
-            $path = '/cards/category/' . $card_type;
-        }
+      }
 
         // return a list of cards in json format if this is an AJAX request.
-        if($request->ajax()){
-            return $cards;
-        }
+      if($request->ajax()){
+        return $cards;
+      }
 
-        $cards->setPath($path);
-        $blank_count = \App\Card::whereRaw('english = ""')->count();
-        $show_latin = true;
-        $show_mode = 'all';
-        return view('cards.index', compact(['cards', 'card_type', 'resource_type', 'show_latin', 'blank_count', 'show_mode']));
+      $cards->setPath($path);
+      $blank_count = \App\Card::whereRaw('english = ""')->count();
+      $show_latin = true;
+      $show_mode = 'all';
+      return view('cards.index', compact(['cards', 'card_type', 'resource_type', 'show_latin', 'blank_count', 'show_mode']));
     }
     public function mark_as_complete($card_id, $status){
-        $card = \App\Card::findOrFail($card_id);
-        $card->update(['marked_complete' => $status]);
+      $card = \App\Card::findOrFail($card_id);
+      $card->update(['marked_complete' => $status]);
     }
 
     public function search($language, $search_term){
 
         // if the search_term value is a number then we assume that the user is trying to filter by lesson number.
-        if(intval($search_term)){
-            $cards = \App\Card::where('lesson_num', $search_term);
-        } else {
-            $likeString = '%' . $search_term . '%';
+      if(intval($search_term)){
+        $cards = \App\Card::where('lesson_num', $search_term);
+      } else {
+        $likeString = '%' . $search_term . '%';
             // Search based on the language that we are searching for.
-            if($language == 'ln'){
-                $cards = \App\Card::where('latin', 'like', $likeString);
-            } else if($language == 'en') {
-                $cards = \App\Card::where('english', 'like', '%' . $likeString);
-            }
+        if($language == 'ln'){
+          $cards = \App\Card::where('latin', 'like', $likeString);
+        } else if($language == 'en') {
+          $cards = \App\Card::where('english', 'like', '%' . $likeString);
         }
+      }
 
-        return $cards->select(['id', 'latin', 'english', 'origin', 'lesson_num'])->orderby('latin')->get();
+      return $cards->select(['id', 'latin', 'english', 'origin', 'lesson_num'])->orderby('latin')->get();
     }
 
     /**
@@ -110,7 +128,7 @@ class CardsController extends Controller
      */
     public function create($card_type = 'latin')
     {
-        return view('cards.show', compact(['card_type']));
+      return view('cards.show', compact(['card_type']));
     }
 
     /**
@@ -121,10 +139,10 @@ class CardsController extends Controller
      */
     public function store(Request $request)
     {
-        $card = new \App\Card($request->request->all());
-        $card->save();
+      $card = new \App\Card($request->request->all());
+      $card->save();
 
-        return $card;
+      return $card;
     }
 
     /**
@@ -135,16 +153,16 @@ class CardsController extends Controller
      */
     public function show($id)
     {   
-        $card_type = 'default';
-        $cards = \App\Card::where('english', $id);
-        if($cards->count() > 0) {
-            $card = $cards->first();
-            $card_type = $card->type;
-        } else {
-            $card = \App\Card::find($id);
-            $card_type = $card->type;
-        }
-        return view('cards.show', compact(['card', 'card_type']));
+      $card_type = 'default';
+      $cards = \App\Card::where('english', $id);
+      if($cards->count() > 0) {
+        $card = $cards->first();
+        $card_type = $card->type;
+      } else {
+        $card = \App\Card::find($id);
+        $card_type = $card->type;
+      }
+      return view('cards.show', compact(['card', 'card_type']));
     }
 
     /**
@@ -167,11 +185,11 @@ class CardsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $card = \App\Card::find($id);
-        $card->update($request->request->all());
-        $card->save();
+      $card = \App\Card::find($id);
+      $card->update($request->request->all());
+      $card->save();
 
-        return $card;
+      return $card;
     }
 
     /**
@@ -182,6 +200,6 @@ class CardsController extends Controller
      */
     public function destroy($id)
     {
-        \App\Card::find($id)->delete();
+      \App\Card::find($id)->delete();
     }
-}
+  }

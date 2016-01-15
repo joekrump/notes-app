@@ -6,18 +6,19 @@ let Spacing = mui.Styles.Spacing;
 
 let Custom1 = {
   spacing: Spacing,
+  contentFontFamily: 'Roboto, sans-serif',
   getPalette() {
     return {
       textColor: Colors.fullWhite,
       canvasColor: '#303030',
       borderColor:  ColorManipulator.fade(Colors.fullWhite, 0.3), //Colors.grey300
       disabledColor: ColorManipulator.fade(Colors.fullWhite, 0.3),
-      primary1Color: Colors.blueGrey500,
-      primary2Color: Colors.blueGrey700,
-      primary3Color: Colors.blueGrey100,
-      accent1Color: Colors.deepOrangeA200,
-      accent2Color: Colors.deepOrangeA400,
-      accent3Color: Colors.deepOrangeA100,
+      primary1Color: Colors.teal500,
+      primary2Color: Colors.teal900,
+      primary3Color: Colors.tealA700,
+      accent1Color: CustomColors.highlightYellow,
+      accent2Color: CustomColors.highlightYellow,
+      accent3Color: CustomColors.highlightYellow,
     };
   },
   getComponentThemes(palette) {

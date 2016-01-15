@@ -24,20 +24,18 @@
         @else
             <style>
                 .background {
-                     background-image: url("/images/material_background.jpg");
+                     background-image: url("/images/app_background2.jpg");
                 }
             </style> 
         @endif
         <meta name="_token" content="{{ csrf_token() }}" />
     </head>
     <body>
-
-        @include('../partials.top_nav')
-
         <div class="background"></div>
-        @yield('content')
+        <div id="react-page">
+        </div>
 
-        <script type="text/javascript" src="{{ asset('js/react-nav.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/react-page.js') }}"></script>
         <script src="{{ asset('js/jquery-1.11.0.min.js') }}"></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
         

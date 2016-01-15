@@ -18,8 +18,6 @@ class NotesController extends Controller
     {
         $courses = \App\Course::orderBy('name', 'ASC')->get();
         $resource_type = 'note';
-
-
         return view('notes.index', compact(['courses', 'resource_type', 'status']));
     }
 
@@ -49,6 +47,12 @@ class NotesController extends Controller
         $note_course = \App\Course::find($note->course_id);
         $note['courseName'] = $note_course->name;
         return $note;
+    }
+
+    public function searchContent(Request $request){
+        $searchTerm = $request->request->get('searchTerm');
+        $notes = \App\Note::whereRaw("title LIKE '%?%' OR content LIKE '%?%'", [$searchTerm, $searchTerm])->get();
+        return $notes;
     }
 
     /**

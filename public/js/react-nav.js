@@ -11196,7 +11196,7 @@ module.exports = {
   desktopGutterMore: 32,
   desktopGutterLess: 16,
   desktopGutterMini: 8,
-  desktopKeylineIncrement: 64,
+  desktopKeylineIncrement: 62,
   desktopDropDownMenuItemHeight: 32,
   desktopDropDownMenuFontSize: 15,
   desktopLeftNavMenuItemHeight: 48,
@@ -40350,7 +40350,8 @@ module.exports = require('./lib/React');
 module.exports = {
   silverGreen: '#0D1012',
   primary1: '#CFD198',
-  blueBlack: '#0D1012'
+  blueBlack: '#0D1012',
+  highlightYellow: '#CDCE18'
 };
 
 },{}],319:[function(require,module,exports){
@@ -40364,18 +40365,19 @@ var Spacing = mui.Styles.Spacing;
 
 var Custom1 = {
   spacing: Spacing,
+  contentFontFamily: 'Roboto, sans-serif',
   getPalette: function getPalette() {
     return {
       textColor: Colors.fullWhite,
       canvasColor: '#303030',
       borderColor: ColorManipulator.fade(Colors.fullWhite, 0.3), //Colors.grey300
       disabledColor: ColorManipulator.fade(Colors.fullWhite, 0.3),
-      primary1Color: Colors.blueGrey500,
-      primary2Color: Colors.blueGrey700,
-      primary3Color: Colors.blueGrey100,
-      accent1Color: Colors.deepOrangeA200,
-      accent2Color: Colors.deepOrangeA400,
-      accent3Color: Colors.deepOrangeA100
+      primary1Color: Colors.teal500,
+      primary2Color: Colors.teal900,
+      primary3Color: Colors.tealA700,
+      accent1Color: CustomColors.highlightYellow,
+      accent2Color: CustomColors.highlightYellow,
+      accent3Color: CustomColors.highlightYellow
     };
   },
   getComponentThemes: function getComponentThemes(palette) {
@@ -40409,7 +40411,7 @@ var Custom1 = {
         borderColor: 'rgba(255, 255, 255, 0.3)'
       },
       paper: {
-        backgroundColor: cardColor
+        backgroundColor: 'rgba(240, 217, 187, 0.9)'
       },
       raisedButton: {
         color: Colors.grey500
@@ -40463,19 +40465,22 @@ injectTapEventPlugin();
 var TopLeftNav = React.createClass({
   displayName: 'TopLeftNav',
 
+  getInitialState: function getInitialState() {
+    return {
+      novelValue: 'Rob Roy',
+      currentPage: 'notes'
+    };
+  },
   loadDefaultView: function loadDefaultView() {},
-
   childContextTypes: {
     muiTheme: React.PropTypes.object
   },
-
   getChildContext: function getChildContext() {
     ThemeManager.setTheme(CustomTheme);
     return {
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
-
   componentWillMount: function componentWillMount() {
     ThemeManager.setTheme(CustomTheme);
   },
@@ -40484,25 +40489,35 @@ var TopLeftNav = React.createClass({
     // Show/Hide the LeftMenu
     this.refs.leftNav.toggle();
   },
-
+  handleNovelDropdownChange: function handleNovelDropdownChange() {},
   render: function render() {
+    var currentPath = window.location.pathname;
 
     var menuItems = [{
       type: MenuItem.Types.LINK,
       payload: '/notes',
-      text: 'Notes'
+      text: 'Notes',
+      active: currentPath == '/notes'
     }, {
       type: MenuItem.Types.LINK,
       payload: '/cards/category/all',
-      text: 'Cards'
+      text: 'Cards',
+      active: currentPath == '/cards/category/all'
+    }, {
+      type: MenuItem.Types.LINK,
+      payload: '/cards',
+      text: 'React Cards',
+      active: currentPath == '/cards'
     }, {
       type: MenuItem.Types.LINK,
       payload: '/courses',
-      text: 'Courses'
+      text: 'Courses',
+      active: currentPath == '/courses'
     }, {
       type: MenuItem.Types.LINK,
       payload: '/rob-roy-graph',
-      text: 'Rob Roy Graph'
+      text: 'Rob Roy',
+      active: currentPath == '/rob-roy-graph'
     }];
 
     return React.createElement(
@@ -40517,10 +40532,10 @@ var TopLeftNav = React.createClass({
         'header',
         null,
         React.createElement(AppBar, {
-          title: '',
+          title: 'Seminarium',
           iconClassNameRight: 'muidocs-icon-navigation-expand-more',
           onLeftIconButtonTouchTap: this.toggleNav,
-          isInitiallyOpen: true,
+          isInitiallyOpen: false,
           zDepth: 4,
           style: { backgroundColor: ThemeManager.getCurrentTheme().component.appBar.backgroundColor } })
       )

@@ -383,23 +383,67 @@ a.btn-success-inverse, .btn-success-inverse {
     #card-page .list > li ul {
       list-style-type: none;
       padding-left: 0; }
-  #card-page .card.empty {
-    border-top: 5px solid red; }
-  #card-page .card .card-menu {
-    background-color: rgba(0, 0, 0, 0.54) !important; }
-  #card-page .card .latin a {
-    color: #000000; }
-  #card-page .card .latin a:hover, #card-page .card .latin a:focus {
-    color: #616161;
-    text-decoration: none; }
-  #card-page .card .actions {
-    position: absolute;
-    bottom: 12px;
-    right: 12px; }
-    #card-page .card .actions .btn-success-inverse, #card-page .card .actions .btn-danger {
-      background-color: rgba(0, 0, 0, 0.6); }
-    #card-page .card .actions .btn-22 {
-      width: 22px; }
+  #card-page .card {
+    margin-top: 40px;
+    background-size: cover;
+    background: rgba(240, 217, 187, 0.9);
+    height: 170px;
+    color: #363636;
+    padding-top: 5px; }
+    #card-page .card .latin {
+      opacity: 1;
+      font-family: "Times New Roman";
+      font-size: 14pt;
+      font-weight: bold; }
+      #card-page .card .latin.not-showing {
+        opacity: 0;
+        transition: opacity 750ms; }
+      #card-page .card .latin ul {
+        padding: 0;
+        margin-top: 14pt;
+        list-style: none; }
+        #card-page .card .latin ul li {
+          padding-left: -5px; }
+      #card-page .card .latin a {
+        color: #000000; }
+      #card-page .card .latin a:hover, #card-page .card .latin a:focus {
+        color: #616161;
+        text-decoration: none; }
+    #card-page .card .english {
+      opacity: 1; }
+      #card-page .card .english.not-showing {
+        opacity: 0;
+        transition: opacity 750ms; }
+      #card-page .card .english .definition {
+        font-size: 12pt;
+        font-weight: bold; }
+      #card-page .card .english .origin {
+        font-size: 8pt;
+        text-align: justify; }
+    #card-page .card:hover .english.not-showing, #card-page .card:focus .english.not-showing {
+      opacity: 1; }
+    #card-page .card:hover .latin.not-showing, #card-page .card:focus .latin.not-showing {
+      opacity: 1; }
+    #card-page .card.empty {
+      border-top: 5px solid red; }
+    #card-page .card .card-menu {
+      background-color: rgba(0, 0, 0, 0.54) !important; }
+    #card-page .card.card-1 {
+      background-image: url("/images/Card1.jpg"); }
+    #card-page .card.card-2 {
+      background-image: url("/images/Card2.jpg"); }
+    #card-page .card.card-0, #card-page .card.card-3 {
+      background-image: url("/images/Card3.jpg"); }
+    #card-page .card .lesson-number {
+      font-size: 10pt; }
+    #card-page .card .actions {
+      position: absolute;
+      bottom: 12px;
+      right: 12px; }
+      #card-page .card .actions .btn-success-inverse, #card-page .card .actions .btn-danger {
+        background-color: rgba(0, 0, 0, 0.6); }
+      #card-page .card .actions .btn-22 {
+        width: 22px; }
   #card-page .toggle-actions {
     padding-top: 20px; }
 
@@ -530,45 +574,5 @@ a.btn-success-inverse, .btn-success-inverse {
     border-radius: 75px; }
     .circle.circle-xs-sm .name {
       top: 65px; }
-
-.card {
-  border: 1px solid black;
-  background: rgba(240, 217, 187, 0.9);
-  height: 170px;
-  color: #363636;
-  padding-top: 5px; }
-  .card:hover, .card:focus {
-    color: #000; }
-    .card:hover .english.not-showing, .card:focus .english.not-showing {
-      opacity: 1; }
-    .card:hover .latin.not-showing, .card:focus .latin.not-showing {
-      opacity: 1; }
-  .card .latin {
-    opacity: 1;
-    font-family: "Times New Roman";
-    font-size: 14pt;
-    font-weight: bold; }
-    .card .latin.not-showing {
-      opacity: 0;
-      transition: opacity 750ms; }
-    .card .latin ul {
-      padding: 0;
-      margin-top: 14pt;
-      list-style: none; }
-      .card .latin ul li {
-        padding-left: -5px; }
-  .card .english {
-    opacity: 1; }
-    .card .english.not-showing {
-      opacity: 0;
-      transition: opacity 750ms; }
-    .card .english .definition {
-      font-size: 12pt;
-      font-weight: bold; }
-    .card .english .origin {
-      font-size: 8pt;
-      text-align: justify; }
-  .card .lesson-number {
-    font-size: 10pt; }
 
 /*# sourceMappingURL=app.css.map */

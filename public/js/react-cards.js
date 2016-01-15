@@ -11352,7 +11352,7 @@ module.exports = {
   desktopGutterMore: 32,
   desktopGutterLess: 16,
   desktopGutterMini: 8,
-  desktopKeylineIncrement: 64,
+  desktopKeylineIncrement: 62,
   desktopDropDownMenuItemHeight: 32,
   desktopDropDownMenuFontSize: 15,
   desktopLeftNavMenuItemHeight: 48,
@@ -40663,13 +40663,14 @@ var CardList = React.createClass({
 	},
 	render: function render() {
 		var flashCards = null;
+		var activeLanguage = this.props.activeLanguage;
 
-		if (this.props.data !== [] && this.props.data.data !== undefined) {
+		if (this.props.cards !== [] && this.props.cards !== undefined) {
 			// DEBUG:
 			// console.log("data: ");
 			// console.log(this.props.data.data);
-			flashCards = this.props.data.data.map((function (card, index) {
-				return React.createElement(FlashCard, { data: card, key: card.id });
+			flashCards = this.props.cards.map((function (card, index) {
+				return React.createElement(FlashCard, { data: card, key: card.id, activeLanguage: activeLanguage, cardNum: index + 1 });
 			}).bind(this));
 		}
 
@@ -40692,7 +40693,6 @@ var injectTapEventPlugin = require('react-tap-event-plugin');
 var AppBar = mui.AppBar;
 var LeftNav = mui.LeftNav;
 var MenuItem = mui.MenuItem;
-
 var ThemeManager = new mui.Styles.ThemeManager();
 var Colors = mui.Styles.Colors;
 var CustomColors = require('./styles/colors');
@@ -40701,6 +40701,8 @@ var SwipeableCardTabs = require('./swipeable-card-tabs');
 var Pagination = require('./pagination');
 var SearchField = require('./search');
 var CardActionMenu = require('./card-action-menu');
+var RadioButton = require('material-ui/lib/radio-button');
+var RadioButtonGroup = require('material-ui/lib/radio-button-group');
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
@@ -40745,7 +40747,8 @@ var CardPage = React.createClass({
       cards: {
         all: { total: 0, data: [] },
         complete: { total: 0, data: [] },
-        incomplete: { total: 0, data: [] }
+        incomplete: { total: 0, data: [] },
+        currentPage: []
       },
       fetchingCards: false,
       paginationPages: {
@@ -40771,25 +40774,64 @@ var CardPage = React.createClass({
           last: null
         }
       },
-      currentCardType: 'complete',
-      language: 'latin'
+      currentCardType: 'incomplete',
+      activeLanguage: 'latin',
+      cardsPerPage: 9
     };
   },
   setListeners: function setListeners() {
-    window.addEventListener("getNewCardPage", this.handleGetNewPage, false);
+    window.addEventListener("getNewCardPage", this.updatePagination, false);
     window.addEventListener("updateCurrentCardType", this.updateCurrentCardType, false);
   },
   componentWillUnmount: function componentWillUnmount() {
-    window.removeEventListener("getNewCardPage", this.handleGetNewPage, false);
+    window.removeEventListener("getNewCardPage", this.updatePagination, false);
     window.removeEventListener("updateCurrentCardType", this.updateCurrentCardType, false);
+  },
+  updatePagination: function updatePagination() {
+    var buttonType = event.detail.buttonType;
+    var newCurrentPageNum = this.state.paginationPages[this.state.currentCardType].curr;
+
+    if (buttonType == 'next') {
+      newCurrentPageNum += 1;
+      if (newCurrentPageNum > this.state.cards[this.state.currentCardType].last_page) {
+        newCurrentPageNum = 1;
+      }
+    } else if (buttonType == 'prev') {
+      newCurrentPageNum -= 1;
+      if (newCurrentPageNum === 0) {
+        newCurrentPageNum = this.state.cards[this.state.currentCardType].last_page;
+      }
+    }
+
+    this.setPageNums(this.state.currentCardType, newCurrentPageNum);
+    // Get new currentPage contents
+    this.updateCurrentPage(this.state.currentCardType, newCurrentPageNum);
   },
   updateCurrentCardType: function updateCurrentCardType() {
     // console.log(event.detail.cardType);
     this.setState({ currentCardType: event.detail.cardType });
-    this.setPageNums(event.detail.cardType);
+    // A type update will also involve changing the set of cards displayed on the page.
+    this.updateCurrentPage(event.detail.cardType, this.state.paginationPages[event.detail.cardType].curr);
   },
-  calcPageNums: function calcPageNums(cardType) {
-    var stateCurrentPage = this.state.cards[cardType].current_page;
+  updateCurrentPage: function updateCurrentPage(cardType, currentPageNum) {
+    var stateCards = this.state.cards;
+    var cardsForCurrentType = stateCards[cardType];
+    var cardRangeStart = currentPageNum * this.state.cardsPerPage - this.state.cardsPerPage;
+    var cardRangeEnd = currentPageNum * this.state.cardsPerPage;
+
+    // If the lastCard is high than the total number of cards, then just grab all cards from the starting card to the end.
+    if (cardRangeEnd > cardsForCurrentType.total) {
+      stateCards.currentPage = stateCards[cardType].data.slice(cardRangeStart);
+    } else {
+      stateCards.currentPage = stateCards[cardType].data.slice(cardRangeStart, cardRangeEnd);
+    }
+
+    this.setState({
+      cards: stateCards
+    });
+  },
+  calcPageNums: function calcPageNums(cardType, currentPageNum) {
+    var stateCurrentPage = currentPageNum;
     var stateLastPage = this.state.cards[cardType].last_page;
     var curr = stateCurrentPage === undefined ? 1 : stateCurrentPage;
     var last = stateLastPage === undefined ? 1 : stateLastPage;
@@ -40819,20 +40861,13 @@ var CardPage = React.createClass({
       last: last
     };
   },
-  setPageNums: function setPageNums(cardType) {
+  setPageNums: function setPageNums(cardType, currentPageNum) {
     var currentPagination = this.state.paginationPages;
-    currentPagination[cardType] = this.calcPageNums(cardType);
+    currentPagination[cardType] = this.calcPageNums(cardType, currentPageNum);
     this.setState({
       paginationPages: currentPagination
     });
   },
-  // shouldComponentUpdate: function(nextProps, nextState){
-  //   // No need to re-render the view when loading state changes.
-  //   // if(nextState.loadingProjects !== this.state.loadingProjects){
-  //   //   return false;
-  //   // }
-  //   return false;
-  // },
   updateSortOrder: function updateSortOrder(event) {
     this.setState({
       sortOrder: event.detail.sortOrder
@@ -40842,7 +40877,7 @@ var CardPage = React.createClass({
   doSearch: function doSearch(queryText, cards) {
     var matchingCards = [];
     var cardsToSearch = cards === undefined ? this.state.cards[this.state.currentCardType].data : cards;
-    var currentLanguage = this.state.language;
+    var currentLanguage = this.state.activeLanguage;
 
     console.log(currentLanguage);
     console.log(cardsToSearch);
@@ -40929,32 +40964,6 @@ var CardPage = React.createClass({
       searchQuery: hasQuery ? searchResults.searchQuery : this.state.searchQuery
     });
   },
-  handleGetNewPage: function handleGetNewPage() {
-    // console.log('clicked');
-    if (!this.state.fetchingCards) {
-      this.setState({ fetchingCards: true });
-      var pageNum = this.state.paginationPages[this.state.currentCardType][event.detail.button_type];
-      // console.log("Page Num: " + pageNum);
-      $.ajax({
-        url: this.props.src + '?tab_filter=' + this.state.currentCardType + '&page=' + pageNum,
-        dataType: 'json',
-        cache: false,
-        success: (function (newPageOfCards) {
-          // TODO: route needs to return just one set based on the card type. Right now all 3 (all, complete and incomplete are being returned.)
-          var currentCards = this.state.cards;
-          currentCards[this.state.currentCardType] = newPageOfCards;
-          this.setState({ cards: currentCards });
-          // console.log(this.state.cards);
-          this.setState({ fetchingCards: false });
-          this.setPageNums(this.state.currentCardType); // update what the current page is.
-        }).bind(this),
-        error: (function (xhr, status, err) {
-          console.error(this.props.src, status, err.toString());
-          this.setState({ fetchingCards: false });
-        }).bind(this) // bind(this) allows this to keep it's context when being accessed within ajax callbacks.
-      });
-    }
-  },
   fetchCards: function fetchCards() {
 
     if (!this.state.fetchingCards) {
@@ -40965,15 +40974,18 @@ var CardPage = React.createClass({
         dataType: 'json',
         cache: false,
         success: (function (cards) {
+          var incompleteCards = cards.incomplete;
+
           this.setState({
             cards: {
-              all: JSON.parse(cards.all),
-              complete: JSON.parse(cards.complete),
-              incomplete: JSON.parse(cards.incomplete)
+              all: cards.all,
+              complete: cards.complete,
+              incomplete: incompleteCards,
+              currentPage: incompleteCards.data.slice(0, 9)
             },
             fetchingCards: false
           });
-          this.setPageNums(this.state.currentCardType);
+          this.setPageNums(this.state.currentCardType, this.state.paginationPages[this.state.currentCardType].curr);
           // console.log(this.state.cards);
         }).bind(this),
         error: (function (xhr, status, err) {
@@ -40982,6 +40994,11 @@ var CardPage = React.createClass({
         }).bind(this) // bind(this) allows 'this' to keep it's context when being accessed within ajax callbacks.
       });
     }
+  },
+  toggleActiveLanguage: function toggleActiveLanguage(event, selectedValue) {
+    this.setState({
+      activeLanguage: selectedValue
+    });
   },
   componentDidMount: function componentDidMount() {
     this.setListeners();
@@ -41000,7 +41017,7 @@ var CardPage = React.createClass({
     ThemeManager.setTheme(CustomTheme);
   },
   render: function render() {
-    // console.log(this.state);
+
     return React.createElement(
       'div',
       null,
@@ -41062,21 +41079,28 @@ var CardPage = React.createClass({
         React.createElement(
           'div',
           { className: 'col-sm-4 text-center' },
-          React.createElement(Pagination, null)
+          React.createElement(Pagination, { cardsPerPage: this.state.cardsPerPage })
         ),
         React.createElement(
           'div',
-          { className: 'col-sm-4 toggle-actions text-right' },
+          { className: 'col-sm-4' },
           React.createElement(
-            'button',
-            { id: 'latin-english-btn', type: 'button', className: 'btn btn-primary', 'data-showing': 'latin' },
-            'Latin'
+            RadioButtonGroup,
+            { name: 'activeLanguage', defaultSelected: 'latin', onChange: this.toggleActiveLanguage },
+            React.createElement(RadioButton, {
+              value: 'latin',
+              label: 'Latin',
+              style: { marginBottom: 16 } }),
+            React.createElement(RadioButton, {
+              value: 'english',
+              label: 'English',
+              style: { marginBottom: 16 } })
           )
         ),
         React.createElement(
           'div',
           { className: 'col-sm-12' },
-          React.createElement(SwipeableCardTabs, { data: this.state.cards })
+          React.createElement(SwipeableCardTabs, { cards: this.state.cards.currentPage, activeLanguage: this.state.activeLanguage })
         )
       )
     );
@@ -41085,7 +41109,7 @@ var CardPage = React.createClass({
 
 module.exports = CardPage;
 
-},{"./card-action-menu":324,"./pagination":328,"./search":329,"./styles/colors":330,"./styles/themes/custom1":331,"./swipeable-card-tabs":332,"material-ui":37,"react":323,"react-tap-event-plugin":150}],327:[function(require,module,exports){
+},{"./card-action-menu":324,"./pagination":328,"./search":329,"./styles/colors":330,"./styles/themes/custom1":331,"./swipeable-card-tabs":332,"material-ui":37,"material-ui/lib/radio-button":61,"material-ui/lib/radio-button-group":60,"react":323,"react-tap-event-plugin":150}],327:[function(require,module,exports){
 // Import components
 'use strict';
 
@@ -41115,8 +41139,7 @@ var FlashCard = React.createClass({
       english: "test English",
       latin: "<ul><li>test Latin</li></ul>",
       origin: null,
-      lesson_num: 3,
-      current_language: 'latin'
+      lesson_num: 3
     };
   },
   componentDidMount: function componentDidMount() {
@@ -41138,61 +41161,65 @@ var FlashCard = React.createClass({
       null,
       React.createElement(NavigationMoreVert, { ref: "menu-1" })
     );
+    // var cardActions = (<div className="actions">
+    //           <IconMenu className="card-menu" color={Colors.black500} iconButtonElement={iconMenuButton} anchorOrigin={{vertical: "bottom", horizontal: "right"}} targetOrigin={{vertical: "top", horizontal: "left"}}>
+    //             <MenuItem primaryText="Refresh" />
+    //             <MenuItem primaryText="Send feedback" />
+    //           </IconMenu>
+    //         </div>);
 
     return React.createElement(
-      Paper,
-      { zDepth: 5, className: "card col-sm-4" + (this.props.data.english == null || this.props.data.english === undefined ? " empty" : ""), 'data-id': this.props.data.id },
+      'div',
+      { className: 'col-sm-4' },
       React.createElement(
         'div',
         { className: 'row' },
         React.createElement(
-          'div',
-          { className: "latin" + (this.state.current_language !== "latin" ? " not-showing" : "" + " col-sm-4") },
-          React.createElement('a', { href: editLink, dangerouslySetInnerHTML: { __html: rawLatinMarkup } })
-        ),
-        React.createElement(
-          'div',
-          { className: 'col-sm-8' },
+          Paper,
+          { zDepth: 5, className: "card col-sm-10 col-sm-offset-1 card-" + this.props.cardNum % 4 + (this.props.data.english == null || this.props.data.english === undefined ? " empty" : ""), 'data-id': this.props.data.id },
           React.createElement(
             'div',
             { className: 'row' },
             React.createElement(
               'div',
-              { className: 'lesson-number col-sm-12' },
-              React.createElement(
-                'div',
-                { className: 'pull-right' },
-                this.props.data.lesson_num
-              )
-            )
-          ),
-          React.createElement(
-            'div',
-            { className: "english" + (this.state.current_language === "latin" ? " not-showing" : "" + " row") },
-            React.createElement(
-              'div',
-              { className: 'col-sm-12' },
-              React.createElement(
-                'div',
-                { className: 'definition' },
-                this.props.data.english
-              )
+              { className: "latin" + (this.props.activeLanguage !== "latin" ? " not-showing" : "") + " col-sm-4" },
+              React.createElement('a', { href: editLink, dangerouslySetInnerHTML: { __html: rawLatinMarkup } })
             ),
             React.createElement(
               'div',
-              { className: 'col-sm-12' },
-              React.createElement('div', { className: 'origin', dangerouslySetInnerHTML: { __html: rawWordOrigin } })
+              { className: 'col-sm-8' },
+              React.createElement(
+                'div',
+                { className: 'row' },
+                React.createElement(
+                  'div',
+                  { className: 'lesson-number col-sm-12' },
+                  React.createElement(
+                    'div',
+                    { className: 'pull-right' },
+                    this.props.data.lesson_num
+                  )
+                )
+              ),
+              React.createElement(
+                'div',
+                { className: "english" + (this.props.activeLanguage === "latin" ? " not-showing" : "") + " row" },
+                React.createElement(
+                  'div',
+                  { className: 'col-sm-12' },
+                  React.createElement(
+                    'div',
+                    { className: 'definition' },
+                    this.props.data.english
+                  )
+                ),
+                React.createElement(
+                  'div',
+                  { className: 'col-sm-12' },
+                  React.createElement('div', { className: 'origin', dangerouslySetInnerHTML: { __html: rawWordOrigin } })
+                )
+              )
             )
-          )
-        ),
-        React.createElement(
-          'div',
-          { className: 'actions' },
-          React.createElement(
-            IconMenu,
-            { className: 'card-menu', color: Colors.black500, iconButtonElement: iconMenuButton, anchorOrigin: { vertical: "bottom", horizontal: "right" }, targetOrigin: { vertical: "top", horizontal: "left" } },
-            React.createElement(MenuItem, { primaryText: 'Refresh' }),
-            React.createElement(MenuItem, { primaryText: 'Send feedback' })
           )
         )
       )
@@ -41233,10 +41260,10 @@ var Pagination = React.createClass({
   setListeners: function setListeners() {},
   fetchPrevPage: function fetchPrevPage() {
     // trigger event to get new page with details for prev page
-    window.dispatchEvent(new CustomEvent("getNewCardPage", { detail: { button_type: 'prev' } }));
+    window.dispatchEvent(new CustomEvent("getNewCardPage", { detail: { buttonType: 'prev' } }));
   },
   fetchNextPage: function fetchNextPage() {
-    window.dispatchEvent(new CustomEvent("getNewCardPage", { detail: { button_type: 'next' } }));
+    window.dispatchEvent(new CustomEvent("getNewCardPage", { detail: { buttonType: 'next' } }));
   },
   render: function render() {
     var projectNodes = null;
@@ -41289,8 +41316,8 @@ var SearchField = React.createClass({
             React.createElement(_materialUiLibTextField2['default'], {
                 ref: 'searchInput',
                 floatingLabelText: 'Search',
-                floatingLabelStyle: { color: Colors.amber900 },
-                underlineFocusStyle: { borderColor: Colors.amber900 },
+                floatingLabelStyle: { color: Colors.highlightYellow },
+                underlineFocusStyle: { borderColor: Colors.highlightYellow },
                 onChange: this.doSearch })
         );
     }
@@ -41306,7 +41333,8 @@ module.exports = SearchField;
 module.exports = {
   silverGreen: '#0D1012',
   primary1: '#CFD198',
-  blueBlack: '#0D1012'
+  blueBlack: '#0D1012',
+  highlightYellow: '#CDCE18'
 };
 
 },{}],331:[function(require,module,exports){
@@ -41320,18 +41348,19 @@ var Spacing = mui.Styles.Spacing;
 
 var Custom1 = {
   spacing: Spacing,
+  contentFontFamily: 'Roboto, sans-serif',
   getPalette: function getPalette() {
     return {
       textColor: Colors.fullWhite,
       canvasColor: '#303030',
       borderColor: ColorManipulator.fade(Colors.fullWhite, 0.3), //Colors.grey300
       disabledColor: ColorManipulator.fade(Colors.fullWhite, 0.3),
-      primary1Color: Colors.blueGrey500,
-      primary2Color: Colors.blueGrey700,
-      primary3Color: Colors.blueGrey100,
-      accent1Color: Colors.deepOrangeA200,
-      accent2Color: Colors.deepOrangeA400,
-      accent3Color: Colors.deepOrangeA100
+      primary1Color: Colors.teal500,
+      primary2Color: Colors.teal900,
+      primary3Color: Colors.tealA700,
+      accent1Color: CustomColors.highlightYellow,
+      accent2Color: CustomColors.highlightYellow,
+      accent3Color: CustomColors.highlightYellow
     };
   },
   getComponentThemes: function getComponentThemes(palette) {
@@ -41455,46 +41484,30 @@ var SwipeableCardTabs = (function (_React$Component) {
     };
 
     this.state = {
-      value: 'complete'
+      value: 'incomplete'
     };
   }
 
   _createClass(SwipeableCardTabs, [{
     key: 'render',
     value: function render() {
-
       return _react2['default'].createElement(
-        _materialUiLibTabsTabs2['default'],
-        {
-          value: this.state.value,
-          onChange: this.handleChange
-        },
+        'div',
+        null,
         _react2['default'].createElement(
-          _materialUiLibTabsTab2['default'],
-          { label: 'Complete', value: 'complete' },
-          _react2['default'].createElement(
-            'div',
-            { className: 'col-sm-12' },
-            _react2['default'].createElement(_cardList2['default'], { data: this.props.data.complete })
-          )
+          _materialUiLibTabsTabs2['default'],
+          {
+            value: this.props.value,
+            onChange: this.handleChange
+          },
+          _react2['default'].createElement(_materialUiLibTabsTab2['default'], { label: 'Incomplete', value: 'incomplete' }),
+          _react2['default'].createElement(_materialUiLibTabsTab2['default'], { label: 'Complete', value: 'complete' }),
+          _react2['default'].createElement(_materialUiLibTabsTab2['default'], { label: 'All', value: 'all' })
         ),
         _react2['default'].createElement(
-          _materialUiLibTabsTab2['default'],
-          { label: 'Incomplete', value: 'incomplete' },
-          _react2['default'].createElement(
-            'div',
-            { className: 'col-sm-12' },
-            _react2['default'].createElement(_cardList2['default'], { data: this.props.data.incomplete })
-          )
-        ),
-        _react2['default'].createElement(
-          _materialUiLibTabsTab2['default'],
-          { label: 'All', value: 'all' },
-          _react2['default'].createElement(
-            'div',
-            { className: 'col-sm-12' },
-            _react2['default'].createElement(_cardList2['default'], { data: this.props.data.all })
-          )
+          'div',
+          { className: 'col-sm-12', ref: 'tab-content' },
+          _react2['default'].createElement(_cardList2['default'], { cards: this.props.cards, activeLanguage: this.props.activeLanguage })
         )
       );
     }

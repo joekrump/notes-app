@@ -12,14 +12,15 @@ let CardList = React.createClass({
 	},
 	render: function(){
 		var flashCards = null;
+		var activeLanguage = this.props.activeLanguage;
 
-		if(this.props.data !== [] && this.props.data.data !== undefined){
+		if(this.props.cards !== [] && this.props.cards !== undefined){
 			// DEBUG:
 			// console.log("data: ");
 			// console.log(this.props.data.data);
-			flashCards = this.props.data.data.map(function (card, index) {
+			flashCards = this.props.cards.map(function (card, index) {
 			  return (
-			    <FlashCard data={card} key={card.id} />
+			    <FlashCard data={card} key={card.id} activeLanguage={activeLanguage} cardNum={index + 1}/>
 			  );
 			}.bind(this));
 		}

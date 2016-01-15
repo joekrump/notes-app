@@ -23,8 +23,7 @@ let FlashCard = React.createClass({
       english: "test English",
       latin: "<ul><li>test Latin</li></ul>",
       origin: null,
-      lesson_num: 3,
-      current_language: 'latin'
+      lesson_num: 3
     };
   },
   componentDidMount: function() {
@@ -48,40 +47,44 @@ let FlashCard = React.createClass({
           <NavigationMoreVert ref={"menu-1"} />
         </IconButton>
     );
+    // var cardActions = (<div className="actions">
+    //           <IconMenu className="card-menu" color={Colors.black500} iconButtonElement={iconMenuButton} anchorOrigin={{vertical: "bottom", horizontal: "right"}} targetOrigin={{vertical: "top", horizontal: "left"}}>
+    //             <MenuItem primaryText="Refresh" />
+    //             <MenuItem primaryText="Send feedback" />
+    //           </IconMenu>
+    //         </div>);
     
     return (
-      <Paper zDepth={5} className={"card col-sm-4" + (this.props.data.english == null || this.props.data.english === undefined ? " empty" : "")} data-id={this.props.data.id}>
-          <div className="row">
-            <div className={"latin" + (this.state.current_language !== "latin" ? " not-showing" : "" + " col-sm-4")}>
-              <a href={editLink} dangerouslySetInnerHTML={{__html: rawLatinMarkup}}></a>
-            </div>
-            <div className="col-sm-8">
-              <div className="row">
-                <div className="lesson-number col-sm-12">
-                  <div className="pull-right">
-                    {this.props.data.lesson_num}
+      <div className="col-sm-4">
+        <div className="row">
+          <Paper zDepth={5} className={"card col-sm-10 col-sm-offset-1 card-" + (this.props.cardNum % 4) + (this.props.data.english == null || this.props.data.english === undefined ? " empty" : "")} data-id={this.props.data.id}>
+            <div className="row">
+              <div className={"latin" + (this.props.activeLanguage !== "latin" ? " not-showing" : "") + " col-sm-4"}>
+                <a href={editLink} dangerouslySetInnerHTML={{__html: rawLatinMarkup}}></a>
+              </div>
+              <div className="col-sm-8">
+                <div className="row">
+                  <div className="lesson-number col-sm-12">
+                    <div className="pull-right">
+                      {this.props.data.lesson_num}
+                    </div>
+                  </div>
+                </div>
+                <div className={"english" + (this.props.activeLanguage === "latin" ? " not-showing" : "") + " row"}>
+                  <div className="col-sm-12">
+                    <div className="definition">
+                      { this.props.data.english }
+                    </div>
+                  </div>
+                  <div className="col-sm-12">
+                    <div className="origin" dangerouslySetInnerHTML={{__html: rawWordOrigin}}></div>
                   </div>
                 </div>
               </div>
-              <div className={"english" + (this.state.current_language === "latin" ? " not-showing" : "" + " row")}>
-                <div className="col-sm-12">
-                  <div className="definition">
-                    { this.props.data.english }
-                  </div>
-                </div>
-              <div className="col-sm-12">
-                  <div className="origin" dangerouslySetInnerHTML={{__html: rawWordOrigin}}></div>
-                </div>
-              </div>
             </div>
-            <div className="actions">
-              <IconMenu className="card-menu" color={Colors.black500} iconButtonElement={iconMenuButton} anchorOrigin={{vertical: "bottom", horizontal: "right"}} targetOrigin={{vertical: "top", horizontal: "left"}}>
-                <MenuItem primaryText="Refresh" />
-                <MenuItem primaryText="Send feedback" />
-              </IconMenu>
-            </div>
-          </div>
-      </Paper>
+          </Paper>
+        </div>
+      </div>
     );
   }
 });

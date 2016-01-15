@@ -4,7 +4,6 @@ let injectTapEventPlugin = require('react-tap-event-plugin');
 let AppBar = mui.AppBar;
 let LeftNav = mui.LeftNav;
 let MenuItem = mui.MenuItem;
-
 let ThemeManager = new mui.Styles.ThemeManager();
 let Colors = mui.Styles.Colors;
 let CustomColors = require('./styles/colors');
@@ -13,6 +12,8 @@ let SwipeableCardTabs = require('./swipeable-card-tabs');
 let Pagination = require('./pagination');
 let SearchField = require('./search');
 let CardActionMenu = require('./card-action-menu');
+let RadioButton = require('material-ui/lib/radio-button');
+let RadioButtonGroup =require('material-ui/lib/radio-button-group');
 
 
 //Needed for onTouchTap
@@ -64,7 +65,8 @@ let CardPage = React.createClass({
 	  	cards: {
 	  		all: {total: 0, data:[]},
 	  		complete: {total: 0, data:[]},
-	  		incomplete: {total: 0, data:[]}
+	  		incomplete: {total: 0, data:[]},
+	  		currentPage: []
 	  	},
 	    fetchingCards: false,
 	    paginationPages: {
@@ -90,25 +92,64 @@ let CardPage = React.createClass({
 	    		last: null
 	    	}
 	    },
-	    currentCardType: 'complete',
-	    language: 'latin'
+	    currentCardType: 'incomplete',
+	    activeLanguage: 'latin',
+	    cardsPerPage: 9
 	  };
 	},
 	setListeners: function(){
-    window.addEventListener("getNewCardPage", this.handleGetNewPage, false);
+    window.addEventListener("getNewCardPage", this.updatePagination, false);
     window.addEventListener("updateCurrentCardType", this.updateCurrentCardType, false);
   },
   componentWillUnmount: function(){
-    window.removeEventListener("getNewCardPage", this.handleGetNewPage, false);
+    window.removeEventListener("getNewCardPage", this.updatePagination, false);
     window.removeEventListener("updateCurrentCardType", this.updateCurrentCardType, false);
+  },
+  updatePagination: function(){
+    var buttonType = event.detail.buttonType;
+    var newCurrentPageNum = this.state.paginationPages[this.state.currentCardType].curr;
+
+    if(buttonType == 'next'){
+      newCurrentPageNum += 1;
+      if(newCurrentPageNum > this.state.cards[this.state.currentCardType].last_page){
+        newCurrentPageNum = 1;
+      }
+    } else if(buttonType == 'prev'){
+      newCurrentPageNum -= 1;
+      if(newCurrentPageNum === 0){
+        newCurrentPageNum = this.state.cards[this.state.currentCardType].last_page;
+      }
+    }
+
+    this.setPageNums(this.state.currentCardType, newCurrentPageNum);
+    // Get new currentPage contents
+    this.updateCurrentPage(this.state.currentCardType, newCurrentPageNum);
   },
   updateCurrentCardType: function(){
   	// console.log(event.detail.cardType);
   	this.setState({currentCardType: event.detail.cardType});
-  	this.setPageNums(event.detail.cardType);
+    // A type update will also involve changing the set of cards displayed on the page.
+    this.updateCurrentPage(event.detail.cardType, this.state.paginationPages[event.detail.cardType].curr);
   },
-  calcPageNums: function(cardType){
-  	var stateCurrentPage = this.state.cards[cardType].current_page;
+  updateCurrentPage: function(cardType, currentPageNum){
+    var stateCards = this.state.cards;
+    var cardsForCurrentType = stateCards[cardType];
+    var cardRangeStart = (currentPageNum * this.state.cardsPerPage) - this.state.cardsPerPage;
+    var cardRangeEnd = currentPageNum * this.state.cardsPerPage;
+    
+    // If the lastCard is high than the total number of cards, then just grab all cards from the starting card to the end.
+    if(cardRangeEnd > cardsForCurrentType.total){
+      stateCards.currentPage = stateCards[cardType].data.slice(cardRangeStart);
+    } else {
+      stateCards.currentPage = stateCards[cardType].data.slice(cardRangeStart, cardRangeEnd);
+    }
+
+    this.setState({
+      cards: stateCards
+    });
+  },
+  calcPageNums: function(cardType, currentPageNum){
+  	var stateCurrentPage = currentPageNum;
   	var stateLastPage = this.state.cards[cardType].last_page
   	var curr  = stateCurrentPage === undefined ? 1 : stateCurrentPage;
   	var last  = stateLastPage === undefined ? 1 : stateLastPage;
@@ -138,20 +179,13 @@ let CardPage = React.createClass({
   		last: last 
   	};
   },
-  setPageNums: function(cardType){
+  setPageNums: function(cardType, currentPageNum){
   	var currentPagination = this.state.paginationPages;
-  	currentPagination[cardType] = this.calcPageNums(cardType);
+  	currentPagination[cardType] = this.calcPageNums(cardType, currentPageNum);
   	this.setState({
   		paginationPages: currentPagination
   	});
   },
-  // shouldComponentUpdate: function(nextProps, nextState){
-  //   // No need to re-render the view when loading state changes.
-  //   // if(nextState.loadingProjects !== this.state.loadingProjects){
-  //   //   return false;
-  //   // }
-  //   return false;
-  // },
   updateSortOrder: function(event){
     this.setState({
       sortOrder: event.detail.sortOrder
@@ -161,7 +195,7 @@ let CardPage = React.createClass({
   doSearch: function(queryText, cards){
       var matchingCards = [];
       var cardsToSearch = cards === undefined ? this.state.cards[this.state.currentCardType].data : cards;
-      var currentLanguage = this.state.language;
+      var currentLanguage = this.state.activeLanguage;
 
       console.log(currentLanguage);
       console.log(cardsToSearch);
@@ -258,32 +292,6 @@ let CardPage = React.createClass({
       searchQuery: hasQuery ? searchResults.searchQuery: this.state.searchQuery
     }); 
   },
-	handleGetNewPage: function(){
-		// console.log('clicked');
-		if(!this.state.fetchingCards){
-		  this.setState({fetchingCards: true});
-		  var pageNum = this.state.paginationPages[this.state.currentCardType][event.detail.button_type];
-		  // console.log("Page Num: " + pageNum);
-		  $.ajax({
-		    url: (this.props.src + '?tab_filter=' + this.state.currentCardType + '&page=' + pageNum),
-		    dataType: 'json',
-		    cache: false,
-		    success: function(newPageOfCards) {
-		    	// TODO: route needs to return just one set based on the card type. Right now all 3 (all, complete and incomplete are being returned.)
-		    	var currentCards = this.state.cards;
-		    	currentCards[this.state.currentCardType] = newPageOfCards;
-		      this.setState({cards: currentCards});
-		      // console.log(this.state.cards);
-		      this.setState({fetchingCards: false});
-		      this.setPageNums(this.state.currentCardType); // update what the current page is.
-		    }.bind(this),
-		    error: function(xhr, status, err) {
-		      console.error(this.props.src, status, err.toString());
-		      this.setState({fetchingCards: false});
-		    }.bind(this) // bind(this) allows this to keep it's context when being accessed within ajax callbacks.
-		  });
-		}
-	},
 	fetchCards: function(){
 
 	  if(!this.state.fetchingCards){
@@ -294,15 +302,18 @@ let CardPage = React.createClass({
 	      dataType: 'json',
 	      cache: false,
 	      success: function(cards) {
+	      	var incompleteCards = cards.incomplete;
+
 	        this.setState({
 	        	cards: {
-	        		all: JSON.parse(cards.all), 
-	        		complete: JSON.parse(cards.complete), 
-	        		incomplete: JSON.parse(cards.incomplete)
+	        		all: cards.all, 
+	        		complete: cards.complete, 
+	        		incomplete: incompleteCards,
+	        		currentPage: incompleteCards.data.slice(0,9)
 	        	},
 	        	fetchingCards: false
 	        });
-	        this.setPageNums(this.state.currentCardType);
+	        this.setPageNums(this.state.currentCardType, this.state.paginationPages[this.state.currentCardType].curr);
 	        // console.log(this.state.cards);
 	      }.bind(this),
 	      error: function(xhr, status, err) {
@@ -311,6 +322,11 @@ let CardPage = React.createClass({
 	      }.bind(this) // bind(this) allows 'this' to keep it's context when being accessed within ajax callbacks.
 	    });
 	  }
+	},
+	toggleActiveLanguage(event, selectedValue){
+		this.setState({
+			activeLanguage: selectedValue
+		});
 	},
 	componentDidMount: function() {
 	  this.setListeners();
@@ -329,7 +345,7 @@ let CardPage = React.createClass({
 	  ThemeManager.setTheme(CustomTheme);
 	},
 	render: function() {
-		// console.log(this.state);
+
 		return (
 			<div>
 				<header className="page-header">
@@ -354,13 +370,22 @@ let CardPage = React.createClass({
 						<h4>{this.state.cards.all.total + " cards"} <i>({this.state.cards.incomplete.total + " blank"})</i></h4>
 					</div>
 					<div className="col-sm-4 text-center">
-						<Pagination />
+						<Pagination cardsPerPage={this.state.cardsPerPage} />
 					</div>
-					<div className="col-sm-4 toggle-actions text-right">
-						<button id="latin-english-btn" type="button" className="btn btn-primary" data-showing="latin">Latin</button>
+					<div className="col-sm-4">
+							<RadioButtonGroup name="activeLanguage" defaultSelected="latin" onChange={this.toggleActiveLanguage}>
+									<RadioButton
+									  value="latin"
+									  label="Latin"
+									  style={{marginBottom:16}}/>
+									<RadioButton
+									  value="english"
+									  label="English"
+									  style={{marginBottom:16}} />
+							</RadioButtonGroup>
 					</div>
 					<div className="col-sm-12">
-						<SwipeableCardTabs data={this.state.cards}/>
+						<SwipeableCardTabs cards={this.state.cards.currentPage} activeLanguage={this.state.activeLanguage} />
 					</div>
 				</div>
 			</div>

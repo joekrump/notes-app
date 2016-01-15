@@ -12,7 +12,7 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.sass(['app.scss', 'latin.scss'], 'public/css/app.css');
+    mix.sass(['app.scss'], 'public/css/app.css');
     // mix.sass(['app.scss', 'materialize.scss'], 'public/css/app.css');
 
       // .version('public/css/app.css');
@@ -37,7 +37,7 @@ elixir(function(mix) {
     // Note: phpSpec is included out of the box in Laravel 5.
     //
     //
-    mix.browserify('app.js', 'public/js/app.js')
-    // mix.browserify('nav.js', 'public/js/react-nav.js')
+    // mix.browserify('app.js', 'public/js/app.js')
+    mix.browserify('nav.js', 'public/js/react-nav.js')
     mix.browserify('cards.js', 'public/js/react-cards.js')
 });
