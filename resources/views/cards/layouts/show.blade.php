@@ -7,7 +7,7 @@
 @section('navbar_right')
 	<ul class="nav navbar-nav navbar-right">
 	  <div class="btn-group">
-	  	<a href='/cards/new' class="btn btn-success-inverse pull-right">New Card</a>
+	  	<a href='/cards/new' class="btn btn-success pull-right">New Card</a>
 	  </div>
 	</ul>
 @stop

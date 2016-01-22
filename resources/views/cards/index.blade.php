@@ -24,7 +24,7 @@
 								
 								<a href="/cards/category/all" class="btn btn-default">All Cards</a>
 				{{-- <a href="/cards/category/all" class="btn btn-primary">Show Categories</a> --}}
-								<a href='/cards/new' class="btn btn-success-inverse">New Card</a>
+								<a href='/cards/new' class="btn btn-success">New Card</a>
 							</div>
 						</div>
 					</div>
@@ -49,7 +49,7 @@
 				<nav class="nav">
 					<ul class="nav-tabs">
 						<li>
-							<button id="complete-filter-btn" type="button" class="btn btn-success-inverse">Completed</button>
+							<button id="complete-filter-btn" type="button" class="btn btn-success">Completed</button>
 						</li>
 						<li>
 							<button id="incomplete-filter-btn" type="button" class="btn btn-danger">Incomplete</button>
@@ -90,7 +90,7 @@
 								</div>
 							</div>
 							<div class="actions">
-								<button class="btn btn-xs btn-success-inverse mark-complete" 
+								<button class="btn btn-xs btn-success mark-complete" 
 											data-action="complete" 
 											data-id="{{ $card->id }}" 
 											data-current-page="{{$cards->currentPage()}}">&check;
@@ -423,7 +423,7 @@
 					'</div>',
 					( nextPageUrl !== undefined ? 
 					['<div class="actions">',
-						'<button class="btn btn-xs btn-success-inverse mark-complete" ',
+						'<button class="btn btn-xs btn-success mark-complete" ',
 									'data-action="complete" ',
 									'data-id="',item.id,'" ',
 									'data-next-page-url="',nextPageUrl,'">&check;',

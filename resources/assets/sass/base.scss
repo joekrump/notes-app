@@ -14,10 +14,16 @@ body {
 
 #react-nav {
   position: fixed;
-  z-index: 9999;
+  z-index: 455;
   top: 0px;
   left: 0px;
   width: 100%;
+}
+#nav-top-right {
+  position: fixed;
+  top: 13px;
+  right: 13px;
+  z-index: 456;
 }
 
 .mobile-nav {
@@ -61,7 +67,7 @@ h1, h2, h3 {
 
 h1 {
   font-size: 22pt;
-  color: $lightBlueA700;
+  color: $white;
 }
 
 h2 {
@@ -73,7 +79,7 @@ h3 {
 }
 
 .background {
-  background-image: url("/images/app_background.jpg");
+  background-image: url("/images/material_background.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: left top;
@@ -92,6 +98,12 @@ h3 {
 }
 .title {
   color: $white;
+}
+#top-nav {
+  z-index: 9999;
+  position: fixed;
+  width: 100%;
+  top: 0px;
 }
 
 .list-striped {

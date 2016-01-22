@@ -1,5 +1,5 @@
 #card-page {
-  background-image: url("/images/cards_background.jpg");
+  // background-image: url("/images/cards_background.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   .list > li {
@@ -7,6 +7,12 @@
     ul {
       list-style-type: none;
       padding-left: 0;
+    }
+  }
+  &.container {
+    margin-top: 80px;
+    h1 {
+      margin-top: 5px;
     }
   }
   .card {
@@ -63,9 +69,6 @@
       .latin.not-showing {
         opacity: 1;
       }
-    }
-    &.empty {
-      border-top: 5px solid red;
     }
     .card-menu {
       background-color: $lightBlack !important;

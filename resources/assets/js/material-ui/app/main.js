@@ -13,7 +13,7 @@ let MenuDivider = mui.MenuDivider;
 let IconMenu = mui.IconMenu;
 let IconButton = mui.IconButton;
 
-let ThemeManager = new mui.Styles.ThemeManager();
+let ThemeManager = mui.Styles.ThemeManager;
 let Colors = mui.Styles.Colors;
 let CommentBox = require('./comment-box')
 let CustomColors = require('./styles/colors');
@@ -30,20 +30,24 @@ let Main = React.createClass({
   loadDefaultView: function(){
 
   },
-
+  getInitialState () {
+    return {
+      muiTheme: this.context.muiTheme,
+    };
+  },
   childContextTypes: {
     muiTheme: React.PropTypes.object
   },
 
   getChildContext() {
-    ThemeManager.setTheme(CustomTheme);
+    // ThemeManager.setTheme(CustomTheme);
     return {
-      muiTheme: ThemeManager.getCurrentTheme()
+      muiTheme: ThemeManager.getMuiTheme(CustomTheme),
     };
   },
 
   componentWillMount() {
-    ThemeManager.setTheme(CustomTheme);
+    // ThemeManager.setTheme(CustomTheme);
   },
   toggleNav(e) {
     e.preventDefault();
@@ -99,7 +103,7 @@ let Main = React.createClass({
             onLeftIconButtonTouchTap={this.toggleNav}
             isInitiallyOpen={true}
             zDepth={4} 
-            style={{backgroundColor:ThemeManager.getCurrentTheme().component.appBar.backgroundColor}} />
+            style={{backgroundColor: Colors.tealA700, color: Colors.darkWhite}} />
         </header>
 
         <div className="container">

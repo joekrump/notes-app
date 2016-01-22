@@ -1,6 +1,7 @@
-let TopLeftNav = require('./material-ui/app/top-left-nav');
 let React = require('react');
+let TopLeftNav = require('./material-ui/app/top-left-nav');
+let ReactDOM = require('react-dom');
 
 (function() {
-  React.render(<TopLeftNav />, document.querySelector('#react-nav'));
+  ReactDOM.render(<TopLeftNav />, document.querySelector('#react-nav'));
 })();

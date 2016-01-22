@@ -34,8 +34,8 @@ export default class SwipeableCardTabs extends React.Component {
           value={this.props.value}
           onChange={this.handleChange}
         >
-          <Tab label="Incomplete" value="incomplete"/>
-          <Tab label="Complete" value="complete"/>
+          <Tab label={"Incomplete ("+ this.props.data.incomplete.total + ")"}  value="incomplete"/>
+          <Tab label={"Complete ("+ this.props.data.complete.total + ")"} value="complete"/>
           <Tab label="All" value="all"/>
         </Tabs>
         <div className="col-sm-12" ref="tab-content">

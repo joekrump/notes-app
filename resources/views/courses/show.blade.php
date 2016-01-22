@@ -22,7 +22,7 @@
 							<input type="number" name="year" class="form-control" placeholder="YYYY" value="{{ isset($course) ? $course->year : new strftime(new Date(), 'YYYY') }}"/>
 						</div>
 						<div class="form-group">
-							<button type="submit" class="btn btn-success-inverse">Submit</button>
+							<button type="submit" class="btn btn-success">Submit</button>
 						</div>
 					</div>
 				</form>

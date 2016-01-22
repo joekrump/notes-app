@@ -58,11 +58,11 @@ let Custom1 = {
         color: Colors.grey500,
       },
       toggle: {
-        thumbOnColor: Colors.cyan200,
+        thumbOnColor: Colors.cyan400,
         thumbOffColor: Colors.grey400,
         thumbDisabledColor: Colors.grey800,
-        thumbRequiredColor: Colors.cyan200,
-        trackOnColor: ColorManipulator.fade(Colors.cyan200, 0.5),
+        thumbRequiredColor: Colors.cyan400,
+        trackOnColor: ColorManipulator.fade(Colors.cyan400, 0.6),
         trackOffColor: 'rgba(255, 255, 255, 0.3)',
         trackDisabledColor: 'rgba(255, 255, 255, 0.1)',
       },
@@ -74,7 +74,7 @@ let Custom1 = {
         trackColor: Colors.minBlack,
         handleColorZero: cardColor,
         handleFillColor: cardColor,
-        selectionColor: Colors.cyan200,
+        selectionColor: Colors.cyan400,
       },
     };
   },

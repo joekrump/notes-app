@@ -7,14 +7,15 @@ let CustomColors         = require('./styles/colors');
 let CustomTheme          = require('./styles/themes/custom1');
 let FontIcon             = require('material-ui/lib/font-icon');
 let IconButton           = require('material-ui/lib/icon-button');
+import FloatingActionButton from 'material-ui/lib/floating-action-button';
 let IconMenu             = require('material-ui/lib/menus/icon-menu');
 let MenuItem             = require('material-ui/lib/menus/menu-item');
 let Paper                = require('material-ui/lib/paper');
 let NavigationMoreVert   = require('material-ui/lib/svg-icons/navigation/more-vert'); // svg icon
+let AddIcon   = require('material-ui/lib/svg-icons/action/done'); // svg icon
+let RemoveIcon   = require('material-ui/lib/svg-icons/content/remove'); // svg icon
 
 injectTapEventPlugin();
-
-let ThemeManager         = new mui.Styles.ThemeManager();
 
 let FlashCard = React.createClass({
   getInitialState: function() {
@@ -38,6 +39,26 @@ let FlashCard = React.createClass({
     );
     window.addEventListener("toggleShowRecentOnly", this.handleShowRecentlyOnly, false);
   },
+  markComplete: function(){
+    var data = {
+      _token: document.querySelector('meta[name="_token"]').getAttribute("content")
+    };
+
+    $.post('/cards/' + this.props.data.id + '/mark-as-complete/1', data, function(response){
+      // fire event to say that marked_complete of this card has been changed to complete
+      window.dispatchEvent(new CustomEvent("cardActionUpdate", { detail: { marked_complete: true}}));
+    });
+  },
+  markIncomplete: function(){
+    var data = {
+      _token: document.querySelector('meta[name="_token"]').getAttribute("content")
+    };
+
+    $.post('/cards/' + this.props.data.id + '/mark-as-complete/0', data, function(response){
+      // fire event to say that marked_complete of this card has been changed to incomplete
+      window.dispatchEvent(new CustomEvent("cardActionUpdate", { detail: { marked_complete: false}}));
+    });
+  },
   render: function() {
     var rawLatinMarkup = this.props.data.latin;
     var rawWordOrigin = this.props.data.origin;
@@ -47,12 +68,26 @@ let FlashCard = React.createClass({
           <NavigationMoreVert ref={"menu-1"} />
         </IconButton>
     );
+    var completeButton;
     // var cardActions = (<div className="actions">
     //           <IconMenu className="card-menu" color={Colors.black500} iconButtonElement={iconMenuButton} anchorOrigin={{vertical: "bottom", horizontal: "right"}} targetOrigin={{vertical: "top", horizontal: "left"}}>
     //             <MenuItem primaryText="Refresh" />
     //             <MenuItem primaryText="Send feedback" />
     //           </IconMenu>
     //         </div>);
+    if(this.props.data.marked_complete){
+      completeButton = (
+        <FloatingActionButton onTouchTap={this.markIncomplete} mini={true} backgroundColor={Colors.redA700} tooltip="Incomplete">
+          <RemoveIcon />
+        </FloatingActionButton>
+      );
+    } else {
+      completeButton = (
+        <FloatingActionButton onTouchTap={this.markComplete} mini={true} backgroundColor={Colors.lightGreenA700} >
+          <AddIcon />
+        </FloatingActionButton>
+      );
+    }
     
     return (
       <div className="col-sm-4">
@@ -82,6 +117,9 @@ let FlashCard = React.createClass({
                 </div>
               </div>
             </div>
+              <div style={{position:'absolute', bottom: 10 + 'px', right: 10 + 'px'}}>
+                {completeButton}
+              </div>
           </Paper>
         </div>
       </div>

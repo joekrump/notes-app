@@ -5,8 +5,7 @@ let RaisedButton = mui.RaisedButton;
 let FloatingActionButton = mui.FloatingActionButton;
 let NavigationArrowForward   = require('material-ui/lib/svg-icons/navigation/arrow-forward'); // svg icon
 let NavigationArrowBack   = require('material-ui/lib/svg-icons/navigation/arrow-back'); // svg icon
-
-var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+let ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 var Pagination = React.createClass({
 	getInitialState: function() {

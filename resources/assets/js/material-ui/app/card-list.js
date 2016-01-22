@@ -26,7 +26,7 @@ let CardList = React.createClass({
 		}
 
 		return (
-			<div className="row">
+			<div className="row" className="card-list">
 				{flashCards}
 			</div>
 		);

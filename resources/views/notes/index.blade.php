@@ -8,7 +8,7 @@
 	<div id="notes" class="row" data-filter-status={{ $status }}>
 		<div class="col-sm-12">
 			<header class="page-header">
-				<a href='/notes/new' class="btn btn-success-inverse pull-right">New Note</a>
+				<a href='/notes/new' class="btn btn-success pull-right">New Note</a>
 				<h1>Notes</h1>
 			</header>
 			
@@ -45,7 +45,7 @@
 					      			<div class="label label-inverse label-default">{{ $note->created_at->toFormattedDateString() }}</div>
 					      			<div class="pull-right">
 					      				@if($note->status != 0)
-					      					<button type="button" class="btn btn-xs btn-success-inverse" data-id="{{$note->id}}" data-action-status=1>set active</button>
+					      					<button type="button" class="btn btn-xs btn-success" data-id="{{$note->id}}" data-action-status=1>set active</button>
 					      				@endif
 					      				@if($note->status != 1)
 					      					<button type="button" class="btn btn-xs btn-primary" data-id="{{$note->id}}" data-action-status=1>archive</button>

@@ -4,7 +4,7 @@
 	<div class="row">
 		<div class="col-sm-12">
 			<header class="page-header">
-				<a href='/courses/new' class="btn btn-success-inverse pull-right">New Course</a>
+				<a href='/courses/new' class="btn btn-success pull-right">New Course</a>
 				<h1>Courses</h1>
 			</header>
 
@@ -23,7 +23,7 @@
 			@else
 				<div class="row">
 					<div class="col-sm-12">
-						No courses yet... <a href='/courses/new' class="btn btn-success-inverse pull-right">Add a New Course</a>
+						No courses yet... <a href='/courses/new' class="btn btn-success pull-right">Add a New Course</a>
 					</div>
 				</div>
 			@endif

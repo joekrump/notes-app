@@ -17,18 +17,11 @@ class CardsController extends Controller
   public function getLatinCards(Request $request){
     $cards = \App\Card::orderBYRaw('RAND()');
     $per_page = 9.0;
-        // if(($tab_filter = $request->request->get('tab_filter'))){
-        //     if($tab_filter == 'all'){
-        //         $allCards = $cards->get();
-        //     } else if($tab_filter == 'complete') {
-        //         $allCards = $cards->where("english", '!=', '')->get();
-        //     } else {
-        //         $allCards = $cards->whereRaw("english IS NULL OR english = ''")->get();
-        //     }
-        // } else {
     $all = $cards->get();
-    $complete = $cards->where("english", '!=', '')->get();
-    $incomplete = $cards->whereRaw("english IS NULL OR english = ''")->get();
+    
+    $complete   = $cards->where('marked_complete', 1)->get();
+    $incomplete = new \Illuminate\Database\Eloquent\Collection(\DB::select('select * from cards where marked_complete != 1', []));
+    
     $all_count = 1.0 * $all->count();
     $complete_count = 1.0 * $complete->count();
     $incomplete_count = 1.0 * $incomplete->count();
@@ -98,9 +91,11 @@ class CardsController extends Controller
       $show_mode = 'all';
       return view('cards.index', compact(['cards', 'card_type', 'resource_type', 'show_latin', 'blank_count', 'show_mode']));
     }
+
     public function mark_as_complete($card_id, $status){
       $card = \App\Card::findOrFail($card_id);
-      $card->update(['marked_complete' => $status]);
+      $card->marked_complete = ($status == 1);
+      $card->save();
     }
 
     public function search($language, $search_term){

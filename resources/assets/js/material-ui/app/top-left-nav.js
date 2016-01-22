@@ -3,12 +3,13 @@ let mui = require('material-ui');
 let injectTapEventPlugin = require('react-tap-event-plugin');
 let AppBar = mui.AppBar;
 let LeftNav = mui.LeftNav;
+let Menu = mui.Menu;
 let MenuItem = mui.MenuItem;
-
-let ThemeManager = new mui.Styles.ThemeManager();
+let ThemeManager =mui.Styles.ThemeManager;
 let Colors = mui.Styles.Colors;
 let CustomColors = require('./styles/colors');
 let CustomTheme = require('./styles/themes/custom1');
+let SelectableMenuList = require('./selectable-menu-list');
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
@@ -20,7 +21,8 @@ let TopLeftNav = React.createClass({
   getInitialState: function() {
     return {
       novelValue: 'Rob Roy',
-      currentPage: 'notes'
+      currentPage: 'notes',
+      muiTheme: this.context.muiTheme
     };
   },
   loadDefaultView: function(){
@@ -30,13 +32,13 @@ let TopLeftNav = React.createClass({
     muiTheme: React.PropTypes.object
   },
   getChildContext() {
-    ThemeManager.setTheme(CustomTheme);
+    // ThemeManager.setTheme(CustomTheme);
     return {
-      muiTheme: ThemeManager.getCurrentTheme()
+      muiTheme: ThemeManager.getMuiTheme(CustomTheme),
     };
   },
   componentWillMount() {
-    ThemeManager.setTheme(CustomTheme);
+    // ThemeManager.setTheme(CustomTheme);
   },
   toggleNav(e) {
     e.preventDefault();
@@ -48,47 +50,18 @@ let TopLeftNav = React.createClass({
   },
   render() {
     let currentPath = window.location.pathname;
-
-    let menuItems = [
-      {
-         type: MenuItem.Types.LINK,
-         payload: '/notes',
-         text: 'Notes',
-         active: (currentPath == '/notes')
-      },
-      {
-         type: MenuItem.Types.LINK,
-         payload: '/cards/category/all',
-         text: 'Cards',
-         active: (currentPath == '/cards/category/all')
-      },
-      {
-         type: MenuItem.Types.LINK,
-         payload: '/cards',
-         text: 'React Cards',
-         active: (currentPath == '/cards')
-      },
-      {
-         type: MenuItem.Types.LINK,
-         payload: '/courses',
-         text: 'Courses',
-         active: (currentPath == '/courses')
-      },
-      {
-         type: MenuItem.Types.LINK,
-         payload: '/rob-roy-graph',
-         text: 'Rob Roy',
-         active: (currentPath == '/rob-roy-graph')
-      }
-    ];
+    let navRight = this.props.navRight === undefined ? null : this.props.navRight;
 
     return (
-      <div>
+      <div id="top-nav">
         <LeftNav 
           ref="leftNav" 
           docked={false} 
           zDepth={4}
-          menuItems={menuItems} />
+          style={{backgroundColor: Colors.tealA700, color: Colors.darkWhite}}
+          >
+          <SelectableMenuList />
+        </LeftNav>
         <header>
           <AppBar
             title="Seminarium Adstator"
@@ -96,7 +69,10 @@ let TopLeftNav = React.createClass({
             onLeftIconButtonTouchTap={this.toggleNav}
             isInitiallyOpen={false}
             zDepth={4} 
-            style={{backgroundColor:ThemeManager.getCurrentTheme().component.appBar.backgroundColor}} />
+            style={{backgroundColor: Colors.tealA700, color: Colors.darkWhite}} />
+            <div id="nav-top-right">
+              {navRight}
+            </div>
         </header>
       </div>
     );

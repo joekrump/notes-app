@@ -4,7 +4,7 @@ let injectTapEventPlugin = require('react-tap-event-plugin');
 let AppBar = mui.AppBar;
 let LeftNav = mui.LeftNav;
 let MenuItem = mui.MenuItem;
-let ThemeManager = new mui.Styles.ThemeManager();
+let ThemeManager = mui.Styles.ThemeManager;
 let Colors = mui.Styles.Colors;
 let CustomColors = require('./styles/colors');
 let CustomTheme = require('./styles/themes/custom1');
@@ -13,16 +13,16 @@ let Pagination = require('./pagination');
 let SearchField = require('./search');
 let CardActionMenu = require('./card-action-menu');
 let RadioButton = require('material-ui/lib/radio-button');
-let RadioButtonGroup =require('material-ui/lib/radio-button-group');
+let RadioButtonGroup = require('material-ui/lib/radio-button-group');
+let TopLeftNav = require('./top-left-nav');
 
-
-//Needed for onTouchTap
-//Can go away when react 1.0 release
-//Check this repo:
-//https://github.com/zilverline/react-tap-event-plugin
+// Needed for onTouchTap
+// Can go away when react 1.0 release
+// Check this repo:
+// https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin();
 
-var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 function sortEnglishByNameASC(a,b) {
   if (a.english < b.english)
@@ -57,16 +57,23 @@ function sortLatinByNameDESC(a,b) {
 }
 
 let CardPage = React.createClass({
-	childContextTypes: {
-	  muiTheme: React.PropTypes.object
-	},
+	childContextTypes : {
+      muiTheme: React.PropTypes.object,
+    },
+
+  getChildContext() {
+    return {
+      muiTheme: ThemeManager.getMuiTheme(CustomTheme),
+    };
+  },
 	getInitialState: function() {
 	  return {
 	  	cards: {
 	  		all: {total: 0, data:[]},
 	  		complete: {total: 0, data:[]},
 	  		incomplete: {total: 0, data:[]},
-	  		currentPage: []
+	  		currentPage: [],
+        savedPage: [] // Stores a backup copy of the current page to quickly restore a previous page.
 	  	},
 	    fetchingCards: false,
 	    paginationPages: {
@@ -100,10 +107,16 @@ let CardPage = React.createClass({
 	setListeners: function(){
     window.addEventListener("getNewCardPage", this.updatePagination, false);
     window.addEventListener("updateCurrentCardType", this.updateCurrentCardType, false);
+    window.addEventListener("newSearch", this.updateIsSearching, false);
   },
   componentWillUnmount: function(){
     window.removeEventListener("getNewCardPage", this.updatePagination, false);
     window.removeEventListener("updateCurrentCardType", this.updateCurrentCardType, false);
+    window.removeEventListener("newSearch", this.updateIsSearching, false);
+  },
+  updateIsSearching: function(){
+    // isSearching = !isSearching;
+    // console.log('searching...');
   },
   updatePagination: function(){
     var buttonType = event.detail.buttonType;
@@ -143,6 +156,8 @@ let CardPage = React.createClass({
     } else {
       stateCards.currentPage = stateCards[cardType].data.slice(cardRangeStart, cardRangeEnd);
     }
+    // Update the saved page as well in case we need to return to it.
+    stateCards.savedPage = stateCards.currentPage;
 
     this.setState({
       cards: stateCards
@@ -193,42 +208,44 @@ let CardPage = React.createClass({
     this.filterProjects();
   },
   doSearch: function(queryText, cards){
-      var matchingCards = [];
-      var cardsToSearch = cards === undefined ? this.state.cards[this.state.currentCardType].data : cards;
-      var currentLanguage = this.state.activeLanguage;
+    var matchingCards = [];
+    var cardsToSearch = cards === undefined ? this.state.cards[this.state.currentCardType].data : cards;
+    var currentLanguage = this.state.activeLanguage;
 
-      console.log(currentLanguage);
-      console.log(cardsToSearch);
-      console.log(queryText);
+    // console.log(currentLanguage);
+    // console.log(cardsToSearch);
+    console.log(queryText);
+    console.log(queryText.trim().length);
 
-      if(queryText !== undefined && cardsToSearch !== undefined){
-        cardsToSearch.forEach(function(card){
-        	console.log(card.latin.toLowerCase())
-        	console.log(queryText.toLowerCase())
-        	// console.log(card.english.toLowerCase().indexOf(queryText.toLowerCase) );
-        	// console.log(card.latin.toLowerCase().indexOf(queryText.toLowerCase) );
-            if((currentLanguage === 'english' && card.english.toLowerCase().indexOf(queryText.toLowerCase()) != -1)
-            	|| (currentLanguage === 'latin' && card.latin.toLowerCase().indexOf(queryText.toLowerCase()) != -1)){
-            	matchingCards.push(card);
-            }
-        });
+    if(queryText !== undefined && cardsToSearch !== undefined){
+      if(queryText.trim().length < 1){
+        var cardsCopy = this.state.cards;
+        cardsCopy.currentPage = this.state.cards.savedPage;
+        this.setState({cards: cardsCopy});
+        return 0;
       }
-      console.log("matching Cards:");
-      console.log(matchingCards);
+      cardsToSearch.forEach(function(card){
+        if((currentLanguage === 'english' && card.english.toLowerCase().indexOf(queryText.toLowerCase()) != -1)){
+          matchingCards.push(card);
+        } else if((currentLanguage === 'latin' && card.latin.toLowerCase().indexOf(queryText.toLowerCase()) != -1)) {
+          matchingCards.push(card);
+        }
+      });
 
       if(this.state.cards[this.state.currentCardType].total > 0 && matchingCards.length > 0){
-    		var currentCards = this.state.cards;
-    		currentCards[this.state.currentCardType].data = matchingCards;
+        var cardsCopy = this.state.cards;
+        if(currentLanguage == 'latin'){
+          cardsCopy.currentPage = matchingCards.sort(sortLatinByNameASC);
+        } else if(currentLanguage == 'english'){
+          cardsCopy.currentPage = matchingCards.sort(sortEnglishByNameASC);
+        }
+        
         this.setState({
           searchQuery: queryText, 
-          cards: currentCards 
+          cards: cardsCopy 
         });
       } 
-
-      // return {
-      //   searchQuery: queryText,
-      //   cards: matchingCards
-      // };
+    }
   },
   cardFilter: function(){
 
@@ -303,13 +320,14 @@ let CardPage = React.createClass({
 	      cache: false,
 	      success: function(cards) {
 	      	var incompleteCards = cards.incomplete;
-
+          var currentPageCards =  incompleteCards.data.slice(0,9);
 	        this.setState({
 	        	cards: {
 	        		all: cards.all, 
 	        		complete: cards.complete, 
 	        		incomplete: incompleteCards,
-	        		currentPage: incompleteCards.data.slice(0,9)
+	        		currentPage: currentPageCards,
+              savedPage: currentPageCards
 	        	},
 	        	fetchingCards: false
 	        });
@@ -335,60 +353,57 @@ let CardPage = React.createClass({
 	    // setInterval(this.fetchCards, 5000);
 	  // }
 	},
-	getChildContext() {
-	  ThemeManager.setTheme(CustomTheme);
-	  return {
-	    muiTheme: ThemeManager.getCurrentTheme()
-	  };
-	},
 	componentWillMount() {
-	  ThemeManager.setTheme(CustomTheme);
+	  // ThemeManager.setTheme(CustomTheme);
 	},
 	render: function() {
-
+    
+    var tabsData = {
+      incomplete: {
+        total: this.state.cards.incomplete.total
+      },
+      complete: {
+        total: this.state.cards.complete.total
+      }
+    };
+    var navRight = (
+      <div key="top-right-nav">
+        <a href='/cards/new' key="new-card-button-top" className="btn btn-success pull-right">New Card</a>
+        <div className="pull-right">
+          <SearchField key="top-search-input" query={this.state.searchQuery} doSearch={this.doSearch}/>
+        </div>
+      </div>
+    );
 		return (
-			<div>
-				<header className="page-header">
-					<div className="row">
-						<div className="col-sm-6">
-							<h1>Cards</h1>
-						</div>
-						<div className="col-sm-6">
-							<div className="row pull-right">
-								<div className="col-sm-6">
-									<SearchField query={this.state.searchQuery} doSearch={this.doSearch}/>
-								</div>
-								<div className="col-sm-6">
-									<CardActionMenu />
-								</div>
-							</div>
-						</div>
-					</div>
-				</header>
-				<div className="row">
-					<div className="col-sm-4">
-						<h4>{this.state.cards.all.total + " cards"} <i>({this.state.cards.incomplete.total + " blank"})</i></h4>
-					</div>
-					<div className="col-sm-4 text-center">
-						<Pagination cardsPerPage={this.state.cardsPerPage} />
-					</div>
-					<div className="col-sm-4">
-							<RadioButtonGroup name="activeLanguage" defaultSelected="latin" onChange={this.toggleActiveLanguage}>
-									<RadioButton
-									  value="latin"
-									  label="Latin"
-									  style={{marginBottom:16}}/>
-									<RadioButton
-									  value="english"
-									  label="English"
-									  style={{marginBottom:16}} />
-							</RadioButtonGroup>
-					</div>
-					<div className="col-sm-12">
-						<SwipeableCardTabs cards={this.state.cards.currentPage} activeLanguage={this.state.activeLanguage} />
-					</div>
-				</div>
-			</div>
+      <div>
+        <TopLeftNav navRight={navRight} />
+        <div className="background"></div>
+  			<div id="card-page" className="container container-fluid">
+  				<div className="row">
+            <div className="col-sm-4">
+              <h1>Cards</h1>
+            </div>
+  					<div className="col-sm-4 text-center">
+  						<Pagination cardsPerPage={this.state.cardsPerPage} />
+  					</div>
+            <div className="col-sm-4">
+              <RadioButtonGroup name="activeLanguage" defaultSelected="latin" onChange={this.toggleActiveLanguage} style={{marginTop: "5px", width:"default", float: 'right'}}>
+                  <RadioButton
+                    value="latin"
+                    label="Latin"
+                    style={{marginBottom:16, marginRight: "15px", width: "default", display: "inline-block"}}/>
+                  <RadioButton
+                    value="english"
+                    label="English"
+                    style={{marginBottom:16, width: "default", display: "inline-block"}} />
+              </RadioButtonGroup>
+            </div>
+  					<div className="col-sm-12">
+  						<SwipeableCardTabs cards={this.state.cards.currentPage} data={tabsData} activeLanguage={this.state.activeLanguage} />
+  					</div>
+  				</div>
+  			</div>
+      </div>
 		);
 	}
 });

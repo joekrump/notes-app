@@ -13,10 +13,16 @@ body {
 
 #react-nav {
   position: fixed;
-  z-index: 9999;
+  z-index: 455;
   top: 0px;
   left: 0px;
   width: 100%; }
+
+#nav-top-right {
+  position: fixed;
+  top: 13px;
+  right: 13px;
+  z-index: 456; }
 
 .mobile-nav {
   display: none; }
@@ -50,7 +56,7 @@ h1, h2, h3 {
 
 h1 {
   font-size: 22pt;
-  color: #0091ea; }
+  color: #ffffff; }
 
 h2 {
   color: #00b0ff; }
@@ -59,7 +65,7 @@ h3 {
   color: #ffffff; }
 
 .background {
-  background-image: url("/images/app_background.jpg");
+  background-image: url("/images/material_background.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: left top;
@@ -78,6 +84,12 @@ h3 {
 
 .title {
   color: #ffffff; }
+
+#top-nav {
+  z-index: 9999;
+  position: fixed;
+  width: 100%;
+  top: 0px; }
 
 .list-striped li {
   background-color: rgba(0, 0, 0, 0.6);
@@ -164,7 +176,7 @@ a.btn {
   text-decoration: none !important; }
 
 .label-inverse {
-  padding: 0.2em 0.6em 0.2em;
+  padding: .2em .6em .2em;
   display: inline-block;
   vertical-align: middle; }
   .label-inverse.label-default {
@@ -182,8 +194,10 @@ a.inverse-link {
 
 .container {
   background-color: rgba(0, 0, 0, 0.6);
-  padding-bottom: 35px;
-  margin-top: 35px; }
+  padding-bottom: 35px; }
+
+.page-header {
+  margin-top: 80px; }
 
 .navbar .container {
   background: none;
@@ -230,43 +244,44 @@ input[type="text"]:focused {
   border: none;
   border-bottom: 1px solid #ffffff; }
 
+a.btn, button.btn {
+  border: 10px;
+  background: none;
+  box-sizing: border-box;
+  display: inline-block;
+  font: inherit;
+  text-transform: uppercase;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+  border-radius: 2px;
+  line-height: 36px;
+  font-family: Roboto, sans-serif;
+  tap-highlight-color: transparent;
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+  padding: 0 16px;
+  overflow: hidden;
+  border-radius: 2px;
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0); }
+
 a.btn-secondary, a.btn-primary, a.btn-success {
   color: #ffffff; }
 
 a.btn-primary, button.btn-primary {
-  color: #00b0ff;
-  background-color: transparent;
-  border-color: #00b0ff; }
-  a.btn-primary:hover, button.btn-primary:hover {
-    color: #0091ea;
-    border-color: #0091ea;
-    background-color: transparent; }
+  background-color: #00b0ff; }
 
 a.btn-secondary, button.btn-secondary {
-  color: #DDDDDD;
-  background-color: transparent;
-  border-color: #bdbdbd; }
-  a.btn-secondary:hover, button.btn-secondary:hover {
-    color: #616161;
-    border-color: #616161;
-    background-color: transparent; }
+  background-color: #bdbdbd; }
 
 a.btn-default, .btn-default {
-  color: #cfd8dc;
-  background-color: transparent;
-  border-color: #cfd8dc; }
-  a.btn-default:hover, .btn-default:hover {
-    color: #ffffff;
-    border-color: #ffffff;
-    background-color: transparent; }
+  color: #000000;
+  background-color: #cfd8dc; }
 
-a.btn-success-inverse, .btn-success-inverse {
-  color: #c6ff00;
-  background-color: rgba(92, 184, 92, 0);
-  border-color: #c6ff00; }
-  a.btn-success-inverse:hover, .btn-success-inverse:hover {
-    border-color: #aeea00;
-    color: #aeea00; }
+a.btn-success, button.btn-success {
+  color: #ffffff;
+  background-color: #5cb85c; }
 
 .pagination > li > a, .pagination > li > span {
   position: relative;
@@ -298,6 +313,10 @@ a.btn-success-inverse, .btn-success-inverse {
   color: #aeea00;
   background-color: rgba(0, 0, 0, 0.6);
   border-color: #c6ff00; }
+
+@media (min-width: 1300px) {
+  .container {
+    width: 1280px; } }
 
 #spin {
   border: 1px solid white;
@@ -375,7 +394,6 @@ a.btn-success-inverse, .btn-success-inverse {
     overflow-y: scroll; } }
 
 #card-page {
-  background-image: url("/images/cards_background.jpg");
   background-size: cover;
   background-repeat: no-repeat; }
   #card-page .list > li {
@@ -383,6 +401,10 @@ a.btn-success-inverse, .btn-success-inverse {
     #card-page .list > li ul {
       list-style-type: none;
       padding-left: 0; }
+  #card-page.container {
+    margin-top: 80px; }
+    #card-page.container h1 {
+      margin-top: 5px; }
   #card-page .card {
     margin-top: 40px;
     background-size: cover;
@@ -424,8 +446,6 @@ a.btn-success-inverse, .btn-success-inverse {
       opacity: 1; }
     #card-page .card:hover .latin.not-showing, #card-page .card:focus .latin.not-showing {
       opacity: 1; }
-    #card-page .card.empty {
-      border-top: 5px solid red; }
     #card-page .card .card-menu {
       background-color: rgba(0, 0, 0, 0.54) !important; }
     #card-page .card.card-1 {
