@@ -3,6 +3,9 @@ import List from 'material-ui/lib/lists/list';
 import ListItem from 'material-ui/lib/lists/list-item';
 import Avatar from 'material-ui/lib/avatar';
 import {SelectableContainerEnhance} from 'material-ui/lib/hoc/selectable-enhance';
+let mui = require('material-ui');
+let Colors = mui.Styles.Colors;
+
 let SelectableList = SelectableContainerEnhance(List);
 
 function wrapState(ComposedComponent) {
@@ -34,7 +37,8 @@ SelectableList = wrapState(SelectableList);
 
 const SelectableMenuList = () => (
     <SelectableList
-      value={window.location.pathname}>
+      value={window.location.pathname}
+      style={{backgroundColor: Colors.transparent, color: Colors.white }}>
       <ListItem
         value={'/notes'}
         primaryText="Notes"/>
