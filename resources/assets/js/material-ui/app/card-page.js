@@ -124,10 +124,11 @@ let CardPage = React.createClass({
     var cardsCopy = this.state.cards;
     var index = cardsCopy[this.state.currentCardType].data.indexOf(event.detail.card);
     var cardCopy = event.detail.card;
+    var allCardsIndex = cardsCopy['all'].data.indexOf(cardCopy);
+    cardCopy.marked_complete = event.detail.newStatusNumber;
     var currentDeck = cardsCopy[this.state.currentCardType];
     var indexOfCurrentDeckName = deckNames.indexOf(this.state.currentCardType);
 
-    cardCopy.marked_complete = event.detail.newStatusNumber;
     if(indexOfCurrentDeckName < (deckNames.length - 1)){
       var temp = deckNames.slice(0, indexOfCurrentDeckName);
       deckNames = temp.concat(deckNames.slice(indexOfCurrentDeckName + 1));
@@ -158,18 +159,21 @@ let CardPage = React.createClass({
       if(name !== 'all'){
         cardsCopy[name].data.push(cardCopy);
       } else {
-        console.log(event.detail.card);
-        index = cardsCopy.all.data.indexOf(event.detail.card);
-        console.log(cardsCopy.all.data);
-        if(index != -1){
-          cardsCopy.all.data.push(cardCopy);
+        
+        if(allCardsIndex != -1){
+          cardsCopy['all'].data[allCardsIndex] = cardCopy;
         } else {
           console.warn("Couldn't find the card :(");
         } 
       }
       return 0;
     });
-    this.updateCurrentPage(this.state.currentCardType, this.state.currentPageNum, cardsCopy);
+    // set updated total counts
+    cardsCopy.incomplete.total = cardsCopy.incomplete.data.length;
+    cardsCopy.complete.total = cardsCopy.complete.data.length;
+
+    console.log(this.state.paginationPages[this.state.currentCardType].curr);
+    this.updateCurrentPage(this.state.currentCardType, this.state.paginationPages[this.state.currentCardType].curr, cardsCopy);
   },
   updatePagination(){
     var buttonType = event.detail.buttonType;

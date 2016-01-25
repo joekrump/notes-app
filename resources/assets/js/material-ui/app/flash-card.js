@@ -44,15 +44,17 @@ let FlashCard = React.createClass({
     var data = {
       _token: document.querySelector('meta[name="_token"]').getAttribute("content")
     };
-    var statusNumber = this.props.data.marked_complete ? 0 : 1;
+    var newStatusNumber = this.props.data.marked_complete ? 0 : 1;
     // positive outcome assumption made
-    window.dispatchEvent(new CustomEvent("cardStatusUpdated", { detail: { newStatusNumber: statusNumber, card: this.props.data }}));
+    
+    window.dispatchEvent(new CustomEvent("cardStatusUpdated", { detail: { newStatusNumber: newStatusNumber, card: this.props.data }}));
 
-    $.post('/cards/' + this.props.data.id + '/mark-as-complete/' + statusNumber, data, function(response){
+    $.post('/cards/' + this.props.data.id + '/mark-as-complete/' + newStatusNumber, data, function(response){
       // fire event to say that marked_complete of this card has been changed to complete
     });
   },
   render: function() {
+
     var rawLatinMarkup = this.props.data.latin;
     var rawWordOrigin = this.props.data.origin;
     var editLink = '/cards/' + this.props.data.id;
@@ -62,7 +64,7 @@ let FlashCard = React.createClass({
         </IconButton>
     );
     var completeButton = (
-      <FloatingActionButton onTouchTap={this.updateStatus} mini={true} backgroundColor={this.props.data.marked_complete ? Colors.redA700 : Colors.green600} tooltip="Incomplete">
+      <FloatingActionButton onTouchTap={this.updateStatus} mini={true} backgroundColor={this.props.data.marked_complete ? Colors.redA700 : Colors.green600}>
         {this.props.data.marked_complete ? <RemoveIcon /> : <AddIcon />}
       </FloatingActionButton>
     );
@@ -71,7 +73,7 @@ let FlashCard = React.createClass({
       <ReactCSSTransitionGroup transitionName="cards" transitionEnterTimeout={500} transitionLeaveTimeout={500} transitionAppearTimeout={500} transitionAppear={true}>
         <div className="col-sm-4">
           <div className="row">
-            <Paper zDepth={5} className={"card col-sm-10 col-sm-offset-1 card-" + (this.props.cardNum % 4) + (this.props.data.english == null || this.props.data.english === undefined ? " empty" : "")} data-id={this.props.data.id}>
+            <Paper zDepth={5} className={"card col-sm-10 col-sm-offset-1 card-3" + (this.props.data.english == null || this.props.data.english === undefined ? " empty" : "")} data-id={this.props.data.id}>
               <div className="row">
                 <div className={"latin" + (this.props.activeLanguage !== "latin" ? " not-showing" : "") + " col-sm-4"}>
                   <a href={editLink} dangerouslySetInnerHTML={{__html: rawLatinMarkup}}></a>
