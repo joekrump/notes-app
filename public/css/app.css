@@ -22,7 +22,7 @@ body {
   position: fixed;
   top: 13px;
   right: 13px;
-  z-index: 456; }
+  z-index: 1101; }
 
 .mobile-nav {
   display: none; }
@@ -281,7 +281,7 @@ a.btn-default, .btn-default {
 
 a.btn-success, button.btn-success {
   color: #ffffff;
-  background-color: #5cb85c; }
+  background-color: #43a047; }
 
 .pagination > li > a, .pagination > li > span {
   position: relative;
@@ -460,10 +460,6 @@ a.btn-success, button.btn-success {
       position: absolute;
       bottom: 12px;
       right: 12px; }
-      #card-page .card .actions .btn-success-inverse, #card-page .card .actions .btn-danger {
-        background-color: rgba(0, 0, 0, 0.6); }
-      #card-page .card .actions .btn-22 {
-        width: 22px; }
   #card-page .toggle-actions {
     padding-top: 20px; }
 

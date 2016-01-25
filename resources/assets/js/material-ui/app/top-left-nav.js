@@ -58,7 +58,7 @@ let TopLeftNav = React.createClass({
           ref="leftNav" 
           docked={false} 
           zDepth={4}
-          style={{backgroundColor: Colors.tealA700, color: Colors.darkWhite}}
+          style={{backgroundColor: Colors.teal700, color: Colors.darkWhite}}
           >
           <SelectableMenuList />
         </LeftNav>

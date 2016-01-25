@@ -11,6 +11,7 @@ var Pagination = React.createClass({
 	getInitialState: function() {
 	  return {
 	    currentFilter: 'complete',
+      muiTheme: this.context.muiTheme,
 	  };
 	},
 	componentDidMount: function() {
@@ -34,15 +35,13 @@ var Pagination = React.createClass({
   },
   render: function () {
     var projectNodes  = null;
+    var rightArrow = (<NavigationArrowForward ref={"pagination-prev"} />);
+    var leftArrow = (<NavigationArrowBack ref={"pagination-next"}  />);
 
     return (
       <div>
-        <RaisedButton secondary={true} onClick={this.fetchPrevPage}>
-          <NavigationArrowBack ref={"pagination-next"} />
-        </RaisedButton>
-        <RaisedButton secondary={true} onClick={this.fetchNextPage}>
-          <NavigationArrowForward ref={"pagination-prev"} />
-        </RaisedButton>
+        <RaisedButton secondary={true} label={leftArrow} onClick={this.fetchPrevPage} labelStyle={{top: '5px'}}/>
+        <RaisedButton secondary={true} label={rightArrow} onClick={this.fetchNextPage} labelStyle={{top: '5px'}}/>
       </div>
     );
   }

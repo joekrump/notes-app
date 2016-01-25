@@ -15,14 +15,13 @@ let CardActionMenu = require('./card-action-menu');
 let RadioButton = require('material-ui/lib/radio-button');
 let RadioButtonGroup = require('material-ui/lib/radio-button-group');
 let TopLeftNav = require('./top-left-nav');
-
+let RaisedButton = mui.RaisedButton;
+let SortBar = require('./sort-bar');
 // Needed for onTouchTap
 // Can go away when react 1.0 release
 // Check this repo:
 // https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin();
-
-var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 function sortEnglishByNameASC(a,b) {
   if (a.english < b.english)
@@ -58,15 +57,14 @@ function sortLatinByNameDESC(a,b) {
 
 let CardPage = React.createClass({
 	childContextTypes : {
-      muiTheme: React.PropTypes.object,
-    },
-
-  getChildContext() {
+    muiTheme: React.PropTypes.object,
+  },
+  getChildContext () {
     return {
-      muiTheme: ThemeManager.getMuiTheme(CustomTheme),
+      muiTheme: this.state.muiTheme,
     };
   },
-	getInitialState: function() {
+	getInitialState() {
 	  return {
 	  	cards: {
 	  		all: {total: 0, data:[]},
@@ -101,24 +99,79 @@ let CardPage = React.createClass({
 	    },
 	    currentCardType: 'incomplete',
 	    activeLanguage: 'latin',
-	    cardsPerPage: 9
+	    cardsPerPage: 9,
+      muiTheme: ThemeManager.getMuiTheme(CustomTheme)
 	  };
 	},
-	setListeners: function(){
+	setListeners(){
     window.addEventListener("getNewCardPage", this.updatePagination, false);
     window.addEventListener("updateCurrentCardType", this.updateCurrentCardType, false);
     window.addEventListener("newSearch", this.updateIsSearching, false);
+    window.addEventListener("cardStatusUpdated", this.updateDecks, false);
   },
-  componentWillUnmount: function(){
+  componentWillUnmount(){
     window.removeEventListener("getNewCardPage", this.updatePagination, false);
     window.removeEventListener("updateCurrentCardType", this.updateCurrentCardType, false);
     window.removeEventListener("newSearch", this.updateIsSearching, false);
+    window.removeEventListener("cardStatusUpdated", this.updateDecks, false);
   },
-  updateIsSearching: function(){
+  updateIsSearching(){
     // isSearching = !isSearching;
     // console.log('searching...');
   },
-  updatePagination: function(){
+  updateDecks(){
+    var deckNames = ['complete', 'incomplete', 'all'];
+    var cardsCopy = this.state.cards;
+    var index = cardsCopy[this.state.currentCardType].data.indexOf(event.detail.card);
+    var cardCopy = event.detail.card;
+    var currentDeck = cardsCopy[this.state.currentCardType];
+    var indexOfCurrentDeckName = deckNames.indexOf(this.state.currentCardType);
+
+    cardCopy.marked_complete = event.detail.newStatusNumber;
+    if(indexOfCurrentDeckName < (deckNames.length - 1)){
+      var temp = deckNames.slice(0, indexOfCurrentDeckName);
+      deckNames = temp.concat(deckNames.slice(indexOfCurrentDeckName + 1));
+    } else {
+      deckNames.slice(0, indexOfCurrentDeckName);
+    }
+    // update the current deck
+    if(index != -1){
+      console.log(index);
+      if(this.state.currentCardType !== 'all'){
+        var newCards;
+        if(index < (cardsCopy[this.state.currentCardType].data.length - 1)){
+          var tempArray = currentDeck.data.slice(0,index);
+          newCards = tempArray.concat(currentDeck.data.slice(index+1)); 
+        } else {
+          console.log('was last card');
+          newCards = currentDeck.data.slice(0,index);
+        }
+        cardsCopy[this.state.currentCardType].data = newCards;
+      } else {
+        cardsCopy['all'].data.push(cardCopy);
+      }
+    } else {
+      console.warn("couldn't find the card... that is weird.");
+    }
+    // update the other decks
+    deckNames.map(function (name, index) {
+      if(name !== 'all'){
+        cardsCopy[name].data.push(cardCopy);
+      } else {
+        console.log(event.detail.card);
+        index = cardsCopy.all.data.indexOf(event.detail.card);
+        console.log(cardsCopy.all.data);
+        if(index != -1){
+          cardsCopy.all.data.push(cardCopy);
+        } else {
+          console.warn("Couldn't find the card :(");
+        } 
+      }
+      return 0;
+    });
+    this.updateCurrentPage(this.state.currentCardType, this.state.currentPageNum, cardsCopy);
+  },
+  updatePagination(){
     var buttonType = event.detail.buttonType;
     var newCurrentPageNum = this.state.paginationPages[this.state.currentCardType].curr;
 
@@ -138,14 +191,14 @@ let CardPage = React.createClass({
     // Get new currentPage contents
     this.updateCurrentPage(this.state.currentCardType, newCurrentPageNum);
   },
-  updateCurrentCardType: function(){
+  updateCurrentCardType(){
   	// console.log(event.detail.cardType);
   	this.setState({currentCardType: event.detail.cardType});
     // A type update will also involve changing the set of cards displayed on the page.
     this.updateCurrentPage(event.detail.cardType, this.state.paginationPages[event.detail.cardType].curr);
   },
-  updateCurrentPage: function(cardType, currentPageNum){
-    var stateCards = this.state.cards;
+  updateCurrentPage(cardType, currentPageNum, currentCards){
+    var stateCards = currentCards === undefined ? this.state.cards : currentCards;
     var cardsForCurrentType = stateCards[cardType];
     var cardRangeStart = (currentPageNum * this.state.cardsPerPage) - this.state.cardsPerPage;
     var cardRangeEnd = currentPageNum * this.state.cardsPerPage;
@@ -163,7 +216,7 @@ let CardPage = React.createClass({
       cards: stateCards
     });
   },
-  calcPageNums: function(cardType, currentPageNum){
+  calcPageNums(cardType, currentPageNum){
   	var stateCurrentPage = currentPageNum;
   	var stateLastPage = this.state.cards[cardType].last_page
   	var curr  = stateCurrentPage === undefined ? 1 : stateCurrentPage;
@@ -194,20 +247,20 @@ let CardPage = React.createClass({
   		last: last 
   	};
   },
-  setPageNums: function(cardType, currentPageNum){
+  setPageNums(cardType, currentPageNum){
   	var currentPagination = this.state.paginationPages;
   	currentPagination[cardType] = this.calcPageNums(cardType, currentPageNum);
   	this.setState({
   		paginationPages: currentPagination
   	});
   },
-  updateSortOrder: function(event){
+  updateSortOrder(event){
     this.setState({
       sortOrder: event.detail.sortOrder
     });
     this.filterProjects();
   },
-  doSearch: function(queryText, cards){
+  doSearch(queryText, cards){
     var matchingCards = [];
     var cardsToSearch = cards === undefined ? this.state.cards[this.state.currentCardType].data : cards;
     var currentLanguage = this.state.activeLanguage;
@@ -247,15 +300,15 @@ let CardPage = React.createClass({
       } 
     }
   },
-  cardFilter: function(){
+  cardFilter(){
 
   },
-  filterCards: function(cards) {
+  filterCards(cards) {
     // this.setState({
     //   fetchingCards: true
     // });
   },
-  sortCards: function(cards) {
+  sortCards(cards) {
   	// TODO: Sort alphabetically 
   	//       - Latin & Enlish depending on current language set.
   	//       Sort by Lesson #
@@ -309,7 +362,7 @@ let CardPage = React.createClass({
       searchQuery: hasQuery ? searchResults.searchQuery: this.state.searchQuery
     }); 
   },
-	fetchCards: function(){
+	fetchCards(){
 
 	  if(!this.state.fetchingCards){
 	    this.setState({fetchingCards: true});
@@ -346,17 +399,38 @@ let CardPage = React.createClass({
 			activeLanguage: selectedValue
 		});
 	},
-	componentDidMount: function() {
+  shuffleArray(array){
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+  },
+  shuffleCards(){
+    console.log('shuffling cards');
+    var cards = this.state.cards;
+    cards[this.state.currentCardType].data = this.shuffleArray(this.state.cards[this.state.currentCardType].data);
+    this.setState({
+      cards: cards
+    });
+    this.updateCurrentPage(this.state.currentCardType, 1, cards);
+  },
+	componentDidMount() {
 	  this.setListeners();
 	  this.fetchCards();
-	  // if (this.props.pollInterval !== undefined && this.props.pollInterval > 0) {
-	    // setInterval(this.fetchCards, 5000);
-	  // }
 	},
-	componentWillMount() {
-	  // ThemeManager.setTheme(CustomTheme);
-	},
-	render: function() {
+	render() {
     
     var tabsData = {
       incomplete: {
@@ -397,9 +471,10 @@ let CardPage = React.createClass({
                     label="English"
                     style={{marginBottom:16, width: "default", display: "inline-block"}} />
               </RadioButtonGroup>
+              <RaisedButton label="Shuffle Cards" primary={true} onTouchTap={this.shuffleCards} style={{float:'right', marginRight: '15px'}}/>
             </div>
   					<div className="col-sm-12">
-  						<SwipeableCardTabs cards={this.state.cards.currentPage} data={tabsData} activeLanguage={this.state.activeLanguage} />
+  						<SwipeableCardTabs cards={this.state.cards.currentPage} data={tabsData} activeLanguage={this.state.activeLanguage}/>
   					</div>
   				</div>
   			</div>

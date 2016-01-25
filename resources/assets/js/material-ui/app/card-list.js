@@ -3,7 +3,9 @@ let FlashCard = require('./flash-card');
 
 let CardList = React.createClass({
 	getInitialState: function() {
-	  return {};
+	  return {
+	  	muiTheme: this.context.muiTheme
+	  };
 	},
 	componentDidMount: function() {
 	  // this.setState({
@@ -20,7 +22,7 @@ let CardList = React.createClass({
 			// console.log(this.props.data.data);
 			flashCards = this.props.cards.map(function (card, index) {
 			  return (
-			    <FlashCard data={card} key={card.id} activeLanguage={activeLanguage} cardNum={index + 1}/>
+			    <FlashCard data={card} key={card.id} activeLanguage={activeLanguage} cardNum={index + 1} />
 			  );
 			}.bind(this));
 		}

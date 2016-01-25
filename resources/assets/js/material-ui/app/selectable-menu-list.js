@@ -11,7 +11,9 @@ let SelectableList = SelectableContainerEnhance(List);
 function wrapState(ComposedComponent) {
   const StateWrapper = React.createClass({
     getInitialState() {
-      return {selectedIndex: window.location.pathname};
+      return {
+        selectedIndex: window.location.pathname
+      };
     },
     goToPage(url){
       console.log(url);
@@ -38,14 +40,17 @@ SelectableList = wrapState(SelectableList);
 const SelectableMenuList = () => (
     <SelectableList
       value={window.location.pathname}
-      style={{backgroundColor: Colors.transparent, color: Colors.white }}>
+      style={{backgroundColor: Colors.transparent }}>
       <ListItem
         value={'/notes'}
-        primaryText="Notes"/>
+        primaryText="Notes"
+        style={{color: Colors.white}}/>
       <ListItem value={'/cards'}
-        primaryText="Cards"  />
+        primaryText="Cards"
+        style={{color: Colors.white}}/>
       <ListItem value={'/courses'}
-        primaryText="Courses" />
+        primaryText="Courses"
+        style={{color: Colors.white}}/>
     </SelectableList>
 );
 

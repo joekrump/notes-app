@@ -15,6 +15,30 @@
       margin-top: 5px;
     }
   }
+  // .cards-enter {
+  //   opacity: 0.01;
+  // }
+
+  // .cards-enter.cards-enter-active {
+  //   opacity: 1;
+  //   transition: opacity 500ms ease-in;
+  // }
+
+  // .cards-leave {
+  //   opacity: 1;
+  // }
+  // .cards-appear {
+  //   opacity: 0.01;
+  // }
+
+  // .cards-appear.cards-appear-active {
+  //   opacity: 1;
+  //   transition: opacity .5s ease-in;
+  // }
+  // .cards-leave.cards-leave-active {
+  //   opacity: 0.01;
+  //   transition: opacity 300ms ease-in;
+  // }
   .card {
     margin-top: 40px;
     background-size: cover;
@@ -89,12 +113,6 @@
       position: absolute;
       bottom: 12px;
       right: 12px;
-      .btn-success-inverse, .btn-danger {
-        background-color: rgba(0,0,0,0.6);
-      }
-      .btn-22 {
-        width: 22px;
-      }
     }
   }
   .toggle-actions {

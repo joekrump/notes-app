@@ -50117,6 +50117,9 @@ var _materialUiLibAvatar2 = _interopRequireDefault(_materialUiLibAvatar);
 
 var _materialUiLibHocSelectableEnhance = require('material-ui/lib/hoc/selectable-enhance');
 
+var mui = require('material-ui');
+var Colors = mui.Styles.Colors;
+
 var SelectableList = (0, _materialUiLibHocSelectableEnhance.SelectableContainerEnhance)(_materialUiLibListsList2['default']);
 
 function wrapState(ComposedComponent) {
@@ -50124,7 +50127,9 @@ function wrapState(ComposedComponent) {
     displayName: 'StateWrapper',
 
     getInitialState: function getInitialState() {
-      return { selectedIndex: window.location.pathname };
+      return {
+        selectedIndex: window.location.pathname
+      };
     },
     goToPage: function goToPage(url) {
       console.log(url);
@@ -50150,21 +50155,25 @@ var SelectableMenuList = function SelectableMenuList() {
   return _react2['default'].createElement(
     SelectableList,
     {
-      value: window.location.pathname },
+      value: window.location.pathname,
+      style: { backgroundColor: Colors.transparent } },
     _react2['default'].createElement(_materialUiLibListsListItem2['default'], {
       value: '/notes',
-      primaryText: 'Notes' }),
+      primaryText: 'Notes',
+      style: { color: Colors.white } }),
     _react2['default'].createElement(_materialUiLibListsListItem2['default'], { value: '/cards',
-      primaryText: 'Cards' }),
+      primaryText: 'Cards',
+      style: { color: Colors.white } }),
     _react2['default'].createElement(_materialUiLibListsListItem2['default'], { value: '/courses',
-      primaryText: 'Courses' })
+      primaryText: 'Courses',
+      style: { color: Colors.white } })
   );
 };
 
 exports['default'] = SelectableMenuList;
 module.exports = exports['default'];
 
-},{"material-ui/lib/avatar":15,"material-ui/lib/hoc/selectable-enhance":51,"material-ui/lib/lists/list":59,"material-ui/lib/lists/list-item":58,"react":370}],372:[function(require,module,exports){
+},{"material-ui":53,"material-ui/lib/avatar":15,"material-ui/lib/hoc/selectable-enhance":51,"material-ui/lib/lists/list":59,"material-ui/lib/lists/list-item":58,"react":370}],372:[function(require,module,exports){
 // To include this file in your project:
 
 'use strict';
@@ -50188,76 +50197,61 @@ var Spacing = mui.Styles.Spacing;
 var Custom1 = {
   spacing: Spacing,
   contentFontFamily: 'Roboto, sans-serif',
-  getPalette: function getPalette() {
-    return {
-      textColor: Colors.fullWhite,
-      canvasColor: '#303030',
-      borderColor: ColorManipulator.fade(Colors.fullWhite, 0.3), //Colors.grey300
-      disabledColor: ColorManipulator.fade(Colors.fullWhite, 0.3),
-      primary1Color: Colors.teal500,
-      primary2Color: Colors.teal900,
-      primary3Color: Colors.tealA700,
-      accent1Color: CustomColors.highlightYellow,
-      accent2Color: CustomColors.highlightYellow,
-      accent3Color: CustomColors.highlightYellow
-    };
+  palette: {
+    textColor: Colors.fullWhite,
+    canvasColor: '#303030',
+    borderColor: ColorManipulator.fade(Colors.fullWhite, 0.3), //Colors.grey300
+    disabledColor: ColorManipulator.fade(Colors.fullWhite, 0.3),
+    primary1Color: Colors.tealA700,
+    primary2Color: Colors.teal900,
+    primary3Color: Colors.tealA700,
+    secondary1Color: Colors.cyanA700,
+    secondary2Color: Colors.cyan900,
+    secondary3Color: Colors.cyanA700,
+    accent1Color: Colors.amber900,
+    accent2Color: Colors.amber900,
+    accent3Color: Colors.amber900,
+    alternateTextColor: Colors.white,
+    canvasColor: Colors.white,
+    borderColor: Colors.grey300
   },
-  getComponentThemes: function getComponentThemes(palette) {
-    var cardColor = Colors.grey900;
-    var spacing = spacing || Spacing;
-    return {
-      appBar: {
-        color: palette.primary1Color,
-        textColor: Colors.darkWhite,
-        height: spacing.desktopKeylineIncrement,
-        backgroundColor: Colors.transparent,
-        containerBackgroundColor: cardColor
-      },
-      avatar: {
-        borderColor: 'rgba(0, 0, 0, 0.5)'
-      },
-      floatingActionButton: {
-        disabledColor: ColorManipulator.fade(palette.textColor, 0.12)
-      },
-      leftNav: {
-        color: cardColor
-      },
-      menu: {
-        backgroundColor: cardColor,
-        containerBackgroundColor: cardColor
-      },
-      menuItem: {
-        hoverColor: 'rgba(255, 255, 255, .03)'
-      },
-      menuSubheader: {
-        borderColor: 'rgba(255, 255, 255, 0.3)'
-      },
-      paper: {
-        backgroundColor: 'rgba(240, 217, 187, 0.9)'
-      },
-      raisedButton: {
-        color: Colors.grey500
-      },
-      toggle: {
-        thumbOnColor: Colors.cyan400,
-        thumbOffColor: Colors.grey400,
-        thumbDisabledColor: Colors.grey800,
-        thumbRequiredColor: Colors.cyan400,
-        trackOnColor: ColorManipulator.fade(Colors.cyan400, 0.6),
-        trackOffColor: 'rgba(255, 255, 255, 0.3)',
-        trackDisabledColor: 'rgba(255, 255, 255, 0.1)'
-      },
-      refreshIndicator: {
-        strokeColor: Colors.grey700,
-        loadingStrokeColor: Colors.teal300
-      },
-      slider: {
-        trackColor: Colors.minBlack,
-        handleColorZero: cardColor,
-        handleFillColor: cardColor,
-        selectionColor: Colors.cyan400
-      }
-    };
+  appBar: {
+    color: Colors.teal500,
+    textColor: Colors.darkWhite,
+    height: Spacing.desktopKeylineIncrement,
+    backgroundColor: Colors.transparent
+  },
+  avatar: {
+    borderColor: 'rgba(0, 0, 0, 0.5)'
+  },
+  floatingActionButton: {
+    disabledColor: ColorManipulator.fade(Colors.fullWhite, 0.12)
+  },
+  leftNav: {
+    color: Colors.white
+  },
+  paper: {
+    backgroundColor: 'rgba(240, 217, 187, 0.9)'
+  },
+  raisedButton: {
+    color: Colors.grey500
+  },
+  toggle: {
+    thumbOnColor: Colors.cyan400,
+    thumbOffColor: Colors.grey400,
+    thumbDisabledColor: Colors.grey800,
+    thumbRequiredColor: Colors.cyan400,
+    trackOnColor: ColorManipulator.fade(Colors.cyan400, 0.6),
+    trackOffColor: 'rgba(255, 255, 255, 0.3)',
+    trackDisabledColor: 'rgba(255, 255, 255, 0.1)'
+  },
+  refreshIndicator: {
+    strokeColor: Colors.grey700,
+    loadingStrokeColor: Colors.teal300
+  },
+  slider: {
+    trackColor: Colors.minBlack,
+    selectionColor: Colors.cyan400
   }
 };
 
@@ -50327,7 +50321,7 @@ var TopLeftNav = React.createClass({
           ref: 'leftNav',
           docked: false,
           zDepth: 4,
-          style: { backgroundColor: Colors.tealA700, color: Colors.darkWhite }
+          style: { backgroundColor: Colors.teal700, color: Colors.darkWhite }
         },
         React.createElement(SelectableMenuList, null)
       ),

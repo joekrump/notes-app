@@ -25,9 +25,9 @@ var SearchField = React.createClass({
             ref="searchInput"
             floatingLabelText="Search"
             floatingLabelStyle={{top: "10px", marginBottom: "0px", color: Colors.white}}
-            inputStyle={{paddingTop: "0px"}}
+            inputStyle={{paddingTop: "0px", marginTop:'0px'}}
             style={{height: "44px", marginRight: '10px'}}
-            underlineFocusStyle={{borderColor: Colors.tealA700}} 
+            underlineFocusStyle={{borderColor: Colors.lightBlueA700}} 
             underlineStyle={{borderColor: Colors.white}} 
             onChange={this.doSearch} />
         </div>
