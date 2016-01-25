@@ -137,14 +137,12 @@ let CardPage = React.createClass({
     }
     // update the current deck
     if(index != -1){
-      console.log(index);
       if(this.state.currentCardType !== 'all'){
         var newCards;
         if(index < (cardsCopy[this.state.currentCardType].data.length - 1)){
-          var tempArray = currentDeck.data.slice(0,index);
-          newCards = tempArray.concat(currentDeck.data.slice(index+1)); 
+          var lastCard = currentDeck.data.pop();
+          newCards = currentDeck.data[index] = lastCard; 
         } else {
-          console.log('was last card');
           newCards = currentDeck.data.slice(0,index);
         }
         cardsCopy[this.state.currentCardType].data = newCards;
@@ -158,14 +156,11 @@ let CardPage = React.createClass({
     deckNames.map(function (name, index) {
       if(name !== 'all'){
         cardsCopy[name].data.push(cardCopy);
-      } else {
-        
-        if(allCardsIndex != -1){
+      } else if(allCardsIndex != -1){
           cardsCopy['all'].data[allCardsIndex] = cardCopy;
-        } else {
-          console.warn("Couldn't find the card :(");
-        } 
-      }
+      } else {
+        console.warn("Couldn't find the card :(");
+      } 
       return 0;
     });
     // set updated total counts
