@@ -28,7 +28,7 @@ class NotesController extends Controller
      */
     public function create()
     {
-        $courses = \App\Course::all();
+        $courses = \App\Course::orderBy('name', 'ASC')->get();
 
         return view('notes.show', compact(['courses']));    
     }

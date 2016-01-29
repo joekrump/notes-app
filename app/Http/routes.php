@@ -16,6 +16,10 @@ Route::get('/', function () {
    return view('welcome');
 });
 
+Route::post('/uploader', 'FilesController@uploadFile');
+Route::get('/uploader', 'FilesController@getUploader');
+Route::get('/browse', 'FilesController@getFiles');
+
 // Card view created using react
 Route::get('/cards', function(){
   return view('cards/react-view');

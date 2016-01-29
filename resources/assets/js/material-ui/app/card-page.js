@@ -139,13 +139,15 @@ let CardPage = React.createClass({
     if(index != -1){
       if(this.state.currentCardType !== 'all'){
         var newCards;
-        if(index < (cardsCopy[this.state.currentCardType].data.length - 1)){
+        if(index < (currentDeck.data.length - 1)){
           var lastCard = currentDeck.data.pop();
-          newCards = currentDeck.data[index] = lastCard; 
+          currentDeck.data[index] = lastCard;
+          newCards = currentDeck.data;
         } else {
           newCards = currentDeck.data.slice(0,index);
         }
         cardsCopy[this.state.currentCardType].data = newCards;
+        cardsCopy[this.state.currentCardType].total--;
       } else {
         cardsCopy['all'].data.push(cardCopy);
       }
@@ -156,6 +158,7 @@ let CardPage = React.createClass({
     deckNames.map(function (name, index) {
       if(name !== 'all'){
         cardsCopy[name].data.push(cardCopy);
+        cardsCopy[name].total++;
       } else if(allCardsIndex != -1){
           cardsCopy['all'].data[allCardsIndex] = cardCopy;
       } else {

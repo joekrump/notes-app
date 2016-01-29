@@ -325,6 +325,7 @@ a.btn-success, button.btn-success {
 
 .form-control.title-field {
   margin-top: 25px;
+  padding: 5px 5px 0px 5px;
   height: 32pt; }
 
 .cke_chrome {
@@ -340,7 +341,7 @@ a.btn-success, button.btn-success {
 .cke_top {
   color: #363636; }
 
-.cke_toolgroup, input[type="text"] {
+.cke_toolgroup, input[type="text"], select {
   margin: 0 6px 3px 0;
   padding: 5px; }
 
