@@ -25,3 +25,50 @@
   }
 }
 
+.cke_colorblock, .cke_colorblock a {
+  color: $white;
+}
+.cke_reset_all .cke_dialog_ui_button {
+  .cke_dialog_ui_button {
+    border: 10px;
+    background: none;
+    color: $black;
+    background-color: $blueGrey100;
+    box-sizing: border-box;
+    display: inline-block;
+    font: inherit;
+    text-transform: uppercase;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+    border-radius: 2px;
+    line-height: 36px;
+    font-family: Roboto, sans-serif;
+    tap-highlight-color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+    padding: 0 16px;
+    overflow: hidden;
+    border-radius: 2px;
+    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    transform: translate3d(0, 0, 0);
+
+  }
+  &.cke_dialog_ui_button_ok {
+    .cke_dialog_ui_button {
+      color: $white;
+      background-color: $lightBlueA400;
+    }
+  }
+  &.cke_dialog_ui_button_cancel {
+    .cke_dialog_ui_button {
+      color: $black;
+      background-color: $blueGrey100;
+    }
+  }
+}
+
+a:hover.cke_colorauto, a:hover.cke_colormore, a:focus.cke_colorauto, a:focus.cke_colormore, a:active.cke_colorauto, a:active.cke_colormore {
+  background-color: rgba(100, 100, 100, 0.8);
+  border-color: rgba(0, 0, 0, 0);
+}
+

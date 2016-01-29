@@ -16,8 +16,7 @@ CKEDITOR.editorConfig = function( config ) {
 	config.toolbarGroups = [
 	    { name: 'document',	   groups: [ 'mode', 'document', 'doctools' ] },
 	    { name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
-	    { name: 'links' },
-	  	{ name: 'insert' },
+	  	{ name: 'insert',      groups: [ 'image']},
 	    { name: 'editing',     groups: [ 'find', 'selection'] },
 	    { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
 	    { name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'image' ] },
