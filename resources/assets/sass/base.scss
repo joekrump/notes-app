@@ -12,6 +12,15 @@ body {
   background-color: $backgroundColor;
 }
 
+::selection {
+  color: white;
+  background: $tealA700; /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  color: white;
+  background: $tealA700; /* Gecko Browsers */
+}
+
 #react-nav {
   position: fixed;
   z-index: 455;

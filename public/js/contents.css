@@ -28,10 +28,12 @@ body
 }
 
 ::selection {
-  background: #819AA8; /* WebKit/Blink Browsers */
+	color: white;
+  background: #00bfa5; /* WebKit/Blink Browsers */
 }
 ::-moz-selection {
-  background: #819AA8; /* Gecko Browsers */
+	color: white;
+  background: #00bfa5; /* Gecko Browsers */
 }
 
 blockquote

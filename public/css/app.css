@@ -11,6 +11,21 @@ body {
   color: #CFD198;
   background-color: #000000; }
 
+::-moz-selection {
+  color: white;
+  background: #00bfa5;
+  /* WebKit/Blink Browsers */ }
+
+::selection {
+  color: white;
+  background: #00bfa5;
+  /* WebKit/Blink Browsers */ }
+
+::-moz-selection {
+  color: white;
+  background: #00bfa5;
+  /* Gecko Browsers */ }
+
 #react-nav {
   position: fixed;
   z-index: 455;
