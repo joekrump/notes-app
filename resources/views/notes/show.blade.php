@@ -63,6 +63,7 @@
 	<script type="text/javascript">
 
 		var courseName = '{{isset($note) ? $note_course->name : ''}}';
+
 		if(courseName === '') {
 			courseName = undefined;
 		}
@@ -170,8 +171,9 @@
 				}
 
 				fileName = response.courseName.replace(/\s+/, '_');
+
 				// Only update the background if the course has changed.
-				if(courseName !== fileName){
+				if(courseName !== response.courseName){
 					courseName = fileName;
 					$('.background').fadeOut(200, function(){
 						$('.background').css({'background-image': 'url("/images/' + fileName + '.jpg")'});
