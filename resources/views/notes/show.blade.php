@@ -156,9 +156,9 @@
 			taglessString = taglessString.replace(/&quot;/ig, "");
 			var wordCount = taglessString.trim().replace(spaceRegex, ' ').split(' ').length;
 			var fileName;
-			$('#word-count').text(wordCount);
-
 			var formData = $form.serializeArray();
+
+			$('#word-count').text(wordCount);
 			formData.push({name: 'content', value: data});
 
 			$('#action-box').removeClass('label-success').addClass('label-info').text('Saving...').fadeIn(100);
@@ -170,11 +170,10 @@
 					$form.attr('action', '/notes/' + noteId);
 				}
 
-				fileName = response.courseName.replace(/\s+/, '_');
-
 				// Only update the background if the course has changed.
 				if(courseName !== response.courseName){
-					courseName = fileName;
+					courseName = response.courseName;
+					fileName = response.courseName.replace(/\s+/, '_');
 					$('.background').fadeOut(200, function(){
 						$('.background').css({'background-image': 'url("/images/' + fileName + '.jpg")'});
 					}).fadeIn(500);
