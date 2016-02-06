@@ -87,7 +87,7 @@ h3 {
   background-size: cover; }
 
 .background-dimmer {
-  background-color: rgba(0, 0, 0, 0.3); }
+  background-color: rgba(0, 0, 0, 0.8); }
 
 .background, .background-dimmer {
   display: block;
