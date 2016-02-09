@@ -120,7 +120,7 @@ h3 {
     border-left: 1px solid #aeea00; }
     .list-striped li:hover .index-actions {
       opacity: 1.0;
-      transition: border 300ms; }
+      transition: border 400ms; }
 
 .title {
   font-size: 96px;

@@ -6,7 +6,16 @@ var TopLeftNav = require('./material-ui/app/top-left-nav');
 var ReactDOM = require('react-dom');
 
 (function () {
-  ReactDOM.render(React.createElement(TopLeftNav, null), document.querySelector('#react-nav'));
+	var navRight = React.createElement(
+		'div',
+		{ key: 'top-right-nav' },
+		React.createElement(
+			'a',
+			{ href: '/notes/new', key: 'new-card-button-top', className: 'btn btn-success pull-right' },
+			'New Note'
+		)
+	);
+	ReactDOM.render(React.createElement(TopLeftNav, { navRight: navRight }), document.querySelector('#react-nav'));
 })();
 
 },{"./material-ui/app/top-left-nav":374,"react":370,"react-dom":204}],2:[function(require,module,exports){

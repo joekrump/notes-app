@@ -8,7 +8,6 @@
 	<div id="notes" class="row" data-filter-status={{ $status }}>
 		<div class="col-sm-12">
 			<header class="page-header">
-				<a href='/notes/new' class="btn btn-success pull-right">New Note</a>
 				<h1>Notes</h1>
 			</header>
 			
