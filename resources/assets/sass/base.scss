@@ -95,7 +95,7 @@ h3 {
   background-size: cover;
 }
 .background-dimmer {
-  background-color: rgba(0,0,0,0.8);
+  background-color: rgba(0,0,0,0.45);
 }
 .background, .background-dimmer {
   display: block;
@@ -123,9 +123,16 @@ h3 {
     border-left: 1px solid $lime900;
     padding-top: 8px;
     padding-bottom: 8px;
+    .index-actions {
+      opacity: 0;
+    }
     &:hover {
       background-color: rgba(0,0,0,0.7);
       border-left: 1px solid $limeA700;
+      .index-actions {
+        opacity: 1.0;
+        transition: border 400ms;
+      }
     }
   }
 }

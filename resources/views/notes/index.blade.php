@@ -43,15 +43,15 @@
 					      				<span class="text">{{ $note->title }}</span>
 					      			</div>
 					      			<div class="label label-inverse label-default">{{ $note->created_at->toFormattedDateString() }}</div>
-					      			<div class="pull-right">
+					      			<div class="pull-right index-actions">
 					      				@if($note->status != 0)
 					      					<button type="button" class="btn btn-xs btn-success" data-id="{{$note->id}}" data-action-status=1>set active</button>
 					      				@endif
 					      				@if($note->status != 1)
-					      					<button type="button" class="btn btn-xs btn-primary" data-id="{{$note->id}}" data-action-status=1>archive</button>
+					      					<button type="button" class="btn btn-xs btn-primary" data-id="{{$note->id}}" data-action-status=1>A</button>
 					      				@endif
 					      				@if($note->status != 2)
-					      					<button type="button" class="btn btn-xs btn-secondary" data-id="{{$note->id}}" data-action-status=1>backup</button>
+					      					<button type="button" class="btn btn-xs btn-secondary" data-id="{{$note->id}}" data-action-status=1>B</button>
 					      				@endif
 					      				
 					      				<button type="button" class="btn btn-xs btn-danger btn-delete" data-id="{{$note->id}}">&times;</button>

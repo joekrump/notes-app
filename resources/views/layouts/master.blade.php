@@ -9,17 +9,14 @@
         @if(isset($note))
             <style>
                 .background {
-            @if(strpos($note->title, 'Enlightenment'))
-                background-image: url("/images/enlightenment.jpg");
-            @elseif(isset($note_course))
-                background-image: url("/images/{{preg_replace('/\s+/', '_', $note_course->name)}}.jpg");
+            @if(isset($note['courseName']))
+                background-image: url("/images/{{preg_replace('/\s+/', '_', $note['courseName'])}}.jpg");
             @endif
-            
-                    background-repeat: no-repeat;
-                    background-attachment: fixed;
-                    background-position: left top;
-                    background-size: cover;
-                }
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-position: left top;
+                background-size: cover;
+            }
             </style>
         @else
             <style>

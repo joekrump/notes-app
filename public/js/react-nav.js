@@ -50329,7 +50329,7 @@ var TopLeftNav = React.createClass({
         'header',
         null,
         React.createElement(AppBar, {
-          title: 'Seminarium Adstator',
+          title: 'Adiūtor',
           iconClassNameRight: 'muidocs-icon-navigation-expand-more',
           onLeftIconButtonTouchTap: this.toggleNav,
           isInitiallyOpen: false,

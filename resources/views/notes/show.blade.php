@@ -25,7 +25,7 @@
 						<div class="form-group">
 						<select name="course_id" class="form-control title-field transparent">
 						@foreach($courses as $course)
-							<option value={{$course->id}} {{ isset($note_course) && ($note_course->id == $course->id) ? 'selected' : '' }}>{{$course->name}}</option>
+							<option value={{$course->id}} {{ isset($note->course) && ($note->course->id == $course->id) ? 'selected' : '' }}>{{$course->name}}</option>
 						@endforeach
 						</select>
 						</div>
@@ -62,7 +62,7 @@
 
 	<script type="text/javascript">
 
-		var courseName = '{{isset($note) ? $note_course->name : ''}}';
+		var courseName = '{{isset($note) ? $note['courseName'] : ''}}';
 
 		if(courseName === '') {
 			courseName = undefined;

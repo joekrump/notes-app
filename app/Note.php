@@ -25,6 +25,18 @@ class Note extends Model
     return $this->belongsTo('\App\Course');
   }
 
+  public function set_subject_name() {
+    if(strpos($this->title, 'WWI') !== false){
+        $this['courseName'] = 'WWI';
+    } else if(strpos($this->title, 'WWII') !== false) {
+        $this['courseName'] = 'WWII';
+    } else if(strpos($this->title, 'Enlightenment') !== false) {
+        $this['courseName'] = 'enlightenment';
+    } else {
+        $this['courseName'] = $this->course->name;
+    }
+  }
+
   public function status_text(){
     $status_text = 'unknown';
     switch($this->status){

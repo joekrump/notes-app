@@ -87,7 +87,7 @@ h3 {
   background-size: cover; }
 
 .background-dimmer {
-  background-color: rgba(0, 0, 0, 0.8); }
+  background-color: rgba(0, 0, 0, 0.45); }
 
 .background, .background-dimmer {
   display: block;
@@ -113,9 +113,14 @@ h3 {
   border-left: 1px solid #827717;
   padding-top: 8px;
   padding-bottom: 8px; }
+  .list-striped li .index-actions {
+    opacity: 0; }
   .list-striped li:hover {
     background-color: rgba(0, 0, 0, 0.7);
     border-left: 1px solid #aeea00; }
+    .list-striped li:hover .index-actions {
+      opacity: 1.0;
+      transition: border 300ms; }
 
 .title {
   font-size: 96px;
@@ -231,15 +236,6 @@ a.inverse-link {
   list-style: none;
   border-bottom: 0; }
 
-.btn-danger {
-  color: #ff1744;
-  border: 1px solid #ff1744;
-  background: transparent; }
-  .btn-danger:hover, .btn-danger:focus {
-    color: #d50000;
-    border-color: #d50000;
-    background: transparent; }
-
 .form-control.transparent {
   color: #ffffff;
   font-size: 22pt;
@@ -260,6 +256,7 @@ input[type="text"]:focused {
   border-bottom: 1px solid #ffffff; }
 
 a.btn, button.btn {
+  color: #ffffff;
   border: 10px;
   background: none;
   box-sizing: border-box;
@@ -280,23 +277,25 @@ a.btn, button.btn {
   transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0); }
+  a.btn.btn-secondary, button.btn.btn-secondary {
+    background-color: #bdbdbd; }
+  a.btn.btn-primary, button.btn.btn-primary {
+    background-color: #00b0ff; }
+  a.btn.btn-default, button.btn.btn-default {
+    color: #000000;
+    background-color: #cfd8dc; }
+  a.btn.btn-danger, button.btn.btn-danger {
+    color: #ffebee;
+    background-color: #d32f2f; }
+  a.btn.btn-success, button.btn.btn-success {
+    color: #ffffff;
+    background-color: #43a047; }
 
-a.btn-secondary, a.btn-primary, a.btn-success {
-  color: #ffffff; }
+.collapse ul {
+  margin-bottom: 2px; }
 
-a.btn-primary, button.btn-primary {
-  background-color: #00b0ff; }
-
-a.btn-secondary, button.btn-secondary {
-  background-color: #bdbdbd; }
-
-a.btn-default, .btn-default {
-  color: #000000;
-  background-color: #cfd8dc; }
-
-a.btn-success, button.btn-success {
-  color: #ffffff;
-  background-color: #43a047; }
+.accordion-body {
+  padding-left: 7px; }
 
 .pagination > li > a, .pagination > li > span {
   position: relative;

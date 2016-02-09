@@ -64,7 +64,7 @@ let TopLeftNav = React.createClass({
         </LeftNav>
         <header>
           <AppBar
-            title="Seminarium Adstator"
+            title="Adiūtor"
             iconClassNameRight="muidocs-icon-navigation-expand-more"
             onLeftIconButtonTouchTap={this.toggleNav}
             isInitiallyOpen={false}

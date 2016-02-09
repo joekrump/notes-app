@@ -44,8 +44,9 @@ class NotesController extends Controller
         $note = new \App\Note($request->input());
         $note->slug = str_slug($request->title);
         $note->save();
-        $note_course = \App\Course::find($note->course_id);
-        $note['courseName'] = $note_course->name;
+        
+        $note->set_subject_name();
+
         return $note;
     }
 
@@ -90,22 +91,11 @@ class NotesController extends Controller
         }
         
         if($note){
-            $note_course = \App\Course::find($note->course_id);
+            $note->set_subject_name();
         }
 
-        return view('notes.show', compact(['note', 'courses', 'note_course']));
+        return view('notes.show', compact(['note', 'courses']));
     }
-
-    // *
-    //  * Show the form for editing the specified resource.
-    //  *
-    //  * @param  int  $id
-    //  * @return Response
-     
-    // public function edit($id)
-    // {
-    //     return view('notes.edit');
-    // }
 
     /**
      * Update the specified resource in storage.
@@ -121,8 +111,17 @@ class NotesController extends Controller
         $note->update($request->input());
         $note->slug = str_slug($request->title);
         $note->save();
-        $note_course = \App\Course::find($note->course_id);
-        $note['courseName'] = $note_course->name;
+
+        if(strpos($request->title, 'WWI') !== false){
+            $note['courseName'] = 'WWI';
+        } else if(strpos($request->title, 'WWII') !== false) {
+            $note['courseName'] = 'WWII';
+        } else if(strpos($request->title, 'Enlightenment') !== false) {
+            $note['courseName'] = 'enlightenment';
+        } else {
+            $note['courseName'] = $note->course->name;
+        }
+
         return $note;
     }
 
