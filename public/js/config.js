@@ -6,6 +6,7 @@
 CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here. For example:
 	// config.language = 'fr';
+	config.skin = 'moono-dark';
 	config.uiColor = '#000000';
 	config.disableNativeSpellChecker = false;
 	config.removePlugins = 'liststyle,tabletools,scayt,contextmenu,resize,save,magicline';
@@ -19,15 +20,17 @@ CKEDITOR.editorConfig = function( config ) {
 	  	{ name: 'insert',      groups: [ 'image']},
 	    { name: 'editing',     groups: [ 'find', 'selection'] },
 	    { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
-	    { name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'image' ] },
+	    
 	    // { name: 'forms' },
 	    // '/',
 	    // { name: 'links' },
 	    // { name: 'insert' },
-	    '/',
+	    // '/',
+	    { name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'image' ] },
 	    { name: 'styles' },
 	    { name: 'colors' },
 	    { name: 'tools' },
 	    { name: 'others' }
 	];
+
 };

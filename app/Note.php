@@ -20,20 +20,32 @@ class Note extends Model
    */
   protected $fillable = ['title', 'content', 'course_id', 'slug', 'status', 'original_note_id'];
 
+  // list of subject names to search for in the title 
+  // in priority order of presidence.
+  protected static $subject_names = [
+    'wwi',
+    'wwii',
+    'enlightenment',
+    'sheen',
+    'saints'
+  ];
+
   public function course()
   {
     return $this->belongsTo('\App\Course');
   }
 
   public function set_subject_name() {
-    if(strpos($this->title, 'WWI') !== false){
-        $this['courseName'] = 'WWI';
-    } else if(strpos($this->title, 'WWII') !== false) {
-        $this['courseName'] = 'WWII';
-    } else if(strpos($this->title, 'Enlightenment') !== false) {
-        $this['courseName'] = 'enlightenment';
-    } else {
-        $this['courseName'] = $this->course->name;
+    $title = strtolower($this->title);
+    $this['courseName'] = null;
+
+    $this['courseName'] = strtolower($this->course->name);
+
+    foreach(Note::$subject_names as $subject_name){
+      if(strpos($title, $subject_name) !== false){
+        $this['courseName'] = $subject_name;
+        break;
+      }
     }
   }
 

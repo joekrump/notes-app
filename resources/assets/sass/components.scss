@@ -1,7 +1,8 @@
 #action-box {
   position: fixed;
-  top: 15px;
+  bottom: 15px;
   right: 15px;
+  z-index: 9999;
 }
 
 .left-options {
@@ -19,4 +20,11 @@
 	background-color: $lightBlack;
 	color: $blueGrey200;
 	border-radius: 5px;
+}
+.left-nav {
+	.logout {
+		position: absolute;
+		bottom: 0px;
+		left: 0px;
+	}
 }

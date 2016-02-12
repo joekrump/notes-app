@@ -13,8 +13,6 @@ body
 	color: #e6e6e6;
 
 	/* Remove the background color to make it transparent */
-
-	background-color: #fff;
 	/*background-color: none !important;*/
 	margin: 20px 0px;
 }

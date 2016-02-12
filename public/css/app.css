@@ -163,8 +163,9 @@ h3 {
 
 #action-box {
   position: fixed;
-  top: 15px;
-  right: 15px; }
+  bottom: 15px;
+  right: 15px;
+  z-index: 9999; }
 
 .left-options {
   position: fixed;
@@ -181,6 +182,11 @@ h3 {
   background-color: rgba(0, 0, 0, 0.54);
   color: #b0bec5;
   border-radius: 5px; }
+
+.left-nav .logout {
+  position: absolute;
+  bottom: 0px;
+  left: 0px; }
 
 .form-control {
   background-color: transparent !important;
@@ -349,7 +355,7 @@ a.btn, button.btn {
   background: transparent !important; }
 
 .cke_contents {
-  background-color: none !important;
+  background: none !important;
   height: 450px !important; }
 
 .cke_top {
@@ -360,7 +366,19 @@ a.btn, button.btn {
   padding: 5px; }
 
 .cke_maximized.cke_inner {
-  background-color: rgba(0, 0, 0, 0.8); }
+  background-color: rgba(0, 0, 0, 0.8) !important; }
+
+.cke_toolgroup, .cke_combo_button {
+  border-radius: 0px !important;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+  background: rgba(0, 121, 107, 0.8) !important; }
+
+a.cke_button:hover, .cke_combo_button:hover {
+  background: #00796b !important; }
+
+a.cke_button.cke_button_on, .cke_combo_button.cke_button_on {
+  background: rgba(0, 121, 107, 0.6) !important; }
 
 .cke_colorblock, .cke_colorblock a {
   color: #ffffff; }

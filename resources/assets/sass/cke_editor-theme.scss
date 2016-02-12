@@ -7,7 +7,7 @@
   background: rgba(0,0,0,0.0) !important;
 }
 .cke_contents {
-  background-color: none !important;
+  background: none !important;
   height: 450px !important;
 }
 
@@ -21,9 +21,27 @@
 
 .cke_maximized {
   &.cke_inner {
-    background-color: rgba(0,0,0,0.8);
+    background-color: rgba(0,0,0,0.8) !important;
   }
 }
+
+.cke_toolgroup, .cke_combo_button {
+  border-radius: 0px !important;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+  background: rgba(0, 121, 107, 0.8) !important;
+}
+a.cke_button, .cke_combo_button {
+  &:hover {
+    background: rgba(0, 121, 107, 1.0) !important;
+  }
+  &.cke_button_on {
+    background: rgba(0, 121, 107, 0.6) !important;
+  }
+}
+// .cke_button_icon {
+//   opacity: 1.0 !important;
+// }
 
 .cke_colorblock, .cke_colorblock a {
   color: $white;

@@ -68,20 +68,41 @@
 			courseName = undefined;
 		}
 
-		$(document).ready(function(e, element){
-			// Load 
-			var initVal = $('#init-content').val();
-			var isCtrl = false;
+		function updateWordCount(contents){
+			var initVal = contents === undefined ? $('#init-content').val() : contents;
 			var spaceRegex = /\s+/gi;
-			var stripNBSPS = initVal.replace(/&nbsp;/gi, " ");
-			var taglessString = stripNBSPS.replace(/(<([^>]+)>)/ig, "");
-			taglessString = stripNBSPS.replace(/&quot;/ig, "");
+			var noNBSPcontent = initVal.replace(/&nbsp;/gi, " ");
+			var taglessString = noNBSPcontent.replace(/(<([^>]+)>)/ig, "");
+			taglessString = noNBSPcontent.replace(/&quot;/ig, "");
 			var wordCount = taglessString.trim().replace(spaceRegex, ' ').split(' ').length;
-			$('.ckeditor').val(stripNBSPS);
-			$('#word-count').text(wordCount);
+			
+			return {
+				wordCount: wordCount,
+				noNBSPcontent: noNBSPcontent // content with &nbsp; instances striped.
+			};
+		}
+
+		$(document).ready(function(e, element){
+			var isCtrl = false;
+			var wordCountData = updateWordCount();
+
+			$('.ckeditor').val(wordCountData.noNBSPcontent);
+
+			$('#word-count').text(wordCountData.wordCount);
 
 			// Add event listener for ctrl+s in editor to do an AJAX save.
 			var editor = CKEDITOR.instances.editor1;
+			// editor.addCommand("mySimpleCommand", {
+			//     exec: function(edt) {
+			//         alert(edt.getData());
+			//     }
+			// });
+			// editor.ui.addButton('SuperButton', {
+			//     label: "Click me",
+			//     command: 'mySimpleCommand',
+			//     toolbar: 'insert',
+			//     icon: '/images/svg/test.svg'
+			// });
 			editor.on('loaded', function (ev) {
 			  var editor = ev.editor;
 			  // add custom commands
@@ -91,6 +112,11 @@
 			  editor.setKeystroke(CKEDITOR.CTRL + 50 /*2*/, 'heading-h2');
 			  editor.setKeystroke(CKEDITOR.CTRL + 51 /*3*/, 'heading-h3');
 			  editor.setKeystroke(CKEDITOR.CTRL + 52 /*4*/, 'heading-h4');
+			});
+
+			editor.on( 'change', function( evt ) {
+			    // getData() returns CKEditor's HTML content.
+			    $('#word-count').text(updateWordCount(editor.getData()).wordCount);
 			});
 
 			editor.addContentsCss( '/css/editor-print.css' );
@@ -151,15 +177,11 @@
 			var $form = $('#note-form');
 			var noteId = {{isset($note) ? $note->id : 'undefined'}};
 			var data = editor.getData().replace(/&nbsp;/ig, " ");
-			var spaceRegex = /\s+/gi;
-			var taglessString = data.replace(/(<([^>]+)>)/ig, "");
-			taglessString = taglessString.replace(/&quot;/ig, "");
-			var wordCount = taglessString.trim().replace(spaceRegex, ' ').split(' ').length;
 			var fileName;
 			var formData = $form.serializeArray();
 
-			$('#word-count').text(wordCount);
 			formData.push({name: 'content', value: data});
+
 
 			$('#action-box').removeClass('label-success').addClass('label-info').text('Saving...').fadeIn(100);
 			$.post($form.attr('action'), formData, function(response){
@@ -171,9 +193,9 @@
 				}
 
 				// Only update the background if the course has changed.
-				if(courseName !== response.courseName){
+				if(courseName !== response.courseName.toLowerCase()){
 					courseName = response.courseName;
-					fileName = response.courseName.replace(/\s+/, '_');
+					fileName = response.courseName.replace(/\s+/, '_').toLowerCase();
 					$('.background').fadeOut(200, function(){
 						$('.background').css({'background-image': 'url("/images/' + fileName + '.jpg")'});
 					}).fadeIn(500);
@@ -181,8 +203,13 @@
 
 				$('#action-box').removeClass('label-info').addClass('label-success').fadeOut(500);
 			}).error(function(response){
-				// console.log(response)
-				alert(response);
+				console.warn('Error');
+				console.warn(response);
+				// update the token
+				$.get('/new-token', function(newToken){
+					$form.find('input[name=_token]').val(newToken);
+					ajaxSave(editor);
+				});
 			});
 		}
 	</script>

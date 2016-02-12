@@ -17,6 +17,9 @@ class NotesController extends Controller
     public function index($status = 0)
     {
         $courses = \App\Course::orderBy('name', 'ASC')->get();
+        if($status !== 0 && $status == 'backup'){
+            $status = 2;
+        }
         $resource_type = 'note';
         return view('notes.index', compact(['courses', 'resource_type', 'status']));
     }

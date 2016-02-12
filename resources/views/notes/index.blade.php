@@ -8,6 +8,11 @@
 	<div id="notes" class="row" data-filter-status={{ $status }}>
 		<div class="col-sm-12">
 			<header class="page-header">
+				@if($status == 2)
+					<a href="/notes" class="btn btn-primary pull-right">Active</a>
+				@else
+					<a href="/notes/status/backup" class="btn btn-primary pull-right">Backups</a>
+				@endif
 				<h1>Notes</h1>
 			</header>
 			

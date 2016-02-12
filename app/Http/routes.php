@@ -51,6 +51,14 @@ Route::post('/notes',             'NotesController@store');
 Route::post('/notes/{note_id}',   'NotesController@update');
 Route::delete('/notes/{note_id}', 'NotesController@destroy');
 
+Route::get('/new-token', function(){
+  $session = app('session');
+
+  if (isset($session)) {
+      return $session->getToken();
+  }
+});
+
 // Courses 
 // 
 Route::get('/courses', 							'CoursesController@index');

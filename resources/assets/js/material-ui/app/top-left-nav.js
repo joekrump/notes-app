@@ -10,6 +10,9 @@ let Colors = mui.Styles.Colors;
 let CustomColors = require('./styles/colors');
 let CustomTheme = require('./styles/themes/custom1');
 let SelectableMenuList = require('./selectable-menu-list');
+import List from 'material-ui/lib/lists/list';
+import ListItem from 'material-ui/lib/lists/list-item';
+let ExitIcon   = require('material-ui/lib/svg-icons/action/exit-to-app'); // svg icon
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
@@ -56,11 +59,19 @@ let TopLeftNav = React.createClass({
       <div id="top-nav">
         <LeftNav 
           ref="leftNav" 
+          className="left-nav"
           docked={false} 
           zDepth={4}
           style={{backgroundColor: Colors.teal700, color: Colors.darkWhite}}
           >
           <SelectableMenuList />
+          <List className="logout" style={{backgroundColor: Colors.teal700, width: '100%'}}>
+            <ListItem 
+              leftIcon={<ExitIcon color={Colors.darkWhite} />}
+              value={'/logout'}
+              primaryText="Logout"
+              style={{backgroundColor: Colors.teal700, color: Colors.darkWhite}} />
+          </List>
         </LeftNav>
         <header>
           <AppBar
