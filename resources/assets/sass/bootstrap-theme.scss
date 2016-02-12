@@ -1,12 +1,14 @@
+// colour picker field
+
 .form-control {
-  background-color: $transparent !important;
-  color: $white !important;
+  background-color: $transparent;
+  color: $white;
   border-radius: 0;
   border: none;
   border-bottom: 1px solid $white;
   &:focus {
     box-shadow: none !important;
-    transition: border 300ms;
+    transition: border 300ms, background-color 100ms;
   }
 }
 a.btn {
@@ -137,6 +139,12 @@ a.btn, button.btn {
 }
 .accordion-body {
   padding-left: 7px;
+}
+
+#colour {
+  &.form-control {
+    margin-top: 77px;
+  }
 }
 
 .pagination>li>a, .pagination>li>span {

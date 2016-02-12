@@ -1,9 +1,21 @@
 #note-page {
-  // background-image: url("/images/notes_background.jpg");
   .container {
   	margin-top: 80px;
-  	padding-bottom: 15px;
   }
+}
+#course-page { 
+	button[type=submit] {
+		margin-top: 15px;
+	}
+	&.container {
+  	margin-top: 80px;
+  	padding-bottom: 0;
+	}
+}
+#note-page {
+	.container {
+		padding-bottom: 15px;
+	}
 }
 #notes {
   .title {

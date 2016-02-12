@@ -10,7 +10,7 @@
 
 			@if($courses->count())
 				@foreach($courses as $course)
-					<div class="row list-header">
+					<div class="row list-header" {{is_null($course->colour) ?: 'style=border-color:'.$course->colour.'' }}>
 						<a href={{'courses/' . $course->id}}>
 							<div class="col-sm-12">
 								<div class="title">

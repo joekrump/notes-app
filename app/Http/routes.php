@@ -61,7 +61,7 @@ Route::get('/new-token', function(){
 
 // Courses 
 // 
-Route::get('/courses', 							'CoursesController@index');
+Route::get('/courses', 							['as' => 'courses_index', 'uses' => 'CoursesController@index']);
 Route::get('/courses/{course_id}', 	'CoursesController@show');
 Route::get('/courses/new', 					'CoursesController@create');
 Route::post('/courses', 						'CoursesController@store');

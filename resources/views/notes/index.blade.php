@@ -22,13 +22,13 @@
 
 					@if(($notes = $course->notes()->where('status', $status)) && ($note_count = $notes->count()))
 					<div class="accordion-group" id="{{ $course->name }}" data-note-count={{ $note_count }}>
-					  <div class="accordion-heading row list-header">
+					  <div class="accordion-heading row list-header" {{is_null($course->colour) ?: 'style=border-color:'.$course->colour.'' }}>
 					    <a class="accordion-toggle" data-toggle="collapse" data-parent="#course-list" href="#collapse{{$course->id}}">
 					      <div class="col-sm-12">
 						      	<div class="title">
 						      		<h4>{{ ucwords($course->name) }}</h4>
 						      	</div>
-						      	<div class="label label-inverse label-default">{{ $note_count }}</div>
+						      	<div class="label label-inverse label-default" {{is_null($course->colour) ?: 'style=border-color:'.$course->colour.'' }}>{{ $note_count }}</div>
 					      </div>
 					    </a>
 					  </div>

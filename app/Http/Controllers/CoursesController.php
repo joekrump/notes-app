@@ -42,7 +42,11 @@ class CoursesController extends Controller
     {
         $course = new \App\Course($request->request->all());
         $course->save();
-        return $course;
+        if($request->ajax()){
+            return $course;
+        }
+
+        return redirect()->route('courses_index');
     }
 
     /**
@@ -86,7 +90,12 @@ class CoursesController extends Controller
         if($course){
            $course->update($request->request->all()); 
         }
-        return $course;
+        
+        if($request->ajax()){
+            return $course;
+        }
+        
+        return redirect()->route('courses_index');
     }
 
     /**

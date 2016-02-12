@@ -127,7 +127,7 @@ h3 {
   font-weight: 100; }
 
 .index-page .list-header {
-  border-left: 1px solid #008B95;
+  border-left: 3px solid #008B95;
   margin-bottom: 2px;
   background-color: rgba(0, 0, 0, 0.7); }
   .index-page .list-header .title {
@@ -189,14 +189,14 @@ h3 {
   left: 0px; }
 
 .form-control {
-  background-color: transparent !important;
-  color: #ffffff !important;
+  background-color: transparent;
+  color: #ffffff;
   border-radius: 0;
   border: none;
   border-bottom: 1px solid #ffffff; }
   .form-control:focus {
     box-shadow: none !important;
-    transition: border 300ms; }
+    transition: border 300ms, background-color 100ms; }
 
 a.btn {
   text-decoration: none !important; }
@@ -303,6 +303,9 @@ a.btn, button.btn {
 .accordion-body {
   padding-left: 7px; }
 
+#colour.form-control {
+  margin-top: 77px; }
+
 .pagination > li > a, .pagination > li > span {
   position: relative;
   float: left;
@@ -368,17 +371,22 @@ a.btn, button.btn {
 .cke_maximized.cke_inner {
   background-color: rgba(0, 0, 0, 0.8) !important; }
 
+.cke_path_item {
+  text-shadow: none !important;
+  color: #787878 !important; }
+
 .cke_toolgroup, .cke_combo_button {
   border-radius: 0px !important;
   margin-right: 0 !important;
   margin-left: 0 !important;
-  background: rgba(0, 121, 107, 0.8) !important; }
+  background: rgba(18, 160, 140, 0) !important;
+  border: 1px solid #12a08c; }
 
 a.cke_button:hover, .cke_combo_button:hover {
-  background: #00796b !important; }
+  background: #12bea7 !important; }
 
 a.cke_button.cke_button_on, .cke_combo_button.cke_button_on {
-  background: rgba(0, 121, 107, 0.6) !important; }
+  background: rgba(18, 160, 140, 0.7) !important; }
 
 .cke_colorblock, .cke_colorblock a {
   color: #ffffff; }
@@ -420,7 +428,16 @@ a:hover.cke_colorauto, a:hover.cke_colormore, a:focus.cke_colorauto, a:focus.cke
   border-color: transparent; }
 
 #note-page .container {
+  margin-top: 80px; }
+
+#course-page button[type=submit] {
+  margin-top: 15px; }
+
+#course-page.container {
   margin-top: 80px;
+  padding-bottom: 0; }
+
+#note-page .container {
   padding-bottom: 15px; }
 
 #notes .title {
