@@ -1,10 +1,10 @@
-let React = require ('react');
-let mui = require('material-ui');
+let React           = require ('react');
+let mui             = require('material-ui');
 let injectTapEventPlugin = require('react-tap-event-plugin');
-let AppBar = mui.AppBar;
-let ThemeManager = mui.Styles.ThemeManager;
-let Colors = mui.Styles.Colors;
-let CustomTheme = require('./styles/themes/custom1');
+let AppBar          = mui.AppBar;
+let ThemeManager    = mui.Styles.ThemeManager;
+let Colors          = mui.Styles.Colors;
+let CustomTheme     = require('./styles/themes/custom1');
 let LeftNavUndocked = require('./left-nav');
 
 //Needed for onTouchTap

@@ -12,12 +12,8 @@ let FloatingActionButton = mui.FloatingActionButton;
 let MenuDivider = mui.MenuDivider;
 let IconMenu = mui.IconMenu;
 let IconButton = mui.IconButton;
-
 let ThemeManager = mui.Styles.ThemeManager;
 let Colors = mui.Styles.Colors;
-let CommentBox = require('./comment-box')
-let CustomColors = require('./styles/colors');
-let CustomTheme = require('./styles/themes/custom1');
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
@@ -110,7 +106,6 @@ let Main = React.createClass({
           <h1 className="title">
             Welcome!
           </h1>
-          <CommentBox url="/comments" pollInterval={5000}/>
       
           <IconMenu style={{position:'fixed',bottom:'100px',right:'145px'}} zDepth={0} iconButtonElement={iconButtonElement} openDirection={"top-center"}>
             <MenuItem index={1}>
