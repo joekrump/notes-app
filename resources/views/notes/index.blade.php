@@ -28,7 +28,7 @@
 						      	<div class="title">
 						      		<h4>{{ ucwords($course->name) }}</h4>
 						      	</div>
-						      	<div class="label label-inverse label-default" {{is_null($course->colour) ?: 'style=border-color:'.$course->colour.'' }}>{{ $note_count }}</div>
+						      	<div class="label label-inverse label-default" {{is_null($course->colour) ?: 'style=border-color:'.$course->colour }}>{{ $note_count }}</div>
 					      </div>
 					    </a>
 					  </div>

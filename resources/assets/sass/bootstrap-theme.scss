@@ -19,7 +19,7 @@ a.btn {
   padding: .2em .6em .2em;
   display: inline-block;
   vertical-align: middle;
-
+  border-radius: 0;
   &.label-default {
     background: rgba(0,0,0,0.4);
     border: 1px solid $lightBlue;
@@ -30,7 +30,7 @@ a.btn {
   }
   &.label-info {
     background-color: rgba(91, 192, 222, 0.4);
-    border: 1px solid rgba(91,192,222,1);
+    border: 1px solid rgba(91, 192, 222, 1);
   }
 }
 

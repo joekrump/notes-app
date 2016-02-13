@@ -14,7 +14,7 @@ let SearchField = require('./search');
 let CardActionMenu = require('./card-action-menu');
 let RadioButton = require('material-ui/lib/radio-button');
 let RadioButtonGroup = require('material-ui/lib/radio-button-group');
-let TopLeftNav = require('./top-left-nav');
+let TopNav = require('./top-nav');
 let RaisedButton = mui.RaisedButton;
 let SortBar = require('./sort-bar');
 // Needed for onTouchTap
@@ -452,7 +452,7 @@ let CardPage = React.createClass({
     );
 		return (
       <div>
-        <TopLeftNav navRight={navRight} />
+        <TopNav navRight={navRight} />
         <div className="background"></div>
   			<div id="card-page" className="container container-fluid">
   				<div className="row">

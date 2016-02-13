@@ -2,17 +2,10 @@ let React = require ('react');
 let mui = require('material-ui');
 let injectTapEventPlugin = require('react-tap-event-plugin');
 let AppBar = mui.AppBar;
-let LeftNav = mui.LeftNav;
-let Menu = mui.Menu;
-let MenuItem = mui.MenuItem;
-let ThemeManager =mui.Styles.ThemeManager;
+let ThemeManager = mui.Styles.ThemeManager;
 let Colors = mui.Styles.Colors;
-let CustomColors = require('./styles/colors');
 let CustomTheme = require('./styles/themes/custom1');
-let SelectableMenuList = require('./selectable-menu-list');
-import List from 'material-ui/lib/lists/list';
-import ListItem from 'material-ui/lib/lists/list-item';
-let ExitIcon   = require('material-ui/lib/svg-icons/action/exit-to-app'); // svg icon
+let LeftNavUndocked = require('./left-nav');
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
@@ -20,11 +13,12 @@ let ExitIcon   = require('material-ui/lib/svg-icons/action/exit-to-app'); // svg
 //https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin();
 
-let TopLeftNav = React.createClass({
+let TopNav = React.createClass({
   getInitialState: function() {
     return {
       novelValue: 'Rob Roy',
       currentPage: 'notes',
+      leftNavOpen: false,
       muiTheme: this.context.muiTheme
     };
   },
@@ -43,13 +37,10 @@ let TopLeftNav = React.createClass({
   componentWillMount() {
     // ThemeManager.setTheme(CustomTheme);
   },
-  toggleNav(e) {
+  toggleLeftNav(e) {
     e.preventDefault();
-    // Show/Hide the LeftMenu
-    this.refs.leftNav.toggle();
-  },
-  handleNovelDropdownChange() {
-
+    window.dispatchEvent(new CustomEvent("toggleLeftNav"));
+    this.setState({leftNavOpen: !this.state.leftNavOpen});
   },
   render() {
     let currentPath = window.location.pathname;
@@ -57,28 +48,12 @@ let TopLeftNav = React.createClass({
 
     return (
       <div id="top-nav">
-        <LeftNav 
-          ref="leftNav" 
-          className="left-nav"
-          docked={false} 
-          zDepth={4}
-          style={{backgroundColor: Colors.teal700, color: Colors.darkWhite}}
-          >
-          <SelectableMenuList />
-          <List className="logout" style={{backgroundColor: Colors.teal700, width: '100%'}}>
-            <ListItem 
-              leftIcon={<ExitIcon color={Colors.darkWhite} />}
-              value={'/logout'}
-              primaryText="Logout"
-              style={{backgroundColor: Colors.teal700, color: Colors.darkWhite}} />
-          </List>
-        </LeftNav>
+        <LeftNavUndocked/>
         <header>
           <AppBar
             title="Adiūtor"
             iconClassNameRight="muidocs-icon-navigation-expand-more"
-            onLeftIconButtonTouchTap={this.toggleNav}
-            isInitiallyOpen={false}
+            onLeftIconButtonTouchTap={this.toggleLeftNav}
             zDepth={4} 
             style={{backgroundColor: Colors.tealA700, color: Colors.darkWhite}} />
             <div id="nav-top-right">
@@ -90,4 +65,4 @@ let TopLeftNav = React.createClass({
   }
 });
 
-module.exports = TopLeftNav;
+module.exports = TopNav;

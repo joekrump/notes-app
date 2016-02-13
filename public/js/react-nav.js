@@ -2,7 +2,7 @@
 'use strict';
 
 var React = require('react');
-var TopLeftNav = require('./material-ui/app/top-left-nav');
+var TopNav = require('./material-ui/app/top-nav');
 var ReactDOM = require('react-dom');
 
 (function () {
@@ -15,10 +15,10 @@ var ReactDOM = require('react-dom');
 			'New Note'
 		)
 	);
-	ReactDOM.render(React.createElement(TopLeftNav, { navRight: navRight }), document.querySelector('#react-nav'));
+	ReactDOM.render(React.createElement(TopNav, { navRight: navRight }), document.querySelector('#react-nav'));
 })();
 
-},{"./material-ui/app/top-left-nav":378,"react":374,"react-dom":208}],2:[function(require,module,exports){
+},{"./material-ui/app/top-nav":379,"react":374,"react-dom":208}],2:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -50252,6 +50252,96 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = require('react');
+var mui = require('material-ui');
+var Colors = mui.Styles.Colors;
+var CustomTheme = require('./styles/themes/custom1');
+var LeftNav = require('material-ui/lib/left-nav');
+var SelectableMenuList = require('./selectable-menu-list');
+var List = require('material-ui/lib/lists/list');
+var ListItem = require('material-ui/lib/lists/list-item');
+var ExitIcon = require('material-ui/lib/svg-icons/action/exit-to-app'); // svg icon
+
+var LeftNavUndocked = (function (_React$Component) {
+  _inherits(LeftNavUndocked, _React$Component);
+
+  function LeftNavUndocked(props) {
+    var _this = this;
+
+    _classCallCheck(this, LeftNavUndocked);
+
+    _get(Object.getPrototypeOf(LeftNavUndocked.prototype), 'constructor', this).call(this, props);
+
+    this.componentDidMount = function () {
+      window.addEventListener("toggleLeftNav", _this.handleToggle, false);
+    };
+
+    this.handleToggle = function () {
+      return _this.setState({ open: !_this.state.open });
+    };
+
+    this.state = { open: false };
+  }
+
+  _createClass(LeftNavUndocked, [{
+    key: 'render',
+
+    // handleClose = () => {
+    //   this.setState({open: false});
+    // }
+
+    value: function render() {
+      var _this2 = this;
+
+      return React.createElement(
+        LeftNav,
+        {
+          docked: false,
+          width: 200,
+          ref: 'leftNav',
+          className: 'left-nav',
+          zDepth: 4,
+          open: this.state.open,
+          onRequestChange: function (open) {
+            return _this2.setState({ open: open });
+          },
+          style: { backgroundColor: Colors.teal700, color: Colors.darkWhite }
+        },
+        React.createElement(SelectableMenuList, null),
+        React.createElement(
+          List,
+          { className: 'logout', style: { backgroundColor: Colors.teal700, width: '100%' } },
+          React.createElement(ListItem, {
+            leftIcon: React.createElement(ExitIcon, { color: Colors.darkWhite }),
+            value: '/logout',
+            primaryText: 'Logout',
+            style: { backgroundColor: Colors.teal700, color: Colors.darkWhite } })
+        )
+      );
+    }
+  }]);
+
+  return LeftNavUndocked;
+})(React.Component);
+
+exports['default'] = LeftNavUndocked;
+module.exports = exports['default'];
+
+},{"./selectable-menu-list":376,"./styles/themes/custom1":378,"material-ui":53,"material-ui/lib/left-nav":55,"material-ui/lib/lists/list":59,"material-ui/lib/lists/list-item":58,"material-ui/lib/svg-icons/action/exit-to-app":109,"react":374}],376:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -50330,7 +50420,7 @@ var SelectableMenuList = function SelectableMenuList() {
 exports['default'] = SelectableMenuList;
 module.exports = exports['default'];
 
-},{"material-ui":53,"material-ui/lib/hoc/selectable-enhance":51,"material-ui/lib/lists/list":59,"material-ui/lib/lists/list-item":58,"material-ui/lib/svg-icons/action/assignment":108,"material-ui/lib/svg-icons/action/list":110,"material-ui/lib/svg-icons/image/grid-on":113,"react":374}],376:[function(require,module,exports){
+},{"material-ui":53,"material-ui/lib/hoc/selectable-enhance":51,"material-ui/lib/lists/list":59,"material-ui/lib/lists/list-item":58,"material-ui/lib/svg-icons/action/assignment":108,"material-ui/lib/svg-icons/action/list":110,"material-ui/lib/svg-icons/image/grid-on":113,"react":374}],377:[function(require,module,exports){
 // To include this file in your project:
 
 'use strict';
@@ -50342,7 +50432,7 @@ module.exports = {
   highlightYellow: '#CDCE18'
 };
 
-},{}],377:[function(require,module,exports){
+},{}],378:[function(require,module,exports){
 'use strict';
 
 var mui = require('material-ui');
@@ -50414,33 +50504,17 @@ var Custom1 = {
 
 module.exports = Custom1;
 
-},{"../colors":376,"material-ui":53}],378:[function(require,module,exports){
+},{"../colors":377,"material-ui":53}],379:[function(require,module,exports){
 'use strict';
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _materialUiLibListsList = require('material-ui/lib/lists/list');
-
-var _materialUiLibListsList2 = _interopRequireDefault(_materialUiLibListsList);
-
-var _materialUiLibListsListItem = require('material-ui/lib/lists/list-item');
-
-var _materialUiLibListsListItem2 = _interopRequireDefault(_materialUiLibListsListItem);
 
 var React = require('react');
 var mui = require('material-ui');
 var injectTapEventPlugin = require('react-tap-event-plugin');
 var AppBar = mui.AppBar;
-var LeftNav = mui.LeftNav;
-var Menu = mui.Menu;
-var MenuItem = mui.MenuItem;
 var ThemeManager = mui.Styles.ThemeManager;
 var Colors = mui.Styles.Colors;
-var CustomColors = require('./styles/colors');
 var CustomTheme = require('./styles/themes/custom1');
-var SelectableMenuList = require('./selectable-menu-list');
-
-var ExitIcon = require('material-ui/lib/svg-icons/action/exit-to-app'); // svg icon
+var LeftNavUndocked = require('./left-nav');
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
@@ -50448,13 +50522,14 @@ var ExitIcon = require('material-ui/lib/svg-icons/action/exit-to-app'); // svg i
 //https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin();
 
-var TopLeftNav = React.createClass({
-  displayName: 'TopLeftNav',
+var TopNav = React.createClass({
+  displayName: 'TopNav',
 
   getInitialState: function getInitialState() {
     return {
       novelValue: 'Rob Roy',
       currentPage: 'notes',
+      leftNavOpen: false,
       muiTheme: this.context.muiTheme
     };
   },
@@ -50471,12 +50546,11 @@ var TopLeftNav = React.createClass({
   componentWillMount: function componentWillMount() {
     // ThemeManager.setTheme(CustomTheme);
   },
-  toggleNav: function toggleNav(e) {
+  toggleLeftNav: function toggleLeftNav(e) {
     e.preventDefault();
-    // Show/Hide the LeftMenu
-    this.refs.leftNav.toggle();
+    window.dispatchEvent(new CustomEvent("toggleLeftNav"));
+    this.setState({ leftNavOpen: !this.state.leftNavOpen });
   },
-  handleNovelDropdownChange: function handleNovelDropdownChange() {},
   render: function render() {
     var currentPath = window.location.pathname;
     var navRight = this.props.navRight === undefined ? null : this.props.navRight;
@@ -50484,34 +50558,14 @@ var TopLeftNav = React.createClass({
     return React.createElement(
       'div',
       { id: 'top-nav' },
-      React.createElement(
-        LeftNav,
-        {
-          ref: 'leftNav',
-          className: 'left-nav',
-          docked: false,
-          zDepth: 4,
-          style: { backgroundColor: Colors.teal700, color: Colors.darkWhite }
-        },
-        React.createElement(SelectableMenuList, null),
-        React.createElement(
-          _materialUiLibListsList2['default'],
-          { className: 'logout', style: { backgroundColor: Colors.teal700, width: '100%' } },
-          React.createElement(_materialUiLibListsListItem2['default'], {
-            leftIcon: React.createElement(ExitIcon, { color: Colors.darkWhite }),
-            value: '/logout',
-            primaryText: 'Logout',
-            style: { backgroundColor: Colors.teal700, color: Colors.darkWhite } })
-        )
-      ),
+      React.createElement(LeftNavUndocked, null),
       React.createElement(
         'header',
         null,
         React.createElement(AppBar, {
           title: 'Adiūtor',
           iconClassNameRight: 'muidocs-icon-navigation-expand-more',
-          onLeftIconButtonTouchTap: this.toggleNav,
-          isInitiallyOpen: false,
+          onLeftIconButtonTouchTap: this.toggleLeftNav,
           zDepth: 4,
           style: { backgroundColor: Colors.tealA700, color: Colors.darkWhite } }),
         React.createElement(
@@ -50524,6 +50578,6 @@ var TopLeftNav = React.createClass({
   }
 });
 
-module.exports = TopLeftNav;
+module.exports = TopNav;
 
-},{"./selectable-menu-list":375,"./styles/colors":376,"./styles/themes/custom1":377,"material-ui":53,"material-ui/lib/lists/list":59,"material-ui/lib/lists/list-item":58,"material-ui/lib/svg-icons/action/exit-to-app":109,"react":374,"react-tap-event-plugin":212}]},{},[1]);
+},{"./left-nav":375,"./styles/themes/custom1":378,"material-ui":53,"react":374,"react-tap-event-plugin":212}]},{},[1]);
