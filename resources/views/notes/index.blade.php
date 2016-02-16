@@ -16,7 +16,7 @@
 				<h1>Notes</h1>
 			</header>
 			<div class="row">
-				<div class="col-sm-12">
+				<div class="col-sm-12 search-container">
 					<form id="note-search" action="/notes/search/" method="GET">
 						<button type="submit" class="btn btn-secondary pull-right">Search</button>
 						<div class="col-sm-3 pull-right">
