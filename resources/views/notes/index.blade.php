@@ -15,7 +15,18 @@
 				@endif
 				<h1>Notes</h1>
 			</header>
-			
+			<div class="row">
+				<div class="col-sm-12">
+					<form id="note-search" action="/notes/search/" method="GET">
+						<button type="submit" class="btn btn-secondary pull-right">Search</button>
+						<div class="col-sm-3 pull-right">
+							<input id="search-field" type="search" class="form-control" name="term"/>
+						</div>
+					</form>
+					<div class="search-results">
+					</div>
+				</div>
+			</div>
 			@if($courses->count())
 				<div class="accordion" id="course-list">
 				@foreach($courses as $course)
@@ -35,7 +46,7 @@
 					  <div id="collapse{{$course->id}}" class="accordion-body collapse row">
 					      <ul class="list list-striped list-unstyled col-sm-12">
 					      	@foreach($notes->orderBy('created_at', 'DESC')->get() as $note)
-					      	<li class="row" data-id="{{$note->id}}">
+					      	<li class="row" data-id="{{$note->id}}" {{is_null($course->colour) ?: 'style=border-color:'.$course->colour }}>
 					      	@if($note->slug)
 					      		<a href={{'/notes/' . $note->slug}}>	
 					      	@else
@@ -78,6 +89,23 @@
 @section('javascripts')
 <script>
   $(document).ready(function(e, element){
+
+  	$('#note-search').submit(function(e){
+  		e.preventDefault();
+  		$.get('/notes/search/' + $('#search-field').val(), function(response){
+  			response = response.sort(function(a, b){
+  				return a.course.name > b.course.name;
+  			});
+  			var $results = '<ul class="list-unstyled">';
+  			$(response).each(function($index, $note){
+  				$results += '<li><a href="/notes/'+ $note.slug +'">' + $note.course.name + ': ' + $note.title + '</a></li>';
+  			});
+  			$results += '</ul>';
+  			$('.search-results').html($results);
+  		});
+  		return false;
+  	});
+
     $('.btn-delete').click(function(e){
       e.preventDefault();
       var $itemRow = $('.row [data-id="' + $(this).data('id') + '"]');

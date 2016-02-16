@@ -6,9 +6,12 @@
 .cke_bottom, .cke_top {
   background: rgba(0,0,0,0.0) !important;
 }
+.cke_bottom {
+  margin-top: 10px;
+}
 .cke_contents {
   background: none !important;
-  height: 450px !important;
+  height: 430px !important;
 }
 
 .cke_top {

@@ -16,12 +16,12 @@ class NotesController extends Controller
      */
     public function index($status = 0)
     {
-        $courses = \App\Course::orderBy('name', 'ASC')->get();
-        if($status !== 0 && $status == 'backup'){
-            $status = 2;
-        }
-        $resource_type = 'note';
-        return view('notes.index', compact(['courses', 'resource_type', 'status']));
+      $courses = \App\Course::orderBy('name', 'ASC')->get();
+      if($status !== 0 && $status == 'backup'){
+        $status = 2;
+      }
+      $resource_type = 'note';
+      return view('notes.index', compact(['courses', 'resource_type', 'status']));
     }
 
     /**
@@ -31,9 +31,9 @@ class NotesController extends Controller
      */
     public function create()
     {
-        $courses = \App\Course::orderBy('name', 'ASC')->get();
+      $courses = \App\Course::orderBy('name', 'ASC')->get();
 
-        return view('notes.show', compact(['courses']));    
+      return view('notes.show', compact(['courses']));    
     }
 
     /**
@@ -44,19 +44,19 @@ class NotesController extends Controller
      */
     public function store(Request $request)
     {
-        $note = new \App\Note($request->input());
-        $note->slug = str_slug($request->title);
-        $note->save();
-        
-        $note->set_subject_name();
+      $note = new \App\Note($request->input());
+      $note->slug = str_slug($request->title);
+      $note->save();
 
-        return $note;
+      $note->set_subject_name();
+
+      return $note;
     }
 
     public function searchContent(Request $request){
-        $searchTerm = $request->request->get('searchTerm');
-        $notes = \App\Note::whereRaw("title LIKE '%?%' OR content LIKE '%?%'", [$searchTerm, $searchTerm])->get();
-        return $notes;
+      $searchTerm = $request->request->get('searchTerm');
+      $notes = \App\Note::whereRaw("title LIKE '%?%' OR content LIKE '%?%'", [$searchTerm, $searchTerm])->get();
+      return $notes;
     }
 
     /**
@@ -67,37 +67,37 @@ class NotesController extends Controller
      */
     public function show($slug)
     {
-        $note = \App\Note::whereSlug($slug)->first();
-        $courses = \App\Course::all();
-        
-        if(!$note){
-            $note = \App\Note::find($slug);
-        }
+      $note = \App\Note::whereSlug($slug)->first();
+      $courses = \App\Course::all();
+
+      if(!$note){
+        $note = \App\Note::find($slug);
+      }
 
         // check if there is already a backup of the note.
-        $existingBackup = \App\Note::where('original_note_id', $note->id)
-            ->where('status', 2)
-            ->first();
+      $existingBackup = \App\Note::where('original_note_id', $note->id)
+      ->where('status', 2)
+      ->first();
 
-        $newNote = $note->replicate();
+      $newNote = $note->replicate();
         // Set the status of the new note to 2 :'backup'
-        $newNote->setAttribute('status', 2);
+      $newNote->setAttribute('status', 2);
 
-        if($existingBackup){
-            $newNote->setAttribute('id', $existingBackup->id);
-            $newNote->update();
-        } else {
-            $newNote->setAttribute('id', null);
-            $newNote->setAttribute('original_note_id', $note->id);
-            $newNote = new \App\Note($newNote->toArray());
-            $newNote->save();
-        }
-        
-        if($note){
-            $note->set_subject_name();
-        }
+      if($existingBackup){
+        $newNote->setAttribute('id', $existingBackup->id);
+        $newNote->update();
+      } else {
+        $newNote->setAttribute('id', null);
+        $newNote->setAttribute('original_note_id', $note->id);
+        $newNote = new \App\Note($newNote->toArray());
+        $newNote->save();
+      }
 
-        return view('notes.show', compact(['note', 'courses']));
+      if($note){
+        $note->set_subject_name();
+      }
+
+      return view('notes.show', compact(['note', 'courses']));
     }
 
     /**
@@ -109,23 +109,23 @@ class NotesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $note = \App\Note::find($id);
-    
-        $note->update($request->input());
-        $note->slug = str_slug($request->title);
-        $note->save();
+      $note = \App\Note::find($id);
 
-        if(strpos($request->title, 'WWI') !== false){
-            $note['courseName'] = 'WWI';
-        } else if(strpos($request->title, 'WWII') !== false) {
-            $note['courseName'] = 'WWII';
-        } else if(strpos($request->title, 'Enlightenment') !== false) {
-            $note['courseName'] = 'enlightenment';
-        } else {
-            $note['courseName'] = $note->course->name;
-        }
+      $note->update($request->input());
+      $note->slug = str_slug($request->title);
+      $note->save();
 
-        return $note;
+      if(strpos($request->title, 'WWI') !== false){
+        $note['courseName'] = 'WWI';
+      } else if(strpos($request->title, 'WWII') !== false) {
+        $note['courseName'] = 'WWII';
+      } else if(strpos($request->title, 'Enlightenment') !== false) {
+        $note['courseName'] = 'enlightenment';
+      } else {
+        $note['courseName'] = $note->course->name;
+      }
+
+      return $note;
     }
 
     /**
@@ -136,9 +136,14 @@ class NotesController extends Controller
      */
     public function destroy($id)
     {
-    	if($note = \App\Note::find($id)){
-            $note->delete();
-    	}
+      if($note = \App\Note::find($id)){
+        $note->delete();
+      }
     }
 
-}
+    public function search($term){
+      $notes = \App\Note::where('status', 0)->where('content', 'like', "%{$term}%")
+        ->with('course')->orderBy('course_id')->get();
+      return $notes;
+    }
+  }

@@ -33,12 +33,17 @@
 					@endif
 				</form>
 				<div class="col-sm-12">
-			    <p>
-		        <textarea class="ckeditor" id="editor1" name="content" cols="100" rows="20"></textarea>
-			    </p>
-			    <div class="pull-left">
+
+	        <textarea class="ckeditor" id="editor1" name="content" cols="100" rows="20" style="display: none;">
+	        </textarea>
+
+			    <div class="left-word-count">
 			    	<small id="word-count"></small>
 			    </div>
+		    </div>
+		    <div class="col-sm-12">
+		    {{-- 	<textarea class="ckeditor" id="editor2" name="content" cols="100" rows="20" style="display: none;">
+		       </textarea> --}}
 		    </div>
 				{{-- Put content into a hidden text area initially. --}}
 				<textarea style="display:none;" id="init-content">{{ isset($note) ? $note->content : '' }}</textarea>
@@ -71,7 +76,7 @@
 		function updateWordCount(contents){
 			var initVal = contents === undefined ? $('#init-content').val() : contents;
 			var spaceRegex = /\s+/gi;
-			var noNBSPcontent = initVal.replace(/&nbsp;/gi, " ");
+			var noNBSPcontent = stripNBSP(initVal);
 			var taglessString = noNBSPcontent.replace(/(<([^>]+)>)/ig, "");
 			taglessString = noNBSPcontent.replace(/&quot;/ig, "");
 			var wordCount = taglessString.trim().replace(spaceRegex, ' ').split(' ').length;
@@ -82,16 +87,21 @@
 			};
 		}
 
+		function stripNBSP(initVal){
+			var noNBSPcontent = initVal.replace(/&nbsp;/gi, " ");
+			return noNBSPcontent;
+		}
+
 		$(document).ready(function(e, element){
 			var isCtrl = false;
-			var wordCountData = updateWordCount();
+			var initVal = $('#init-content').val();
 
-			$('.ckeditor').val(wordCountData.noNBSPcontent);
+			$('.ckeditor').val(initVal);
+			var editor = CKEDITOR.instances.editor1;
 
-			$('#word-count').text(wordCountData.wordCount);
+			$('#word-count').text(updateWordCount(initVal).wordCount);
 
 			// Add event listener for ctrl+s in editor to do an AJAX save.
-			var editor = CKEDITOR.instances.editor1;
 			// editor.addCommand("mySimpleCommand", {
 			//     exec: function(edt) {
 			//         alert(edt.getData());
@@ -176,7 +186,7 @@
 		function ajaxSave(editor){
 			var $form = $('#note-form');
 			var noteId = {{isset($note) ? $note->id : 'undefined'}};
-			var data = editor.getData().replace(/&nbsp;/ig, " ");
+			var data = stripNBSP(editor.getData());
 			var fileName;
 			var formData = $form.serializeArray();
 

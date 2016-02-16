@@ -50,6 +50,7 @@ Route::get('/notes/{note_id}',    'NotesController@show');
 Route::post('/notes',             'NotesController@store');
 Route::post('/notes/{note_id}',   'NotesController@update');
 Route::delete('/notes/{note_id}', 'NotesController@destroy');
+Route::get('/notes/search/{term}', 'NotesController@search');
 
 Route::get('/new-token', function(){
   $session = app('session');

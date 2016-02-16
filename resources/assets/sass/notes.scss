@@ -36,13 +36,16 @@
 @media(min-width: 970px){
 	#note-page {
 		.cke_contents {
-			height: 430px !important; 
+			height: 400px; 
 		}
 	}
 	#notes {
 		.accordion-body {
 			max-height: 360px;
-			overflow-y: scroll;
+			overflow-y: hidden;
+			&:hover {
+				overflow-y: scroll;
+			}
 		}
 	}
 }
