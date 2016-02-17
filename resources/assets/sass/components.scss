@@ -36,7 +36,12 @@
 
 .search-container {
 	margin-bottom: 15px;
-	.search-results {
+	.search-results-container {
 		width: 30%;
+	}
+	.results-header {
+		h1, h2 {
+			margin-top: 0px;
+		}
 	}
 }

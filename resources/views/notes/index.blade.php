@@ -19,11 +19,18 @@
 				<div class="col-sm-12 search-container">
 					<form id="note-search" action="/notes/search/" method="GET">
 						<button type="submit" class="btn btn-secondary pull-right">Search</button>
-						<div class="col-sm-3 pull-right">
-							<input id="search-field" type="search" class="form-control" name="term"/>
+						<div class="col-sm-2 pull-right">
+							<input id="search-field" type="search" class="form-control" name="term" placeholder="Search" />
 						</div>
 					</form>
-					<div class="search-results">
+					<div class="search-results-container">
+						<div class="row">
+							<div class="col-sm-4 results-header" style="display: none;">
+								<h2>Results:</h2>
+							</div>
+							<div class="col-sm-8 search-results">
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -93,15 +100,23 @@
   	$('#note-search').submit(function(e){
   		e.preventDefault();
   		$.get('/notes/search/' + $('#search-field').val(), function(response){
-  			response = response.sort(function(a, b){
-  				return a.course.name > b.course.name;
-  			});
-  			var $results = '<ul class="list-unstyled">';
-  			$(response).each(function($index, $note){
-  				$results += '<li><a href="/notes/'+ $note.slug +'">' + $note.course.name + ': ' + $note.title + '</a></li>';
-  			});
-  			$results += '</ul>';
-  			$('.search-results').html($results);
+  			if(response == []){
+  				$('.results-header').hide();
+  				return 1;
+  			} else {
+  				$('.results-header').fadeIn(500);
+  				response = response.sort(function(a, b){
+  					return a.course.name > b.course.name;
+  				});
+  				var $results = '<ul class="list-unstyled">';
+  				$(response).each(function($index, $note){
+  					$results += '<li><a href="/notes/'+ $note.slug +'">' + $note.course.name + ': ' + $note.title + '</a></li>';
+  				});
+  				$results += '</ul>';
+
+  				$('.search-results').html($results);
+  			}
+  			
   		});
   		return false;
   	});

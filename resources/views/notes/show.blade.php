@@ -131,14 +131,11 @@
 
 			editor.addContentsCss( '/css/editor-print.css' );
 
-			// Set hotkey listner for ctrl+s in editor
+			// Set hotkey listener for ctrl+s in editor
 			editor.on( 'contentDom', function( evt )
 			{
-				editor.document.on( 'keyup', function(event){
-					if(event.data.$.keyCode == 17) isCtrl=false;
-				});
 
-				editor.document.on( 'keydown', function(event){
+				editor.document.on('keydown', function(event){
 					if(event.data.$.keyCode == 17) isCtrl = true;
 					if(event.data.$.keyCode == 83 && isCtrl == true){
 						// The preventDefault() call prevents the browser's save popup to appear.
@@ -148,6 +145,7 @@
 						} catch(err) {}
 
 						ajaxSave(editor);
+						isCtrl=false;
 						return false;
 	        }
 	      });

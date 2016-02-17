@@ -199,6 +199,13 @@ h3 {
   bottom: 0px;
   left: 0px; }
 
+.search-container {
+  margin-bottom: 15px; }
+  .search-container .search-results-container {
+    width: 30%; }
+  .search-container .results-header h1, .search-container .results-header h2 {
+    margin-top: 0px; }
+
 .form-control {
   background-color: transparent;
   color: #ffffff;
