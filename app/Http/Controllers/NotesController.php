@@ -45,7 +45,8 @@ class NotesController extends Controller
     public function store(Request $request)
     {
       $note = new \App\Note($request->input());
-      $note->slug = str_slug($request->title);
+      
+      $note->set_slug($request->title);
       $note->save();
 
       $note->set_subject_name();
@@ -53,19 +54,14 @@ class NotesController extends Controller
       return $note;
     }
 
-    public function searchContent(Request $request){
-      $searchTerm = $request->request->get('searchTerm');
-      $notes = \App\Note::whereRaw("title LIKE '%?%' OR content LIKE '%?%'", [$searchTerm, $searchTerm])->get();
-      return $notes;
-    }
-
     /**
-     * Display the specified resource.
+     * Display a note that has a specific slug
      *
-     * @param  int  $id
+     * @param  Request  $request
+     * @param  string   $slug
      * @return Response
      */
-    public function show($slug)
+    public function show(Request $request, $slug)
     {
       $note = \App\Note::whereSlug($slug)->first();
       $courses = \App\Course::all();
@@ -74,10 +70,12 @@ class NotesController extends Controller
         $note = \App\Note::find($slug);
       }
 
-        // check if there is already a backup of the note.
+      $search_term = $request->request->get('s');
+
+      // check if there is already a backup of the note.
       $existingBackup = \App\Note::where('original_note_id', $note->id)
-      ->where('status', 2)
-      ->first();
+        ->where('status', 2)
+        ->first();
 
       $newNote = $note->replicate();
         // Set the status of the new note to 2 :'backup'
@@ -97,7 +95,7 @@ class NotesController extends Controller
         $note->set_subject_name();
       }
 
-      return view('notes.show', compact(['note', 'courses']));
+      return view('notes.show', compact(['note', 'courses', 'search_term']));
     }
 
     /**
@@ -110,20 +108,14 @@ class NotesController extends Controller
     public function update(Request $request, $id)
     {
       $note = \App\Note::find($id);
-
+      $previous_title = $note->title;
       $note->update($request->input());
-      $note->slug = str_slug($request->title);
+      if($previous_title !== $note->title){
+        $note->set_slug($request->title);
+      }
       $note->save();
 
-      if(strpos($request->title, 'WWI') !== false){
-        $note['courseName'] = 'WWI';
-      } else if(strpos($request->title, 'WWII') !== false) {
-        $note['courseName'] = 'WWII';
-      } else if(strpos($request->title, 'Enlightenment') !== false) {
-        $note['courseName'] = 'enlightenment';
-      } else {
-        $note['courseName'] = $note->course->name;
-      }
+      $note->set_subject_name();
 
       return $note;
     }

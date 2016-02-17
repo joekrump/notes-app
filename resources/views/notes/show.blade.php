@@ -92,6 +92,10 @@
 			return noNBSPcontent;
 		}
 
+		function scrollToText($container, searchTerm) {
+		  $container.scrollTop($("*:contains('" + searchTerm + "'):last").offset().top);
+		}
+
 		$(document).ready(function(e, element){
 			var isCtrl = false;
 			var initVal = $('#init-content').val();
@@ -101,18 +105,6 @@
 
 			$('#word-count').text(updateWordCount(initVal).wordCount);
 
-			// Add event listener for ctrl+s in editor to do an AJAX save.
-			// editor.addCommand("mySimpleCommand", {
-			//     exec: function(edt) {
-			//         alert(edt.getData());
-			//     }
-			// });
-			// editor.ui.addButton('SuperButton', {
-			//     label: "Click me",
-			//     command: 'mySimpleCommand',
-			//     toolbar: 'insert',
-			//     icon: '/images/svg/test.svg'
-			// });
 			editor.on('loaded', function (ev) {
 			  var editor = ev.editor;
 			  // add custom commands
@@ -124,17 +116,24 @@
 			  editor.setKeystroke(CKEDITOR.CTRL + 52 /*4*/, 'heading-h4');
 			});
 
-			editor.on( 'change', function( evt ) {
-			    // getData() returns CKEditor's HTML content.
-			    $('#word-count').text(updateWordCount(editor.getData()).wordCount);
+			editor.on('change', function( evt ) {
+		    // getData() returns CKEditor's HTML content.
+		    $('#word-count').text(updateWordCount(editor.getData()).wordCount);
 			});
 
 			editor.addContentsCss( '/css/editor-print.css' );
 
 			// Set hotkey listener for ctrl+s in editor
-			editor.on( 'contentDom', function( evt )
+			editor.on('contentDom', function( evt )
 			{
+				var searchTerm = {{ isset($search_term) ? $search_term : 'null'}}; // get a search term if there is one passed from the server
 
+				// if there is a search term when the page is loaded, scroll to it
+				if(searchTerm !== null){
+					scrollToText($(editor.document), searchTerm);
+				}
+
+				// Register listener for Ctrl+s saving from context of the editor.
 				editor.document.on('keydown', function(event){
 					if(event.data.$.keyCode == 17) isCtrl = true;
 					if(event.data.$.keyCode == 83 && isCtrl == true){
@@ -149,6 +148,7 @@
 						return false;
 	        }
 	      });
+
 			}, editor.element.$);
 			
 			// Set hotkey listener for ctrl+s saving outside editor.
@@ -199,6 +199,9 @@
 					noteId = response.id;
 					$form.attr('action', '/notes/' + noteId);
 				}
+
+				var state = {};
+				history.pushState(state, response.title, "/notes/" + response.slug);
 
 				// Only update the background if the course has changed.
 				if(courseName !== response.courseName.toLowerCase()){

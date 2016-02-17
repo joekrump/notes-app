@@ -49,6 +49,19 @@ class Note extends Model
     }
   }
 
+  public function set_slug($title){
+    $slug = str_slug($title);
+
+    $num_with_slug = \App\Note::where('slug', $slug)->count();
+    
+    if($num_with_slug > 0){
+      $slug = $slug . '-' . $num_with_slug;
+    }
+
+    $this->slug = $slug;
+    return 0;
+  }
+
   public function status_text(){
     $status_text = 'unknown';
     switch($this->status){
