@@ -46,39 +46,34 @@
 						      	<div class="title">
 						      		<h4>{{ ucwords($course->name) }}</h4>
 						      	</div>
-						      	<div class="label label-inverse label-default" {{is_null($course->colour) ?: 'style=border-color:'.$course->colour }}>{{ $note_count }}</div>
+						      	<div class="label label-inverse label-default note-count-label" {{is_null($course->colour) ?: 'style=border-color:'.$course->colour }}>{{ $note_count }}</div>
 					      </div>
 					    </a>
 					  </div>
 					  <div id="collapse{{$course->id}}" class="accordion-body collapse row">
 					      <ul class="list list-striped list-unstyled col-sm-12">
 					      	@foreach($notes->orderBy('created_at', 'DESC')->get() as $note)
-					      	<li class="row" data-id="{{$note->id}}" {{is_null($course->colour) ?: 'style=border-color:'.$course->colour }}>
-					      	@if($note->slug)
-					      		<a href={{'/notes/' . $note->slug}}>	
-					      	@else
-					      		<a href={{'/notes/' . $note->id}}>
-					      	@endif
-					      		
-					      		<div class="col-sm-12">
-					      			<div class="title">
-					      				<span class="text">{{ $note->title }}</span>
-					      			</div>
-					      			<div class="label label-inverse label-default">{{ $note->created_at->toFormattedDateString() }}</div>
-					      			<div class="pull-right index-actions">
-					      				@if($note->status != 0)
-					      					<button type="button" class="btn btn-xs btn-success" data-id="{{$note->id}}" data-action-status=1>set active</button>
-					      				@endif
-					      				@if($note->status != 1)
-					      					<button type="button" class="btn btn-xs btn-primary" data-id="{{$note->id}}" data-action-status=1>A</button>
-					      				@endif
-					      				@if($note->status != 2)
-					      					<button type="button" class="btn btn-xs btn-secondary" data-id="{{$note->id}}" data-action-status=1>B</button>
-					      				@endif
-					      				
-					      				<button type="button" class="btn btn-xs btn-danger btn-delete" data-id="{{$note->id}}">&times;</button>
-					      			</div>
-					      		</div>
+					      	<li class="row" data-id="{{ $note->id }}" data-course-name="{{ $note->course->name }}" {{is_null($course->colour) ?: 'style=border-color:'.$course->colour }}>
+					      		<a href={{'/notes/' . $note->slug ? $note->slug : $note->id }}>	
+						      		<div class="col-sm-12">
+						      			<div class="title">
+						      				<span class="text">{{ $note->title }}</span>
+						      			</div>
+						      			<div class="label label-inverse label-default">{{ $note->created_at->toFormattedDateString() }}</div>
+						      			<div class="pull-right index-actions">
+						      				@if($note->status != 0)
+						      					<button type="button" class="btn btn-xs btn-success" data-id="{{$note->id}}" data-action-status=0>Set Active</button>
+						      				@endif
+						      				@if($note->status != 1)
+						      					<button type="button" class="btn btn-xs btn-primary" data-id="{{$note->id}}" data-action-status=1>A</button>
+						      				@endif
+						      				@if($note->status != 2)
+						      					<button type="button" class="btn btn-xs btn-secondary" data-id="{{$note->id}}" data-action-status=2>B</button>
+						      				@endif
+						      				
+						      				<button type="button" class="btn btn-xs btn-danger btn-delete" data-id="{{$note->id}}">&times;</button>
+						      			</div>
+						      		</div>
 					      		</a>
 					      	</li>
 					      	@endforeach
@@ -101,8 +96,9 @@
   		e.preventDefault();
   		var searchValue = $('#search-field').val();
   		$.get('/notes/search/' + searchValue, function(response){
-  			if(response == []){
+  			if(response.length == 0){
   				$('.results-header').hide();
+  				$('.search-results').html('<div>No results matching "' + searchValue + '"</div>');
   				return 1;
   			} else {
   				$('.results-header').fadeIn(500);
@@ -111,7 +107,7 @@
   				});
   				var $results = '<ul class="list-unstyled">';
   				$(response).each(function($index, $note){
-  					$results += '<li><a href="/notes/' + $note.slug + '?s=' + searchValue + '">' + $note.course.name + ': ' + $note.title + '</a></li>';
+  					$results += '<li><a href="/notes/' + $note.id + '?s=' + searchValue + '">' + $note.course.name + ': ' + $note.title + '</a></li>';
   				});
   				$results += '</ul>';
 
@@ -127,6 +123,19 @@
       var $itemRow = $('.row [data-id="' + $(this).data('id') + '"]');
       // Hide row by positive assertion.
       $itemRow.slideUp(300);
+      var accordionHeader = $('#'+ $itemRow.data('course-name'));
+      console.log(accordionHeader);
+      var courseNoteCount = accordionHeader.data('note-count');
+      console.log(courseNoteCount);
+
+      if(--courseNoteCount == 0){
+      	accordionHeader.slideUp(300, function(){
+      		$(this).remove();
+      	});
+      } else {
+      	accordionHeader.data('note-count', courseNoteCount);
+      	accordionHeader.find('.note-count-label').text(courseNoteCount);
+      }
 
       $.ajax({
         url: '/{{$resource_type}}s/' + $(this).data('id'),
@@ -136,6 +145,7 @@
           if(response.status === 200){
             // Remove DOM element
             $itemRow.remove();
+            
           } else {
             // If the deletion fails then show the row again.
             $itemRow.slideDown(300);

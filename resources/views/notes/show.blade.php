@@ -99,7 +99,7 @@
 		$(document).ready(function(e, element){
 			var isCtrl = false;
 			var initVal = $('#init-content').val();
-			var searchTerm = "{{ $search_term }}";
+			var searchTerm = "{{ isset($search_term) ? $search_term : '' }}";
 			var Note = {
 				id: {{isset($note) ? $note->id : 'undefined'}}
 			};
@@ -133,10 +133,10 @@
 					var iframe = document.querySelector(".cke_wysiwyg_frame").contentDocument.body;
 					/*create a new RegExp object using search variable as a parameter,
 					the g option is passed in so it will find more than one occurence of the
-					search parameter*/                                               
+					search parameter*/                                          
 					var result = new RegExp(searchTerm, 'g');
-					//set the html of the iframe making the found items bold
-					iframe.innerHTML = iframe.innerHTML.replace(result,"<span class='search-found'>" + searchTerm + "</span>" );
+
+					iframe.innerHTML = iframe.innerHTML.replace(result,"<span class='search-found'>" + searchTerm + "</span>");
 					scrollToText(document.querySelector(".cke_wysiwyg_frame"), searchTerm);
 				}
 

@@ -306,7 +306,7 @@ a.btn, button.btn {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0); }
   a.btn.btn-secondary, button.btn.btn-secondary {
-    background-color: #bdbdbd; }
+    background-color: #ffa726; }
   a.btn.btn-primary, button.btn.btn-primary {
     background-color: #00b0ff; }
   a.btn.btn-default, button.btn.btn-default {
