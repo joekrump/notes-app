@@ -92,14 +92,17 @@
 			return noNBSPcontent;
 		}
 
-		function scrollToText($container, searchTerm) {
-		  $container.scrollTop($("*:contains('" + searchTerm + "'):last").offset().top);
+		function scrollToText(iframe, searchTerm) {
+		  iframe.contentWindow.scrollTo(0, $(iframe.contentDocument).find("*:contains('" + searchTerm + "'):last").offset().top);
 		}
 
 		$(document).ready(function(e, element){
 			var isCtrl = false;
 			var initVal = $('#init-content').val();
-
+			var searchTerm = "{{ $search_term }}";
+			var Note = {
+				id: {{isset($note) ? $note->id : 'undefined'}}
+			};
 			$('.ckeditor').val(initVal);
 			var editor = CKEDITOR.instances.editor1;
 
@@ -107,8 +110,6 @@
 
 			editor.on('loaded', function (ev) {
 			  var editor = ev.editor;
-			  // add custom commands
-			  addCustomEditorCommands(editor);
 			  // bind the custom events to hotkeys
 			  editor.setKeystroke(CKEDITOR.CTRL + 49 /*1*/, 'heading-h1');
 			  editor.setKeystroke(CKEDITOR.CTRL + 50 /*2*/, 'heading-h2');
@@ -126,24 +127,31 @@
 			// Set hotkey listener for ctrl+s in editor
 			editor.on('contentDom', function( evt )
 			{
-				var searchTerm = {{ isset($search_term) ? $search_term : 'null'}}; // get a search term if there is one passed from the server
 
 				// if there is a search term when the page is loaded, scroll to it
-				if(searchTerm !== null){
-					scrollToText($(editor.document), searchTerm);
+				if(searchTerm !== null && searchTerm !== ''){
+					var iframe = document.querySelector(".cke_wysiwyg_frame").contentDocument.body;
+					/*create a new RegExp object using search variable as a parameter,
+					the g option is passed in so it will find more than one occurence of the
+					search parameter*/                                               
+					var result = new RegExp(searchTerm, 'g');
+					//set the html of the iframe making the found items bold
+					iframe.innerHTML = iframe.innerHTML.replace(result,"<span class='search-found'>" + searchTerm + "</span>" );
+					scrollToText(document.querySelector(".cke_wysiwyg_frame"), searchTerm);
 				}
 
 				// Register listener for Ctrl+s saving from context of the editor.
 				editor.document.on('keydown', function(event){
+					
+
 					if(event.data.$.keyCode == 17) isCtrl = true;
 					if(event.data.$.keyCode == 83 && isCtrl == true){
-						// The preventDefault() call prevents the browser's save popup to appear.
-						// The try statement fixes a weird IE error.
 						try {
 							event.data.$.preventDefault();
 						} catch(err) {}
-
-						ajaxSave(editor);
+						// The preventDefault() call prevents the browser's save popup to appear.
+						// The try statement fixes a weird IE error.
+						ajaxSave(editor, Note, searchTerm);
 						isCtrl=false;
 						return false;
 	        }
@@ -154,59 +162,48 @@
 			// Set hotkey listener for ctrl+s saving outside editor.
 			Mousetrap.bind('ctrl+s', function(e) {
 				e.preventDefault();
-				ajaxSave(editor);
+
+				ajaxSave(editor, Note, searchTerm);
+
 			});
 		});
-
-		function addCustomEditorCommands(editor){
-			editor.addCommand('heading-h1', {
-				exec: function (editor) {
-					CKEDITOR.tools.callFunction(201,'h1');
-				}
-			});
-			editor.addCommand('heading-h2', {
-				exec: function (editor) {
-					CKEDITOR.tools.callFunction(201,'h2');
-				}
-			});
-			editor.addCommand('heading-h3', {
-				exec: function (editor) {
-					CKEDITOR.tools.callFunction(201,'h3');            
-				}
-			}); 
-			editor.addCommand('heading-h4', {
-				exec: function (editor) {
-					CKEDITOR.tools.callFunction(201,'h4'); 
-				}
-			}); 
-		}
-
-		function ajaxSave(editor){
+		
+		/**
+		 * Issue an AJAX post request to save editor content
+		 * @param  {Object} editor [description]
+		 * @param  {Object} Note   [description]
+		 * @return {int}        	 [description]
+		 */
+		function ajaxSave(editor, Note, searchTerm){
 			var $form = $('#note-form');
-			var noteId = {{isset($note) ? $note->id : 'undefined'}};
 			var data = stripNBSP(editor.getData());
 			var fileName;
 			var formData = $form.serializeArray();
 
-			formData.push({name: 'content', value: data});
+			if(searchTerm !== null){
+				$('.search-found').replaceWith(searchTerm);
+      }
 
+			formData.push({name: 'content', value: data});
 
 			$('#action-box').removeClass('label-success').addClass('label-info').text('Saving...').fadeIn(100);
 			$.post($form.attr('action'), formData, function(response){
-
-				// Only update on intial save
-				if(response.id !== noteId){
-					noteId = response.id;
-					$form.attr('action', '/notes/' + noteId);
+				// update URL if there is a new slug
+				if(Note.slug !== response.slug){
+					var state = {};
+					history.pushState(state, Note.title, "/notes/" + response.slug);
 				}
-
-				var state = {};
-				history.pushState(state, response.title, "/notes/" + response.slug);
+				// update the action of the Note form if the Note has somehow had its id updated.	
+				if(Note.id !== response.id){
+					$form.attr('action', '/notes/' + response.id);
+				}
+				// now update Note value
+				Note = response;
 
 				// Only update the background if the course has changed.
-				if(courseName !== response.courseName.toLowerCase()){
-					courseName = response.courseName;
-					fileName = response.courseName.replace(/\s+/, '_').toLowerCase();
+				if(courseName !== Note.courseName.toLowerCase()){
+					courseName = Note.courseName;
+					fileName = Note.courseName.replace(/\s+/, '_').toLowerCase();
 					$('.background').fadeOut(200, function(){
 						$('.background').css({'background-image': 'url("/images/' + fileName + '.jpg")'});
 					}).fadeIn(500);
@@ -219,9 +216,12 @@
 				// update the token
 				$.get('/new-token', function(newToken){
 					$form.find('input[name=_token]').val(newToken);
-					ajaxSave(editor);
+					ajaxSave(editor, Note, searchTerm);
 				});
 			});
+
+			return 0;
 		}
+
 	</script>
 @stop

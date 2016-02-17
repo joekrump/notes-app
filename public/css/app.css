@@ -16,6 +16,9 @@ a {
   a:hover {
     color: #00bfa5; }
 
+.search-found {
+  color: #FF9632; }
+
 ::-moz-selection {
   color: white;
   background: #00bfa5;

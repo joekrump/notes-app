@@ -19,6 +19,10 @@ a {
   }
 }
 
+.search-found {
+  color: #FF9632;
+}
+
 ::selection {
   color: white;
   background: $tealA700; /* WebKit/Blink Browsers */

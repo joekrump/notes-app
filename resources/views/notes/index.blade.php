@@ -99,7 +99,8 @@
 
   	$('#note-search').submit(function(e){
   		e.preventDefault();
-  		$.get('/notes/search/' + $('#search-field').val(), function(response){
+  		var searchValue = $('#search-field').val();
+  		$.get('/notes/search/' + searchValue, function(response){
   			if(response == []){
   				$('.results-header').hide();
   				return 1;
@@ -110,7 +111,7 @@
   				});
   				var $results = '<ul class="list-unstyled">';
   				$(response).each(function($index, $note){
-  					$results += '<li><a href="/notes/'+ $note.slug +'">' + $note.course.name + ': ' + $note.title + '</a></li>';
+  					$results += '<li><a href="/notes/' + $note.slug + '?s=' + searchValue + '">' + $note.course.name + ': ' + $note.title + '</a></li>';
   				});
   				$results += '</ul>';
 
