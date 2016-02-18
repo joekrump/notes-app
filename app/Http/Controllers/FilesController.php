@@ -36,7 +36,12 @@ class FilesController extends Controller
     }
 
     public function getUploader(){
-        echo "test";
+        return 'not implemented (FilesController.getUploader())';
+    }
+
+    public function getBrowser(){
+
+        return view('files.file-browser', compact([]));
     }
 
     public function getFiles(){

@@ -52271,7 +52271,6 @@ var TopNav = React.createClass({
         'header',
         null,
         React.createElement(AppBar, {
-          title: 'Adiūtor',
           iconClassNameRight: 'muidocs-icon-navigation-expand-more',
           onLeftIconButtonTouchTap: this.toggleLeftNav,
           zDepth: 4,

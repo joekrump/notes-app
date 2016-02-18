@@ -27,7 +27,7 @@ body
 	line-height: 1.5;
 	background-color: rgba(0,0,0,0.0) !important;
 	padding: 0px;
-	position: absolute;
+	position: relative;
 }
 
 ::selection {

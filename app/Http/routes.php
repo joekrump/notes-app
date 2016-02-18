@@ -18,7 +18,7 @@ Route::get('/', function () {
 
 Route::post('/uploader', 'FilesController@uploadFile');
 Route::get('/uploader', 'FilesController@getUploader');
-Route::get('/browse', 'FilesController@getFiles');
+Route::get('/browser', 'FilesController@getBrowser');
 
 // Card view created using react
 Route::get('/cards', function(){
@@ -31,6 +31,10 @@ Route::get('/react/cards/latin', 'CardsController@getLatinCards');
 //
 Route::get('/rob-roy-graph', function() {
 	return view('graph.circle.rob_roy');
+});
+
+Route::get('/brideshead', function() {
+  return view('brideshead-revisited-place');
 });
 
 Route::get('/admin', function() {

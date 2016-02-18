@@ -53,8 +53,8 @@
 					  <div id="collapse{{$course->id}}" class="accordion-body collapse row">
 					      <ul class="list list-striped list-unstyled col-sm-12">
 					      	@foreach($notes->orderBy('created_at', 'DESC')->get() as $note)
-					      	<li class="row" data-id="{{ $note->id }}" data-course-name="{{ $note->course->name }}" {{is_null($course->colour) ?: 'style=border-color:'.$course->colour }}>
-					      		<a href={{'/notes/' . $note->slug ? $note->slug : $note->id }}>	
+					      	<li class="row" data-id="{{ $note->id }}" data-course-name="{{ $note->course->name }}" {{is_null($course->colour) ?: "style="}} "{{ is_null($course->colour) ?: 'border-left:3px solid '. $course->colour  }}">
+					      		<a href={{'/notes/' . ($note->slug ? $note->slug : $note->id) }}>	
 						      		<div class="col-sm-12">
 						      			<div class="title">
 						      				<span class="text">{{ $note->title }}</span>
