@@ -1,0 +1,161 @@
+.form-control {
+  background-color: transparent;
+  color: #ffffff;
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid #ffffff; }
+  .form-control:focus {
+    box-shadow: none !important;
+    transition: border 300ms, background-color 100ms; }
+
+a.btn {
+  text-decoration: none !important; }
+
+.label-inverse {
+  padding: .2em .6em .2em;
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 0; }
+  .label-inverse.label-default {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid #008B95; }
+  .label-inverse.label-success {
+    background-color: rgba(92, 184, 92, 0.4);
+    border: 1px solid #5cb85c; }
+  .label-inverse.label-info {
+    background-color: rgba(91, 192, 222, 0.4);
+    border: 1px solid #5bc0de; }
+
+a.inverse-link {
+  color: #ffffff; }
+
+.container {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding-bottom: 35px; }
+
+.page-header {
+  margin-top: 80px; }
+
+.navbar .container {
+  background: none;
+  padding-bottom: 0px;
+  margin-top: 0px; }
+
+.navbar-inverse {
+  background-color: transparent;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 14px 45px rgba(0, 0, 0, 0.25), 0 10px 18px rgba(0, 0, 0, 0.22);
+  border-bottom: none; }
+  .navbar-inverse .navbar-nav > li > a {
+    color: #ffffff; }
+
+.nav-tabs {
+  list-style: none;
+  border-bottom: 0; }
+
+.form-control.transparent {
+  color: #ffffff;
+  font-size: 22pt;
+  border: none;
+  background: transparent;
+  border-radius: 0;
+  border-bottom: 1px solid #ffffff; }
+  .form-control.transparent option {
+    color: white;
+    font-size: 14pt;
+    background-color: rgba(0, 0, 0, 0.8); }
+
+select {
+  border: none; }
+
+input[type="text"]:focused {
+  border: none;
+  border-bottom: 1px solid #ffffff; }
+
+a.btn, button.btn {
+  color: #ffffff;
+  border: 10px;
+  background: none;
+  box-sizing: border-box;
+  display: inline-block;
+  font: inherit;
+  text-transform: uppercase;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+  border-radius: 2px;
+  line-height: 36px;
+  font-family: Roboto, sans-serif;
+  tap-highlight-color: transparent;
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+  padding: 0 16px;
+  overflow: hidden;
+  border-radius: 2px;
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0); }
+  a.btn.btn-secondary, button.btn.btn-secondary {
+    background-color: #ffa726; }
+  a.btn.btn-primary, button.btn.btn-primary {
+    background-color: #00b0ff; }
+  a.btn.btn-default, button.btn.btn-default {
+    color: #000000;
+    background-color: #cfd8dc; }
+  a.btn.btn-danger, button.btn.btn-danger {
+    color: #ffebee;
+    background-color: #d32f2f; }
+  a.btn.btn-success, button.btn.btn-success {
+    color: #ffffff;
+    background-color: #43a047; }
+
+.collapse ul {
+  margin-bottom: 2px; }
+
+.accordion-body {
+  padding-left: 7px; }
+
+#colour.form-control {
+  margin-top: 77px; }
+
+.img-thumbnail {
+  display: block;
+  margin: 0 auto;
+  border-radius: 0px;
+  padding: 2px; }
+
+.pagination > li > a, .pagination > li > span {
+  position: relative;
+  float: left;
+  line-height: 1.42857143;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.6);
+  text-decoratino: none;
+  border: 1px solid #ffffff; }
+
+.pagination > .disabled > span,
+.pagination > .disabled > a,
+.pagination > .disabled > span:focus,
+.pagination > .disabled > span:hover,
+.pagination > .disabled > a:focus,
+.pagination > .disabled > a:hover {
+  color: #e0e0e0;
+  cursor: not-allowed;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-color: #e0e0e0; }
+
+.pagination > li > a:focus, .pagination > li > a:hover, .pagination > li > span:focus, .pagination > li > span:hover {
+  z-index: 3;
+  color: #00bcd4;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-color: #0097a7; }
+
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+  color: #aeea00;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-color: #c6ff00; }
+
+@media (min-width: 1300px) {
+  .container {
+    width: 1280px; } }
+
+/*# sourceMappingURL=fm.css.map */

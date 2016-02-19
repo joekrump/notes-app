@@ -170,6 +170,10 @@ h3 {
   .index-page .actions .btn-secondary {
     padding: 2px 5px; }
 
+.img-container .img-responsive {
+  width: auto;
+  height: auto; }
+
 #action-box {
   position: fixed;
   bottom: 15px;
@@ -327,6 +331,12 @@ a.btn, button.btn {
 
 #colour.form-control {
   margin-top: 77px; }
+
+.img-thumbnail {
+  display: block;
+  margin: 0 auto;
+  border-radius: 0px;
+  padding: 2px; }
 
 .pagination > li > a, .pagination > li > span {
   position: relative;

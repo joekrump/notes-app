@@ -146,6 +146,12 @@ a.btn, button.btn {
     margin-top: 77px;
   }
 }
+.img-thumbnail {
+  display: block;
+  margin: 0 auto;
+  border-radius: 0px;
+  padding: 2px;
+}
 
 .pagination>li>a, .pagination>li>span {
   position: relative;
