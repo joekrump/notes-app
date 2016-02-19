@@ -93,7 +93,10 @@
 		}
 
 		function scrollToText(iframe, searchTerm) {
-		  iframe.contentWindow.scrollTo(0, $(iframe.contentDocument).find("*:contains('" + searchTerm + "'):last").offset().top);
+			var $lastTerm = $(iframe.contentDocument).find("*:contains('" + searchTerm + "'):last");
+			if($lastTerm.length > 0) {
+				iframe.contentWindow.scrollTo(0, $lastTerm.offset().top);	
+			}
 		}
 
 		$(document).ready(function(e, element){

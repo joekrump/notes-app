@@ -134,7 +134,7 @@ class NotesController extends Controller
     }
 
     public function search($term){
-      $notes = \App\Note::where('status', 0)->where('content', 'like', "%{$term}%")
+      $notes = \App\Note::where('status', 0)->where('content', 'like', "%{$term}%")->orWhere('title', 'like', "%{$term}%")
         ->with('course')->orderBy('course_id')->get();
       return $notes;
     }

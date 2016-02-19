@@ -13,16 +13,17 @@
 				@else
 					<a href="/notes/status/backup" class="btn btn-primary pull-right">Backups</a>
 				@endif
+				<form id="note-search" class="pull-right col-sm-10" action="/notes/search/" method="GET">
+					<button type="submit" class="btn btn-secondary pull-right">Search</button>
+					<div class="col-sm-2 pull-right">
+						<input id="search-field" type="search" class="form-control" name="term" placeholder="Search" />
+					</div>
+				</form>
 				<h1>Notes</h1>
 			</header>
 			<div class="row">
 				<div class="col-sm-12 search-container">
-					<form id="note-search" action="/notes/search/" method="GET">
-						<button type="submit" class="btn btn-secondary pull-right">Search</button>
-						<div class="col-sm-2 pull-right">
-							<input id="search-field" type="search" class="form-control" name="term" placeholder="Search" />
-						</div>
-					</form>
+					
 					<div class="search-results-container">
 						<div class="row">
 							<div class="col-sm-4 results-header" style="display: none;">
