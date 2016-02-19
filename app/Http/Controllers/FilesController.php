@@ -19,7 +19,6 @@ class FilesController extends Controller
         else
         {
          $result = $file->move("images/uploads", $fileName);
-         echo "Stored in: " . "images/uploads/" . $_FILES["upload"]["name"];
         }
         // Required: anonymous function reference number as explained above.
         $funcNum = $_GET['CKEditorFuncNum'];
@@ -30,6 +29,8 @@ class FilesController extends Controller
          
         // Check the $_FILES array and save the file. Assign the correct path to a variable ($url).
         $url = "/images/uploads/" . $fileName;
+        $image = new \App\Image(['url' => $url]);
+        $image->save();
         // Usually you will only assign something here if the file could not be uploaded.
         $message = '';
         echo "<script type='text/javascript'> window.parent.CKEDITOR.tools.callFunction($funcNum, '$url', '$message');</script>";
@@ -40,8 +41,8 @@ class FilesController extends Controller
     }
 
     public function getBrowser(){
-
-        return view('files.file-browser', compact([]));
+        $images = \App\Image::all();
+        return view('files.file-browser', compact(['images']));
     }
 
     public function getFiles(){
