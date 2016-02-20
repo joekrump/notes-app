@@ -30,116 +30,136 @@
 			var lastPosition;
 			var dots = new Path();
 			// charlesDot (The dot that will be moving along bridesheadPath)
-			var charlesDot = new Path.Circle(new Point(0, 0), 10);
+			var charlesStartPosition = new Point(400, 600);
+			var charlesDot = new Path.Circle({
+					center: [0, 0],
+				 	radius: 10,
+				 	fillColor: 'white', 
+				 	position: charlesStartPosition
+			});
 			var offset = 0;
 			// Put Charles at the starting point
-			var startPosition ;
 			var carposition = new Point();
 			var currentPosition = 0;
 			var cloneCircle;
-			var length;
-			var amount;
+			var length;	
+			var amount = 0.2; // controls the speed at which the movement will occur
 			var tool = new Tool();
-			var locationCircles = [];
-			var circleObject;
 
-			var timeDefaults = {
-				center: [400, 400],
-			 	radius: 400
-			};
+			function drawLocations(){
+				var timeDefaults = {
+					center: [400, 400],
+				 	radius: 400
+				};
 
-			var primaryLocationDefaults = {
-				center: [0, 0],
-			 	radius: 100
-			};
+				var primaryLocationDefaults = {
+					center: [0, 0],
+				 	radius: 100
+				};
 
-			var secondaryLocationDefaults = {
-				center: [0, 0],
-			 	radius: 50
-			};
+				var secondaryLocationDefaults = {
+					center: [0, 0],
+				 	radius: 50
+				};
 
-			var tertiaryLocationDefautls = {
-				center: [0, 0],
-			 	radius: 25
-			};
+				var tertiaryLocationDefautls = {
+					center: [0, 0],
+				 	radius: 25
+				};
 
-			// add present
-			timeDefaults.fillColor = 'lightgreen';
-			new Path.Circle(timeDefaults);
-			// add past
-			timeDefaults.fillColor = 'lightgrey';
-			timeDefaults.center = [1500,400];
-			new Path.Circle(timeDefaults);
-			// add Brideshead Past
-			primaryLocationDefaults.fillColor = 'forestgreen';
-			primaryLocationDefaults.center = [1300,400];
-			new Path.Circle(primaryLocationDefaults);
+				// add present
+				timeDefaults.fillColor = 'lightgreen';
+				new Path.Circle(timeDefaults);
+				// add past
+				timeDefaults.fillColor = 'lightgrey';
+				timeDefaults.center = [1500,400];
+				new Path.Circle(timeDefaults);
+				
+				// add Brideshead
+				// 
+				// Past
+				primaryLocationDefaults.fillColor = 'forestgreen';
+				primaryLocationDefaults.center = [1300,400];
+				new Path.Circle(primaryLocationDefaults);
+				// Present
+				primaryLocationDefaults.center = [200,400];
+				new Path.Circle(primaryLocationDefaults);
 
-			// add Oxford Past
-			primaryLocationDefaults.fillColor = 'steelblue';
-			primaryLocationDefaults.center = [1700,400];
-			new Path.Circle(primaryLocationDefaults);
+				// add Oxford
+				// 
+				// Past
+				primaryLocationDefaults.fillColor = 'steelblue';
+				primaryLocationDefaults.center = [1700,400];
+				new Path.Circle(primaryLocationDefaults);
+				// Present
+				// 
+				insertText();
+			}
 
+			function insertText(){
+					// text for Past location circle
+					var pastText = new PointText({
+						point: [1500,100],
+				    content: 'Past',
+				    fillColor: 'black',
+				    fontFamily: 'Tahoma',
+				    fontWeight: 'bold',
+				    fontSize: '1.5rem',
+				    justification: 'center'
+					});
+					// text for Present location circle
+					var presentText = new PointText({
+						point: [400, 100],
+				    content: 'Present',
+				    fillColor: 'black',
+				    fontFamily: 'Tahoma',
+				    fontWeight: 'bold',
+				    fontSize: '1.5rem',
+				    justification: 'center'
+					});
+					// text for Oxford Circle
+					var oxfordText = new PointText({
+						point: [1700,400],
+				    content: 'Oxford',
+				    fillColor: 'white',
+				    fontFamily: 'Tahoma',
+				    fontWeight: 'bold',
+				    fontSize: '1.2rem',
+				    justification: 'center'
+					});	
 
-			var pastText = new PointText({
-				point: [1500,100],
-		    content: 'Past',
-		    fillColor: 'black',
-		    fontFamily: 'Tahoma',
-		    fontWeight: 'bold',
-		    fontSize: '1.5rem',
-		    justification: 'center'
-			});
+					// Brideshead Text
+					// 
+					var bridesheadText = {
+						point: [1300,400],
+				    content: 'Brideshead',
+				    fillColor: 'white',
+				    fontFamily: 'Tahoma',
+				    fontWeight: 'bold',
+				    fontSize: '1.2rem',
+				    justification: 'center'
+					};
+					// draw for past
+					new PointText(bridesheadText);
+					bridesheadText.point = [200, 400];
+					// draw for present
+					new PointText(bridesheadText);
 
-			var presentText = new PointText({
-				point: [400, 100],
-		    content: 'Present',
-		    fillColor: 'black',
-		    fontFamily: 'Tahoma',
-		    fontWeight: 'bold',
-		    fontSize: '1.5rem',
-		    justification: 'center'
-			});
-
-			var oxfordText = new PointText({
-				point: [1700,400],
-		    content: 'Oxford',
-		    fillColor: 'white',
-		    fontFamily: 'Tahoma',
-		    fontWeight: 'bold',
-		    fontSize: '1.2rem',
-		    justification: 'center'
-			});
-
-			var bridesheadText = new PointText({
-				point: [1300,400],
-		    content: 'Brideshead',
-		    fillColor: 'white',
-		    fontFamily: 'Tahoma',
-		    fontWeight: 'bold',
-		    fontSize: '1.2rem',
-		    justification: 'center'
-			});
-			// dots.add(oxfordText);
-			charlesDot.fillColor = 'white';	
-			// console.log(charlesDot._style);
+			}
+	
+			drawLocations();
 			
-			segment1 = new Segment(new Point(100, 101), zeroZero, zeroZero);
-			segment2 = new Segment(new Point(100, 102), zeroZero, zeroZero);
+			segment1 = new Segment(new Point(400, 600), zeroZero, zeroZero);
+			segment2 = new Segment(new Point(400, 601), zeroZero, zeroZero);
 
 			bridesheadPath.add(segment1, segment2);
-			bridesheadPath.strokeColor ='rgba(255,255,255,0.0)';
+			bridesheadPath.strokeColor ='rgba(0,0,0,0.0)';
 			bridesheadPath.strokeWidth = 4;
 			bridesheadPath.closed = false;
 			bridesheadPath.fullySelected = false;
-			bridesheadPath.position = view.top_left;
-			startPosition = zeroZero;
-
-			charlesDot.position = startPosition;
+			bridesheadPath.position = new Point(400, 600);
+			
 			project.activeLayer.addChild(charlesDot)
-
-			// set the number of parts the path is divided into. COntrols the speed at which the movement will occur
-			amount = 0.2;
 			
 			//calculate the length of one part of the path
 			length = bridesheadPath.length / amount;
@@ -153,14 +173,22 @@
 		    	++currentPosition; // Move charles Dot ahead by one position
 		    	if(currentPosition % 5 == 0){
 		    		// Drop a 'tomato' coloured circle every fifth position change
-		    		cloneCircle = new Path.Circle(carposition, 5);
-		    		cloneCircle.fillColor = 'tomato';	
-		    		dots.add(cloneCircle);
+		    		createPathCircle(carposition);
+		    		charlesDot.bringToFront();
 		    	}
 		    } else {
 		    	// Keep charlesDot at its current position
 		    	charlesDot.position = lastPosition;
 		    }
+			}
+
+			function createPathCircle(carposition){
+    		var pathCircle = new Path.Circle(carposition, 5);
+    		pathCircle.fillColor = 'tomato';
+    		pathCircle.shadowColor = new Color(0, 0, 0);
+		    pathCircle.shadowBlur = 4;
+		    pathCircle.shadowOffset = new Point(1, 1);
+		    return pathCircle;
 			}
 			
 		  // var previousLength;
