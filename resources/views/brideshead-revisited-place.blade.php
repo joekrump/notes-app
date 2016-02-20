@@ -27,32 +27,25 @@
 			//DRAW A RACING TRACK
 			var bridesheadPath = new Path();
 
-			bridesheadPath.strokeColor ='rgba(255,255,255,0.1)';
+			bridesheadPath.strokeColor ='rgba(255,255,255,0.0)';
 			bridesheadPath.strokeWidth = 4;
 
-			var handleInTop = new Point(-90, 0);
-			var handleOutTop = new Point(90, 0);
-			var handleInSide = new Point(0, -90);
-			var handleOutSide = new Point(0, 90);
+			var handleInTop = new Point(0, 0);
+			var handleOutTop = new Point(0, 0);
+			var handleInSide = new Point(0, 0);
+			var handleOutSide = new Point(0, 0);
 			var lastPosition;
 			var dots = new Path();
 
-			Segment1 = new Segment(new Point(230, 100), handleOutTop, handleInTop);
-			Segment2 = new Segment(new Point(100, 275), handleInSide, handleOutSide);
-			Segment3 = new Segment(new Point(230, 450), handleInTop, handleOutTop);
-			Segment4 = new Segment(new Point(435, 450), handleInTop, handleOutTop);
-			Segment5 = new Segment(new Point(765, 100), handleInTop, handleOutTop);
-			Segment6 = new Segment(new Point(970, 100), handleInTop, handleOutTop);
-			Segment7 = new Segment(new Point(1100, 275), handleInSide, handleOutSide);
-			Segment8 = new Segment(new Point(970, 450), handleOutTop, handleInTop);
-			Segment9 = new Segment(new Point(765, 450), handleOutTop, handleInTop);
-			Segment10 = new Segment(new Point(435, 100), handleOutTop, handleInTop);
+			Segment1 = new Segment(new Point(0, 1), handleOutTop, handleInTop);
+			Segment2 = new Segment(new Point(0, 2), handleInSide, handleOutSide);
 
-			bridesheadPath.add(Segment1, Segment2, Segment3, Segment4, Segment5, Segment6, Segment7, Segment8, Segment9, Segment10);
+
+			bridesheadPath.add(Segment1, Segment2);
 			bridesheadPath.closed = false;
 
 			bridesheadPath.fullySelected=false;
-			bridesheadPath.position = view.center;
+			bridesheadPath.position = view.top_left;
 
 			// charlesDot
 			var charlesDot = new Path.Circle(new Point(10, 10), 10);
@@ -77,7 +70,7 @@
 
 
 			// set the number of parts the path is divided into
-			var amount = 600;
+			var amount = 0.2;
 			
 			//calculate the length of one part of the path
 			var length = bridesheadPath.length / amount;
