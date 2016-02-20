@@ -49,9 +49,8 @@
     var paddingPx = 30;
     $imgThumbnails.each(function(index, thumbnail){
       $currentThumbnailObject = $(thumbnail);
-      console.log($currentThumbnailObject.height());
+
       if($currentThumbnailObject.height() >= thumbnailContainerWidthPx){
-        console.log('height resize');
         $currentThumbnailObject.css({height : thumbnailContainerWidthPx, width : 'auto'});
       } else {
         $currentThumbnailObject.css({width : thumbnailContainerWidthPx - paddingPx, height : 'auto'});
@@ -68,10 +67,8 @@
     var containerWidthPx = $imageContainers.width();
     var $imageThumbnails = $('.img-container .img-thumbnail');
 
-    $imageContainers.css('height', $imageContainers.width());
     resizeThumbnails($imageThumbnails, containerWidthPx, true);
     
-
     $(window).on('resize', function(){
       containerWidthPx = $imageContainers.width();
       $imageContainers.css('height', containerWidthPx);

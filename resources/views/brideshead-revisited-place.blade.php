@@ -1,5 +1,12 @@
 @extends('layouts.paper')
 
+@section('stylesheets')
+	<style type="text/css">
+		body {
+			overflow: hidden;
+		}
+	</style>
+@stop
 
 @section('content')
   <canvas resize="true" id="paper"></canvas>
@@ -16,51 +23,93 @@
 			}
 		    
 			paper.setup($('canvas')[0]);
-			var points = 2;
-			var length = 20;
-			var tool = new Tool();
-			var myPath = createWorm('#b71c1c');
+
+			//DRAW A RACING TRACK
+			var bridesheadPath = new Path();
+
+			bridesheadPath.strokeColor ='rgba(255,255,255,0.4)';
+			bridesheadPath.strokeWidth = 4;
+
+			var handleInTop = new Point(-90, 0);
+			var handleOutTop = new Point(90, 0);
+			var handleInSide = new Point(0, -90);
+			var handleOutSide = new Point(0, 90);
+			var lastPosition;
+
+			Segment1 = new Segment(new Point(230, 100), handleOutTop, handleInTop);
+			Segment2 = new Segment(new Point(100, 275), handleInSide, handleOutSide);
+			Segment3 = new Segment(new Point(230, 450), handleInTop, handleOutTop);
+			Segment4 = new Segment(new Point(435, 450), handleInTop, handleOutTop);
+			Segment5 = new Segment(new Point(765, 100), handleInTop, handleOutTop);
+			Segment6 = new Segment(new Point(970, 100), handleInTop, handleOutTop);
+			Segment7 = new Segment(new Point(1100, 275), handleInSide, handleOutSide);
+			Segment8 = new Segment(new Point(970, 450), handleOutTop, handleInTop);
+			Segment9 = new Segment(new Point(765, 450), handleOutTop, handleInTop);
+			Segment10 = new Segment(new Point(435, 100), handleOutTop, handleInTop);
+
+			bridesheadPath.add(Segment1, Segment2, Segment3, Segment4, Segment5, Segment6, Segment7, Segment8, Segment9, Segment10);
+			bridesheadPath.closed = false;
+
+			bridesheadPath.fullySelected=false;
+			bridesheadPath.position = view.center;
+
+			//DRAW A RACING CAR
+			var racingcar = new Path.Circle(new Point(10, 10), 10);
+			racingcar.fillColor = 'tomato';	
+
+			var handleInRightCar = new Point(0, 13)
+			var handleOutRightCar = new Point(0, -13)
+
+			FirstCorner = new Point(100, 100);
+			SecondCorner = new Point(100, 100);
+			ThirdCorner = new Point(140, 496);
+			FourthCorner = new Segment(new Point(145, 483), handleInRightCar, handleOutRightCar);
+			FifthCorner = new Point(140, 470);
+
+			// racingcar.add(FirstCorner, SecondCorner, ThirdCorner, FourthCorner, FifthCorner);
+			// racingcar.closed = true;
+
+			// Put Charles at the starting point
+			var offset = 0;
+			var startposition = bridesheadPath.getPointAt(offset);
+			racingcar.position = startposition;
+
+
+			// set the number of parts the path is divided into
+			var amount = 600;
 			
-			function createWorm(color) {
-				console.log('creating worm');
-				var path = new paper.Path({
-					strokeColor: color,
-					strokeWidth: 20,
-					strokeCap: 'round'
-				});
-				
-				var start = new paper.Point(Math.random()*100,Math.random()*100);
-				for(var i = 0; i < points; i++) {
-					path.add(new paper.Point(i * length + start.x, 0 + start.y));
-				}
-				
-				return path;
-			}
-		    
-		    var x;
-		    var y;
-			function moveSeg(event) {
-		        event.count = 1;
-				if(event.count <= 100) {
-				myPath.firstSegment.point._x += (x - myPath.firstSegment.point._x)/10;
-		        myPath.firstSegment.point._y += (y - myPath.firstSegment.point._y)/10;
-		            for (var i = 0; i < points - 1; i++) {
-		                var segment = myPath.segments[i];
-		                var nextSegment = segment.next;
-		                var vector = new paper.Point(segment.point.x - nextSegment.point.x,segment.point.y - nextSegment.point.y);
-		                vector.length = length;
-		                nextSegment.point = new paper.Point(segment.point.x - vector.x,segment.point.y - vector.y);
-		            }
-		            myPath.smooth();
-		        }
+			//calculate the length of one part of the path
+			var length = bridesheadPath.length / amount;
+
+			// animate the circle, moving from position to position along the bridesheadPath
+			var carposition = new Point();
+			var currentPosition = 0;
+
+			function onFrame(event){
+		    if((currentPosition * length) < bridesheadPath.length){
+		    	carposition = bridesheadPath.getPointAt(currentPosition * length);
+		    	racingcar.position = carposition;
+		    	++currentPosition;
+		    } else {
+		  
+		    	// console.log((currentPosition * length));
+		    	// console.log(bridesheadPath.length);
+		    	racingcar.position = lastPosition;
 		    }
+			}
+			var tool = new Tool();
 		    
 			paper.tool.onMouseDown = function(event) {
-				console.log('fired');
-		        x = event.event.offsetX;
-		        y = event.event.offsetY;
-		        paper.view.attach('frame', moveSeg);
+        x = event.event.offsetX;
+        y = event.event.offsetY;
+        lastPosition = new Point(x, y);
+        bridesheadPath.add(new Segment(lastPosition, new Point(0,0), new Point(0,0)));
+        amount = bridesheadPath.length / length;
+        length = bridesheadPath.length / amount;
+        paper.view.attach('frame', onFrame);
 			}
+
+
 
 		});
 	</script>

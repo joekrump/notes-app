@@ -333,7 +333,7 @@ a.btn, button.btn {
   margin-top: 77px; }
 
 .img-thumbnail {
-  display: block;
+  display: inline-block;
   margin: 0 auto;
   border-radius: 0px;
   padding: 2px; }
