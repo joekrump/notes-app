@@ -52,58 +52,75 @@
 			var currentPosition = 0;
 			var cloneCircle;
 			var length;	
-			var amount = 0.25; // controls the speed at which the movement will occur
+			var amount = 0.1; // controls the speed at which the movement will occur
 			var tool = new Tool();
 			var numpathLocations = 0;
 			var pathLocations = [];
 			var listpathLocation;
+			var latestLocationName = '';
 
 			function drawpathLocations(){
 				var timeDefaults = {
 					center: [250, 850],
 				 	radius: 200,
 				 	data: {
-				 		name: 'test'
+				 		name: 'default'
 				 	}
 				};
 
 				var primarypathLocationDefaults = {
 					center: [0, 0],
-				 	radius: 100
+				 	radius: 100,
+				 	data: {
+				 		name: 'default'
+				 	},
+				 	hasParent: true
 				};
 
 				var secondarypathLocationDefaults = {
 					center: [0, 0],
-				 	radius: 50
+				 	radius: 50,
+				 	data: {
+				 		name: 'default'
+				 	},
+				 	hasParent: true
 				};
 
 				var tertiarypathLocationDefautls = {
 					center: [0, 0],
-				 	radius: 25
+				 	radius: 25,
+				 	data: {
+				 		name: 'default'
+				 	},
+				 	hasParent: true
 				};
 
 				// add present
 				timeDefaults.fillColor = 'lightgreen';
 				pathLocations.push(new Path.Circle(timeDefaults));
+				pathLocations[numpathLocations].data.name = 'Present';
 				numpathLocations++;
 				// add past
 				timeDefaults.fillColor = 'lightgrey';
 				timeDefaults.center = [1400,540];
 				timeDefaults.radius = 800;
 				pathLocations.push(new Path.Circle(timeDefaults));
+				pathLocations[numpathLocations].data.name = 'Past';
 				numpathLocations++;
 				
 				// add Brideshead
 				// 
 				// Past
 				primarypathLocationDefaults.fillColor = 'forestgreen';
+				primarypathLocationDefaults.data.name = 'Brideshead';
 				primarypathLocationDefaults.center = [1300,400];
-
 				pathLocations.push(new Path.Circle(primarypathLocationDefaults));
+				pathLocations[numpathLocations].data.name = 'Brideshead';
 				numpathLocations++;
 				// Present
 				primarypathLocationDefaults.center = [200,400];
 				pathLocations.push(new Path.Circle(primarypathLocationDefaults));
+				pathLocations[numpathLocations].data.name = 'Brideshead';
 				numpathLocations++;
 
 				// add Oxford
@@ -112,11 +129,11 @@
 				primarypathLocationDefaults.fillColor = 'steelblue';
 				primarypathLocationDefaults.center = [1700,400];
 				pathLocations.push(new Path.Circle(primarypathLocationDefaults));
+				pathLocations[numpathLocations].data.name = 'Oxford';
 				numpathLocations++;
 				// Present
 				// 
 				
-
 				insertText();
 			}
 
@@ -124,12 +141,8 @@
 				(new Point(400, 600)),
 				(new Point(400, 500)),
 				(new Point(1000, 500)),
-				(new Point(700, 600)),
-				(new Point(1400, 1000)),
-				(new Point(700, 600)),
-				(new Point(700, 200)),
-				(new Point(1400,540)),
-				(new Point(200, 500))
+				(new Point(200,400)),
+				(new Point(250, 850))
 			];
 
 			function insertText(){
@@ -239,8 +252,10 @@
 			}
 
 			function insertListItem(pathLocation){
-				$('#location-list').append('<li>' + pathLocation.data.name+ '</li>');
-
+				if(latestLocationName !== pathLocation.data.name){
+					$('#location-list').append('<li>' + pathLocation.data.name+ '</li>');
+					latestLocationName = pathLocation.data.name;
+				}
 			}
 
 
