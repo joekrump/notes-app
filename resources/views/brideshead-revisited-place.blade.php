@@ -5,7 +5,7 @@
 		body {
 			overflow: hidden;
 		}
-		#location-list {
+		.location-list {
 			position: fixed;
 			top: 0;
 			left: 0;
@@ -15,8 +15,8 @@
 @stop
 
 @section('content')
-	<ol id="location-list">
-
+	<ol class="location-list" id="most-inner-list">
+		<li>Present</li>
 	</ol>
   <canvas resize="true" id="paper"></canvas>
 @stop
@@ -56,13 +56,18 @@
 			var tool = new Tool();
 			var numpathLocations = 0;
 			var pathLocations = [];
-			var listpathLocation;
-			var latestLocationName = '';
+			var pathLocationIndex;
+			var latestLocationName = 'Present';
+			var activeParentName 	 = 'Present';
+			var locationsMetaData = [];
+			var activeParentIndex = 0;
+			var parentName = '';
+			var listHasItems = false;
 
 			function drawpathLocations(){
 				var timeDefaults = {
 					center: [250, 850],
-				 	radius: 200,
+				 	radius: 300,
 				 	data: {
 				 		name: 'default'
 				 	}
@@ -96,16 +101,21 @@
 				};
 
 				// add present
-				timeDefaults.fillColor = 'lightgreen';
-				pathLocations.push(new Path.Circle(timeDefaults));
-				pathLocations[numpathLocations].data.name = 'Present';
+				timeDefaults.fillColor = 'black';
+				var rtop = new Point(0, 0);
+				var rbot = new Point(580, $(window).height());
+				var rect = new Rectangle(rtop, rbot);
+				var prect = new Path.Rectangle(rect, 5);
+
+				pathLocations.push(prect);
+				locationsMetaData.push({name: 'Present'});
 				numpathLocations++;
 				// add past
 				timeDefaults.fillColor = 'lightgrey';
 				timeDefaults.center = [1400,540];
 				timeDefaults.radius = 800;
 				pathLocations.push(new Path.Circle(timeDefaults));
-				pathLocations[numpathLocations].data.name = 'Past';
+				locationsMetaData.push({name: 'Past'});
 				numpathLocations++;
 				
 				// add Brideshead
@@ -115,12 +125,12 @@
 				primarypathLocationDefaults.data.name = 'Brideshead';
 				primarypathLocationDefaults.center = [1300,400];
 				pathLocations.push(new Path.Circle(primarypathLocationDefaults));
-				pathLocations[numpathLocations].data.name = 'Brideshead';
+				locationsMetaData.push({name: 'Brideshead', parentName: 'Past'});
 				numpathLocations++;
 				// Present
-				primarypathLocationDefaults.center = [200,400];
+				primarypathLocationDefaults.center = [200,800];
 				pathLocations.push(new Path.Circle(primarypathLocationDefaults));
-				pathLocations[numpathLocations].data.name = 'Brideshead';
+				locationsMetaData.push({name: 'Brideshead', parentName: 'Present'});
 				numpathLocations++;
 
 				// add Oxford
@@ -129,7 +139,7 @@
 				primarypathLocationDefaults.fillColor = 'steelblue';
 				primarypathLocationDefaults.center = [1700,400];
 				pathLocations.push(new Path.Circle(primarypathLocationDefaults));
-				pathLocations[numpathLocations].data.name = 'Oxford';
+				locationsMetaData.push({name: 'Oxford', parentName: 'Past'});
 				numpathLocations++;
 				// Present
 				// 
@@ -140,13 +150,15 @@
 			var plotPoints = [
 				(new Point(400, 600)),
 				(new Point(400, 500)),
-				(new Point(1000, 500)),
+				(new Point(1300,400)),
 				(new Point(200,400)),
+				(new Point(250, 850)),
+				(new Point(1700,400)),
 				(new Point(250, 850))
 			];
 
 			function insertText(){
-					// text for Past pathLocation circle
+					// text for Past circle
 					var pastText = new PointText({
 						point: [1500,100],
 				    content: 'Past',
@@ -156,11 +168,11 @@
 				    fontSize: '1.5rem',
 				    justification: 'center'
 					});
-					// text for Present pathLocation circle
+					// text for Present circle
 					var presentText = new PointText({
-						point: [250, 750],
+						point: [250, 500],
 				    content: 'Present',
-				    fillColor: 'black',
+				    fillColor: 'white',
 				    fontFamily: 'Tahoma',
 				    fontWeight: 'bold',
 				    fontSize: '1.5rem',
@@ -190,7 +202,7 @@
 					};
 					// draw for past
 					new PointText(bridesheadText);
-					bridesheadText.point = [200, 400];
+					bridesheadText.point = [200, 800];
 					// draw for present
 					new PointText(bridesheadText);
 			}
@@ -220,18 +232,18 @@
 
 			function onFrame(event){
 		    if((currentPosition * length) < bridesheadPath.length){
-		    	carposition = bridesheadPath.getPointAt(currentPosition * length);
+		    	carposition = bridesheadPath.getPointAt(currentPosition * (length ));
 		    	charlesDot.position = carposition;
 		    	++currentPosition; // Move charles Dot ahead by one position
 		    	if(currentPosition % 5 == 0){
 		    		// Drop a 'tomato' coloured circle every fifth position change
-		    		createPathCircle(carposition, 'tomato', 5);
+		    		createPathCircle(carposition, 'tomato', 5).bringToFront();
 		    		charlesDot.bringToFront();
 		    	} else {
 		    		createPathCircle(carposition, 'red', 3);
 		    	}
-		    	if((listpathLocation = isInApathLocation(charlesDot)) !== false){
-		    		insertListItem(listpathLocation);
+		    	if((pathLocationIndex = isInApathLocation(charlesDot)) !== false){
+		    		insertListItem(pathLocationIndex);
 		    	}
 		    } else {
 		    	// Keep charlesDot at its current position
@@ -247,14 +259,32 @@
 		    	pathCircle.shadowBlur = 4;
 		    	pathCircle.shadowOffset = new Point(1, 1);
     		}
-    		
+
+    		setTimeout(function(){
+    			pathCircle.scale(0.0);
+    		}, 5000);
 		    return pathCircle;
 			}
 
-			function insertListItem(pathLocation){
-				if(latestLocationName !== pathLocation.data.name){
-					$('#location-list').append('<li>' + pathLocation.data.name+ '</li>');
-					latestLocationName = pathLocation.data.name;
+			function insertListItem(pathLocationIndex){
+				if(latestLocationName !== locationsMetaData[pathLocationIndex].name && (locationsMetaData[pathLocationIndex].name !== activeParentName)){
+					if(pathLocations[pathLocationIndex].hasParent && !listHasItems){
+						
+						$('#most-inner-list').removeAttr('id').find('li:last').append('<ol id="most-inner-list"><li>' + locationsMetaData[pathLocationIndex].name + '</li></ol>');
+						listHasItems = true;
+						activeParentName = locationsMetaData[pathLocationIndex].parentName;
+					} else {
+						var mostInnerList = $('#most-inner-list');
+						if(!pathLocations[pathLocationIndex].hasParent && !mostInnerList.hasClass('location-list')){
+							$('#most-inner-list').removeAttr('id').parents('ol').attr('id', 'most-inner-list');
+						}
+						$('#most-inner-list').append('<li>' + locationsMetaData[pathLocationIndex].name + '</li>');
+						activeParentIndex = pathLocationIndex;
+						listHasItems = false;
+						activeParentName= '';
+					}
+					
+					latestLocationName = locationsMetaData[pathLocationIndex].name;
 				}
 			}
 
@@ -266,8 +296,10 @@
 			 */
 			function isInApathLocation(charlesDot){
 				for(var j = 0; j < numpathLocations; j++){
+
 					if(charlesDot.intersects(pathLocations[j])){
-						return pathLocations[j];
+						// console.log(pathLocations[j]);
+						return j;
 					}
 				}
 				return false;
@@ -288,9 +320,7 @@
         // lastPosition = new Point(x, y);
         for(var i = 0; i < plotPoints.length; i++){
         	bridesheadPath.add(new Segment(plotPoints[i], new Point(0,0), new Point(0,0)));
-
         	amount = bridesheadPath.length / length;
-        	
         	length = bridesheadPath.length / amount;
         }
         
