@@ -27,7 +27,7 @@
 			//DRAW A RACING TRACK
 			var bridesheadPath = new Path();
 
-			bridesheadPath.strokeColor ='rgba(255,255,255,0.4)';
+			bridesheadPath.strokeColor ='rgba(255,255,255,0.1)';
 			bridesheadPath.strokeWidth = 4;
 
 			var handleInTop = new Point(-90, 0);
@@ -35,6 +35,7 @@
 			var handleInSide = new Point(0, -90);
 			var handleOutSide = new Point(0, 90);
 			var lastPosition;
+			var dots = new Path();
 
 			Segment1 = new Segment(new Point(230, 100), handleOutTop, handleInTop);
 			Segment2 = new Segment(new Point(100, 275), handleInSide, handleOutSide);
@@ -53,9 +54,9 @@
 			bridesheadPath.fullySelected=false;
 			bridesheadPath.position = view.center;
 
-			//DRAW A RACING CAR
-			var racingcar = new Path.Circle(new Point(10, 10), 10);
-			racingcar.fillColor = 'tomato';	
+			// charlesDot
+			var charlesDot = new Path.Circle(new Point(10, 10), 10);
+			charlesDot.fillColor = 'white';	
 
 			var handleInRightCar = new Point(0, 13)
 			var handleOutRightCar = new Point(0, -13)
@@ -66,13 +67,13 @@
 			FourthCorner = new Segment(new Point(145, 483), handleInRightCar, handleOutRightCar);
 			FifthCorner = new Point(140, 470);
 
-			// racingcar.add(FirstCorner, SecondCorner, ThirdCorner, FourthCorner, FifthCorner);
-			// racingcar.closed = true;
+			// charlesDot.add(FirstCorner, SecondCorner, ThirdCorner, FourthCorner, FifthCorner);
+			// charlesDot.closed = true;
 
 			// Put Charles at the starting point
 			var offset = 0;
 			var startposition = bridesheadPath.getPointAt(offset);
-			racingcar.position = startposition;
+			charlesDot.position = startposition;
 
 
 			// set the number of parts the path is divided into
@@ -84,17 +85,24 @@
 			// animate the circle, moving from position to position along the bridesheadPath
 			var carposition = new Point();
 			var currentPosition = 0;
+			var cloneCircle;
 
 			function onFrame(event){
 		    if((currentPosition * length) < bridesheadPath.length){
 		    	carposition = bridesheadPath.getPointAt(currentPosition * length);
-		    	racingcar.position = carposition;
+		    	charlesDot.position = carposition;
 		    	++currentPosition;
+		    	if(currentPosition % 5 == 0){
+		    		cloneCircle = new Path.Circle(carposition, 5);
+		    		cloneCircle.fillColor = 'tomato';	
+		    		dots.add(cloneCircle);
+		    	}
+		    	
 		    } else {
 		  
 		    	// console.log((currentPosition * length));
 		    	// console.log(bridesheadPath.length);
-		    	racingcar.position = lastPosition;
+		    	charlesDot.position = lastPosition;
 		    }
 			}
 			var tool = new Tool();
