@@ -154,6 +154,8 @@
 				(new Point(200,400)),
 				(new Point(250, 850)),
 				(new Point(1700,400)),
+				(new Point(200,400)),
+				(new Point(33,800)),
 				(new Point(250, 850))
 			];
 
@@ -259,7 +261,7 @@
 		    	pathCircle.shadowBlur = 4;
 		    	pathCircle.shadowOffset = new Point(1, 1);
     		}
-
+    		// Fade out the circle by scaling after 5 seconds.
     		setTimeout(function(){
     			pathCircle.scale(0.0);
     		}, 5000);
@@ -275,13 +277,15 @@
 						activeParentName = locationsMetaData[pathLocationIndex].parentName;
 					} else {
 						var mostInnerList = $('#most-inner-list');
-						if(!pathLocations[pathLocationIndex].hasParent && !mostInnerList.hasClass('location-list')){
-							$('#most-inner-list').removeAttr('id').parents('ol').attr('id', 'most-inner-list');
+						if(!pathLocations[pathLocationIndex].hasParent){
+							activeParentIndex = pathLocationIndex;
+							listHasItems = false;
+							activeParentName= '';
+							if(!mostInnerList.hasClass('location-list')){
+								$('#most-inner-list').removeAttr('id').parents('ol').attr('id', 'most-inner-list');
+							}
 						}
 						$('#most-inner-list').append('<li>' + locationsMetaData[pathLocationIndex].name + '</li>');
-						activeParentIndex = pathLocationIndex;
-						listHasItems = false;
-						activeParentName= '';
 					}
 					
 					latestLocationName = locationsMetaData[pathLocationIndex].name;
