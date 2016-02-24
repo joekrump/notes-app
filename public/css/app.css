@@ -96,7 +96,7 @@ h3 {
   opacity: 0.6; }
 
 .background-dimmer {
-  background-color: rgba(0, 0, 0, 0.45); }
+  background-color: rgba(0, 0, 0, 0.25); }
 
 .background, .background-dimmer {
   display: block;

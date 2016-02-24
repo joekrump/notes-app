@@ -23,8 +23,8 @@ class Note extends Model
   // list of subject names to search for in the title 
   // in priority order of presidence.
   protected static $subject_names = [
-    'wwi',
     'wwii',
+    'wwi',
     'enlightenment',
     'sheen',
     'saints'

@@ -23,7 +23,7 @@
 					@if(isset($courses) && $courses->count())
 					<div class="col-sm-4">
 						<div class="form-group">
-						<select name="course_id" class="form-control title-field transparent">
+						<select id="course_name" name="course_id" class="form-control title-field transparent">
 						@foreach($courses as $course)
 							<option value={{$course->id}} {{ isset($note->course) && ($note->course->id == $course->id) ? 'selected' : '' }}>{{$course->name}}</option>
 						@endforeach
@@ -46,7 +46,7 @@
 		       </textarea> --}}
 		    </div>
 				{{-- Put content into a hidden text area initially. --}}
-				<textarea style="display:none;" id="init-content">{{ isset($note) ? $note->content : '' }}</textarea>
+				<textarea style="display:none;" id="init-content">{{ isset($note) ? $note->content : '<div class="header"><div class="pull-left"><p></p></div><div class="pull-right"><p>Joseph Krump</p></div></div><p focus=focus></p>' }}</textarea>
 			</div>
 		</section>
 	</div>
@@ -107,6 +107,9 @@
 				id: {{isset($note) ? $note->id : 'undefined'}}
 			};
 			$('.ckeditor').val(initVal);
+
+
+
 			var editor = CKEDITOR.instances.editor1;
 
 			$('#word-count').text(updateWordCount(initVal).wordCount);
@@ -125,29 +128,44 @@
 		    $('#word-count').text(updateWordCount(editor.getData()).wordCount);
 			});
 
+			
+
 			editor.addContentsCss( '/css/editor-print.css' );
 
 			// Set hotkey listener for ctrl+s in editor
 			editor.on('contentDom', function( evt )
 			{
+				var cke_wysiwyg_frame = document.querySelector(".cke_wysiwyg_frame");
 
+				$('#course_name').change(function(e){
+					var $headerCourseName = $(cke_wysiwyg_frame.contentDocument).find('.header .pull-left p:first');
+					console.log($headerCourseName)
+					if($headerCourseName){
+						$headerCourseName.text($(this).find('option[value='+$(this).val()+']').text());
+					}
+					
+				});
 				// if there is a search term when the page is loaded, scroll to it
-				if(searchTerm !== null && searchTerm !== ''){
-					var iframe = document.querySelector(".cke_wysiwyg_frame").contentDocument.body;
+				if(searchTerm !== null && searchTerm !== ''){	
+					var iframe_body = cke_wysiwyg_frame.contentDocument.body;
 					/*create a new RegExp object using search variable as a parameter,
 					the g option is passed in so it will find more than one occurence of the
 					search parameter*/                                          
 					var result = new RegExp(searchTerm, 'g');
 
-					iframe.innerHTML = iframe.innerHTML.replace(result,"<span class='search-found'>" + searchTerm + "</span>");
-					scrollToText(document.querySelector(".cke_wysiwyg_frame"), searchTerm);
+					iframe_body.innerHTML = iframe_body.innerHTML.replace(result,"<span class='search-found'>" + searchTerm + "</span>");
+					scrollToText(cke_wysiwyg_frame, searchTerm);
 				}
 
 				// Register listener for Ctrl+s saving from context of the editor.
 				editor.document.on('keydown', function(event){
-					
 
-					if(event.data.$.keyCode == 17) isCtrl = true;
+					if(event.data.$.keyCode == 17){
+						isCtrl = true;
+						setTimeout(function(){
+							isCtrl = false;
+						}, 500);
+					} 
 					if(event.data.$.keyCode == 83 && isCtrl == true){
 						try {
 							event.data.$.preventDefault();

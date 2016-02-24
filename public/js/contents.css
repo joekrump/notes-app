@@ -17,6 +17,34 @@ body
 /*	margin: 5px -1px;*/
 	margin-top: -10px;
 }
+
+header, .header, footer, .footer {
+	width: 100%;
+	display: block;
+	box-sizing: border-box;
+}
+.header:before {
+	display: table;
+  content: " ";
+  box-sizing: border-box;
+}
+
+.header:after {
+	clear: both;
+	display: table;
+	content: " ";
+	box-sizing: border-box;
+}
+
+.pull-left {
+	float: left;
+	display: block;
+}
+.pull-right {
+	float: right;
+	display: block;
+}
+
 .search-found {
   background-color: #FF9632;
   color: #e6e6e6;
@@ -41,11 +69,10 @@ body
 
 blockquote
 {
-	font-style: italic;
 	font-family: Georgia, Times, "Times New Roman", serif;
 	padding: 2px 0;
 	border-style: solid;
-	border-color: #ccc;
+	border-color: #00bfa5;
 	border-width: 0;
 }
 
@@ -63,8 +90,7 @@ blockquote
 	border-right-width: 5px;
 }
 
-a
-{
+a{
 	color: #0782C1;
 }
 
