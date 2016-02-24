@@ -269,8 +269,8 @@ $(function() {
 	}
 
 	function insertNewInnerList(parentName){
-		$('#location-list').append('<ol data-name="' + parentName + '"><li class="latest"><span class="li-content" style="display:none;">' + parentName + '</span></li></ol>');
-		$('.active').find('.li-content').slideDown(500);
+		$('#location-list li:last').append('<ol class="children"><li class="latest" data-name="' + parentName + '"><span class="li-content" style="display:none;">' + parentName + '</span><ol class="children"></li></ol>');
+		$('.latest').find('.li-content').slideDown(500);
 	}
 
 	/**
@@ -296,7 +296,7 @@ $(function() {
 			if(lastElementContent != locationsMetaData[pathLocationIndex].name){
 				resetParentTree(locationsMetaData[pathLocationIndex].name);
 				$('.active').removeClass('active');
-				$locationList.append('<li class="active" data-name="' + locationsMetaData[pathLocationIndex].name + '"><span class="li-content" style="display:none;">' + locationsMetaData[pathLocationIndex].name + '</span></li>');
+				$locationList.append('<li class="active" data-name="' + locationsMetaData[pathLocationIndex].name + '"><span class="li-content" style="display:none;">' + locationsMetaData[pathLocationIndex].name + '</span><ol class="children"></ol></li>');
 				$('.active').find('.li-content').slideDown(500);
 			}
 			currentLocationName = locationsMetaData[pathLocationIndex].name;
@@ -306,11 +306,13 @@ $(function() {
 				return;
 			}
 			$('.latest').removeClass('latest');
+			
 			var activeTreeIndex = insertNewParentRow(locationsMetaData[pathLocationIndex]);
 			if(activeTreeIndex == -1){
-				$('.active').after(makeLiString(locationsMetaData[pathLocationIndex].name));
+				$('.active').children('.children:last').append(makeLiString(locationsMetaData[pathLocationIndex].name));
+				currentLocationName = locationsMetaData[pathLocationIndex].name;
 			} else {
-				console.log(activeTreeIndex);
+				// console.log(activeTreeIndex);
 				var $activeListItem = $('.active');
 				var parentName = activeParentTree[activeTreeIndex];
 				var $parentList;
@@ -323,33 +325,50 @@ $(function() {
 
 				if($parentList.length != 0){
 					$existingList = $parentList.find('[data-name="' + locationsMetaData[pathLocationIndex].parent.name + '"]');
-					console.log($existingList);
-					if($existingList.length > 0){
-						$existingList.append(makeLiString(locationsMetaData[pathLocationIndex].name));
-					} else {
-						console.log('how did this HAPPEN AGAIN?');
-						if(locationData[locationsMetaData[pathLocationIndex].key].parent.parent !== undefined){
-							insertNewInnerList(locationsMetaData[pathLocationIndex].parent.name);
 
-							$('[data-name="' + locationsMetaData[pathLocationIndex].parent.name + '"]:last').append('<ol data-name="' + locationsMetaData[pathLocationIndex].name + '">' + makeLiString(locationsMetaData[pathLocationIndex].name) + '</ol>');
+					if($existingList.length > 0){
+						// If item does not already exist then insert
+						if($('.active').find('[data-name="' + locationsMetaData[pathLocationIndex].name + '"]').length == 0){
+							$existingList.children('.children:last').append(makeLiString(locationsMetaData[pathLocationIndex].name));
+						}
+					} else {
+						if(locationData[locationsMetaData[pathLocationIndex].key].parent.parent !== undefined){
+							if($('.active').find('[data-name="' + locationsMetaData[pathLocationIndex].parent.name + '"]').length == 0){
+								insertNewInnerList(locationsMetaData[pathLocationIndex].parent.name);
+							}
+							if($('.active').find('[data-name="' + locationsMetaData[pathLocationIndex].name + '"]').length == 0){
+
+								$('.active').find('[data-name="' + locationsMetaData[pathLocationIndex].parent.name + '"]').children('.children:last').append(makeLiString(locationsMetaData[pathLocationIndex].name));
+							}
 						} else {
-							insertNewInnerList(locationsMetaData[pathLocationIndex].name);
+
+							if($('.active').find('[data-name="' + locationsMetaData[pathLocationIndex].name + '"]').length == 0){
+								console.log(locationsMetaData[pathLocationIndex].name);
+								$('[data-name="' + locationsMetaData[pathLocationIndex].parent.name + '"]:last').children('.children:last').append(makeLiString(locationsMetaData[pathLocationIndex].name))
+								// insertNewInnerList(locationsMetaData[pathLocationIndex].name);
+							}
 						}
 					}
 				} else {
-					console.log('HOW DID THIS HAPPEN?');
+					// console.log('HOW DID THIS HAPPEN?');
 				}
 				activeParentTree = activeParentTree.slice(0, (activeTreeIndex + 1));
 				currentLocationName = locationsMetaData[pathLocationIndex].name;
 			}
 			$('.latest .li-content').slideDown(500);
 		} else {
-			console.log('else')
+
 		}
+		// console.log(activeParentTree);
 	}
 
+	/**
+	 * [makeLiString description]
+	 * @param  {[type]} content [description]
+	 * @return {[type]}         [description]
+	 */
 	function makeLiString(content){
-		return ('<li class="latest"><span class="li-content" style="display:none;">' + content + '</span></li>');
+		return ('<li class="latest" data-name="' + locationsMetaData[pathLocationIndex].name + '"><span class="li-content" style="display:none;">' + content + '</span><ol class="children"></ol></li>');
 	}
 
 	function insertNewParentRow(location){

@@ -44,7 +44,11 @@
 
 @section('content')
 	<ol id="location-list">
-		<li class="active" data-name="Present"><span class="li-content">Present</span></li>
+		<li class="active" data-name="Present">
+			<span class="li-content">Present</span>
+			<ol class="children">
+			</ol>
+		</li>
 	</ol>
   <canvas resize="true" id="paper"></canvas>
 @stop
