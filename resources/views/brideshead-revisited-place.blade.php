@@ -26,7 +26,7 @@
 
 @section('content')
 	<ol id="location-list">
-		<li data-name="Present">Present</li>
+		<li data-name="Present"><span class="li-content">Present</span></li>
 	</ol>
   <canvas resize="true" id="paper"></canvas>
 @stop
