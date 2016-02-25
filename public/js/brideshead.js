@@ -56,16 +56,17 @@ $(function() {
 		'present',
 		'presentBrideshead',
 		'presentBridesheadChapel',
-		// 'presentArmyCamp1',
-		// 'presentArmyCamp1Huts',
-		// 'presentNearbyCity',
-		// 'presentNearbyCityMadhouse',
-		// 'presentTrain',
-		// 'presentTrainCOsCarriage',
-		// 'presentTrainStation',
-		// 'presentArmyCamp2',
-		// 'presentArmyCamp2Huts',
-		// 'presentFarmToEat'
+		'presentArmyCamp1',
+		'presentArmyCamp1Huts',
+		'presentNearbyCity',
+		'presentNearbyCityMadhouse',
+		'presentTrain',
+		'presentTrainCOsCarriage',
+		'presentTrainStation1',
+		'presentTrainStation2',
+		'presentArmyCamp2',
+		'presentArmyCamp2Huts',
+		'presentFarmToEat'
 	];
 	var locationData = {};
 
@@ -98,17 +99,13 @@ $(function() {
 		};
 		// Past locations
 		// 
-		locationData.past = {name: 'Past', center: {x: 1400, y:400}, color: 'lightgrey', radius: timeSize.radius, childKeys: ['pastBrideshead', 'pastOxford','pastCarFaxStation',
-'pastBotleyRoad',
-'pastSwindon',
-'pastRavenna'], shape: 'circle', key: 'past'};
+		locationData.past = {name: 'Past', center: {x: 1400, y:400}, color: 'lightgrey', radius: timeSize.radius, shape: 'circle', key: 'past'};
 		locationData.pastBrideshead = {
 					name: 'Brideshead',
 					center: {x: 1300, y:400},
 					radius: primarySize.radius,
 					color: 'forestgreen',
 					parent: locationData.past,
-					childKeys: ['pastBridesheadChapel', 'pastBridesheadCdr'],
 					shape: 'circle',
 					key: 'pastBrideshead'
 				};
@@ -146,16 +143,7 @@ $(function() {
 					color: 'steelblue',
 					parent: locationData.past,
 					shape: 'circle',
-					key: 'pastOxford',
-					childKeys: ['pastOxfordFirstFloorRoom',
-						'pastOxfordClasses',
-						'pastOxfordSebastiansRoom',
-						'pastOxfordBotanicalGardens',
-						'pastOxfordGodstow',
-						'pastOxfordTrout',
-						'pastOxfordAlexanders',
-						'pastOxfordTeashop'
-					]
+					key: 'pastOxford'
 				};
 
 		locationData.pastOxfordFirstFloorRoom = {
@@ -269,14 +257,13 @@ $(function() {
 
 		// Present Locations
 		// 
-		locationData.present = {name: 'Present', childKeys: ['presentBrideshead'], shape: 'rect', radius: 800, center: {x: 250, y: 500}, key: 'present'};
+		locationData.present = {name: 'Present', shape: 'rect', radius: 800, center: {x: 250, y: 500}, key: 'present'};
 		locationData.presentBrideshead = {
 					name: 'Brideshead',
 					center: {x: 250, y: 800},
 					color: 'forestgreen',
 					radius: primarySize.radius,
 					parent: locationData.present,
-					childKeys: ['presentBridesheadChapel'],
 				  shape: 'circle',
 				  key: 'presentBrideshead'
 				};
@@ -289,27 +276,105 @@ $(function() {
 					shape: 'circle',
 					key: 'presentBridesheadChapel'
 				};
-
-
-		presentArmyCamp1 = {
+		locationData.presentArmyCamp1 = {
 					name: 'Army Camp 1',
-					center: {x: 250, y: 400},
+					center: {x: 255, y: 200},
 					color: '#1428B8',
-					radius: primarySize.radius,
+					radius: tertiarySize.radius,
 					parent: locationData.present,
-					childKeys: ['presentArmyCamp1Huts'],
 				  shape: 'circle',
-				  key: 'presentBrideshead'
+				  key: 'presentArmyCamp1'
 				};
-		// presentArmyCamp1Huts
-		// presentNearbyCity
-		// presentNearbyCityMadhouse
-		// presentTrain
-		// presentTrainCOsCarriage
-		// presentTrainStation
-		// presentArmyCamp2
-		// presentArmyCamp2Huts
-		// presentFarmToEat
+		locationData.presentArmyCamp1Huts = {
+					name: 'Huts',
+					center: {x: 255, y: 225},
+					color: '#1428B8',
+					radius: tertiarySize.radius,
+					parent: locationData.presentArmyCamp1,
+				  shape: 'circle',
+				  key: 'presentArmyCamp1Huts'
+				};
+		locationData.presentNearbyCity= {
+					name: 'City (near Army Camp 1)',
+					center: {x: 305, y: 450},
+					color: 'slategrey',
+					radius: tertiarySize.radius,
+					parent: locationData.present,
+				  shape: 'circle',
+				  key: 'presentNearbyCity'
+				};
+		locationData.presentNearbyCityMadhouse= {
+					name: 'Mad House',
+					center: {x: 305, y: 475},
+					color: 'slategrey',
+					radius: tertiarySize.radius,
+					parent: locationData.presentNearbyCity,
+				  shape: 'circle',
+				  key: 'presentNearbyCityMadhouse'
+				};
+		locationData.presentTrain= {
+					name: 'Train',
+					center: {x: 425, y: 500},
+					color: 'red',
+					radius: tertiarySize.radius,
+					parent: locationData.present,
+				  shape: 'circle',
+				  key: 'presentTrain'
+				};
+		locationData.presentTrainCOsCarriage= {
+					name: 'Co\'s Carriage',
+					center: {x: 425, y: 525},
+					color: 'red',
+					radius: tertiarySize.radius,
+					parent: locationData.presentTrain,
+				  shape: 'circle',
+				  key: 'presentTrainCOsCarriage'
+				};
+		locationData.presentTrainStation1= {
+					name: 'Train Station 1',
+					center: {x: 425, y: 400},
+					color: '#1428B8',
+					radius: tertiarySize.radius,
+					parent: locationData.present,
+				  shape: 'circle',
+				  key: 'presentTrainStation1'
+				};
+		locationData.presentTrainStation2= {
+					name: 'Train Station 2',
+					center: {x: 425, y: 700},
+					color: '#1428B8',
+					radius: tertiarySize.radius,
+					parent: locationData.present,
+				  shape: 'circle',
+				  key: 'presentTrainStation2'
+				};
+		locationData.presentArmyCamp2= {
+					name: 'Army Camp 2',
+					center: {x: 425, y: 760},
+					color: '#1428B8',
+					radius: tertiarySize.radius,
+					parent: locationData.present,
+				  shape: 'circle',
+				  key: 'presentArmyCamp2'
+				};
+		locationData.presentArmyCamp2Huts= {
+					name: 'Huts',
+					center: {x: 425, y: 785},
+					color: '#1428B8',
+					radius: tertiarySize.radius,
+					parent: locationData.presentArmyCamp2,
+				  shape: 'circle',
+				  key: 'presentArmyCamp2Huts'
+				};
+		locationData.presentFarmToEat= {
+			name: 'Farm',
+			center: {x: 290, y: 350},
+			color: '#1428B8',
+			radius: tertiarySize.radius,
+			parent: locationData.present,
+		  shape: 'circle',
+		  key: 'presentFarmToEat'
+		};
 
 		$(locationKeys).each(function(index, value){
 			// console.log(value);
@@ -330,11 +395,9 @@ $(function() {
 				});
 			}
 		});
-		console.log(locationsMetaData);
-		// console.log(numpathLocations);
-		insertText();
 		// console.log(locationsMetaData);
-		// console.log(locationData);
+
+		insertText();
 	}
 
 	var plotPoints = [
@@ -350,7 +413,7 @@ $(function() {
 		(new Point(800,400)),
 		(new Point(33,800)),
 		(new Point(250, 850))
-		]
+	]
 
 	function insertText(){
 		var fontSize = '1.5rem';
@@ -466,10 +529,9 @@ $(function() {
 		var $activeParentListItem = $locationList.children('li:last');
 		var $parentList;
 		// check if the content of the new list item element is different from the element that is trying to be inserted.
-		// console.log('n: ' + newLocation.name + ' c: ' + currentLocationName );
-		console.log(currentLocationName);
-		console.log(newLocation.name);
-		if(currentLocationName != newLocation.name){
+		if(currentLocationName == newLocation.name){
+			return; // return early if the locations match
+		} else {
 
 			// If it does not have a parent, then insert a new item to the base list
 			if(newLocation.parent === undefined){
@@ -500,12 +562,8 @@ $(function() {
 		  } else {
 
 		  }
-
 			currentLocationName = newLocation.name; // update the currentLocationName
-	  } else {
-	  	// console.log('else');	
-	  	// console.log(newLocation);
-		}
+	  }
 	}
 
 	/**
