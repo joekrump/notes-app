@@ -8,7 +8,19 @@ $(function() {
 	paper.setup($('canvas')[0]);
 
 	// The path that will be followed
-	var bridesheadPath = new Path();
+	var bridesheadPath = new Path({
+		strokeColor: 'rgba(0,0,0,0)',
+		strokeWidth: 3,
+		closed: false,
+		fullySelected: false
+	});
+	var railPath = new Path({
+		strokeColor: 'red',
+		strokeWidth: 3,
+		closed: false,
+		fullySelected: false
+	});
+	var railTiePath;
 	var zeroZero = new Point(0, 0);
 	var lastPosition;
 	var dots = new Path();
@@ -16,10 +28,11 @@ $(function() {
 	var charlesDot;
 	var offset = 0;
 	// Put Charles at the starting point
-	var carposition = new Point();
+	var charlesPosition = new Point();
 	var currentPosition = 0;
 	var cloneCircle;
 	var length;	
+	// var currentLocation = true; // Starts from within a location
 	var amount = 0.3; // controls the speed at which the movement will occur
 	var tool = new Tool();
 	var numpathLocations = 0;
@@ -70,7 +83,6 @@ $(function() {
 		var rtop = new Point(0, 0);
 		var rbot = new Point(580, $(window).height());
 		var rect = new Rectangle(rtop, rbot);
-
 		var pRect = new Path.Rectangle(rect, 5);
 		// pRect.strokeColor = 'blue';
 		var locationMeta = {};
@@ -308,17 +320,17 @@ $(function() {
 				};
 		locationData.presentTrain= {
 					name: 'Train',
-					center: {x: 425, y: 500},
-					color: 'red',
-					radius: tertiarySize.radius,
+					center: {x: 425, y: 460},
+					color: '#EC973E',
+					radius: 35,
 					parent: locationData.present,
 				  shape: 'circle',
 				  key: 'presentTrain'
 				};
 		locationData.presentTrainCOsCarriage= {
-					name: 'Co\'s Carriage',
-					center: {x: 425, y: 525},
-					color: 'red',
+					name: 'CO\'s Carriage',
+					center: {x: 425, y: 485},
+					color: '#EC973E',
 					radius: tertiarySize.radius,
 					parent: locationData.presentTrain,
 				  shape: 'circle',
@@ -327,7 +339,7 @@ $(function() {
 		locationData.presentTrainStation1= {
 					name: 'Train Station 1',
 					center: {x: 425, y: 400},
-					color: '#1428B8',
+					color: '#98A8D6',
 					radius: tertiarySize.radius,
 					parent: locationData.present,
 				  shape: 'circle',
@@ -336,7 +348,7 @@ $(function() {
 		locationData.presentTrainStation2= {
 					name: 'Train Station 2',
 					center: {x: 425, y: 700},
-					color: '#1428B8',
+					color: '#98A8D6',
 					radius: tertiarySize.radius,
 					parent: locationData.present,
 				  shape: 'circle',
@@ -363,7 +375,7 @@ $(function() {
 		locationData.presentFarmToEat= {
 			name: 'Farm',
 			center: {x: 290, y: 350},
-			color: '#1428B8',
+			color: '#CA4720',
 			radius: tertiarySize.radius,
 			parent: locationData.present,
 		  shape: 'circle',
@@ -415,15 +427,18 @@ $(function() {
 		'presentArmyCamp2Huts',
 		'presentBrideshead'
 	];
+	// Set the last position that charlesDot was at to be the starting position
+	// 
+	lastPosition = new Point(locationData[[plotKeys[0]]].center.x, locationData[[plotKeys[0]]].center.y);
 
 	// set charles dot and set start point to be the x,y coords of the first location according to the order in plotKeys
+	// 
 	charlesDot = new Path.Circle({
 			center: [0, 0],
 		 	radius: 10,
 		 	fillColor: 'white', 
-		 	position: new Point(locationData[[plotKeys[0]]].center.x, locationData[[plotKeys[0]]].center.y)
+		 	position: lastPosition
 	});
-
 
 	$(plotKeys).each(function(index, value){
 		plotPoints.push(new Point(locationData[value].center.x, locationData[value].center.y));
@@ -468,10 +483,6 @@ $(function() {
 	segment2 = new Segment(new Point(400, 601), zeroZero, zeroZero);
 
 	bridesheadPath.add(segment1, segment2);
-	bridesheadPath.strokeColor = 'rgba(0,0,0,0)';
-	bridesheadPath.strokeWidth = 4;
-	bridesheadPath.closed = false;
-	bridesheadPath.fullySelected = false;
 	bridesheadPath.position = new Point(locationData[[plotKeys[0]]].center.x, locationData[[plotKeys[0]]].center.y)
 	
 	project.activeLayer.addChild(charlesDot)
@@ -479,30 +490,59 @@ $(function() {
 	// calculate the length of one part of the path
 	length = bridesheadPath.length / amount;
 
+	function drawCharlesPathPieces(){  	
+  	var segment3 = new Segment(lastPosition);
+  	var segment4 = new Segment(charlesPosition);
+
+  	// Draw some unique symbol every 5th iteration
+  	if(currentPosition % 5 == 0){
+  		
+  		if(activeParentTree.indexOf('Train') != -1){
+  			var line = new Path.Line({
+  				from: [(charlesPosition.x - 5), charlesPosition.y],
+			    to: [(charlesPosition.x + 5), charlesPosition.y],
+			    strokeColor: 'red',
+			    strokeWidth: 4
+  			}).sendToBack();
+  			setTimeout(function(){
+  				line.scale(0.0);
+  			}, 3000);
+  		} else {
+  			createPathCircle( charlesPosition, 'red', 5).sendToBack();
+  			// charlesDot
+  		}
+  	} else {
+  		railPath.add(segment3, segment4);
+  	}
+		lastPosition = charlesPosition;
+	}
+
+	function moveCharlesDot(){
+		charlesPosition = bridesheadPath.getPointAt(currentPosition * (length ));
+    charlesDot.position =  charlesPosition;
+    ++currentPosition; // Move charles Dot ahead by one position
+	}
+
 	// animate the circle, moving from position to position along the bridesheadPath
 	function onFrame(event){
     if((currentPosition * length) < bridesheadPath.length){
-    	carposition = bridesheadPath.getPointAt(currentPosition * (length ));
-    	charlesDot.position = carposition;
-    	++currentPosition; // Move charles Dot ahead by one position
-    	if(currentPosition % 5 == 0){
-    		// Drop a 'tomato' coloured circle every fifth position change
-    		createPathCircle(carposition, 'red', 5).bringToFront();
-    		charlesDot.bringToFront();
-    	} else {
-    		createPathCircle(carposition, 'red', 3);
-    	}
+    	// Move charles dot regardless of whether the path is being drawn or not.
+    	moveCharlesDot();
+ 
     	if((pathLocationIndex = isInApathLocation(charlesDot)) !== false){
     		insertListItem(pathLocationIndex);
+    	} else {
+    		drawCharlesPathPieces();
     	}
+    	lastPosition = charlesPosition;
     } else {
     	// Keep charlesDot at its current position
     	charlesDot.position = lastPosition;
     }
 	}
 
-	function createPathCircle(carposition, color, size){
-		var pathCircle = new Path.Circle(carposition, size);
+	function createPathCircle( charlesPosition, color, size){
+		var pathCircle = new Path.Circle( charlesPosition, size);
 		pathCircle.fillColor = color;
 		if(size === 5){
 			pathCircle.shadowColor = new Color(0, 0, 0);
@@ -512,7 +552,7 @@ $(function() {
 		// Fade out the circle by scaling after 5 seconds.
 		setTimeout(function(){
 			pathCircle.scale(0.0);
-		}, 5000);
+		}, 3000);
     return pathCircle;
 	}
 
@@ -588,6 +628,7 @@ $(function() {
 
 			if(charlesDot.intersects(pathLocationsShapes[j])){
 				// console.log(pathLocations[j]);
+				insideLocation = true;
 				return j;
 			}
 		}
