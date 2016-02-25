@@ -20,7 +20,7 @@ $(function() {
 	var currentPosition = 0;
 	var cloneCircle;
 	var length;	
-	var amount = 0.1; // controls the speed at which the movement will occur
+	var amount = 0.3; // controls the speed at which the movement will occur
 	var tool = new Tool();
 	var numpathLocations = 0;
 	var pathLocationsShapes = [];
@@ -274,14 +274,14 @@ $(function() {
 					name: 'Army Camp 1',
 					center: {x: 255, y: 200},
 					color: '#1428B8',
-					radius: tertiarySize.radius,
+					radius: 40,
 					parent: locationData.present,
 				  shape: 'circle',
 				  key: 'presentArmyCamp1'
 				};
 		locationData.presentArmyCamp1Huts = {
 					name: 'Huts',
-					center: {x: 255, y: 225},
+					center: {x: 255, y: 245},
 					color: '#1428B8',
 					radius: tertiarySize.radius,
 					parent: locationData.presentArmyCamp1,
@@ -292,14 +292,14 @@ $(function() {
 					name: 'City (near Army Camp 1)',
 					center: {x: 305, y: 450},
 					color: 'slategrey',
-					radius: tertiarySize.radius,
+					radius: 40,
 					parent: locationData.present,
 				  shape: 'circle',
 				  key: 'presentNearbyCity'
 				};
 		locationData.presentNearbyCityMadhouse= {
 					name: 'Mad House',
-					center: {x: 305, y: 475},
+					center: {x: 305, y: 495},
 					color: 'slategrey',
 					radius: tertiarySize.radius,
 					parent: locationData.presentNearbyCity,
@@ -344,16 +344,16 @@ $(function() {
 				};
 		locationData.presentArmyCamp2= {
 					name: 'Army Camp 2',
-					center: {x: 425, y: 760},
+					center: {x: 425, y: 780},
 					color: '#1428B8',
-					radius: tertiarySize.radius,
+					radius: 40,
 					parent: locationData.present,
 				  shape: 'circle',
 				  key: 'presentArmyCamp2'
 				};
 		locationData.presentArmyCamp2Huts= {
 					name: 'Huts',
-					center: {x: 425, y: 785},
+					center: {x: 425, y: 825},
 					color: '#1428B8',
 					radius: tertiarySize.radius,
 					parent: locationData.presentArmyCamp2,
@@ -373,10 +373,14 @@ $(function() {
 		$(locationKeys).each(function(index, value){
 			// console.log(value);
 			if(locationData[value].shape === 'circle'){
+				
 				pathLocationsShapes.push(new Path.Circle({
 					fillColor: locationData[value].color,
 					center: [locationData[value].center.x, locationData[value].center.y],
-					radius: [locationData[value].radius]
+					radius: [locationData[value].radius],
+					shadowColor: 'rgb(10,10,10)',
+					shadowBlur: 4,
+					shadowOffset: new Point(2, 2)
 				}));
 				numpathLocations++; // rect has already been added and accounted for so just add circle count
 

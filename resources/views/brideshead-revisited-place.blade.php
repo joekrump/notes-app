@@ -7,8 +7,8 @@
 		}
 		#location-list {
 			position: fixed;
-			top: 0;
-			left: 0;
+			top: 10px;
+			left: 10px;
 			color: white;
 			height: 800px;
 			overflow-y: scroll;
@@ -36,9 +36,9 @@
 			transition: all 300;
 			color: white;
 		}
-	/*	.active {
-			color: green;
-		}*/
+		ol {
+			padding-left: 15px;
+		}
 	</style>
 @stop
 
