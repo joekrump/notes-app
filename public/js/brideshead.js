@@ -13,13 +13,7 @@ $(function() {
 	var lastPosition;
 	var dots = new Path();
 	// charlesDot (The dot that will be moving along bridesheadPath)
-	var charlesStartPosition = new Point(400, 600);
-	var charlesDot = new Path.Circle({
-			center: [0, 0],
-		 	radius: 10,
-		 	fillColor: 'white', 
-		 	position: charlesStartPosition
-	});
+	var charlesDot;
 	var offset = 0;
 	// Put Charles at the starting point
 	var carposition = new Point();
@@ -69,6 +63,7 @@ $(function() {
 		'presentFarmToEat'
 	];
 	var locationData = {};
+	var plotPoints = [];
 
 	function drawpathLocations(){
 
@@ -83,7 +78,6 @@ $(function() {
 		pathLocationsShapes.push(pRect);
 		locationsMetaData.push({name: 'Present', key: 'present'});
 		numpathLocations++;
-
 		
 		var timeSize = {
 		 	radius: 800
@@ -400,20 +394,36 @@ $(function() {
 		insertText();
 	}
 
-	var plotPoints = [
-		// (new Point(400, 600)),
-		// (new Point(400, 500)),
-		// (new Point(1300,400)),
-		// (new Point(200,400)),
-		(new Point(250, 850)),
-		(new Point(1700,400)),
-		(new Point(200,400)),
-		(new Point(1300,525)),
-		(new Point(1300, 275)),
-		(new Point(800,400)),
-		(new Point(33,800)),
-		(new Point(250, 850))
-	]
+	drawpathLocations();
+
+	// contains the order of the plot
+	var plotKeys = [
+		'presentArmyCamp1',
+		'presentArmyCamp1Huts',
+		'presentFarmToEat',
+		'presentNearbyCity',
+		'presentNearbyCityMadhouse',
+		'presentTrainStation1',
+		'presentTrain',
+		'presentTrainCOsCarriage',
+		'presentTrainStation2',
+		'presentArmyCamp2',
+		'presentArmyCamp2Huts',
+		'presentBrideshead'
+	];
+
+	// set charles dot and set start point to be the x,y coords of the first location according to the order in plotKeys
+	charlesDot = new Path.Circle({
+			center: [0, 0],
+		 	radius: 10,
+		 	fillColor: 'white', 
+		 	position: new Point(locationData[[plotKeys[0]]].center.x, locationData[[plotKeys[0]]].center.y)
+	});
+
+
+	$(plotKeys).each(function(index, value){
+		plotPoints.push(new Point(locationData[value].center.x, locationData[value].center.y));
+	});
 
 	function insertText(){
 		var fontSize = '1.5rem';
@@ -448,8 +458,6 @@ $(function() {
 		});
 	}
 
-	drawpathLocations();
-
 	// TODO: Once 4 new pathLocations have been hit then fade the one that occurred 4 ago.
 
 	segment1 = new Segment(new Point(400, 600), zeroZero, zeroZero);
@@ -460,7 +468,7 @@ $(function() {
 	bridesheadPath.strokeWidth = 4;
 	bridesheadPath.closed = false;
 	bridesheadPath.fullySelected = false;
-	bridesheadPath.position = new Point(400, 600);
+	bridesheadPath.position = new Point(locationData[[plotKeys[0]]].center.x, locationData[[plotKeys[0]]].center.y)
 	
 	project.activeLayer.addChild(charlesDot)
 	
