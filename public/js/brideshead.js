@@ -33,17 +33,39 @@ $(function() {
 	var pathLocationIndex;
 	var currentLocationName = 'Present';
 	var activeParentTree 	 = ['Present'];
-	var parentTreeMaxIndex = 0;
 	var locationsMetaData = [];
 	var locationKeys = [
 		'past',
 		'pastBrideshead',
 		'pastBridesheadChapel',
 		'pastBridesheadCdr',
+		'pastBridesheadNanny',
 		'pastOxford',
+		'pastOxfordFirstFloorRoom',
+		'pastOxfordClasses',
+		'pastOxfordSebastiansRoom',
+		'pastOxfordBotanicalGardens',
+		'pastOxfordGodstow',
+		'pastOxfordTrout',
+		'pastOxfordAlexanders',
+		'pastOxfordTeashop',
+		'pastCarFaxStation',
+		'pastBotleyRoad',
+		'pastSwindon',
+		'pastRavenna',
 		'present',
 		'presentBrideshead',
-		'presentBridesheadChapel'
+		'presentBridesheadChapel',
+		// 'presentArmyCamp1',
+		// 'presentArmyCamp1Huts',
+		// 'presentNearbyCity',
+		// 'presentNearbyCityMadhouse',
+		// 'presentTrain',
+		// 'presentTrainCOsCarriage',
+		// 'presentTrainStation',
+		// 'presentArmyCamp2',
+		// 'presentArmyCamp2Huts',
+		// 'presentFarmToEat'
 	];
 	var locationData = {};
 
@@ -54,7 +76,7 @@ $(function() {
 		var rect = new Rectangle(rtop, rbot);
 
 		var pRect = new Path.Rectangle(rect, 5);
-		pRect.strokeColor = 'blue';
+		// pRect.strokeColor = 'blue';
 		var locationMeta = {};
 		// Draw rectangle representing the present.
 		pathLocationsShapes.push(pRect);
@@ -76,7 +98,10 @@ $(function() {
 		};
 		// Past locations
 		// 
-		locationData.past = {name: 'Past', center: {x: 1400, y:400}, color: 'slategrey', radius: timeSize.radius, childKeys: ['pastBrideshead', 'pastOxford'], shape: 'circle', key: 'past'};
+		locationData.past = {name: 'Past', center: {x: 1400, y:400}, color: 'lightgrey', radius: timeSize.radius, childKeys: ['pastBrideshead', 'pastOxford','pastCarFaxStation',
+'pastBotleyRoad',
+'pastSwindon',
+'pastRavenna'], shape: 'circle', key: 'past'};
 		locationData.pastBrideshead = {
 					name: 'Brideshead',
 					center: {x: 1300, y:400},
@@ -105,6 +130,15 @@ $(function() {
 					shape: 'circle',
 					key: 'pastBridesheadCdr'
 				};
+		locationData.pastBridesheadNanny = {
+					name: 'Nursery',
+					center: {x: 1425, y: 400},
+					radius: secondarySize.radius,
+					color: 'forestgreen',
+					parent: locationData.pastBrideshead,
+					shape: 'circle',
+					key: 'pastBridesheadCdr'
+				};
 		locationData.pastOxford = {
 					name: 'Oxford',
 					center: {x: 1700,y: 400},
@@ -112,7 +146,125 @@ $(function() {
 					color: 'steelblue',
 					parent: locationData.past,
 					shape: 'circle',
-					key: 'pastOxford'
+					key: 'pastOxford',
+					childKeys: ['pastOxfordFirstFloorRoom',
+						'pastOxfordClasses',
+						'pastOxfordSebastiansRoom',
+						'pastOxfordBotanicalGardens',
+						'pastOxfordGodstow',
+						'pastOxfordTrout',
+						'pastOxfordAlexanders',
+						'pastOxfordTeashop'
+					]
+				};
+
+		locationData.pastOxfordFirstFloorRoom = {
+					name: 'Charles\' room',
+					center: {x: 1825,y: 400},
+					radius: secondarySize.radius,
+					color: 'steelblue',
+					parent: locationData.pastOxford,
+					shape: 'circle',
+					key: 'pastOxfordFirstFloorRoom'
+				};
+		locationData.pastOxfordClasses = {
+					name: 'Classes',
+					center: {x: 1575,y: 400},
+					radius: secondarySize.radius,
+					color: 'steelblue',
+					parent: locationData.pastOxford,
+					shape: 'circle',
+					key: 'pastOxfordClasses'
+				};
+		locationData.pastOxfordSebastiansRoom = {
+					name: 'Sebastian\'s Room',
+					center: {x: 1700,y: 525},
+					radius: secondarySize.radius,
+					color: 'steelblue',
+					parent: locationData.pastOxford,
+					shape: 'circle',
+					key: 'pastOxfordSebastiansRoom'
+				};
+		locationData.pastOxfordBotanicalGardens = {
+					name: 'Botanical Gardens',
+					center: {x: 1700,y: 275},
+					radius: secondarySize.radius,
+					color: 'steelblue',
+					parent: locationData.pastOxford,
+					shape: 'circle',
+					key: 'pastOxfordBotanicalGardens'
+				};
+		locationData.pastOxfordGodstow = {
+					name: 'Godstow',
+					center: {x: 1800,y: 500},
+					radius: secondarySize.radius,
+					color: 'steelblue',
+					parent: locationData.pastOxford,
+					shape: 'circle',
+					key: 'pastOxfordGodstow'
+				};
+		locationData.pastOxfordTrout = {
+					name: 'The Trout',
+					center: {x: 1800,y: 300},
+					radius: secondarySize.radius,
+					color: 'steelblue',
+					parent: locationData.pastOxford,
+					shape: 'circle',
+					key: 'pastOxfordTrout'
+				};
+		locationData.pastOxfordAlexanders = {
+					name: 'Alexander\'s',
+					center: {x: 1600,y: 300},
+					radius: secondarySize.radius,
+					color: 'steelblue',
+					parent: locationData.pastOxford,
+					shape: 'circle',
+					key: 'pastOxfordAlexanders'
+				};
+		locationData.pastOxfordTeashop = {
+					name: 'Tea shop',
+					center: {x: 1600,y: 500},
+					radius: secondarySize.radius,
+					color: 'steelblue',
+					parent: locationData.pastOxford,
+					shape: 'circle',
+					key: 'pastOxfordTeashop'
+				};
+		locationData.pastCarFaxStation = {
+					name: 'Carfax Sation',
+					center: {x: 1200,y: 800},
+					radius: tertiarySize.radius,
+					color: '#BAB7AF',
+					parent: locationData.past,
+					shape: 'circle',
+					key: 'pastCarFaxStation'
+				};
+		locationData.pastBotleyRoad = {
+					name: 'Botley Road',
+					center: {x: 900, y: 600},
+					radius: tertiarySize.radius,
+					color: '#B4800C',
+					parent: locationData.past,
+					shape: 'circle',
+					key: 'pastBotleyRoad'
+				};
+		locationData.pastSwindon = {
+					name: 'Swindon',
+					center: {x: 900,y: 400},
+					radius: secondarySize.radius,
+					color: '#9B7113',
+					parent: locationData.past,
+					shape: 'circle',
+					key: 'pastSwindon'
+				};
+		locationData.pastRavenna = {
+					name: 'Revenna',
+					center: {x: 900, y: 200},
+					radius: secondarySize.radius,
+					color: '#DDD723',
+					parent: locationData.past,
+					shape: 'circle',
+					key: 'pastRavenna'
 				};
 
 		// Present Locations
@@ -138,7 +290,29 @@ $(function() {
 					key: 'presentBridesheadChapel'
 				};
 
+
+		presentArmyCamp1 = {
+					name: 'Army Camp 1',
+					center: {x: 250, y: 400},
+					color: '#1428B8',
+					radius: primarySize.radius,
+					parent: locationData.present,
+					childKeys: ['presentArmyCamp1Huts'],
+				  shape: 'circle',
+				  key: 'presentBrideshead'
+				};
+		// presentArmyCamp1Huts
+		// presentNearbyCity
+		// presentNearbyCityMadhouse
+		// presentTrain
+		// presentTrainCOsCarriage
+		// presentTrainStation
+		// presentArmyCamp2
+		// presentArmyCamp2Huts
+		// presentFarmToEat
+
 		$(locationKeys).each(function(index, value){
+			// console.log(value);
 			if(locationData[value].shape === 'circle'){
 				pathLocationsShapes.push(new Path.Circle({
 					fillColor: locationData[value].color,
@@ -156,7 +330,7 @@ $(function() {
 				});
 			}
 		});
-		// console.log(locationsMetaData);
+		console.log(locationsMetaData);
 		// console.log(numpathLocations);
 		insertText();
 		// console.log(locationsMetaData);
@@ -194,7 +368,7 @@ $(function() {
 			    justification: 'center'
 				});
 			} else {
-				var y = (locationData[value].center.y - 300);
+				var y = (locationData[value].center.y - (locationData[value].name == 'Past' ? 300 : 400));
 				var color =  locationData[value].name == 'Past' ? '#363636' : 'white';
 				fontSize = '1.5rem';
 				new PointText({
@@ -213,7 +387,7 @@ $(function() {
 
 	drawpathLocations();
 
-	// Once 4 new pathLocations have been hit then fade the one that occurred 4 ago.
+	// TODO: Once 4 new pathLocations have been hit then fade the one that occurred 4 ago.
 
 	segment1 = new Segment(new Point(400, 600), zeroZero, zeroZero);
 	segment2 = new Segment(new Point(400, 601), zeroZero, zeroZero);
@@ -231,7 +405,6 @@ $(function() {
 	length = bridesheadPath.length / amount;
 
 	// animate the circle, moving from position to position along the bridesheadPath
-
 	function onFrame(event){
     if((currentPosition * length) < bridesheadPath.length){
     	carposition = bridesheadPath.getPointAt(currentPosition * (length ));
@@ -268,11 +441,6 @@ $(function() {
     return pathCircle;
 	}
 
-	function insertNewInnerList(parentName){
-		$('#location-list li:last').append('<ol class="children"><li class="latest" data-name="' + parentName + '"><span class="li-content" style="display:none;">' + parentName + '</span><ol class="children"></li></ol>');
-		$('.latest').find('.li-content').slideDown(500);
-	}
-
 	/**
 	 * Resets the array containing the names of the parent elements in the active list tree
 	 * @param  {string} parentLocation - the name of the parent to be placed at index 0 of the array
@@ -280,114 +448,64 @@ $(function() {
 	 */
 	function resetParentTree(parentLocation){
 		activeParentTree = [parentLocation];
-		parentTreeMaxIndex = 0;
+	}
+
+	function appendListItemToList($listToAppendTo, $listItemName){
+		$('.most-recent-li').removeClass('most-recent-li');
+		$listToAppendTo.append('<li class="most-recent-li" data-name="' + $listItemName + '"><span class="li-content" style="display:none;">' + $listItemName + '</span><ol class="children"></ol></li>');
+		// Animate the item sliding down for 500ms
+		$('.most-recent-li').find('.li-content').slideDown(500);
 	}
 
 	function insertListItem(pathLocationIndex){
-	
-		// This is a root location such as Past, or Present
-		if(locationsMetaData[pathLocationIndex].parent === undefined){
-			
-			var $locationList = $('#location-list');
-			var lastElementContent = $locationList.children('li:last').children('.li-content').text();
-			
-			// if this isn't a repeat element then append a list item to the root of the list
-			// 
-			if(lastElementContent != locationsMetaData[pathLocationIndex].name){
-				resetParentTree(locationsMetaData[pathLocationIndex].name);
-				$('.active').removeClass('active');
-				$locationList.append('<li class="active" data-name="' + locationsMetaData[pathLocationIndex].name + '"><span class="li-content" style="display:none;">' + locationsMetaData[pathLocationIndex].name + '</span><ol class="children"></ol></li>');
-				$('.active').find('.li-content').slideDown(500);
-			}
-			currentLocationName = locationsMetaData[pathLocationIndex].name;
-			
-		} else if(currentLocationName != locationsMetaData[pathLocationIndex].name){
-			if(activeParentTree.indexOf(locationsMetaData[pathLocationIndex].name) != -1){
-				return;
-			}
-			$('.latest').removeClass('latest');
-			
-			var activeTreeIndex = insertNewParentRow(locationsMetaData[pathLocationIndex]);
-			if(activeTreeIndex == -1){
-				$('.active').children('.children:last').append(makeLiString(locationsMetaData[pathLocationIndex].name));
-				currentLocationName = locationsMetaData[pathLocationIndex].name;
-			} else {
-				// console.log(activeTreeIndex);
-				var $activeListItem = $('.active');
-				var parentName = activeParentTree[activeTreeIndex];
-				var $parentList;
-
-				if($activeListItem.data('name') == parentName){
-					$parentList = $activeListItem;
-				} else {
-					$parentList = $activeListItem.find('[data-name="' + parentName + '"]');
-				}
-
-				if($parentList.length != 0){
-					$existingList = $parentList.find('[data-name="' + locationsMetaData[pathLocationIndex].parent.name + '"]');
-
-					if($existingList.length > 0){
-						// If item does not already exist then insert
-						if($('.active').find('[data-name="' + locationsMetaData[pathLocationIndex].name + '"]').length == 0){
-							$existingList.children('.children:last').append(makeLiString(locationsMetaData[pathLocationIndex].name));
-						}
-					} else {
-						if(locationData[locationsMetaData[pathLocationIndex].key].parent.parent !== undefined){
-							if($('.active').find('[data-name="' + locationsMetaData[pathLocationIndex].parent.name + '"]').length == 0){
-								insertNewInnerList(locationsMetaData[pathLocationIndex].parent.name);
-							}
-							if($('.active').find('[data-name="' + locationsMetaData[pathLocationIndex].name + '"]').length == 0){
-
-								$('.active').find('[data-name="' + locationsMetaData[pathLocationIndex].parent.name + '"]').children('.children:last').append(makeLiString(locationsMetaData[pathLocationIndex].name));
-							}
-						} else {
-
-							if($('.active').find('[data-name="' + locationsMetaData[pathLocationIndex].name + '"]').length == 0){
-								console.log(locationsMetaData[pathLocationIndex].name);
-								$('[data-name="' + locationsMetaData[pathLocationIndex].parent.name + '"]:last').children('.children:last').append(makeLiString(locationsMetaData[pathLocationIndex].name))
-								// insertNewInnerList(locationsMetaData[pathLocationIndex].name);
-							}
-						}
-					}
-				} else {
-					// console.log('HOW DID THIS HAPPEN?');
-				}
-				activeParentTree = activeParentTree.slice(0, (activeTreeIndex + 1));
-				currentLocationName = locationsMetaData[pathLocationIndex].name;
-			}
-			$('.latest .li-content').slideDown(500);
-		} else {
-
-		}
-		// console.log(activeParentTree);
+		insertNewLocationContent(locationsMetaData[pathLocationIndex]);
 	}
 
-	/**
-	 * [makeLiString description]
-	 * @param  {[type]} content [description]
-	 * @return {[type]}         [description]
-	 */
-	function makeLiString(content){
-		return ('<li class="latest" data-name="' + locationsMetaData[pathLocationIndex].name + '"><span class="li-content" style="display:none;">' + content + '</span><ol class="children"></ol></li>');
-	}
+	function insertNewLocationContent(newLocation, recursive){
+		var $locationList = $('#location-list');
+		var $activeParentListItem = $locationList.children('li:last');
+		var $parentList;
+		// check if the content of the new list item element is different from the element that is trying to be inserted.
+		// console.log('n: ' + newLocation.name + ' c: ' + currentLocationName );
+		console.log(currentLocationName);
+		console.log(newLocation.name);
+		if(currentLocationName != newLocation.name){
 
-	function insertNewParentRow(location){
-
-		
-		// if the lowest parent is the same as the new location being inserted.
-
-			location = locationData[location.key].parent
-			if(location !== undefined){
+			// If it does not have a parent, then insert a new item to the base list
+			if(newLocation.parent === undefined){
 				
-				var indexOfParent = activeParentTree.indexOf(location.name);
-				if(indexOfParent != -1){
-					return indexOfParent;
-				} 
-				// console.log('try again')
-				return insertNewParentRow(location);
-			} else {
-				return -1;
+				// Reset the array containing the keys of the lowest tree branch
+				if(activeParentTree.indexOf(newLocation.name) == -1){
+					resetParentTree(newLocation.name);
+					appendListItemToList($locationList, newLocation.name);
+				} else {
+					return;
+				}
+			} else if(newLocation.parent.name == activeParentTree[0] && (activeParentTree[1] !== newLocation.name) && ($('.most-recent-li').data('name') != newLocation.name)){
+				activeParentTree[1] = newLocation.name;
+				appendListItemToList($locationList.find('[data-name="' + newLocation.parent.name + '"]:last').children('.children'), newLocation.name);
 			}
+			else if(newLocation.parent.name == currentLocationName && ($('.most-recent-li').data('name') != newLocation.name)){						
+				// attach the new list item to the parent
+				$parentList = $locationList.find('[data-name="' + currentLocationName + '"]:last').children('.children');
+				
+				appendListItemToList($parentList, newLocation.name);
+			} // otherwise, insert the parent as well as the child list-item 
+			else if(activeParentTree.indexOf(newLocation.parent.name) == -1){
+		  	activeParentTree[1] = newLocation.parent.name;
+		  	appendListItemToList($activeParentListItem.children('.children'), newLocation.parent.name);
+		  	currentLocationName = newLocation.parent.name;
+		  	// recursively check to see if the parent's parent exists up the current tree
+		  	insertNewLocationContent(newLocation, true);
+		  } else {
+
+		  }
+
+			currentLocationName = newLocation.name; // update the currentLocationName
+	  } else {
+	  	// console.log('else');	
+	  	// console.log(newLocation);
+		}
 	}
 
 	/**
@@ -406,26 +524,12 @@ $(function() {
 		return false;
 	}
 
-	/**
-	 * If a pathLocation has a parent return true, else false
-	 * @param  {[type]} pathLocation [description]
-	 * @return {[type]}          [description]
-	 */
-	function pathLocationHasParent(pathLocation){
-
-	}
-
 	paper.tool.onMouseDown = function(event) {
-    // x = event.event.offsetX;
-    // y = event.event.offsetY;
-    // lastPosition = new Point(x, y);
     for(var i = 0; i < plotPoints.length; i++){
     	bridesheadPath.add(new Segment(plotPoints[i], new Point(0,0), new Point(0,0)));
     	amount = bridesheadPath.length / length;
     	length = bridesheadPath.length / amount;
     }
-    
-
     paper.view.attach('frame', onFrame);
 	}
 });

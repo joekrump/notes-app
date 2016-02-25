@@ -44,7 +44,7 @@
 
 @section('content')
 	<ol id="location-list">
-		<li class="active" data-name="Present">
+		<li class="most-recent-li" data-name="Present">
 			<span class="li-content">Present</span>
 			<ol class="children">
 			</ol>
