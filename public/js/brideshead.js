@@ -15,7 +15,7 @@ $(function() {
 		fullySelected: false
 	});
 	var railPath = new Path({
-		strokeColor: 'red',
+		strokeColor: '#F44336',
 		strokeWidth: 3,
 		closed: false,
 		fullySelected: false
@@ -47,13 +47,14 @@ $(function() {
 		'pastBridesheadChapel',
 		'pastBridesheadCdr',
 		'pastBridesheadNanny',
+		'pastBridesheadServantsEntrance',
 		'pastOxford',
-		'pastOxfordFirstFloorRoom',
+		'pastOxfordCharlesRoom',
 		'pastOxfordClasses',
 		'pastOxfordSebastiansRoom',
 		'pastOxfordBotanicalGardens',
-		'pastOxfordGodstow',
-		'pastOxfordTrout',
+		'pastGodstow',
+		'pastTrout',
 		'pastOxfordAlexanders',
 		'pastOxfordTeashop',
 		'pastCarFaxStation',
@@ -63,6 +64,7 @@ $(function() {
 		'present',
 		'presentBrideshead',
 		'presentBridesheadChapel',
+		'presentBridesheadNanny',
 		'presentArmyCamp1',
 		'presentArmyCamp1Huts',
 		'presentNearbyCity',
@@ -108,43 +110,52 @@ $(function() {
 		locationData.past = {name: 'Past', center: {x: 1400, y:400}, color: 'lightgrey', radius: timeSize.radius, shape: 'circle', key: 'past'};
 		locationData.pastBrideshead = {
 					name: 'Brideshead',
-					center: {x: 1300, y:400},
+					center: {x: 1300, y:300},
 					radius: primarySize.radius,
-					color: 'forestgreen',
+					color: '#4CAF50',
 					parent: locationData.past,
 					shape: 'circle',
 					key: 'pastBrideshead'
 				};
 		locationData.pastBridesheadChapel = {
 					name: 'Chapel',
-					center: {x: 1300, y:525},
+					center: {x: 1425, y: 300},
 					radius: secondarySize.radius,
-					color: 'forestgreen',
+					color: '#4CAF50',
 					parent: locationData.pastBrideshead,
 					shape: 'circle',
 					key: 'pastBridesheadChapel'
 				};
 		locationData.pastBridesheadCdr = {
 					name: 'Chinese Drawing Room',
-					center: {x: 1300, y: 275},
+					center: {x: 1300, y: 175},
 					radius: secondarySize.radius,
-					color: 'forestgreen',
+					color: '#4CAF50',
 					parent: locationData.pastBrideshead,
 					shape: 'circle',
 					key: 'pastBridesheadCdr'
 				};
 		locationData.pastBridesheadNanny = {
 					name: 'Nursery',
-					center: {x: 1425, y: 400},
+					center: {x: 1175, y: 300},
 					radius: secondarySize.radius,
-					color: 'forestgreen',
+					color: '#4CAF50',
 					parent: locationData.pastBrideshead,
 					shape: 'circle',
 					key: 'pastBridesheadCdr'
 				};
+		locationData.pastBridesheadServantsEntrance = {
+					name: 'Servants Entrance',
+					center: {x: 1300, y:425},
+					radius: secondarySize.radius,
+					color: '#4CAF50',
+					parent: locationData.pastBrideshead,
+					shape: 'circle',
+					key: 'pastBridesheadServantsEntrance'
+				};
 		locationData.pastOxford = {
 					name: 'Oxford',
-					center: {x: 1700,y: 400},
+					center: {x: 1700,y: 600},
 					radius: primarySize.radius,
 					color: 'steelblue',
 					parent: locationData.past,
@@ -152,9 +163,9 @@ $(function() {
 					key: 'pastOxford'
 				};
 
-		locationData.pastOxfordFirstFloorRoom = {
+		locationData.pastOxfordCharlesRoom = {
 					name: 'Charles\' room',
-					center: {x: 1825,y: 400},
+					center: {x: 1600,y: 700},
 					radius: secondarySize.radius,
 					color: 'steelblue',
 					parent: locationData.pastOxford,
@@ -163,7 +174,7 @@ $(function() {
 				};
 		locationData.pastOxfordClasses = {
 					name: 'Classes',
-					center: {x: 1575,y: 400},
+					center: {x: 1575,y: 600},
 					radius: secondarySize.radius,
 					color: 'steelblue',
 					parent: locationData.pastOxford,
@@ -172,7 +183,7 @@ $(function() {
 				};
 		locationData.pastOxfordSebastiansRoom = {
 					name: 'Sebastian\'s Room',
-					center: {x: 1700,y: 525},
+					center: {x: 1700,y: 725},
 					radius: secondarySize.radius,
 					color: 'steelblue',
 					parent: locationData.pastOxford,
@@ -181,30 +192,30 @@ $(function() {
 				};
 		locationData.pastOxfordBotanicalGardens = {
 					name: 'Botanical Gardens',
-					center: {x: 1700,y: 275},
+					center: {x: 1700,y: 425},
 					radius: secondarySize.radius,
 					color: 'steelblue',
 					parent: locationData.pastOxford,
 					shape: 'circle',
 					key: 'pastOxfordBotanicalGardens'
 				};
-		locationData.pastOxfordGodstow = {
+		locationData.pastGodstow = {
 					name: 'Godstow',
-					center: {x: 1800,y: 500},
+					center: {x: 1400,y: 475},
 					radius: secondarySize.radius,
 					color: 'steelblue',
-					parent: locationData.pastOxford,
+					parent: locationData.past,
 					shape: 'circle',
-					key: 'pastOxfordGodstow'
+					key: 'pastGodstow'
 				};
-		locationData.pastOxfordTrout = {
+		locationData.pastTrout = {
 					name: 'The Trout',
-					center: {x: 1800,y: 300},
+					center: {x: 1450,y: 575},
 					radius: secondarySize.radius,
 					color: 'steelblue',
-					parent: locationData.pastOxford,
+					parent: locationData.past,
 					shape: 'circle',
-					key: 'pastOxfordTrout'
+					key: 'pastTrout'
 				};
 		locationData.pastOxfordAlexanders = {
 					name: 'Alexander\'s',
@@ -217,7 +228,7 @@ $(function() {
 				};
 		locationData.pastOxfordTeashop = {
 					name: 'Tea shop',
-					center: {x: 1600,y: 500},
+					center: {x: 1825,y: 400},
 					radius: secondarySize.radius,
 					color: 'steelblue',
 					parent: locationData.pastOxford,
@@ -267,7 +278,7 @@ $(function() {
 		locationData.presentBrideshead = {
 					name: 'Brideshead',
 					center: {x: 250, y: 800},
-					color: 'forestgreen',
+					color: '#4CAF50',
 					radius: primarySize.radius,
 					parent: locationData.present,
 				  shape: 'circle',
@@ -277,7 +288,16 @@ $(function() {
 					name: 'Chapel',
 					center: {x: 250, y: 925},
 					radius: secondarySize.radius,
-					color: 'forestgreen',
+					color: '#4CAF50',
+					parent: locationData.presentBrideshead,
+					shape: 'circle',
+					key: 'presentBridesheadChapel'
+				};
+		locationData.presentBridesheadNanny = {
+					name: 'Nursery',
+					center: {x: 125, y: 800},
+					radius: secondarySize.radius,
+					color: '#4CAF50',
 					parent: locationData.presentBrideshead,
 					shape: 'circle',
 					key: 'presentBridesheadChapel'
@@ -285,7 +305,7 @@ $(function() {
 		locationData.presentArmyCamp1 = {
 					name: 'Army Camp 1',
 					center: {x: 255, y: 200},
-					color: '#1428B8',
+					color: '#2196F3',
 					radius: 40,
 					parent: locationData.present,
 				  shape: 'circle',
@@ -294,7 +314,7 @@ $(function() {
 		locationData.presentArmyCamp1Huts = {
 					name: 'Huts',
 					center: {x: 255, y: 245},
-					color: '#1428B8',
+					color: '#2196F3',
 					radius: tertiarySize.radius,
 					parent: locationData.presentArmyCamp1,
 				  shape: 'circle',
@@ -303,7 +323,7 @@ $(function() {
 		locationData.presentNearbyCity= {
 					name: 'City (near Army Camp 1)',
 					center: {x: 305, y: 450},
-					color: 'slategrey',
+					color: '#607D8B',
 					radius: 40,
 					parent: locationData.present,
 				  shape: 'circle',
@@ -312,7 +332,7 @@ $(function() {
 		locationData.presentNearbyCityMadhouse= {
 					name: 'Mad House',
 					center: {x: 305, y: 495},
-					color: 'slategrey',
+					color: '#607D8B',
 					radius: tertiarySize.radius,
 					parent: locationData.presentNearbyCity,
 				  shape: 'circle',
@@ -321,7 +341,7 @@ $(function() {
 		locationData.presentTrain= {
 					name: 'Train',
 					center: {x: 425, y: 460},
-					color: '#EC973E',
+					color: '#3F51B5',
 					radius: 35,
 					parent: locationData.present,
 				  shape: 'circle',
@@ -330,7 +350,7 @@ $(function() {
 		locationData.presentTrainCOsCarriage= {
 					name: 'CO\'s Carriage',
 					center: {x: 425, y: 485},
-					color: '#EC973E',
+					color: '#3F51B5',
 					radius: tertiarySize.radius,
 					parent: locationData.presentTrain,
 				  shape: 'circle',
@@ -339,7 +359,7 @@ $(function() {
 		locationData.presentTrainStation1= {
 					name: 'Train Station 1',
 					center: {x: 425, y: 400},
-					color: '#98A8D6',
+					color: '#607D8B',
 					radius: tertiarySize.radius,
 					parent: locationData.present,
 				  shape: 'circle',
@@ -348,7 +368,7 @@ $(function() {
 		locationData.presentTrainStation2= {
 					name: 'Train Station 2',
 					center: {x: 425, y: 700},
-					color: '#98A8D6',
+					color: '#607D8B',
 					radius: tertiarySize.radius,
 					parent: locationData.present,
 				  shape: 'circle',
@@ -357,7 +377,7 @@ $(function() {
 		locationData.presentArmyCamp2= {
 					name: 'Army Camp 2',
 					center: {x: 425, y: 780},
-					color: '#1428B8',
+					color: '#2196F3',
 					radius: 40,
 					parent: locationData.present,
 				  shape: 'circle',
@@ -366,7 +386,7 @@ $(function() {
 		locationData.presentArmyCamp2Huts= {
 					name: 'Huts',
 					center: {x: 425, y: 825},
-					color: '#1428B8',
+					color: '#2196F3',
 					radius: tertiarySize.radius,
 					parent: locationData.presentArmyCamp2,
 				  shape: 'circle',
@@ -375,7 +395,7 @@ $(function() {
 		locationData.presentFarmToEat= {
 			name: 'Farm',
 			center: {x: 290, y: 350},
-			color: '#CA4720',
+			color: '#673AB7',
 			radius: tertiarySize.radius,
 			parent: locationData.present,
 		  shape: 'circle',
@@ -425,7 +445,6 @@ $(function() {
 		'presentTrainStation2',
 		'presentArmyCamp2',
 		'presentArmyCamp2Huts',
-		'presentBrideshead'
 	];
 	// Set the last position that charlesDot was at to be the starting position
 	// 
@@ -443,6 +462,13 @@ $(function() {
 	$(plotKeys).each(function(index, value){
 		plotPoints.push(new Point(locationData[value].center.x, locationData[value].center.y));
 	});
+	plotPoints.push(new Point(1080, 750)); // intermediate point so doesn't go through a location it is not supposed to
+	plotPoints.push(new Point(locationData.pastOxfordCharlesRoom.center.x, locationData.pastOxfordCharlesRoom.center.y));
+	plotPoints.push(new Point(1330, 675));
+	plotPoints.push(new Point(locationData.pastBridesheadServantsEntrance.center.x, locationData.pastBridesheadServantsEntrance.center.y));
+	plotPoints.push(new Point(locationData.pastGodstow.center.x, locationData.pastGodstow.center.y));
+	plotPoints.push(new Point(locationData.pastTrout.center.x, locationData.pastTrout.center.y));
+	plotPoints.push(new Point(locationData.pastOxfordCharlesRoom.center.x, locationData.pastOxfordCharlesRoom.center.y));
 
 	function insertText(){
 		var fontSize = '1.5rem';
@@ -501,14 +527,14 @@ $(function() {
   			var line = new Path.Line({
   				from: [(charlesPosition.x - 5), charlesPosition.y],
 			    to: [(charlesPosition.x + 5), charlesPosition.y],
-			    strokeColor: 'red',
+			    strokeColor: '#F44336',
 			    strokeWidth: 4
   			}).sendToBack();
   			setTimeout(function(){
   				line.scale(0.0);
   			}, 3000);
   		} else {
-  			createPathCircle( charlesPosition, 'red', 5).sendToBack();
+  			createPathCircle( charlesPosition, '#F44336', 5).sendToBack();
   			// charlesDot
   		}
   	} else {
@@ -531,6 +557,7 @@ $(function() {
  
     	if((pathLocationIndex = isInApathLocation(charlesDot)) !== false){
     		insertListItem(pathLocationIndex);
+    		drawCharlesPathPieces();
     	} else {
     		drawCharlesPathPieces();
     	}
@@ -636,6 +663,7 @@ $(function() {
 	}
 
 	paper.tool.onMouseDown = function(event) {
+		$('body').append('<div class="mouse-pos">x: ' + event.point.x + ',y: ' + event.point.y + '</div>');
     for(var i = 0; i < plotPoints.length; i++){
     	bridesheadPath.add(new Segment(plotPoints[i], new Point(0,0), new Point(0,0)));
     	amount = bridesheadPath.length / length;

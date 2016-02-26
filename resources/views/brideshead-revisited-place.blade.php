@@ -5,6 +5,14 @@
 		body {
 			overflow: hidden;
 		}
+		.mouse-pos {
+			position: fixed;
+			top: 15px;
+			right: 15px;
+			background:black;
+			color: white;
+			height: 40px;
+		}
 		#location-list {
 			position: fixed;
 			top: 10px;
