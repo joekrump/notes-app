@@ -26,6 +26,7 @@
             </style> 
         @endif
         <meta name="_token" content="{{ csrf_token() }}" />
+        <meta charset="utf-8" />
     </head>
     <body>
 

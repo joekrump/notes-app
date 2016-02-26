@@ -5,6 +5,9 @@
   },
   "dependencies": {
     "laravel-elixir": "^2.0.0",
-    "bootstrap-sass": "^3.0.0"
+    "bootstrap-sass": "^3.0.0",
+    "react-dom": "~0.14.7",
+    "react": "~0.14.7",
+    "draft-js": "~0.1.0"
   }
 }

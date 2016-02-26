@@ -16,6 +16,10 @@ Route::get('/', function () {
    return view('welcome');
 });
 
+Route::get('/draft', function () {
+   return view('draftjs');
+});
+
 Route::post('/uploader', 'FilesController@uploadFile');
 Route::get('/uploader', 'FilesController@getUploader');
 Route::get('/browser', 'FilesController@getBrowser');
