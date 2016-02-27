@@ -55,7 +55,7 @@ let TopNav = React.createClass({
             iconClassNameRight="muidocs-icon-navigation-expand-more"
             onLeftIconButtonTouchTap={this.toggleLeftNav}
             zDepth={4} 
-            style={{backgroundColor: Colors.tealA700, color: Colors.darkWhite}} />
+            style={{backgroundColor: Colors.lightBlue600, color: Colors.darkWhite}} />
             <div id="nav-top-right">
               {navRight}
             </div>

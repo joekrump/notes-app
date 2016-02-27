@@ -139,7 +139,7 @@ h3 {
   border-top: 3px solid #008B95;
   margin-bottom: 5px;
   background-color: rgba(0, 0, 0, 0.6);
-  box-shadow: 0 14px 45px rgba(0, 0, 0, 0.25), 0 10px 18px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 19px 60px rgba(0, 0, 0, 0.3), 0 15px 20px rgba(0, 0, 0, 0.22);
   transition: all 400ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; }
   .index-page .list-header .title {
     overflow: hidden;
@@ -338,9 +338,6 @@ a.btn, button.btn {
 .collapse ul {
   margin-bottom: 2px; }
 
-.accordion-body {
-  padding-left: 7px; }
-
 #colour.form-control {
   margin-top: 77px; }
 
@@ -505,12 +502,12 @@ a:hover.cke_colorauto, a:hover.cke_colormore, a:focus.cke_colorauto, a:focus.cke
 
 #notes .card {
   border-top: 3px solid #008B95;
-  background-color: #1A819B;
+  background-color: #424242;
   margin-bottom: 5px;
   padding-top: 5px;
   padding-top: 12px;
   padding-bottom: 12px;
-  box-shadow: 0 14px 45px rgba(0, 0, 0, 0.25), 0 10px 18px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 19px 60px rgba(0, 0, 0, 0.3), 0 15px 20px rgba(0, 0, 0, 0.22);
   transition: all 400ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; }
   #notes .card .index-actions {
     opacity: 0;
@@ -519,7 +516,7 @@ a:hover.cke_colorauto, a:hover.cke_colormore, a:focus.cke_colorauto, a:focus.cke
     right: 5px;
     transition: all 400ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; }
   #notes .card:hover {
-    background-color: #209FBF; }
+    background-color: #03a9f4; }
     #notes .card:hover .index-actions {
       opacity: 1.0; }
 

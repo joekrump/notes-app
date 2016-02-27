@@ -35,7 +35,7 @@ export default class SwipeableCardTabs extends React.Component {
       <Badge
             badgeContent={this.props.data.incomplete.total}
             secondary={true}
-            badgeStyle={{top: 10, right: -8, backgroundColor: Colors.orangeA700, width: '28px', height: '28px'}}
+            badgeStyle={{top: 10, right: -8, backgroundColor: Colors.redA700, width: '28px', height: '28px'}}
           >
           <div>Incomplete</div>
       </Badge>
@@ -44,9 +44,19 @@ export default class SwipeableCardTabs extends React.Component {
       <Badge
             badgeContent={this.props.data.complete.total}
             secondary={true}
-            badgeStyle={{top: 10, right: -8, backgroundColor: Colors.lightBlueA700, width: '28px', height: '28px'}}
+            badgeStyle={{top: 10, right: -8, backgroundColor: Colors.green600, width: '28px', height: '28px'}}
           >
           <div>Complete</div>
+      </Badge>
+      );
+
+    let label3 = (
+      <Badge
+            badgeContent={this.props.data.incomplete.total + this.props.data.complete.total}
+            secondary={true}
+            badgeStyle={{top: 10, right: -8, backgroundColor: Colors.deepOrange700, width: '28px', height: '28px'}}
+          >
+          <div>All</div>
       </Badge>
       );
 
@@ -58,7 +68,7 @@ export default class SwipeableCardTabs extends React.Component {
         >
           <Tab value="incomplete" label={label1} />
           <Tab value="complete" label={label2}/>
-          <Tab label="All" value="all"/>
+          <Tab value="all" label={label3}/>
         </Tabs>
         <div className="col-sm-12" ref="tab-content">
           <CardList cards={this.props.cards} activeLanguage={this.props.activeLanguage} />

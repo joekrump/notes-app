@@ -38600,7 +38600,10 @@ var ReactDOMOption = {
       }
     });
 
-    nativeProps.children = content;
+    if (content) {
+      nativeProps.children = content;
+    }
+
     return nativeProps;
   }
 
@@ -45141,7 +45144,7 @@ module.exports = ReactUpdates;
 
 'use strict';
 
-module.exports = '0.14.6';
+module.exports = '0.14.7';
 },{}],301:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -46236,6 +46239,7 @@ var warning = require('fbjs/lib/warning');
  */
 var EventInterface = {
   type: null,
+  target: null,
   // currentTarget is set when dispatching; no use in copying it here
   currentTarget: emptyFunction.thatReturnsNull,
   eventPhase: null,
@@ -46269,8 +46273,6 @@ function SyntheticEvent(dispatchConfig, dispatchMarker, nativeEvent, nativeEvent
   this.dispatchConfig = dispatchConfig;
   this.dispatchMarker = dispatchMarker;
   this.nativeEvent = nativeEvent;
-  this.target = nativeEventTarget;
-  this.currentTarget = nativeEventTarget;
 
   var Interface = this.constructor.Interface;
   for (var propName in Interface) {
@@ -46281,7 +46283,11 @@ function SyntheticEvent(dispatchConfig, dispatchMarker, nativeEvent, nativeEvent
     if (normalize) {
       this[propName] = normalize(nativeEvent);
     } else {
-      this[propName] = nativeEvent[propName];
+      if (propName === 'target') {
+        this.target = nativeEventTarget;
+      } else {
+        this[propName] = nativeEvent[propName];
+      }
     }
   }
 
@@ -50313,17 +50319,17 @@ var LeftNavUndocked = (function (_React$Component) {
           onRequestChange: function (open) {
             return _this2.setState({ open: open });
           },
-          style: { backgroundColor: Colors.teal700, color: Colors.darkWhite }
+          style: { backgroundColor: Colors.lightBlue900, color: Colors.darkWhite }
         },
         React.createElement(SelectableMenuList, null),
         React.createElement(
           List,
-          { className: 'logout', style: { backgroundColor: Colors.teal700, width: '100%' } },
+          { className: 'logout', style: { backgroundColor: Colors.lightBlue900, width: '100%' } },
           React.createElement(ListItem, {
             leftIcon: React.createElement(ExitIcon, { color: Colors.darkWhite }),
             value: '/logout',
             primaryText: 'Logout',
-            style: { backgroundColor: Colors.teal700, color: Colors.darkWhite } })
+            style: { backgroundColor: Colors.lightBlue900, color: Colors.darkWhite } })
         )
       );
     }
@@ -50449,9 +50455,9 @@ var Custom1 = {
     canvasColor: '#303030',
     borderColor: ColorManipulator.fade(Colors.fullWhite, 0.3), //Colors.grey300
     disabledColor: ColorManipulator.fade(Colors.fullWhite, 0.3),
-    primary1Color: Colors.tealA700,
-    primary2Color: Colors.teal900,
-    primary3Color: Colors.tealA700,
+    primary1Color: Colors.lightBlue800,
+    primary2Color: Colors.lightBlue500,
+    primary3Color: Colors.lightBlue800,
     secondary1Color: Colors.cyanA700,
     secondary2Color: Colors.cyan900,
     secondary3Color: Colors.cyanA700,
@@ -50463,7 +50469,7 @@ var Custom1 = {
     borderColor: Colors.grey300
   },
   appBar: {
-    color: Colors.teal500,
+    color: Colors.blue600,
     textColor: Colors.darkWhite,
     height: Spacing.desktopKeylineIncrement,
     backgroundColor: Colors.transparent
@@ -50567,7 +50573,7 @@ var TopNav = React.createClass({
           iconClassNameRight: 'muidocs-icon-navigation-expand-more',
           onLeftIconButtonTouchTap: this.toggleLeftNav,
           zDepth: 4,
-          style: { backgroundColor: Colors.tealA700, color: Colors.darkWhite } }),
+          style: { backgroundColor: Colors.lightBlue600, color: Colors.darkWhite } }),
         React.createElement(
           'div',
           { id: 'nav-top-right' },
