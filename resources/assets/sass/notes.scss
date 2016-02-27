@@ -38,6 +38,7 @@
 	.accordion-body {
 		margin-bottom: 3px;
 		overflow-x: hidden;
+
 	}
 	.card {
 		border-top: 3px solid $lightBlue;
@@ -76,7 +77,7 @@
 			max-height: 360px;
 			overflow-y: hidden;
 			&:hover {
-				margin-right: -23px;
+				margin-right: -8px;
 				overflow-y: scroll;
 			}
 		}

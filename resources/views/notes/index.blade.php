@@ -58,7 +58,7 @@
 					      </div>
 					    </a>
 					  </div>
-					  <div id="collapse{{$course->id}}" class="accordion-body collapse row">
+					  <div id="collapse{{$course->id}}" class="accordion-body collapse">
 					{{--   	<div class="col-sm-8 col-sm-offset-4">
 					  		<div class="row"> --}}
 					      	@foreach($notes->orderBy('created_at', 'DESC')->get() as $note)
@@ -138,7 +138,7 @@
   			$accordionBody = $(this);
   			maxHeightPx = $accordionBody.css('max-height').split('px')[0];
   			if($accordionBody.height() < maxHeightPx){
-  				$accordionBody.css({'overflow-y' : 'hidden', 'margin-right' : '-15px'})
+  				$accordionBody.css({'overflow-y' : 'hidden'})
   			}
   		});
   	}).resize();
