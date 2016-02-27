@@ -120,6 +120,9 @@ a.btn, button.btn {
   
   &.btn-secondary {
     background-color: $orange400;
+    &:hover {
+      color: $lightWhite;
+    }
   }
   &.btn-primary {
     background-color: $lightBlueA400;

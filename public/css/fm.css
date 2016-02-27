@@ -99,6 +99,8 @@ a.btn, button.btn {
     line-height: 22px; }
   a.btn.btn-secondary, button.btn.btn-secondary {
     background-color: #ffa726; }
+    a.btn.btn-secondary:hover, button.btn.btn-secondary:hover {
+      color: rgba(255, 255, 255, 0.54); }
   a.btn.btn-primary, button.btn.btn-primary {
     background-color: #00b0ff; }
   a.btn.btn-default, button.btn.btn-default {
