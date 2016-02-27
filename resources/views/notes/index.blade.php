@@ -43,11 +43,12 @@
 			</div>
 			@if($courses->count())
 				<div class="accordion" id="course-list">
+				<?php $distanceFromTop = 136 ?>
 				@foreach($courses as $course)
 
 					@if(($notes = $course->notes()->where('status', $status)) && ($note_count = $notes->count()))
 					<div class="accordion-group" id="{{ $course->name }}" data-note-count={{ $note_count }}>
-					  <div class="accordion-heading row list-header" {{is_null($course->colour) ?: 'style=border-color:'.$course->colour }}>
+					  <div class="accordion-heading row list-header" {{is_null($course->colour) ?: 'style=border-color:'.$course->colour.';top:'. ($distanceFromTop += 42) .'px;' }}>
 					    <a class="accordion-toggle" data-toggle="collapse" data-parent="#course-list" href="#collapse{{$course->id}}">
 					      <div class="col-sm-12">
 						      	<div class="title">
@@ -58,32 +59,36 @@
 					    </a>
 					  </div>
 					  <div id="collapse{{$course->id}}" class="accordion-body collapse row">
-			      	@foreach($notes->orderBy('created_at', 'DESC')->get() as $note)
-			      	<div class="card col-sm-2" data-id="{{ $note->id }}" data-course-name="{{ $note->course->name }}" {{is_null($course->colour) ?: 'style=border-color:'.$course->colour.'' }}>
-			      		<a href={{'/notes/' . ($note->slug ? $note->slug : $note->id) }}>	
-				      		<div class="row">
-				      			<div class="title col-sm-12">
-				      				<span class="text">{{ $note->title }}</span>
-				      			</div>
-				      			<div class="col-sm-12">
-				      				<div class="label label-inverse label-default">{{ $note->created_at->toFormattedDateString() }}</div>
-				      			</div>
-				      			<div class="pull-right index-actions">
-				      				@if($note->status != 0)
-				      					<button type="button" class="btn btn-sm btn-success" data-id="{{$note->id}}" data-action-status=0>Set Active</button>
-				      				@endif
-				      				@if($note->status != 1)
-				      					<button type="button" class="btn btn-sm btn-primary" data-id="{{$note->id}}" data-action-status=1>A</button>
-				      				@endif
-				      				@if($note->status != 2)
-				      					<button type="button" class="btn btn-sm btn-secondary" data-id="{{$note->id}}" data-action-status=2>B</button>
-				      				@endif
-				      				<button type="button" class="btn btn-sm btn-danger btn-delete" data-id="{{$note->id}}">&times;</button>
-				      			</div>
-				      		</div>
-			      		</a>
-			      	</div>
-			      	@endforeach
+					{{--   	<div class="col-sm-8 col-sm-offset-4">
+					  		<div class="row"> --}}
+					      	@foreach($notes->orderBy('created_at', 'DESC')->get() as $note)
+					      	<div class="card col-sm-2" data-id="{{ $note->id }}" data-course-name="{{ $note->course->name }}" {{is_null($course->colour) ?: 'style=border-color:'.$course->colour.'' }}>
+					      		<a href={{'/notes/' . ($note->slug ? $note->slug : $note->id) }}>	
+						      		<div class="row">
+						      			<div class="title col-sm-12">
+						      				<span class="text">{{ $note->title }}</span>
+						      			</div>
+						      			<div class="col-sm-12">
+						      				<div class="label label-inverse label-default">{{ $note->created_at->toFormattedDateString() }}</div>
+						      			</div>
+						      			<div class="pull-right index-actions">
+						      				@if($note->status != 0)
+						      					<button type="button" class="btn btn-sm btn-success" data-id="{{$note->id}}" data-action-status=0>Set Active</button>
+						      				@endif
+						      				@if($note->status != 1)
+						      					<button type="button" class="btn btn-sm btn-primary" data-id="{{$note->id}}" data-action-status=1>A</button>
+						      				@endif
+						      				@if($note->status != 2)
+						      					<button type="button" class="btn btn-sm btn-secondary" data-id="{{$note->id}}" data-action-status=2>B</button>
+						      				@endif
+						      				<button type="button" class="btn btn-sm btn-danger btn-delete" data-id="{{$note->id}}">&times;</button>
+						      			</div>
+						      		</div>
+					      		</a>
+					      	</div>
+					      	@endforeach
+				 {{--      	</div>
+			      	</div> --}}
 					  </div>
 					</div>
 					@endif
