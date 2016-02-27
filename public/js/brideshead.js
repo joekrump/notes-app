@@ -33,7 +33,7 @@ $(function() {
 	var cloneCircle;
 	var length;	
 	// var currentLocation = true; // Starts from within a location
-	var amount = 0.3; // controls the speed at which the movement will occur
+	var amount = 0.05; // controls the speed at which the movement will occur
 	var tool = new Tool();
 	var numpathLocations = 0;
 	var pathLocationsShapes = [];
@@ -61,21 +61,21 @@ $(function() {
 		'pastBotleyRoad',
 		'pastSwindon',
 		'pastRavenna',
+		'pastFarmToEat',
 		'present',
 		'presentBrideshead',
 		'presentBridesheadChapel',
 		'presentBridesheadNanny',
 		'presentArmyCamp1',
 		'presentArmyCamp1Huts',
-		'presentNearbyCity',
-		'presentNearbyCityMadhouse',
+		'presentArmyCamp1NearbyCity',
+		'presentArmyCamp1NearbyCityMadhouse',
 		'presentTrain',
 		'presentTrainCOsCarriage',
 		'presentTrainStation1',
 		'presentTrainStation2',
 		'presentArmyCamp2',
 		'presentArmyCamp2Huts',
-		'presentFarmToEat'
 	];
 	var locationData = {};
 	var plotPoints = [];
@@ -271,6 +271,15 @@ $(function() {
 					shape: 'circle',
 					key: 'pastRavenna'
 				};
+		locationData.pastFarmToEat= {
+			name: 'Farm',
+			center: {x: 1500, y: 450},
+			color: '#673AB7',
+			radius: tertiarySize.radius,
+			parent: locationData.past,
+		  shape: 'circle',
+		  key: 'pastFarmToEat'
+		};
 
 		// Present Locations
 		// 
@@ -313,30 +322,30 @@ $(function() {
 				};
 		locationData.presentArmyCamp1Huts = {
 					name: 'Huts',
-					center: {x: 255, y: 245},
+					center: {x: 300, y: 320},
 					color: '#2196F3',
 					radius: tertiarySize.radius,
 					parent: locationData.presentArmyCamp1,
 				  shape: 'circle',
 				  key: 'presentArmyCamp1Huts'
 				};
-		locationData.presentNearbyCity= {
+		locationData.presentArmyCamp1NearbyCity= {
 					name: 'City (near Army Camp 1)',
-					center: {x: 305, y: 450},
+					center: {x: 255, y: 245},
 					color: '#607D8B',
 					radius: 40,
-					parent: locationData.present,
+					parent: locationData.presentArmyCamp1,
 				  shape: 'circle',
-				  key: 'presentNearbyCity'
+				  key: 'presentArmyCamp1NearbyCity'
 				};
-		locationData.presentNearbyCityMadhouse= {
+		locationData.presentArmyCamp1NearbyCityMadhouse= {
 					name: 'Mad House',
 					center: {x: 305, y: 495},
 					color: '#607D8B',
 					radius: tertiarySize.radius,
-					parent: locationData.presentNearbyCity,
+					parent: locationData.presentArmyCamp1,
 				  shape: 'circle',
-				  key: 'presentNearbyCityMadhouse'
+				  key: 'presentArmyCamp1NearbyCityMadhouse'
 				};
 		locationData.presentTrain= {
 					name: 'Train',
@@ -392,15 +401,6 @@ $(function() {
 				  shape: 'circle',
 				  key: 'presentArmyCamp2Huts'
 				};
-		locationData.presentFarmToEat= {
-			name: 'Farm',
-			center: {x: 290, y: 350},
-			color: '#673AB7',
-			radius: tertiarySize.radius,
-			parent: locationData.present,
-		  shape: 'circle',
-		  key: 'presentFarmToEat'
-		};
 
 		$(locationKeys).each(function(index, value){
 			// console.log(value);
@@ -435,10 +435,9 @@ $(function() {
 	// contains the order of the plot
 	var plotKeys = [
 		'presentArmyCamp1',
+		'presentArmyCamp1NearbyCity',
 		'presentArmyCamp1Huts',
-		'presentFarmToEat',
-		'presentNearbyCity',
-		'presentNearbyCityMadhouse',
+		'presentArmyCamp1NearbyCityMadhouse',
 		'presentTrainStation1',
 		'presentTrain',
 		'presentTrainCOsCarriage',
@@ -469,6 +468,7 @@ $(function() {
 	plotPoints.push(new Point(locationData.pastGodstow.center.x, locationData.pastGodstow.center.y));
 	plotPoints.push(new Point(locationData.pastTrout.center.x, locationData.pastTrout.center.y));
 	plotPoints.push(new Point(locationData.pastOxfordCharlesRoom.center.x, locationData.pastOxfordCharlesRoom.center.y));
+	plotPoints.push(new Point(locationData.pastOxfordClasses.center.x, locationData.pastOxfordClasses.center.y));
 
 	function insertText(){
 		var fontSize = '1.5rem';

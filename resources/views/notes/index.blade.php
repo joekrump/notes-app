@@ -33,8 +33,9 @@
 
 							</div>
 							<div class="list list-striped list-unstyled col-sm-12 results-container">
-								<div class="results row">
-
+								<div class="row">
+									<div class="col-sm-12 results">
+									</div>
 								</div>
 							</div>
 						</div>
@@ -77,7 +78,7 @@
 						      			</div>
 						      			<div class="pull-right index-actions">
 						      				@if($note->status != 0)
-						      					<button type="button" class="btn btn-sm btn-success" data-id="{{$note->id}}" data-action-status=0>Set Active</button>
+						      					<button type="button" class="btn btn-sm btn-success" data-id="{{$note->id}}" data-action-status=0>R</button>
 						      				@endif
 						      				@if($note->status != 1)
 						      					<button type="button" class="btn btn-sm btn-primary" data-id="{{$note->id}}" data-action-status=1>A</button>
@@ -119,7 +120,7 @@
     			'</div>',
     			'<div class="pull-right index-actions">'];
     				if(note.status != 0){
-    					li.push('<button type="button" class="btn btn-sm btn-success" data-id="{{$note->id}}" data-action-status=0>Set Active</button>');
+    					li.push('<button type="button" class="btn btn-sm btn-success" data-id="{{$note->id}}" data-action-status=0>R</button>');
     				}
     				if(note.status != 1){
     					li.push('<button type="button" class="btn btn-sm btn-primary" data-id="{{$note->id}}" data-action-status=1>A</button>');
