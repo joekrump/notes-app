@@ -38,8 +38,8 @@ elixir(function(mix) {
     // Note: phpSpec is included out of the box in Laravel 5.
     //
     //
-    // mix.browserify('app.js', 'public/js/app.js')
-    // mix.browserify('nav.js', 'public/js/react-nav.js')
-    // mix.browserify('cards.js', 'public/js/react-page.js')
+    mix.browserify('app.js', 'public/js/app.js')
+    mix.browserify('nav.js', 'public/js/react-nav.js')
+    mix.browserify('cards.js', 'public/js/react-page.js')
     // mix.browserify('draft-editor.js', 'public/js/draft-editor.js')
 });

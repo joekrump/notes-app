@@ -47,7 +47,7 @@
 
 					@if(($notes = $course->notes()->where('status', $status)) && ($note_count = $notes->count()))
 					<div class="accordion-group" id="{{ $course->name }}" data-note-count={{ $note_count }}>
-					  <div class="accordion-heading row list-header" {{is_null($course->colour) ?: 'style=border-color:'.$course->colour.'' }}>
+					  <div class="accordion-heading row list-header" {{is_null($course->colour) ?: 'style=border-color:'.$course->colour }}>
 					    <a class="accordion-toggle" data-toggle="collapse" data-parent="#course-list" href="#collapse{{$course->id}}">
 					      <div class="col-sm-12">
 						      	<div class="title">
@@ -59,7 +59,7 @@
 					  </div>
 					  <div id="collapse{{$course->id}}" class="accordion-body collapse row">
 			      	@foreach($notes->orderBy('created_at', 'DESC')->get() as $note)
-			      	<div class="card col-sm-2" data-id="{{ $note->id }}" data-course-name="{{ $note->course->name }}" {{is_null($course->colour) ?: "style="}} "{{ is_null($course->colour) ?: 'border-left:3px solid '. $course->colour  }}">
+			      	<div class="card col-sm-2" data-id="{{ $note->id }}" data-course-name="{{ $note->course->name }}" {{is_null($course->colour) ?: 'style=border-color:'.$course->colour.'' }}>
 			      		<a href={{'/notes/' . ($note->slug ? $note->slug : $note->id) }}>	
 				      		<div class="row">
 				      			<div class="title col-sm-12">
@@ -99,7 +99,7 @@
 	function makeListItem(note, searchValue){
 		var createdAt = new Date(note.created_at);
 
-  	var li = ['<div class="col-sm-2 card" data-id="',note.id,'" data-course-name="', note.name,'" style="border-left:3px solid ', note.colour,'">',
+  	var li = ['<div class="col-sm-2 card" data-id="',note.id,'" data-course-name="', note.name,'" style="border-top:3px solid ', note.colour,'">',
   		'<a href="/notes/',(note.slug ? note.slug : note.id),'?s=',searchValue,'">',
     		'<div class="row">',
     			'<div class="title col-sm-12">',

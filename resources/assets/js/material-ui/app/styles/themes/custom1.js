@@ -12,9 +12,9 @@ let Custom1 = {
     canvasColor: '#303030',
     borderColor:  ColorManipulator.fade(Colors.fullWhite, 0.3), //Colors.grey300
     disabledColor: ColorManipulator.fade(Colors.fullWhite, 0.3),
-    primary1Color: Colors.tealA700,
-    primary2Color: Colors.teal900,
-    primary3Color: Colors.tealA700,
+    primary1Color: '#1A819B',
+    primary2Color: '#209FBF',
+    primary3Color: '#1A819B',
     secondary1Color: Colors.cyanA700,
     secondary2Color: Colors.cyan900,
     secondary3Color: Colors.cyanA700,
@@ -26,7 +26,7 @@ let Custom1 = {
     borderColor: Colors.grey300,
   },
   appBar: {
-    color: Colors.teal500,
+    color: '#1A819B',
     textColor: Colors.darkWhite,
     height: Spacing.desktopKeylineIncrement,
     backgroundColor: Colors.transparent

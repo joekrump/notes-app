@@ -34,15 +34,15 @@ export default class LeftNavUndocked extends React.Component {
         zDepth={4}
         open={this.state.open}
         onRequestChange={open => this.setState({open})}
-        style={{backgroundColor: Colors.teal700, color: Colors.darkWhite}}
+        style={{backgroundColor: '#1A819B', color: Colors.darkWhite}}
         >
         <SelectableMenuList />
-        <List className="logout" style={{backgroundColor: Colors.teal700, width: '100%'}}>
+        <List className="logout" style={{backgroundColor: '#1A819B', width: '100%'}}>
           <ListItem 
             leftIcon={<ExitIcon color={Colors.darkWhite} />}
             value={'/logout'}
             primaryText="Logout"
-            style={{backgroundColor: Colors.teal700, color: Colors.darkWhite}} />
+            style={{backgroundColor: '#1A819B', color: Colors.darkWhite}} />
         </List>
       </LeftNav>
     );
