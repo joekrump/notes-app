@@ -15,7 +15,7 @@
 				@endif
 				<form id="note-search" class="pull-right col-sm-10" action="/notes/search/" method="GET">
 					<button type="submit" class="btn btn-secondary pull-right">Search</button>
-					<div class="col-sm-2 pull-right">
+					<div class="col-sm-3 pull-right">
 						<input id="search-field" type="search" class="form-control" name="term" placeholder="Search" />
 					</div>
 				</form>
@@ -32,9 +32,11 @@
 							<div class="col-sm-6 no-results" style="display: none;">
 
 							</div>
-							<ul class="list list-striped list-unstyled results col-sm-12">
+							<div class="list list-striped list-unstyled col-sm-12 results-container">
+								<div class="results row">
 
-							</ul>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -56,33 +58,32 @@
 					    </a>
 					  </div>
 					  <div id="collapse{{$course->id}}" class="accordion-body collapse row">
-					      <ul class="list list-striped list-unstyled col-sm-12">
-					      	@foreach($notes->orderBy('created_at', 'DESC')->get() as $note)
-					      	<li class="row" data-id="{{ $note->id }}" data-course-name="{{ $note->course->name }}" {{is_null($course->colour) ?: "style="}} "{{ is_null($course->colour) ?: 'border-left:3px solid '. $course->colour  }}">
-					      		<a href={{'/notes/' . ($note->slug ? $note->slug : $note->id) }}>	
-						      		<div class="col-sm-12">
-						      			<div class="title">
-						      				<span class="text">{{ $note->title }}</span>
-						      			</div>
-						      			<div class="label label-inverse label-default">{{ $note->created_at->toFormattedDateString() }}</div>
-						      			<div class="pull-right index-actions">
-						      				@if($note->status != 0)
-						      					<button type="button" class="btn btn-xs btn-success" data-id="{{$note->id}}" data-action-status=0>Set Active</button>
-						      				@endif
-						      				@if($note->status != 1)
-						      					<button type="button" class="btn btn-xs btn-primary" data-id="{{$note->id}}" data-action-status=1>A</button>
-						      				@endif
-						      				@if($note->status != 2)
-						      					<button type="button" class="btn btn-xs btn-secondary" data-id="{{$note->id}}" data-action-status=2>B</button>
-						      				@endif
-						      				
-						      				<button type="button" class="btn btn-xs btn-danger btn-delete" data-id="{{$note->id}}">&times;</button>
-						      			</div>
-						      		</div>
-					      		</a>
-					      	</li>
-					      	@endforeach
-					      </ul>
+			      	@foreach($notes->orderBy('created_at', 'DESC')->get() as $note)
+			      	<div class="card col-sm-2" data-id="{{ $note->id }}" data-course-name="{{ $note->course->name }}" {{is_null($course->colour) ?: "style="}} "{{ is_null($course->colour) ?: 'border-left:3px solid '. $course->colour  }}">
+			      		<a href={{'/notes/' . ($note->slug ? $note->slug : $note->id) }}>	
+				      		<div class="row">
+				      			<div class="title col-sm-12">
+				      				<span class="text">{{ $note->title }}</span>
+				      			</div>
+				      			<div class="col-sm-12">
+				      				<div class="label label-inverse label-default">{{ $note->created_at->toFormattedDateString() }}</div>
+				      			</div>
+				      			<div class="pull-right index-actions">
+				      				@if($note->status != 0)
+				      					<button type="button" class="btn btn-sm btn-success" data-id="{{$note->id}}" data-action-status=0>Set Active</button>
+				      				@endif
+				      				@if($note->status != 1)
+				      					<button type="button" class="btn btn-sm btn-primary" data-id="{{$note->id}}" data-action-status=1>A</button>
+				      				@endif
+				      				@if($note->status != 2)
+				      					<button type="button" class="btn btn-sm btn-secondary" data-id="{{$note->id}}" data-action-status=2>B</button>
+				      				@endif
+				      				<button type="button" class="btn btn-sm btn-danger btn-delete" data-id="{{$note->id}}">&times;</button>
+				      			</div>
+				      		</div>
+			      		</a>
+			      	</div>
+			      	@endforeach
 					  </div>
 					</div>
 					@endif
@@ -95,35 +96,48 @@
 
 @section('javascripts')
 <script>
-	function makeListItem(note){
+	function makeListItem(note, searchValue){
 		var createdAt = new Date(note.created_at);
 
-  	var li = ['<li class="row" data-id="',note.id,'" data-course-name="', note.name,'" style="border-left:3px solid ', note.colour,'">',
-  		'<a href="/notes/',(note.slug ? note.slug : note.id),'">',
-    		'<div class="col-sm-12">',
-    			'<div class="title">',
+  	var li = ['<div class="col-sm-2 card" data-id="',note.id,'" data-course-name="', note.name,'" style="border-left:3px solid ', note.colour,'">',
+  		'<a href="/notes/',(note.slug ? note.slug : note.id),'?s=',searchValue,'">',
+    		'<div class="row">',
+    			'<div class="title col-sm-12">',
     				'<span class="text">',note.title,'</span>',
     			'</div>',
+    			'<div class="col-sm-12">',
     			'<div class="label label-inverse label-default">',createdAt.toDateString(),'</div>',
-    		'<div class="pull-right index-actions">'];
+    			'</div>',
+    			'<div class="pull-right index-actions">'];
     				if(note.status != 0){
-    					li.push('<button type="button" class="btn btn-xs btn-success" data-id="{{$note->id}}" data-action-status=0>Set Active</button>');
+    					li.push('<button type="button" class="btn btn-sm btn-success" data-id="{{$note->id}}" data-action-status=0>Set Active</button>');
     				}
     				if(note.status != 1){
-    					li.push('<button type="button" class="btn btn-xs btn-primary" data-id="{{$note->id}}" data-action-status=1>A</button>');
+    					li.push('<button type="button" class="btn btn-sm btn-primary" data-id="{{$note->id}}" data-action-status=1>A</button>');
     				}
     				if(note.status != 2){
-    					li.push('<button type="button" class="btn btn-xs btn-secondary" data-id="{{$note->id}}" data-action-status=2>B</button>');
+    					li.push('<button type="button" class="btn btn-sm btn-secondary" data-id="{{$note->id}}" data-action-status=2>B</button>');
     				}
-    				li.push('<button type="button" class="btn btn-xs btn-danger btn-delete" data-id="',note.id,'">&times;</button>');
+    				li.push('<button type="button" class="btn btn-sm btn-danger btn-delete" data-id="',note.id,'">&times;</button>');
     			li.push('</div>');
     		li.push('</div>');
   		li.push('</a>');
-  	li.push('</li>');
+  	li.push('</div>');
   	return li.join('');
 	}
   $(document).ready(function(e, element){
-
+  	var $accordionBody;
+  	var maxHeightPx;
+  	$(window).on('resize', function(){
+  		$('.accordion-body').each(function(){
+  			$accordionBody = $(this);
+  			maxHeightPx = $accordionBody.css('max-height').split('px')[0];
+  			if($accordionBody.height() < maxHeightPx){
+  				$accordionBody.css({'overflow-y' : 'hidden', 'margin-right' : '-15px'})
+  			}
+  		});
+  	}).resize();
+  	
   	$('#note-search').submit(function(e){
   		e.preventDefault();
   		var searchValue = $('#search-field').val();
@@ -131,7 +145,7 @@
   			if(response.length == 0){
   				$('.results-header').hide();
   				$('.no-results').html('<div>No results matching "' + searchValue + '"</div>').fadeIn();
-  				$('.results').slideUp();
+  				$('.results-container').slideUp();
   				$('#course-list').fadeIn(300);
 
   				return 1;
@@ -144,10 +158,11 @@
   				// });
   				var $results = '';
   				$(response).each(function($index, $note){
-  					$results += makeListItem($note);
+  					$results += makeListItem($note, searchValue);
   				});
 
-  				$('.results').html($results).slideDown();
+  				$('.results').html($results);
+  				$('.results-container').slideDown();
   			}
   			
   		});

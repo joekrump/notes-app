@@ -140,19 +140,19 @@
 }
 
 @media (min-width: 1500px){
-  .container {
+  #cards.container {
     width: 1400px;
   }
 }
 
 @media (min-width: 1800px){
-  .container {
+  #cards.container {
     width: 1780px;
   }
 }
 
 #card-page {
-  .container {
+  #cards.container {
     width: 1170px;
   }
 }

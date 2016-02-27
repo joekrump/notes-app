@@ -19,10 +19,11 @@
 }
 #notes {
   .title {
-  	width: 300px;
+  	// width: 300px;
   	display: inline-block;
   	overflow: hidden;
   	white-space: nowrap;
+  	font-size: 1.2rem;
 		text-overflow: ellipsis;
 		text-overflow: " …";
 		color: $white;
@@ -31,6 +32,32 @@
 			vertical-align: middle;
 		}
 	}
+	.accordion-body {
+		margin-bottom: 3px;
+		overflow-x: hidden;
+	}
+	.card {
+    background-color: rgba(0,0,0,0.6);
+    margin-top: 1px;
+    padding-top: 5px;
+    border-left: 3px solid $lightBlue;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    .index-actions {
+      opacity: 0;
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+    }
+    &:hover {
+      background-color: rgba(0,0,0,0.7);
+      border-left: 3px solid $limeA700;
+      .index-actions {
+        opacity: 1.0;
+        transition: border 400ms, opacity 400ms;
+      }
+    }
+  }
 }
 
 @media(min-width: 970px){
@@ -44,6 +71,7 @@
 			max-height: 360px;
 			overflow-y: hidden;
 			&:hover {
+				margin-right: -23px;
 				overflow-y: scroll;
 			}
 		}
@@ -51,18 +79,18 @@
 }
 
 @media (min-width: 1300px){
-  #note-page{
+  #note-page, #notes {
   	.container {
-    	width: 900px;
+    	width: 1170px;
   	}
 	}
 }
 
 
 @media (min-width: 1500px){
-	#note-page, .footer-fixed-bottom  {
+	#note-page, .footer-fixed-bottom, #notes  {
 		.container {
-		  width: 900px;
+		  width: 1170px;
 		}
 		.cke_contents {
 			height: 500px !important;
@@ -71,7 +99,11 @@
 	#notes {
 		.accordion-body {
 			max-height: 400px;
-			overflow-y: scroll;
+			overflow-y: hidden;
+			&:hover {
+				margin-right: -23px;
+				overflow-y: scroll;
+			}
 		}
 	}
 }
@@ -84,20 +116,28 @@
 	#notes {
 		.accordion-body {
 			max-height: 400px;
-			overflow-y: scroll;
+			overflow-y: hidden;
+			&:hover {
+				margin-right: -23px;
+				overflow-y: scroll;
+			}
 		}
 	}
 }
 @media (min-width: 1800px){
-	#note-page, .footer-fixed-bottom {
+	#note-page, .footer-fixed-bottom, #notes {
 		.container {
-		  width: 800px;
+		  width: 1170px;
 		}
 	}
 	#notes {
 		.accordion-body {
 			max-height: 550px;
-			overflow-y: scroll;
+			overflow-y: hidden;
+			&:hover {
+				margin-right: -23px;
+				overflow-y: scroll;
+			}
 		}
 	}
 }
