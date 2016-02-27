@@ -33,7 +33,7 @@ $(function() {
 	var cloneCircle;
 	var length;	
 	// var currentLocation = true; // Starts from within a location
-	var amount = 0.05; // controls the speed at which the movement will occur
+	var amount = 0.3; // controls the speed at which the movement will occur
 	var tool = new Tool();
 	var numpathLocations = 0;
 	var pathLocationsShapes = [];
@@ -611,7 +611,6 @@ $(function() {
 		if(currentLocationName == newLocation.name){
 			return; // return early if the locations match
 		} else {
-
 			// If it does not have a parent, then insert a new item to the base list
 			if(newLocation.parent === undefined){
 				
@@ -638,8 +637,8 @@ $(function() {
 		  	currentLocationName = newLocation.parent.name;
 		  	// recursively check to see if the parent's parent exists up the current tree
 		  	insertNewLocationContent(newLocation, true);
-		  } else {
-
+		  } else if((activeParentTree[1] == newLocation.parent.name) && ($('.most-recent-li').data('name') != newLocation.name)){
+		  	appendListItemToList($locationList.find('[data-name="' + newLocation.parent.name + '"]:last').children('.children'), newLocation.name);
 		  }
 			currentLocationName = newLocation.name; // update the currentLocationName
 	  }
