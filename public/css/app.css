@@ -526,8 +526,8 @@ a:hover.cke_colorauto, a:hover.cke_colormore, a:focus.cke_colorauto, a:focus.cke
   #notes .accordion-body {
     max-height: 360px;
     overflow-y: hidden; }
-    #notes .accordion-body:hover {
-      margin-right: -23px;
+    #notes .accordion-body.overflow:hover {
+      margin-right: -8px;
       overflow-y: scroll; } }
 
 @media (min-width: 1300px) {
@@ -542,8 +542,8 @@ a:hover.cke_colorauto, a:hover.cke_colormore, a:focus.cke_colorauto, a:focus.cke
   #notes .accordion-body {
     max-height: 400px;
     overflow-y: hidden; }
-    #notes .accordion-body:hover {
-      margin-right: -23px;
+    #notes .accordion-body.overflow:hover {
+      margin-right: -8px;
       overflow-y: scroll; } }
 
 @media (min-width: 1900px) {
@@ -552,8 +552,8 @@ a:hover.cke_colorauto, a:hover.cke_colormore, a:focus.cke_colorauto, a:focus.cke
   #notes .accordion-body {
     max-height: 400px;
     overflow-y: hidden; }
-    #notes .accordion-body:hover {
-      margin-right: -23px;
+    #notes .accordion-body.overflow:hover {
+      margin-right: -8px;
       overflow-y: scroll; } }
 
 @media (min-width: 1800px) {
@@ -562,8 +562,8 @@ a:hover.cke_colorauto, a:hover.cke_colormore, a:focus.cke_colorauto, a:focus.cke
   #notes .accordion-body {
     max-height: 400px;
     overflow-y: hidden; }
-    #notes .accordion-body:hover {
-      margin-right: -23px;
+    #notes .accordion-body.overflow:hover {
+      margin-right: -8px;
       overflow-y: scroll; } }
 
 #card-page {

@@ -48,13 +48,17 @@
 
 					@if(($notes = $course->notes()->where('status', $status)) && ($note_count = $notes->count()))
 					<div class="accordion-group" id="{{ $course->name }}" data-note-count={{ $note_count }}>
-					  <div class="accordion-heading row list-header" {{is_null($course->colour) ?: 'style=border-color:'.$course->colour.';top:'. ($distanceFromTop += 42) .'px;' }}>
+					  <div class="accordion-heading list-header" {{is_null($course->colour) ?: 'style=border-color:'.$course->colour.';top:'. ($distanceFromTop += 42) .'px;' }}>
 					    <a class="accordion-toggle" data-toggle="collapse" data-parent="#course-list" href="#collapse{{$course->id}}">
+					    	<div class="row">
 					      <div class="col-sm-12">
+					      	<div class="col-sm-12">
 						      	<div class="title">
 						      		<h4>{{ ucwords($course->name) }}</h4>
 						      	</div>
 						      	<div class="label label-inverse label-default note-count-label" {{is_null($course->colour) ?: 'style=border-color:'.$course->colour }}>{{ $note_count }}</div>
+						      	</div>
+					      </div>
 					      </div>
 					    </a>
 					  </div>
@@ -138,7 +142,9 @@
   			$accordionBody = $(this);
   			maxHeightPx = $accordionBody.css('max-height').split('px')[0];
   			if($accordionBody.height() < maxHeightPx){
-  				$accordionBody.css({'overflow-y' : 'hidden'})
+  				$accordionBody.css({'overflow-y' : 'hidden'});
+  			} else {
+  				$accordionBody.addClass('overflow');
   			}
   		});
   	}).resize();

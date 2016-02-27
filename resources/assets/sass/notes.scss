@@ -76,9 +76,11 @@
 		.accordion-body {
 			max-height: 360px;
 			overflow-y: hidden;
-			&:hover {
-				margin-right: -8px;
-				overflow-y: scroll;
+			&.overflow{
+				&:hover {
+					margin-right: -8px;
+					overflow-y: scroll;
+				}
 			}
 		}
 	}
@@ -106,9 +108,11 @@
 		.accordion-body {
 			max-height: 400px;
 			overflow-y: hidden;
-			&:hover {
-				margin-right: -23px;
-				overflow-y: scroll;
+			&.overflow{
+				&:hover {
+					margin-right: -8px;
+					overflow-y: scroll;
+				}
 			}
 		}
 	}
@@ -123,9 +127,11 @@
 		.accordion-body {
 			max-height: 400px;
 			overflow-y: hidden;
-			&:hover {
-				margin-right: -23px;
-				overflow-y: scroll;
+			&.overflow{
+				&:hover {
+					margin-right: -8px;
+					overflow-y: scroll;
+				}
 			}
 		}
 	}
@@ -140,9 +146,11 @@
 		.accordion-body {
 			max-height: 400px;
 			overflow-y: hidden;
-			&:hover {
-				margin-right: -23px;
-				overflow-y: scroll;
+			&.overflow{
+				&:hover {
+					margin-right: -8px;
+					overflow-y: scroll;
+				}
 			}
 		}
 	}
