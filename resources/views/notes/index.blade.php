@@ -26,11 +26,15 @@
 					
 					<div class="search-results-container">
 						<div class="row">
-							<div class="col-sm-4 results-header" style="display: none;">
-								<h2>Results:</h2>
+							<div class="col-sm-12 results-header" style="display: none;">
+								<h2>Search Results:</h2>
 							</div>
-							<div class="col-sm-8 search-results">
+							<div class="col-sm-6 no-results" style="display: none;">
+
 							</div>
+							<ul class="list list-striped list-unstyled results col-sm-12">
+
+							</ul>
 						</div>
 					</div>
 				</div>
@@ -91,6 +95,33 @@
 
 @section('javascripts')
 <script>
+	function makeListItem(note){
+		var createdAt = new Date(note.created_at);
+
+  	var li = ['<li class="row" data-id="',note.id,'" data-course-name="', note.name,'" style="border-left:3px solid ', note.colour,'">',
+  		'<a href="/notes/',(note.slug ? note.slug : note.id),'">',
+    		'<div class="col-sm-12">',
+    			'<div class="title">',
+    				'<span class="text">',note.title,'</span>',
+    			'</div>',
+    			'<div class="label label-inverse label-default">',createdAt.toDateString(),'</div>',
+    		'<div class="pull-right index-actions">'];
+    				if(note.status != 0){
+    					li.push('<button type="button" class="btn btn-xs btn-success" data-id="{{$note->id}}" data-action-status=0>Set Active</button>');
+    				}
+    				if(note.status != 1){
+    					li.push('<button type="button" class="btn btn-xs btn-primary" data-id="{{$note->id}}" data-action-status=1>A</button>');
+    				}
+    				if(note.status != 2){
+    					li.push('<button type="button" class="btn btn-xs btn-secondary" data-id="{{$note->id}}" data-action-status=2>B</button>');
+    				}
+    				li.push('<button type="button" class="btn btn-xs btn-danger btn-delete" data-id="',note.id,'">&times;</button>');
+    			li.push('</div>');
+    		li.push('</div>');
+  		li.push('</a>');
+  	li.push('</li>');
+  	return li.join('');
+	}
   $(document).ready(function(e, element){
 
   	$('#note-search').submit(function(e){
@@ -99,20 +130,24 @@
   		$.get('/notes/search/' + searchValue, function(response){
   			if(response.length == 0){
   				$('.results-header').hide();
-  				$('.search-results').html('<div>No results matching "' + searchValue + '"</div>');
+  				$('.no-results').html('<div>No results matching "' + searchValue + '"</div>').fadeIn();
+  				$('.results').slideUp();
+  				$('#course-list').fadeIn(300);
+
   				return 1;
   			} else {
+  				$('#course-list').fadeOut(300);
+  				$('.no-results').fadeOut();
   				$('.results-header').fadeIn(500);
-  				response = response.sort(function(a, b){
-  					return a.course.name > b.course.name;
-  				});
-  				var $results = '<ul class="list-unstyled">';
+  				// response = response.sort(function(a, b){
+  				// 	return a.course.name > b.course.name;
+  				// });
+  				var $results = '';
   				$(response).each(function($index, $note){
-  					$results += '<li><a href="/notes/' + $note.id + '?s=' + searchValue + '">' + $note.course.name + ': ' + $note.title + '</a></li>';
+  					$results += makeListItem($note);
   				});
-  				$results += '</ul>';
 
-  				$('.search-results').html($results);
+  				$('.results').html($results).slideDown();
   			}
   			
   		});

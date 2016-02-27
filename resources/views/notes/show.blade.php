@@ -46,7 +46,7 @@
 		       </textarea> --}}
 		    </div>
 				{{-- Put content into a hidden text area initially. --}}
-				<textarea style="display:none;" id="init-content">{{ isset($note) ? $note->content : '<div class="header"><div class="pull-left"><p></p></div><div class="pull-right"><p>Joseph Krump</p></div></div><p focus=focus></p>' }}</textarea>
+				<textarea style="display:none;" id="init-content">{{ isset($note) ? $note->content : '<div class="header"><div class="pull-left"><p><i></></p></div><div class="pull-right"><p><i>Joseph Krump</i></p></div></div><p focus=focus></p>' }}</textarea>
 			</div>
 		</section>
 	</div>
@@ -138,7 +138,7 @@
 				var cke_wysiwyg_frame = document.querySelector(".cke_wysiwyg_frame");
 
 				$('#course_name').change(function(e){
-					var $headerCourseName = $(cke_wysiwyg_frame.contentDocument).find('.header .pull-left p:first');
+					var $headerCourseName = $(cke_wysiwyg_frame.contentDocument).find('.header .pull-left p:first i');
 					console.log($headerCourseName)
 					if($headerCourseName){
 						$headerCourseName.text($(this).find('option[value='+$(this).val()+']').text());

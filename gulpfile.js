@@ -41,5 +41,5 @@ elixir(function(mix) {
     // mix.browserify('app.js', 'public/js/app.js')
     // mix.browserify('nav.js', 'public/js/react-nav.js')
     // mix.browserify('cards.js', 'public/js/react-page.js')
-    mix.browserify('draft-editor.js', 'public/js/draft-editor.js')
+    // mix.browserify('draft-editor.js', 'public/js/draft-editor.js')
 });

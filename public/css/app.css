@@ -209,7 +209,13 @@ h3 {
 .search-container {
   margin-bottom: 15px; }
   .search-container .search-results-container {
-    width: 30%; }
+    width: 100%; }
+  .search-container .no-results {
+    font-weight: 700;
+    color: #ffffff; }
+  .search-container .results {
+    max-height: 468px;
+    overflow-y: scroll; }
   .search-container .results-header h1, .search-container .results-header h2 {
     margin-top: 0px; }
 
@@ -249,7 +255,8 @@ a.inverse-link {
   padding-bottom: 35px; }
 
 .page-header {
-  margin-top: 80px; }
+  margin-top: 70px;
+  margin-bottom: 5px; }
 
 .navbar .container {
   background: none;
@@ -496,25 +503,29 @@ a:hover.cke_colorauto, a:hover.cke_colormore, a:focus.cke_colorauto, a:focus.cke
     #notes .accordion-body:hover {
       overflow-y: scroll; } }
 
+@media (min-width: 1300px) {
+  #note-page .container {
+    width: 900px; } }
+
 @media (min-width: 1500px) {
   #note-page .container, .footer-fixed-bottom .container {
-    width: 1400px; }
+    width: 900px; }
   #note-page .cke_contents, .footer-fixed-bottom .cke_contents {
-    height: 550px !important; }
+    height: 500px !important; }
   #notes .accordion-body {
     max-height: 400px;
     overflow-y: scroll; } }
 
 @media (min-width: 1900px) {
   #note-page .cke_contents {
-    height: 760px !important; }
+    height: 680px !important; }
   #notes .accordion-body {
     max-height: 400px;
     overflow-y: scroll; } }
 
 @media (min-width: 1800px) {
   #note-page .container, .footer-fixed-bottom .container {
-    width: 1780px; }
+    width: 800px; }
   #notes .accordion-body {
     max-height: 550px;
     overflow-y: scroll; } }

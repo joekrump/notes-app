@@ -34,7 +34,8 @@ a.inverse-link {
   padding-bottom: 35px; }
 
 .page-header {
-  margin-top: 80px; }
+  margin-top: 70px;
+  margin-bottom: 5px; }
 
 .navbar .container {
   background: none;

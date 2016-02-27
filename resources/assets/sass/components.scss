@@ -37,7 +37,15 @@
 .search-container {
 	margin-bottom: 15px;
 	.search-results-container {
-		width: 30%;
+		width: 100%;
+	}
+	.no-results {
+		font-weight: 700;
+		color: $white;
+	}
+	.results {
+		max-height: 468px;
+		overflow-y: scroll;
 	}
 	.results-header {
 		h1, h2 {

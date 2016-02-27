@@ -49,13 +49,23 @@
 		}
 	}
 }
+
+@media (min-width: 1300px){
+  #note-page{
+  	.container {
+    	width: 900px;
+  	}
+	}
+}
+
+
 @media (min-width: 1500px){
 	#note-page, .footer-fixed-bottom  {
 		.container {
-		  width: 1400px;
+		  width: 900px;
 		}
 		.cke_contents {
-			height: 550px !important;
+			height: 500px !important;
 		}
 	}
 	#notes {
@@ -68,7 +78,7 @@
 @media (min-width: 1900px){
 	#note-page {
 		.cke_contents {
-			height: 760px !important;
+			height: 680px !important;
 		}
 	}
 	#notes {
@@ -81,7 +91,7 @@
 @media (min-width: 1800px){
 	#note-page, .footer-fixed-bottom {
 		.container {
-		  width: 1780px;
+		  width: 800px;
 		}
 	}
 	#notes {
