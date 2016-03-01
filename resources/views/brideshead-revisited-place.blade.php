@@ -18,7 +18,7 @@
 			top: 10px;
 			left: 10px;
 			color: white;
-			height: 800px;
+			height: 650px;
 			overflow-y: scroll;
 		}
 		/* Let's get this party started */
@@ -47,16 +47,24 @@
 		ol {
 			padding-left: 15px;
 		}
-		.start-button {
+		.controls {
 			position: fixed;
 			bottom: 15px;
 			left: 15px;
+		}
+		.float-left {
+			pull: left;
 		}
 	</style>
 @stop
 
 @section('content')
-	<button class="btn btn-primary start-button">Start</button>
+	<div class="controls">
+		<button class="btn btn-primary start-button float-left">Start</button>
+		<button class="btn btn-primary up-speed float-left">+</button>
+		<button class="btn btn-primary down-speed float-left">-</button>
+	</div>
+	
 	<ol id="location-list">
 		<li class="most-recent-li" data-name="Present">
 			<span class="li-content">Present</span>

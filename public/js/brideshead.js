@@ -56,15 +56,25 @@ $(function() {
 		'past',
 		'pastBrideshead',
 		'pastBridesheadChapel',
+		'pastBridesheadSebastiansRoom',
 		'pastBridesheadCdr',
 		'pastBridesheadNanny',
 		'pastBridesheadServantsEntrance',
 		'pastBridesheadPaintedParlour',
 		'pastBridesheadLibrary',
 		'pastBridesheadColonnade',
+		'pastBridesheadGardenRoom',
 		'pastBridesheadRoof',
+		'pastJail',
+		'pastRexsHouse',
+		'pastCourt',
+		'pastBridesheadLadyMarchmainsRoom',
+		'pastBridesheadDiningRoom',
+		'pastBridesheadDrawingRoom',
+		'pastBridesheadTapestryHall',
 		'pastOxford',
 		'pastOxfordCharlesRoom',
+		'pastOxfordBlackwells',
 		'pastOxfordClasses',
 		'pastOxfordSebastiansRoom',
 		'pastOxfordBotanicalGardens',
@@ -72,6 +82,13 @@ $(function() {
 		'pastTrout',
 		'pastOxfordAlexanders',
 		'pastOxfordTeashop',
+		'pastOxfordStClements',
+		'pastOxfordStEbbs',
+		'pastOxfordGardenersArms',
+		'pastOxfordNagsHead',
+		'pastOxfordTurfInHellPassage',
+		'pastMarchmainHouse',
+		'pastMaMayfields',
 		'pastCarFaxStation',
 		'pastBotleyRoad',
 		'pastSwindon',
@@ -95,6 +112,8 @@ $(function() {
 		'pastMilan',
 		'pastVenice',
 		'pastVeniceBridesheadsHouse',
+		'pastVeniceFlorians',
+		'pastLondon',
 		'present',
 		'presentBrideshead',
 		'presentBridesheadChapel',
@@ -108,7 +127,7 @@ $(function() {
 		'presentTrainStation1',
 		'presentTrainStation2',
 		'presentArmyCamp2',
-		'presentArmyCamp2Huts',
+		'presentArmyCamp2Huts'
 	];
 	var locationData = {};
 	var plotPoints = [];
@@ -125,6 +144,22 @@ $(function() {
 	 	radius: 25
 	};
 
+	// lower speed on button click
+	// 
+	$('.down-speed').click(function(e){
+		e.preventDefault();
+		amount += 0.05;
+		length = bridesheadPath.length / amount
+	});
+	// increase speed on button click
+	// 
+	$('.up-speed').click(function(e){
+		e.preventDefault();
+		if(amount > 0.05){
+			amount -= 0.05;
+			length = bridesheadPath.length / amount
+		}
+	});
 
 	function drawpathLocations(){
 
@@ -139,54 +174,98 @@ $(function() {
 		locationsMetaData.push({name: 'Present', key: 'present'});
 		numpathLocations++;
 		
-
 		// Past locations
 		// 
 		locationData.past = {name: 'Past', center: {x: 1400, y:400}, color: 'rgba(60,60,60,0.2)', radius: timeSize.radius, shape: 'circle', key: 'past'};
 		locationData.pastBrideshead = {
-					name: 'Brideshead',
-					center: {x: 1650 + (bridesheadTransform.x), y:200 + (bridesheadTransform.y)},
-					radius: primarySize.radius,
-					color: '#4CAF50',
-					parent: locationData.past,
-					shape: 'circle',
-					key: 'pastBrideshead'
-				};
+			name: 'Brideshead',
+			center: {x: 1650 + (bridesheadTransform.x), y:200 + (bridesheadTransform.y)},
+			radius: primarySize.radius,
+			color: '#4CAF50',
+			parent: locationData.past,
+			shape: 'circle',
+			key: 'pastBrideshead'
+		};
 		locationData.pastBridesheadChapel = {
-					name: 'Chapel',
-					center: {x: 1550 + (bridesheadTransform.x), y: 100 + (bridesheadTransform.y)},
-					radius: secondarySize.radius,
-					color: '#4CAF50',
-					parent: locationData.pastBrideshead,
-					shape: 'circle',
-					key: 'pastBridesheadChapel'
-				};
+			name: 'Chapel',
+			center: {x: 1550 + (bridesheadTransform.x), y: 100 + (bridesheadTransform.y)},
+			radius: secondarySize.radius,
+			color: '#4CAF50',
+			parent: locationData.pastBrideshead,
+			shape: 'circle',
+			key: 'pastBridesheadChapel'
+		};
+		locationData.pastBridesheadSebastiansRoom = {
+			name: 'Sebastian\'s Room',
+			center: {x: 1500 + (bridesheadTransform.x), y: 225 + (bridesheadTransform.y)},
+			radius: tertiarySize.radius,
+			color: '#4CAF50',
+			parent: locationData.pastBrideshead,
+			shape: 'circle',
+			key: 'pastBridesheadSebastiansRoom'
+		};
 		locationData.pastBridesheadCdr = {
-					name: 'Chinese Drawing Room',
-					center: {x: 1650 + (bridesheadTransform.x), y: 75 + (bridesheadTransform.y)},
-					radius: secondarySize.radius,
-					color: '#4CAF50',
-					parent: locationData.pastBrideshead,
-					shape: 'circle',
-					key: 'pastBridesheadCdr'
-				};
+			name: 'Chinese Drawing Room',
+			center: {x: 1650 + (bridesheadTransform.x), y: 75 + (bridesheadTransform.y)},
+			radius: secondarySize.radius,
+			color: '#4CAF50',
+			parent: locationData.pastBrideshead,
+			shape: 'circle',
+			key: 'pastBridesheadCdr'
+		};
 		locationData.pastBridesheadNanny = {
-					name: 'Nursery',
-					center: {x: 1525 + (bridesheadTransform.x), y: 200 + (bridesheadTransform.y)},
-					radius: secondarySize.radius,
-					color: '#4CAF50',
-					parent: locationData.pastBrideshead,
-					shape: 'circle',
-					key: 'pastBridesheadCdr'
-				};
+			name: 'Nursery',
+			center: {x: 1525 + (bridesheadTransform.x), y: 175 + (bridesheadTransform.y)},
+			radius: tertiarySize.radius,
+			color: '#4CAF50',
+			parent: locationData.pastBrideshead,
+			shape: 'circle',
+			key: 'pastBridesheadCdr'
+		};
 		locationData.pastBridesheadServantsEntrance = {
 			name: 'Servants Entrance',
-			center: {x: 1650 + (bridesheadTransform.x), y: 300 + (bridesheadTransform.y)},
+			center: {x: 1650 + (bridesheadTransform.x), y: 350 + (bridesheadTransform.y)},
 			radius: tertiarySize.radius,
 			color: '#4CAF50',
 			parent: locationData.pastBrideshead,
 			shape: 'circle',
 			key: 'pastBridesheadServantsEntrance'
+		};
+		locationData.pastBridesheadLadyMarchmainsRoom = {
+			name: 'Lady Marchmain\'s Room',
+			center: {x: 1622, y: 834},
+			radius: 10,
+			color: '#4CAF50',
+			parent: locationData.pastBrideshead,
+			shape: 'circle',
+			key: 'pastBridesheadLadyMarchmainsRoom'
+		};
+		locationData.pastBridesheadDiningRoom = {
+			name: 'Dining Room',
+			center: {x: 1497, y: 839},
+			radius: 10,
+			color: '#4CAF50',
+			parent: locationData.pastBrideshead,
+			shape: 'circle',
+			key: 'pastBridesheadDiningRoom'
+		};
+		locationData.pastBridesheadDrawingRoom = {
+			name: 'Drawing Room',
+			center: {x: 1444, y: 891},
+			radius: 10,
+			color: '#4CAF50',
+			parent: locationData.pastBrideshead,
+			shape: 'circle',
+			key: 'pastBridesheadDrawingRoom'
+		};
+		locationData.pastBridesheadTapestryHall = {
+			name: 'Tapestry Hall',
+			center: {x: 1552, y: 896},
+			radius: 10,
+			color: '#4CAF50',
+			parent: locationData.pastBrideshead,
+			shape: 'circle',
+			key: 'pastBridesheadTapestryHall'
 		};
 		locationData.pastBridesheadPaintedParlour = {
 			name: 'Painted Parlour',
@@ -224,56 +303,73 @@ $(function() {
 			shape: 'circle',
 			key: 'pastBridesheadLibrary'
 		};
+		locationData.pastBridesheadGardenRoom = {
+			name: 'Garden Room',
+			center: {x: 1533,y: 744},
+			radius: 10,
+			color: '#4CAF50',
+			parent: locationData.pastBrideshead,
+			shape: 'circle',
+			key: 'pastBridesheadGardenRoom'
+		};
 		locationData.pastOxford = {
-					name: 'Oxford',
-					center: {x: 1700 + (oxfordTransform.x),y: 600 + (oxfordTransform.y)},
-					radius: primarySize.radius,
-					color: 'steelblue',
-					parent: locationData.past,
-					shape: 'circle',
-					key: 'pastOxford'
-				};
-
+			name: 'Oxford',
+			center: {x: 1700 + (oxfordTransform.x),y: 600 + (oxfordTransform.y)},
+			radius: primarySize.radius,
+			color: 'steelblue',
+			parent: locationData.past,
+			shape: 'circle',
+			key: 'pastOxford'
+		};
 		locationData.pastOxfordCharlesRoom = {
-					name: 'Charles\' room',
-					center: {x: 1600 + (oxfordTransform.x),y: 700 + (oxfordTransform.y)},
-					radius: secondarySize.radius,
-					color: 'steelblue',
-					parent: locationData.pastOxford,
-					shape: 'circle',
-					key: 'pastOxfordFirstFloorRoom'
-				};
+			name: 'Charles\' room',
+			center: {x: 1600 + (oxfordTransform.x),y: 700 + (oxfordTransform.y)},
+			radius: secondarySize.radius,
+			color: 'steelblue',
+			parent: locationData.pastOxford,
+			shape: 'circle',
+			key: 'pastOxfordFirstFloorRoom'
+		};
+		locationData.pastOxfordBlackwells = {
+			name: 'Blackwells',
+			center: {x: 960,y: 942},
+			radius: 10,
+			color: 'steelblue',
+			parent: locationData.pastOxford,
+			shape: 'circle',
+			key: 'pastOxfordBlackwells'
+		};
 		locationData.pastOxfordClasses = {
-					name: 'Classes',
-					center: {x: 1575 + (oxfordTransform.x),y: 600 + (oxfordTransform.y)},
-					radius: secondarySize.radius,
-					color: 'steelblue',
-					parent: locationData.pastOxford,
-					shape: 'circle',
-					key: 'pastOxfordClasses'
-				};
+			name: 'Classes',
+			center: {x: 1575 + (oxfordTransform.x),y: 600 + (oxfordTransform.y)},
+			radius: secondarySize.radius,
+			color: 'steelblue',
+			parent: locationData.pastOxford,
+			shape: 'circle',
+			key: 'pastOxfordClasses'
+		};
 		locationData.pastOxfordSebastiansRoom = {
-					name: 'Sebastian\'s Room',
-					center: {x: 1590 + (oxfordTransform.x), y: 470 + (oxfordTransform.y)},
-					radius: secondarySize.radius,
-					color: 'steelblue',
-					parent: locationData.pastOxford,
-					shape: 'circle',
-					key: 'pastOxfordSebastiansRoom'
-				};
+			name: 'Sebastian\'s Room',
+			center: {x: 1590 + (oxfordTransform.x), y: 470 + (oxfordTransform.y)},
+			radius: secondarySize.radius,
+			color: 'steelblue',
+			parent: locationData.pastOxford,
+			shape: 'circle',
+			key: 'pastOxfordSebastiansRoom'
+		};
 		locationData.pastOxfordBotanicalGardens = {
-					name: 'Botanical Gardens',
-					center: {x: 1780 + (oxfordTransform.x),y: 420 + (oxfordTransform.y)},
-					radius: tertiarySize.radius,
-					color: 'steelblue',
-					parent: locationData.pastOxford,
-					shape: 'circle',
-					key: 'pastOxfordBotanicalGardens'
-				};
+			name: 'Botanical Gardens',
+			center: {x: 1780 + (oxfordTransform.x),y: 420 + (oxfordTransform.y)},
+			radius: tertiarySize.radius,
+			color: 'steelblue',
+			parent: locationData.pastOxford,
+			shape: 'circle',
+			key: 'pastOxfordBotanicalGardens'
+		};
 		locationData.pastGodstow = {
 					name: 'Godstow',
-					center: {x: 1260,y: 660},
-					radius: tertiarySize.radius,
+					center: {x: 1219,y: 677},
+					radius: 10,
 					color: 'steelblue',
 					parent: locationData.past,
 					shape: 'circle',
@@ -281,8 +377,8 @@ $(function() {
 				};
 		locationData.pastTrout = {
 					name: 'The Trout',
-					center: {x: 1200,y: 660},
-					radius: tertiarySize.radius,
+					center: {x: 1170 ,y: 684},
+					radius: 10,
 					color: 'steelblue',
 					parent: locationData.past,
 					shape: 'circle',
@@ -299,13 +395,58 @@ $(function() {
 				};
 		locationData.pastOxfordTeashop = {
 					name: 'Tea shop',
-					center: {x: 1875 + (oxfordTransform.x),y: 445 + (oxfordTransform.y)},
+					center: {x: 1850 + (oxfordTransform.x),y: 445 + (oxfordTransform.y)},
 					radius: tertiarySize.radius,
 					color: 'steelblue',
 					parent: locationData.pastOxford,
 					shape: 'circle',
 					key: 'pastOxfordTeashop'
 				};
+		locationData.pastOxfordStClements = {
+			name: 'St. Clement\'s',
+			center: {x: 1900 + (oxfordTransform.x),y: 550 + (oxfordTransform.y)},
+			radius: 10,
+			color: 'steelblue',
+			parent: locationData.pastOxford,
+			shape: 'circle',
+			key: 'pastOxfordStClements'
+		};
+		locationData.pastOxfordStEbbs = {
+			name: 'St. Ebb\'s',
+			center: {x: 1910 + (oxfordTransform.x),y: 575 + (oxfordTransform.y)},
+			radius: 10,
+			color: 'steelblue',
+			parent: locationData.pastOxford,
+			shape: 'circle',
+			key: 'pastOxfordStEbbs'
+		};
+		locationData.pastOxfordGardenersArms = {
+			name: 'Gardener\'s Arms',
+			center: {x: 1910 + (oxfordTransform.x),y: 600 + (oxfordTransform.y)},
+			radius: 10,
+			color: 'steelblue',
+			parent: locationData.pastOxford,
+			shape: 'circle',
+			key: 'pastOxfordGardenersArms'
+		};
+		locationData.pastOxfordNagsHead = {
+			name: 'Nag\'s Head',
+			center: {x: 1900 + (oxfordTransform.x),y: 625 + (oxfordTransform.y)},
+			radius: 10,
+			color: 'steelblue',
+			parent: locationData.pastOxford,
+			shape: 'circle',
+			key: 'pastOxfordNagsHead'
+		};
+		locationData.pastOxfordTurfInHellPassage = {
+			name: 'Tuff in Hell Passage',
+			center: {x: 1875 + (oxfordTransform.x),y: 650 + (oxfordTransform.y)},
+			radius: 10,
+			color: 'steelblue',
+			parent: locationData.pastOxford,
+			shape: 'circle',
+			key: 'pastOxfordTurfInHellPassage'
+		};
 		locationData.pastCarFaxStation = {
 					name: 'Carfax Sation',
 					center: {x: 1040,y: 940},
@@ -326,7 +467,7 @@ $(function() {
 				};
 		locationData.pastSwindon = {
 					name: 'Swindon',
-					center: {x: 1200,y: 875},
+					center: {x: 1200,y: 910},
 					radius: 15,
 					color: '#795548',
 					parent: locationData.past,
@@ -335,7 +476,7 @@ $(function() {
 				};
 		locationData.pastRavenna = {
 					name: 'Revenna (with Collins)',
-					center: {x: 653, y: 445},
+					center: {x: 732, y: 663},
 					radius: tertiarySize.radius,
 					color: '#B44012',
 					parent: locationData.past,
@@ -344,7 +485,7 @@ $(function() {
 				};
 		locationData.pastPicturesqueSpot = {
 					name: 'Picturesque side-of-the-road spot',
-					center: {x: 1230,y: 840},
+					center: {x: 1230,y: 880},
 					radius: 15,
 					color: '#43a047',
 					parent: locationData.past,
@@ -362,7 +503,7 @@ $(function() {
 		};
 		locationData.pastFathersHome = {
 			name: 'Charles\' Father\'s Home',
-			center: {x: 800,y: 300},
+			center: {x: 1200,y: 350},
 			radius: 100,
 			color: '#ff9100',
 			parent: locationData.past,
@@ -371,7 +512,7 @@ $(function() {
 		};
 		locationData.pastFathersHomeCharlesRoom = {
 			name: 'Charles\'s Room',
-			center: {x: 720,y: 375},
+			center: {x: 1120,y: 425},
 			radius: tertiarySize.radius,
 			color: '#ff9100',
 			parent: locationData.pastFathersHome,
@@ -380,7 +521,7 @@ $(function() {
 		};
 		locationData.pastFathersHomeGardenRoom = {
 			name: 'Garden Room',
-			center: {x: 725,y: 225},
+			center: {x: 1134,y: 272},
 			radius: tertiarySize.radius,
 			color: '#ff9100',
 			parent: locationData.pastFathersHome,
@@ -388,8 +529,8 @@ $(function() {
 			key: 'pastFathersHomeGardenRoom'
 		};
 		locationData.pastFathersHomeDiningRoom = {
-			name: 'Dinning Room',
-			center: {x: 875,y: 225},
+			name: 'Dining Room',
+			center: {x: 1275,y: 275},
 			radius: tertiarySize.radius,
 			color: '#ff9100',
 			parent: locationData.pastFathersHome,
@@ -398,7 +539,7 @@ $(function() {
 		};
 		locationData.pastFathersHall = {
 			name: 'Hall',
-			center: {x: 800,y: 400},
+			center: {x: 1200,y: 450},
 			radius: tertiarySize.radius,
 			color: '#ff9100',
 			parent: locationData.pastFathersHome,
@@ -407,7 +548,7 @@ $(function() {
 		};
 		locationData.pastFathersHomeGallery = {
 			name: 'Gallery',
-			center: {x: 800,y: 200},
+			center: {x: 1200,y: 250},
 			radius: tertiarySize.radius,
 			color: '#ff9100',
 			parent: locationData.pastFathersHome,
@@ -416,7 +557,7 @@ $(function() {
 		};
 		locationData.pastPaddingtonStation = {
 			name: 'Paddington Station',
-			center: {x: 1040,y: 340},
+			center: {x: 1470,y: 440},
 			radius: tertiarySize.radius,
 			color: '#00838f',
 			parent: locationData.past,
@@ -425,7 +566,7 @@ $(function() {
 		};
 		locationData.pastPaddingtonStationTrain = {
 			name: 'Train',
-			center: {x: 1080,y: 360},
+			center: {x: 1490,y: 460},
 			radius: 15,
 			color: '#00838f',
 			parent: locationData.pastPaddingtonStation,
@@ -490,7 +631,7 @@ $(function() {
 			name: 'Milan',
 			center: {x: 1550, y: 350},
 			radius: tertiarySize.radius,
-			color: '#ffab00',
+			color: '#e91e63',
 			parent: locationData.past,
 			shape: 'circle',
 			key: 'pastMilan'
@@ -506,12 +647,75 @@ $(function() {
 		};
 		locationData.pastVeniceBridesheadsHouse = {
 			name: 'Brideshead Sr\'s House',
-			center: {x: 1475, y: 250},
-			radius: secondarySize.radius,
+			center: {x: 1464, y: 224},
+			radius: tertiarySize.radius,
 			color: '#ff5722',
 			parent: locationData.pastVenice,
 			shape: 'circle',
 			key: 'pastVeniceBridesheadsHouse'
+		};
+		locationData.pastVeniceFlorians = {
+			name: 'Florian\'s',
+			center: {x: 1404, y: 159},
+			radius: 10,
+			color: '#ff5722',
+			parent: locationData.pastVenice,
+			shape: 'circle',
+			key: 'pastVeniceFlorians'
+		};
+		locationData.pastLondon = {
+			name: 'London',
+			center: {x: 1366, y: 296},
+			radius: tertiarySize.radius,
+			color: '#c62828',
+			parent: locationData.past,
+			shape: 'circle',
+			key: 'pastLondon'
+		};
+				locationData.pastMarchmainHouse = {
+			name: 'Marchmain House',
+			center: {x: 1410,y: 340},
+			radius: 10,
+			color: '#c62828',
+			parent: locationData.pastLondon,
+			shape: 'circle',
+			key: 'pastMarchmainHouse'
+		};
+		locationData.pastMaMayfields = {
+			name: 'Ma Mayfield\'s',
+			center: {x: 1429,y: 323},
+			radius: 10,
+			color: '#c62828',
+			parent: locationData.pastLondon,
+			shape: 'circle',
+			key: 'pastMaMayfields'
+		};
+		locationData.pastJail = {
+			name: 'Jail',
+			center: {x: 1450, y: 350},
+			radius: 10,
+			color: '#c62828',
+			parent: locationData.pastLondon,
+			shape: 'circle',
+			key: 'pastJail'
+		};
+		locationData.pastRexsHouse = {
+			name: 'Rex\'s',
+			center: {x: 1325, y: 356},
+			radius: 10,
+			color: '#c62828',
+			parent: locationData.pastLondon,
+			shape: 'circle',
+			key: 'pastRexsHouse'
+		};
+		locationData.pastCourt = {
+			name: 'Court',
+			center: {x: 1425, y: 380},
+			radius: 10,
+			color: '#c62828',
+			parent: locationData.pastLondon,
+			shape: 'circle',
+			key: 'pastCourt'
 		};
 
 		// Present Locations
@@ -655,13 +859,13 @@ $(function() {
 					name: locationData[value].name,
 					key: value,
 					parent: (locationData[value].parent ? {
-						name: locationData[value].parent.name 
+						name: locationData[value].parent.name, 
+						key: locationData[value].parent.key
 					} : undefined)
 				});
 			}
 		});
 		// console.log(locationsMetaData);
-
 		insertText();
 	}
 
@@ -689,7 +893,7 @@ $(function() {
 	// 
 	charlesDot = new Path.Circle({
 			center: [0, 0],
-		 	radius: 10,
+		 	radius: 7,
 		 	fillColor: 'white', 
 		 	position: lastPosition
 	});
@@ -709,6 +913,7 @@ $(function() {
 	plotPoints.push(new Point(locationData.pastOxfordClasses.center.x, locationData.pastOxfordClasses.center.y));
 	// plotPoints.push(new Point(1700, 630));
 	plotPoints.push(new Point(locationData.pastOxfordSebastiansRoom.center.x, locationData.pastOxfordSebastiansRoom.center.y));
+	plotPoints.push(new Point(1002, 686));
 	plotPoints.push(new Point(locationData.pastOxfordBotanicalGardens.center.x, locationData.pastOxfordBotanicalGardens.center.y));
 	plotPoints.push(new Point(locationData.pastOxfordCharlesRoom.center.x, locationData.pastOxfordCharlesRoom.center.y));
 	plotPoints.push(new Point(locationData.pastPicturesqueSpot.center.x, locationData.pastPicturesqueSpot.center.y));
@@ -725,6 +930,7 @@ $(function() {
 	plotPoints.push(new Point(730, 730));
 	plotPoints.push(new Point(locationData.pastRavenna.center.x, locationData.pastRavenna.center.y));
 	// plotPoints.push(new Point(locationData.pastOxford.center.x, locationData.pastOxford.center.y));
+	plotPoints.push(new Point(854, 557));
 	plotPoints.push(new Point(915, 560));
 	plotPoints.push(new Point(locationData.pastOxfordAlexanders.center.x, locationData.pastOxfordAlexanders.center.y));
 	plotPoints.push(new Point(locationData.pastOxfordCharlesRoom.center.x, locationData.pastOxfordCharlesRoom.center.y));
@@ -745,11 +951,11 @@ $(function() {
 	plotPoints.push(new Point(locationData.pastPaddingtonStationTrain.center.x, locationData.pastPaddingtonStationTrain.center.y));
 	plotPoints.push(new Point(locationData.pastMelsteadCarbury.center.x, locationData.pastMelsteadCarbury.center.y));
 	plotPoints.push(new Point(locationData.pastBridesheadPaintedParlour.center.x, locationData.pastBridesheadPaintedParlour.center.y));
-	// plotPoints.push(new Point(1194, 195));
+	plotPoints.push(new Point(1568, 776));
 	plotPoints.push(new Point(locationData.pastBridesheadLibrary.center.x, locationData.pastBridesheadLibrary.center.y));
 	// Book 1: Chapter 4
 	// 
-	// plotPoints.push(new Point(1576, 188));
+	plotPoints.push(new Point(1576, 816));
 	plotPoints.push(new Point(locationData.pastBridesheadColonnade.center.x, locationData.pastBridesheadColonnade.center.y));
 	plotPoints.push(new Point(locationData.pastBridesheadPaintedParlour.center.x, locationData.pastBridesheadPaintedParlour.center.y));
 	plotPoints.push(new Point(locationData.pastBridesheadRoof.center.x, locationData.pastBridesheadRoof.center.y));
@@ -759,7 +965,82 @@ $(function() {
 	plotPoints.push(new Point(locationData.pastParisGareDeLyon.center.x, locationData.pastParisGareDeLyon.center.y));
 	plotPoints.push(new Point(locationData.pastMilan.center.x, locationData.pastMilan.center.y));
 	plotPoints.push(new Point(locationData.pastVeniceBridesheadsHouse.center.x, locationData.pastVeniceBridesheadsHouse.center.y));
-	
+	plotPoints.push(new Point(locationData.pastVeniceFlorians.center.x, locationData.pastVeniceFlorians.center.y));
+	plotPoints.push(new Point(locationData.pastVeniceBridesheadsHouse.center.x, locationData.pastVeniceBridesheadsHouse.center.y));
+	plotPoints.push(new Point(locationData.pastVenice.center.x, locationData.pastVenice.center.y));
+	plotPoints.push(new Point(locationData.pastVeniceBridesheadsHouse.center.x, locationData.pastVeniceBridesheadsHouse.center.y));
+	plotPoints.push(new Point(locationData.pastLondon.center.x, locationData.pastLondon.center.y));
+	plotPoints.push(new Point(1293, 818));
+	plotPoints.push(new Point(1339, 853));
+	plotPoints.push(new Point(1417, 865)); // point on brideshead
+	plotPoints.push(new Point(1339, 853));
+	plotPoints.push(new Point(1293, 818));
+	plotPoints.push(new Point(1317, 568));
+	plotPoints.push(new Point(locationData.pastFathersHome.center.x, locationData.pastFathersHome.center.y));
+	// Book 1: Chapter 5
+	//
+	plotPoints.push(new Point(locationData.pastOxfordSebastiansRoom.center.x, locationData.pastOxfordSebastiansRoom.center.y));
+	plotPoints.push(new Point(995, 680)); // point in oxford
+	plotPoints.push(new Point(locationData.pastOxfordTeashop.center.x, locationData.pastOxfordTeashop.center.y));
+	plotPoints.push(new Point(locationData.pastOxford.center.x, locationData.pastOxford.center.y));
+	plotPoints.push(new Point(locationData.pastOxfordTeashop.center.x, locationData.pastOxfordTeashop.center.y));
+	plotPoints.push(new Point(locationData.pastOxfordClasses.center.x, locationData.pastOxfordClasses.center.y));
+	plotPoints.push(new Point(locationData.pastOxfordTeashop.center.x, locationData.pastOxfordTeashop.center.y));
+	plotPoints.push(new Point(1087, 808)); // point in oxford
+	plotPoints.push(new Point(locationData.pastOxfordStEbbs.center.x, locationData.pastOxfordStEbbs.center.y));
+	plotPoints.push(new Point(1087, 808)); // point in oxford
+	plotPoints.push(new Point(locationData.pastOxfordStClements.center.x, locationData.pastOxfordStClements.center.y));
+	plotPoints.push(new Point(1087, 808)); // point in oxford
+	plotPoints.push(new Point(locationData.pastOxfordGardenersArms.center.x, locationData.pastOxfordGardenersArms.center.y));
+	plotPoints.push(new Point(1087, 808)); // point in oxford
+	plotPoints.push(new Point(locationData.pastOxfordNagsHead.center.x, locationData.pastOxfordNagsHead.center.y));
+	plotPoints.push(new Point(1087, 808)); // point in oxford
+	plotPoints.push(new Point(locationData.pastOxfordTurfInHellPassage.center.x, locationData.pastOxfordTurfInHellPassage.center.y));
+	plotPoints.push(new Point(1087, 808)); // point in oxford
+	plotPoints.push(new Point(locationData.pastBridesheadSebastiansRoom.center.x, locationData.pastBridesheadSebastiansRoom.center.y));
+	plotPoints.push(new Point(1303, 610));
+	plotPoints.push(new Point(locationData.pastMarchmainHouse.center.x, locationData.pastMarchmainHouse.center.y));
+	plotPoints.push(new Point(locationData.pastMaMayfields.center.x, locationData.pastMaMayfields.center.y));
+	plotPoints.push(new Point(locationData.pastJail.center.x, locationData.pastJail.center.y));
+	plotPoints.push(new Point(1394, 370));
+	plotPoints.push(new Point(locationData.pastRexsHouse.center.x, locationData.pastRexsHouse.center.y));
+	plotPoints.push(new Point(locationData.pastCourt.center.x, locationData.pastCourt.center.y));
+	plotPoints.push(new Point(1187, 645)); 
+	plotPoints.push(new Point(1079, 694)); // point in oxford
+	plotPoints.push(new Point(1094, 833)); 
+	plotPoints.push(new Point(1485, 857)); 
+	plotPoints.push(new Point(locationData.pastBridesheadTapestryHall.center.x, locationData.pastBridesheadTapestryHall.center.y));
+	plotPoints.push(new Point(1485, 857)); 
+	plotPoints.push(new Point(1094, 833)); 
+	plotPoints.push(new Point(1079, 694)); // point in oxford
+	plotPoints.push(new Point(1094, 833)); 
+	plotPoints.push(new Point(1485, 857)); 
+	plotPoints.push(new Point(locationData.pastBridesheadGardenRoom.center.x, locationData.pastBridesheadGardenRoom.center.y));
+	plotPoints.push(new Point(1452, 821));
+	plotPoints.push(new Point(locationData.pastBridesheadDrawingRoom.center.x, locationData.pastBridesheadDrawingRoom.center.y));
+	plotPoints.push(new Point(locationData.pastBridesheadSebastiansRoom.center.x, locationData.pastBridesheadSebastiansRoom.center.y));
+	plotPoints.push(new Point(locationData.pastBridesheadDiningRoom.center.x, locationData.pastBridesheadDiningRoom.center.y));
+	plotPoints.push(new Point(locationData.pastBridesheadSebastiansRoom.center.x, locationData.pastBridesheadSebastiansRoom.center.y));
+	plotPoints.push(new Point(locationData.pastBridesheadLadyMarchmainsRoom.center.x, locationData.pastBridesheadLadyMarchmainsRoom.center.y));
+	plotPoints.push(new Point(1496, 809));
+	plotPoints.push(new Point(1405, 833));
+	plotPoints.push(new Point(1290, 850));
+	plotPoints.push(new Point(locationData.pastLondon.center.x, locationData.pastLondon.center.y));
+	plotPoints.push(new Point(1373, 405));
+	plotPoints.push(new Point(locationData.pastPaddingtonStation.center.x, locationData.pastPaddingtonStation.center.y));
+	plotPoints.push(new Point(1073, 694));
+	plotPoints.push(new Point(locationData.pastOxfordBlackwells.center.x, locationData.pastOxfordBlackwells.center.y));
+	plotPoints.push(new Point(locationData.pastCarFaxStation.center.x, locationData.pastCarFaxStation.center.y));
+	plotPoints.push(new Point(1262, 819));
+	plotPoints.push(new Point(locationData.pastLondon.center.x, locationData.pastLondon.center.y));
+	plotPoints.push(new Point(1293, 818));
+	plotPoints.push(new Point(1339, 853));
+	plotPoints.push(new Point(locationData.pastBridesheadGardenRoom.center.x, locationData.pastBridesheadGardenRoom.center.y));
+	// Book 2: Chapter 1
+	// 
+	plotPoints.push(new Point(1452, 821));
+	plotPoints.push(new Point(locationData.pastBridesheadDrawingRoom.center.x, locationData.pastBridesheadDrawingRoom.center.y));
+
 	function insertText(){
 		var fontSize = '1.5rem';
 		$(locationKeys).each(function(index, value){
@@ -793,7 +1074,6 @@ $(function() {
 			    justification: 'center'
 				});
 			}
-			
 		});
 	}
 
@@ -841,7 +1121,7 @@ $(function() {
 	}
 
 	function moveCharlesDot(){
-		charlesPosition = bridesheadPath.getPointAt(currentPosition * (length ));
+		charlesPosition = bridesheadPath.getPointAt(currentPosition * (length));
     charlesDot.position =  charlesPosition;
     ++currentPosition; // Move charles Dot ahead by one position
 	}
@@ -889,9 +1169,11 @@ $(function() {
 		activeParentTree = [parentLocation];
 	}
 
-	function appendListItemToList($listToAppendTo, $listItemName){
+	function appendListItemToList($listToAppendTo, newLocationMeta){
 		$('.most-recent-li').removeClass('most-recent-li');
-		$listToAppendTo.append('<li class="most-recent-li" data-name="' + $listItemName + '"><span class="li-content" style="display:none;">' + $listItemName + '</span><ol class="children"></ol></li>');
+		var isPastOrPreset = newLocationMeta.key == 'past' || newLocationMeta.key == 'past';
+
+		$listToAppendTo.append('<li class="most-recent-li" data-name="' + newLocationMeta.name + '"><span class="li-content" style="display:none;' + (isPastOrPreset ? '' : 'color:' + locationData[newLocationMeta.key].color + ';') + '">' + newLocationMeta.name + '</span><ol class="children"></ol></li>');
 		// Animate the item sliding down for 500ms
 		$('.most-recent-li').find('.li-content').animate({opacity: 'toggle'}, 200, function(){
 				// console.log('after')
@@ -903,7 +1185,7 @@ $(function() {
 		insertNewLocationContent(locationsMetaData[pathLocationIndex]);
 	}
 
-	function insertNewLocationContent(newLocation, recursive){
+	function insertNewLocationContent(newLocation){
 		var $locationList = $('#location-list');
 		var $activeParentListItem = $locationList.children('li:last');
 		var $parentList;
@@ -917,28 +1199,29 @@ $(function() {
 				// Reset the array containing the keys of the lowest tree branch
 				if(activeParentTree.indexOf(newLocation.name) == -1){
 					resetParentTree(newLocation.name);
-					appendListItemToList($locationList, newLocation.name);
+					appendListItemToList($locationList, newLocation);
 				} else {
 					return;
 				}
 			} else if(newLocation.parent.name == activeParentTree[0] && (activeParentTree[1] !== newLocation.name) && ($('.most-recent-li').data('name') != newLocation.name)){
 				activeParentTree[1] = newLocation.name;
-				appendListItemToList($locationList.find('[data-name="' + newLocation.parent.name + '"]:last').children('.children'), newLocation.name);
+				appendListItemToList($locationList.find('[data-name="' + newLocation.parent.name + '"]:last').children('.children'), newLocation);
 			}
 			else if(newLocation.parent.name == currentLocationName && ($('.most-recent-li').data('name') != newLocation.name)){						
 				// attach the new list item to the parent
 				$parentList = $locationList.find('[data-name="' + currentLocationName + '"]:last').children('.children');
 				
-				appendListItemToList($parentList, newLocation.name);
+				appendListItemToList($parentList, newLocation);
 			} // otherwise, insert the parent as well as the child list-item 
 			else if(activeParentTree.indexOf(newLocation.parent.name) == -1){
 		  	activeParentTree[1] = newLocation.parent.name;
-		  	appendListItemToList($activeParentListItem.children('.children'), newLocation.parent.name);
+
+		  	appendListItemToList($activeParentListItem.children('.children'), newLocation.parent);
 		  	currentLocationName = newLocation.parent.name;
 		  	// recursively check to see if the parent's parent exists up the current tree
 		  	insertNewLocationContent(newLocation, true);
 		  } else if((activeParentTree[1] == newLocation.parent.name) && ($('.most-recent-li').data('name') != newLocation.name)){
-		  	appendListItemToList($locationList.find('[data-name="' + newLocation.parent.name + '"]:last').children('.children'), newLocation.name);
+		  	appendListItemToList($locationList.find('[data-name="' + newLocation.parent.name + '"]:last').children('.children'), newLocation);
 		  }
 			currentLocationName = newLocation.name; // update the currentLocationName
 	  }
