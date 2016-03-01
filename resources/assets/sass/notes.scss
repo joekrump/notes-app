@@ -69,12 +69,12 @@
 @media(min-width: 970px){
 	#note-page {
 		.cke_contents {
-			height: 400px; 
+			height: 460px; 
 		}
 	}
 	#notes {
 		.accordion-body {
-			max-height: 360px;
+			max-height: 360px !important;
 			overflow-y: hidden;
 			&.overflow{
 				&:hover {
@@ -88,6 +88,9 @@
 
 @media (min-width: 1300px){
   #note-page, #notes {
+  	.cke_contents {
+			height: 500px !important; 
+		}
   	.container {
     	width: 1170px;
   	}
@@ -101,26 +104,7 @@
 		  width: 1170px;
 		}
 		.cke_contents {
-			height: 500px !important;
-		}
-	}
-	#notes {
-		.accordion-body {
-			max-height: 400px;
-			overflow-y: hidden;
-			&.overflow{
-				&:hover {
-					margin-right: -8px;
-					overflow-y: scroll;
-				}
-			}
-		}
-	}
-}
-@media (min-width: 1900px){
-	#note-page {
-		.cke_contents {
-			height: 680px !important;
+			height: 520px !important;
 		}
 	}
 	#notes {
@@ -140,6 +124,25 @@
 	#note-page, .footer-fixed-bottom, #notes {
 		.container {
 		  width: 1170px;
+		}
+	}
+	#notes {
+		.accordion-body {
+			max-height: 400px;
+			overflow-y: hidden;
+			&.overflow{
+				&:hover {
+					margin-right: -8px;
+					overflow-y: scroll;
+				}
+			}
+		}
+	}
+}
+@media (min-width: 1900px){
+	#note-page {
+		.cke_contents {
+			height: 680px !important;
 		}
 	}
 	#notes {

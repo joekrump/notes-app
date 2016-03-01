@@ -96,7 +96,7 @@ h3 {
   opacity: 0.6; }
 
 .background-dimmer {
-  background-color: rgba(0, 0, 0, 0.9); }
+  background-color: rgba(0, 0, 0, 0.7); }
 
 .background, .background-dimmer {
   display: block;
@@ -402,8 +402,7 @@ a.btn, button.btn {
   margin-top: 10px; }
 
 .cke_contents {
-  background: none !important;
-  height: 430px !important; }
+  background: none !important; }
 
 .cke_top {
   color: #e6e6e6; }
@@ -522,15 +521,17 @@ a:hover.cke_colorauto, a:hover.cke_colormore, a:focus.cke_colorauto, a:focus.cke
 
 @media (min-width: 970px) {
   #note-page .cke_contents {
-    height: 400px; }
+    height: 460px; }
   #notes .accordion-body {
-    max-height: 360px;
+    max-height: 360px !important;
     overflow-y: hidden; }
     #notes .accordion-body.overflow:hover {
       margin-right: -8px;
       overflow-y: scroll; } }
 
 @media (min-width: 1300px) {
+  #note-page .cke_contents, #notes .cke_contents {
+    height: 500px !important; }
   #note-page .container, #notes .container {
     width: 1170px; } }
 
@@ -538,17 +539,7 @@ a:hover.cke_colorauto, a:hover.cke_colormore, a:focus.cke_colorauto, a:focus.cke
   #note-page .container, .footer-fixed-bottom .container, #notes .container {
     width: 1170px; }
   #note-page .cke_contents, .footer-fixed-bottom .cke_contents, #notes .cke_contents {
-    height: 500px !important; }
-  #notes .accordion-body {
-    max-height: 400px;
-    overflow-y: hidden; }
-    #notes .accordion-body.overflow:hover {
-      margin-right: -8px;
-      overflow-y: scroll; } }
-
-@media (min-width: 1900px) {
-  #note-page .cke_contents {
-    height: 680px !important; }
+    height: 520px !important; }
   #notes .accordion-body {
     max-height: 400px;
     overflow-y: hidden; }
@@ -559,6 +550,16 @@ a:hover.cke_colorauto, a:hover.cke_colormore, a:focus.cke_colorauto, a:focus.cke
 @media (min-width: 1800px) {
   #note-page .container, .footer-fixed-bottom .container, #notes .container {
     width: 1170px; }
+  #notes .accordion-body {
+    max-height: 400px;
+    overflow-y: hidden; }
+    #notes .accordion-body.overflow:hover {
+      margin-right: -8px;
+      overflow-y: scroll; } }
+
+@media (min-width: 1900px) {
+  #note-page .cke_contents {
+    height: 680px !important; }
   #notes .accordion-body {
     max-height: 400px;
     overflow-y: hidden; }

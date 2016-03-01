@@ -23,6 +23,7 @@ class Note extends Model
   // list of subject names to search for in the title 
   // in priority order of presidence.
   protected static $subject_names = [
+    'cold war',
     'wwii',
     'wwi',
     'enlightenment',
@@ -43,7 +44,11 @@ class Note extends Model
 
     foreach(Note::$subject_names as $subject_name){
       if(strpos($title, $subject_name) !== false){
-        $this['courseName'] = $subject_name;
+        if($subject_name == 'wwii' && (strpos($title, 'japan') !== false)){
+          $this['courseName'] = 'wwii_japanese';
+        } else {
+          $this['courseName'] = $subject_name;
+        }
         break;
       }
     }

@@ -47,10 +47,16 @@
 		ol {
 			padding-left: 15px;
 		}
+		.start-button {
+			position: fixed;
+			bottom: 15px;
+			left: 15px;
+		}
 	</style>
 @stop
 
 @section('content')
+	<button class="btn btn-primary start-button">Start</button>
 	<ol id="location-list">
 		<li class="most-recent-li" data-name="Present">
 			<span class="li-content">Present</span>
