@@ -43,6 +43,7 @@
 		li {
 			transition: all 300;
 			color: white;
+			font-weight: bold;
 		}
 		ol {
 			padding-left: 15px;
