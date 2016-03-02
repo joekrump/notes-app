@@ -62,14 +62,15 @@
 @section('content')
 	<div class="controls">
 		<button class="btn btn-primary start-button float-left">Start</button>
-		<button class="btn btn-primary up-speed float-left">+</button>
-		<button class="btn btn-primary down-speed float-left">-</button>
+	{{-- 	<button class="btn btn-primary up-speed float-left">+</button>
+		<button class="btn btn-primary down-speed float-left">-</button> --}}
 	</div>
 	
 	<ol id="location-list">
 		<li class="most-recent-li" data-name="Present">
 			<span class="li-content">Present</span>
 			<ol class="children">
+				<li class="most-recent-li" data-name="City"><span class="li-content" style="color: rgb(96, 125, 139);">City</span><ol class="children"></ol></li>
 			</ol>
 		</li>
 	</ol>
