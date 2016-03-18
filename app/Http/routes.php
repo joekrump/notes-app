@@ -98,14 +98,6 @@ Route::delete('/decks/{deck_id}',       'DecksController@destroy');
 // 
 Route::post('/decks/{deck_id}/{card_id}/{action}', 'DecksController@handle_card_action');
 Route::delete('/decks/{deck_id}',       'DecksController@destroy');
-
-Route::post('/comments', function(){
-  // $initData = Comment::getData();
-  $initData[] = Request::all();
-
-  return response()->json($initData);
-});
-
 Route::get('admin', array('before' => 'auth', function()
 {
     // Only authenticated users may enter...

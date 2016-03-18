@@ -28,7 +28,8 @@ class Note extends Model
     'wwi',
     'enlightenment',
     'sheen',
-    'saints'
+    'saints',
+    'noam chomsky'
   ];
 
   public function course()

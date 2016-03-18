@@ -21,7 +21,7 @@
 				</form>
 				<h1>Notes</h1>
 			</header>
-			<div class="row">
+			<div class="row search-results-row" style="display:none;">
 				<div class="col-sm-12 search-container">
 					
 					<div class="search-results-container">
@@ -106,35 +106,7 @@
 
 @section('javascripts')
 <script>
-	function makeListItem(note, searchValue){
-		var createdAt = new Date(note.created_at);
 
-  	var li = ['<div class="col-sm-2 card" data-id="',note.id,'" data-course-name="', note.name,'" style="border-top:3px solid ', note.colour,'">',
-  		'<a href="/notes/',(note.slug ? note.slug : note.id),'?s=',searchValue,'">',
-    		'<div class="row">',
-    			'<div class="title col-sm-12">',
-    				'<span class="text">',note.title,'</span>',
-    			'</div>',
-    			'<div class="col-sm-12">',
-    			'<div class="label label-inverse label-default">',createdAt.toDateString(),'</div>',
-    			'</div>',
-    			'<div class="pull-right index-actions">'];
-    				if(note.status != 0){
-    					li.push('<button type="button" class="btn btn-sm btn-success" data-id="{{$note->id}}" data-action-status=0>R</button>');
-    				}
-    				if(note.status != 1){
-    					li.push('<button type="button" class="btn btn-sm btn-primary" data-id="{{$note->id}}" data-action-status=1>A</button>');
-    				}
-    				if(note.status != 2){
-    					li.push('<button type="button" class="btn btn-sm btn-secondary" data-id="{{$note->id}}" data-action-status=2>B</button>');
-    				}
-    				li.push('<button type="button" class="btn btn-sm btn-danger btn-delete" data-id="',note.id,'">&times;</button>');
-    			li.push('</div>');
-    		li.push('</div>');
-  		li.push('</a>');
-  	li.push('</div>');
-  	return li.join('');
-	}
   $(document).ready(function(e, element){
   	var $accordionBody;
   	var maxHeightPx;
@@ -150,54 +122,96 @@
   		});
   	}).resize();
   	
+    setDeleteListener('.btn-delete'); // initialize listeners for delete buttons
+
   	$('#note-search').submit(function(e){
   		e.preventDefault();
+
   		var searchValue = $('#search-field').val();
-  		$.get('/notes/search/' + searchValue, function(response){
-  			if(response.length == 0){
-  				$('.results-header').hide();
-  				$('.no-results').html('<div>No results matching "' + searchValue + '"</div>').fadeIn();
-  				$('.results-container').slideUp();
-  				$('#course-list').fadeIn(300);
+      if(searchValue.trim().length > 0){
+        $.get('/notes/search/' + searchValue, function(response){
+          if(response.length == 0){
+            $('.results-header').hide();
+            $('.no-results').html('<div>No results matching "' + searchValue + '"</div>').fadeIn();
+            $('.results-container').slideUp(300, function(){
+              $('.search-results-row').fadeOut(300);
+            });
+            $('#course-list').fadeIn(300);
 
-  				return 1;
-  			} else {
-  				$('#course-list').fadeOut(300);
-  				$('.no-results').fadeOut();
-  				$('.results-header').fadeIn(500);
-  				// response = response.sort(function(a, b){
-  				// 	return a.course.name > b.course.name;
-  				// });
-  				var $results = '';
-  				$(response).each(function($index, $note){
-  					$results += makeListItem($note, searchValue);
-  				});
+            return 1;
+          } else {
+            $('#course-list').fadeOut(300);
+            $('.no-results').fadeOut();
+            $('.results-header').fadeIn(500);
+    
+            var $results = '';
 
-  				$('.results').html($results);
-  				$('.results-container').slideDown();
-  			}
-  			
-  		});
+            $.each(response, function($index, $note){
+              $results += makeListItem($note, searchValue);
+            });
+
+            $('.results').html($results);
+            setDeleteListener('.results .btn-delete');
+            $('.search-results-row').show(function(){
+              $('.results-container').slideDown();
+            });
+          }
+          
+        });
+        return true;
+      }
+
   		return false;
   	});
+  });
 
-    $('.btn-delete').click(function(e){
+  function makeListItem(note, searchValue){
+    var createdAt = new Date(note.created_at);
+
+    var li = ['<div class="col-sm-2 card" data-id="',note.id,'" data-course-name="', note.course.name,'" style="border-top:3px solid ', note.course.colour,'">',
+      '<a href="/notes/',(note.slug ? note.slug : note.id),'?s=',searchValue,'">',
+        '<div class="row">',
+          '<div class="title col-sm-12">',
+            '<span class="text">',note.title,'</span>',
+          '</div>',
+          '<div class="col-sm-12">',
+          '<div class="label label-inverse label-default">',createdAt.toDateString(),'</div>',
+          '</div>',
+          '<div class="pull-right index-actions">'];
+            if(note.status != 0){
+              li.push('<button type="button" class="btn btn-sm btn-success" data-id="{{$note->id}}" data-action-status=0>R</button>');
+            }
+            if(note.status != 1){
+              li.push('<button type="button" class="btn btn-sm btn-primary" data-id="{{$note->id}}" data-action-status=1>A</button>');
+            }
+            if(note.status != 2){
+              li.push('<button type="button" class="btn btn-sm btn-secondary" data-id="{{$note->id}}" data-action-status=2>B</button>');
+            }
+            li.push('<button type="button" class="btn btn-sm btn-danger btn-delete" data-id="',note.id,'">&times;</button>');
+          li.push('</div>');
+        li.push('</div>');
+      li.push('</a>');
+    li.push('</div>');
+    return li.join('');
+  }
+
+  function setDeleteListener(selectorString){
+    $(selectorString).click(function(e){
       e.preventDefault();
       var $itemRow = $('.row [data-id="' + $(this).data('id') + '"]');
       // Hide row by positive assertion.
       $itemRow.slideUp(300);
       var accordionHeader = $('#'+ $itemRow.data('course-name'));
-      console.log(accordionHeader);
+
       var courseNoteCount = accordionHeader.data('note-count');
-      console.log(courseNoteCount);
 
       if(--courseNoteCount == 0){
-      	accordionHeader.slideUp(300, function(){
-      		$(this).remove();
-      	});
+        accordionHeader.slideUp(300, function(){
+          $(this).remove();
+        });
       } else {
-      	accordionHeader.data('note-count', courseNoteCount);
-      	accordionHeader.find('.note-count-label').text(courseNoteCount);
+        accordionHeader.data('note-count', courseNoteCount);
+        accordionHeader.find('.note-count-label').text(courseNoteCount);
       }
 
       $.ajax({
@@ -216,6 +230,6 @@
         }
       });
     });
-  });
+  }
 </script>
 @stop
