@@ -29,7 +29,9 @@ class Note extends Model
     'enlightenment',
     'sheen',
     'saints',
-    'noam chomsky'
+    'noam chomsky',
+    'star gazing',
+    'laudato si'
   ];
 
   public function course()
