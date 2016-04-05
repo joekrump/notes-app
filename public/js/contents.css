@@ -51,11 +51,12 @@ header, .header, footer, .footer {
 }
 .cke_editable
 {
-	font-size: 11pt;
+	font-size: 18px;
 	line-height: 1.5;
 	background-color: rgba(0,0,0,0.0) !important;
 	padding: 0px;
 	position: relative;
+	font-weight: 300;
 }
 
 ::selection {
