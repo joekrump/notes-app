@@ -10,4 +10,14 @@
     color: black;
     font-family: Geneva, Tahoma, Verdana, sans-serif;
   }
+  p, ol, ul, body {
+  	font-size: 11pt;
+  }
+  h1 {
+  	font-size: 26pt;
+  }
+  h2 {
+  	font-size: 16pt;
+  }
+
 }
