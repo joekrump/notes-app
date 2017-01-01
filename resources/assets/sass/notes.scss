@@ -177,3 +177,19 @@
 		}
 	}
 }
+
+@media (min-height: 1300px) {
+	#note-page {
+		.cke_contents {
+			height: 1300px !important;
+		}
+	}
+}
+
+@media (min-height: 1600px) {
+	#note-page {
+		.cke_contents {
+			height: 1500px !important;
+		}
+	}
+}
